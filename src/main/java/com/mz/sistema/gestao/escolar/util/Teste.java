@@ -4,7 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,9 +24,10 @@ public class Teste {
 		nomes.add(nom1);
 		StringBuilder builder = new StringBuilder();
 		builder.append(nomes);
-		
-		System.out.println(builder.toString().replace("[", "").replace("]", ""));
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+		String dataFormatoBanco =sdf.format(new Date());
+		System.out.println(dataFormatoBanco);
 	}
 
 	public static boolean criptografarSenha(String password, String passwordEncode) {
