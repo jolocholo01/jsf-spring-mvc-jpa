@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/academico/principal/index.xhtml">
+	<ui:define name="titulo">Meus Horários	</ui:define>
+	<ui:define name="cabacalho">
+		<link rel="stylesheet"
+			href="#{request.contextPath}/resources/css/horario.css" />
+
+	</ui:define>
+	<ui:define name="titulo_do_corpo">
+		<ui:include src="/academico/professor/template/titulo_do_corpo.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="nome_usuario">
+		<ui:include src="/academico/professor/template/nome_usuario.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="ambiente_comum">
+		<h:form id="form_menu">
+			<div class="menu menubar">
+				<ul class="btn1 btn-green">
+					<li><h:outputLink
+							value="#{request.contextPath}/professor/index.jsf">
+							 Principal
+						</h:outputLink></li>
+					<h:outputText value=" > " style="font-size:21px;" />
+					<li><h:outputLink
+							value="#{request.contextPath}/professor/horario.jsf">
+							Gerenciar meus Horários
+						</h:outputLink></li>
+				</ul>
+			</div>
+		</h:form>
+
+		<h:form>
+
+
+
+
+			<div style="border: 1px solid #ddd; border-radius: 4px 4px 0 0;">
+
+				<div class="form-group row">
+
+					<h:outputLabel value="Turno : "
+						styleClass="col-sm-1 control-label texto-label textfim" />
+					<div class="col-sm-5">
+						<h:selectOneMenu value="#{horarioBean.horarioAula.turno}"
+							styleClass="form-control" converter="turnoConverter">
+							<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+							<f:selectItems value="#{horarioBean.turnos}" var="turno"
+								itemLabel="#{turno.descricao}" itemValue="#{turno}" />
+
+						</h:selectOneMenu>
+					</div>
+				</div>
+
+				<div class="form-group ">
+					<h:outputLabel
+						styleClass="col-sm-1 control-label texto-label textfim" />
+
+					<div class="col-sm-5">
+						<h:commandButton value="Buscar"
+							action="#{horarioBean.buscarHorario}"
+							styleClass="btn btn-primary active horario12" />
+					</div>
+				</div>
+				<br /> <br /> <br />
+				<h:dataTable
+					styleClass="table tabela tabelaHorarioAluno tabela-horarios"
+					value="#{horarioBean.horarioAulas}" var="horarioAula"
+					style="width: 100%;">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Horário" />
+						</f:facet>
+						<h:outputText value="#{horarioAula.aulaInicial}">
+							<f:convertDateTime pattern="HH : mm" timeZone="Africa/Harare" />
+						</h:outputText>
+						<h:outputText value=" - " style="margin: 10px;" />
+						<h:outputText value="#{horarioAula.aulaFinal}">
+							<f:convertDateTime pattern="HH : mm" timeZone="Africa/Harare" />
+						</h:outputText>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Segunda" />
+						</f:facet>
+
+						<ui:repeat var="horario"
+							value="#{horarioBean.getHorariosProfessor(horarioAula)}">
+							<h:panelGroup rendered="#{horario.diaSemana.sigla =='SEG'}">
+								<h:outputText
+									value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.sigla}"
+									title="#{horario.turma.classe.descricao} > TURMA ( #{horario.turma.descricao} ) - #{horario.disciplina.descricao}">
+
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="top" />
+								</h:outputText>
+							</h:panelGroup>
+						</ui:repeat>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Terça" />
+						</f:facet>
+						<ui:repeat var="horario" value="#{horarioBean.horariosProfessor}">
+
+							<h:outputText rendered="#{horario.diaSemana.sigla =='TER'}"
+								value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.sigla}"
+								title="#{horario.turma.classe.descricao} > TURMA ( #{horario.turma.descricao} ) - #{horario.disciplina.descricao}">
+
+								<f:passThroughAttribute name="data-toggle" value="tooltip" />
+								<f:passThroughAttribute name="data-placement" value="top" />
+							</h:outputText>
+						</ui:repeat>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Quarta</f:facet>
+						<ui:repeat var="horario" value="#{horarioBean.horariosProfessor}">
+
+							<h:outputText rendered="#{horario.diaSemana.sigla =='QUA'}"
+								value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.sigla}"
+								title="#{horario.turma.classe.descricao} > TURMA ( #{horario.turma.descricao} ) - #{horario.disciplina.descricao}">
+
+								<f:passThroughAttribute name="data-toggle" value="tooltip" />
+								<f:passThroughAttribute name="data-placement" value="top" />
+							</h:outputText>
+						</ui:repeat>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Quinta</f:facet>
+						<ui:repeat var="horario" value="#{horarioBean.horariosProfessor}">
+
+							<h:outputText rendered="#{horario.diaSemana.sigla =='QUI'}"
+								value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.sigla}"
+								title="#{horario.turma.classe.descricao} > TURMA ( #{horario.turma.descricao} ) - #{horario.disciplina.descricao}">
+
+								<f:passThroughAttribute name="data-toggle" value="tooltip" />
+								<f:passThroughAttribute name="data-placement" value="top" />
+							</h:outputText>
+						</ui:repeat>
+
+					</h:column>
+					<h:column>
+						<f:facet name="header">Sexta</f:facet>
+						<ui:repeat var="horario" value="#{horarioBean.horariosProfessor}">
+							<h:outputText rendered="#{horario.diaSemana.sigla =='SEX'}"
+								value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.sigla}"
+								title="#{horario.turma.classe.descricao} > TURMA ( #{horario.turma.descricao} ) - #{horario.disciplina.descricao}">
+
+								<f:passThroughAttribute name="data-toggle" value="tooltip" />
+								<f:passThroughAttribute name="data-placement" value="top" />
+							</h:outputText>
+
+						</ui:repeat>
+
+					</h:column>
+				</h:dataTable>
+				<p:panel rendered="true"></p:panel>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
+
+

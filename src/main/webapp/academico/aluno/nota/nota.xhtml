@@ -1,0 +1,567 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/academico/principal/index.xhtml">
+	<ui:define name="titulo">Notas de Estudante</ui:define>
+
+	<ui:define name="cabacalho">
+		<link rel="stylesheet"
+			href="#{request.contextPath}/resources/css/nota.css" />
+	</ui:define>
+
+	<ui:define name="titulo_do_corpo">
+		<ui:include src="/academico/aluno/template/titulo_do_corpo.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="nome_usuario">
+		<ui:include src="/academico/aluno/template/nome_usuario.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="ambiente_comum">
+
+		<h:form id="form_menu">
+
+
+			<div class="menu menubar">
+				<ul>
+					<li style="width: 65px;"><h:commandLink
+							action="#{notaBean.voltar}"> Principal
+							</h:commandLink></li>
+					<h:panelGroup>
+						<h:outputText value=" > " style="font-size:21px;" />
+					</h:panelGroup>
+					<li style="width: 222px;"><h:outputLink
+							value="#{request.contextPath}/aluno/nota.jsf">
+							 Minhas Notas de frequência
+						</h:outputLink></li>
+				</ul>
+			</div>
+
+		</h:form>
+
+		<h:form id="form-nota-aluno">
+			<p:panel header="Caderneta do Aluno" style="margin: 20px 6px 30px;">
+
+				<h:panelGrid style="margin-top:10px; " />
+
+				<h:panelGrid columns="2" style="float:left;margin-left:10px;">
+					<h:outputLabel value="Ecola: " style="margin-top:5px;" />
+					<h:outputText
+						value="#{authenticationContext.matriculaEscolaLogada.escola.descricao}"
+						style="margin-left:10px;" />
+					<h:outputLabel value="Ano lectivo: " style="margin-top:5px;" />
+					<h:outputText
+						value="#{authenticationContext.matriculaEscolaLogada.ano}"
+						style="margin-left:10px;" />
+					<h:outputLabel value="Classe: " style="margin-top:5px;" />
+					<h:outputText
+						value="#{authenticationContext.matriculaEscolaLogada.classe.descricao}"
+						style="margin-left:10px;" />
+					<h:outputLabel value="Turma: " style="margin-top:5px;" />
+					<h:outputText
+						value="#{authenticationContext.matriculaEscolaLogada.turma.descricao} / #{authenticationContext.matriculaEscolaLogada.turma.turno.descricao}"
+						style="margin-left:10px;"
+						rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao !=null}" />
+					<h:outputText value="NÃO INFORMADA" style="margin-left: 10px;"
+						rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao ==null}" />
+					<h:outputLabel value="Trimestre: " style="margin-top:-50px;" />
+
+
+					<h:selectOneMenu styleClass="form-control"
+						value="#{alunoBean.trimestreAtivo.descricao}"
+						style="margin-left:10px;text-transform: uppercase;">
+
+						<f:selectItems value="#{alunoBean.tipoTrimestres}"
+							var="tipoTrimestre" itemLabel="#{tipoTrimestre.label}"
+							itemValue="#{tipoTrimestre.label}" />
+					</h:selectOneMenu>
+					<h:inputHidden />
+					<h:commandButton value="Buscar" styleClass="btn btn-primary active"
+						actionListener="#{alunoBean.buscarMinhasNotas}" />
+
+				</h:panelGrid>
+				<br />
+
+				<br />
+
+				<h:panelGrid id="tabela-notas"
+					styleClass="table tabela-lancar-nota-professor ">
+					<!-- Tabela de nota do primeiro ciclo -->
+					<h:panelGroup
+						rendered="#{alunoBean.matricula.classe.ciclo=='1º CICLO' and alunoBean.notas !=null}">
+						<table class="tblEditavel table" id="tblEditavel">
+
+							<THEAD>
+								<TR class="centralizar">
+									<th rowspan="2" class="padding-bottom">Disciplina</th>
+									<th colspan="3">AC</th>
+									<th rowspan="2" class="texto-centro padding-bottom">MAC</th>
+									<th colspan="2">AS</th>
+									<th rowspan="2" class="texto-centro padding-bottom">MAS</th>
+									<th rowspan="2" class="texto-centro padding-bottom">AP/AF</th>
+									<th rowspan="2" class="texto-centro">Media Trimestral</th>
+									<h:panelGroup></h:panelGroup>
+
+								</TR>
+								<TR class="centralizar">
+									<th>1ª</th>
+									<th>2ª</th>
+									<th>3ª</th>
+									<th>1ª</th>
+									<th>2ª</th>
+								</TR>
+							</THEAD>
+							<TBODY>
+								<h:panelGroup
+									rendered="#{alunoBean.trimestreAtivo.descricao!=null}">
+									<ui:repeat var="nota" value="#{alunoBean.notas}">
+										<tr>
+											<td class="td nome-aluno"><h:outputText id="idNomeAluno"
+													value="#{nota.disciplina.descricao}"
+													title="#{nota.situacao}"
+													style="text-transform: uppercase; margin-left: 5px;" /></td>
+
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.ac1}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.ac1 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.ac12}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.ac12 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.ac13}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.ac13 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText></td>
+
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.ac2}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.ac2 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.ac22}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.ac22 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.ac23}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.ac23 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText></td>
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.ac3}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.ac3 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.ac32}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.ac32 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.ac33}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.ac33 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText></td>
+
+
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.mediaAc}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.mediaAc >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.mediaAc2}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.mediaAc2 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.mediaAc3}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.mediaAc3 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText></td>
+
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.as1}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.as1 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.as12}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.as12 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.as13}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.as13 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText></td>
+
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.as2}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.as2 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.as22}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.as22 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.as23}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.as23 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText></td>
+
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.mediaAs}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.mediaAs >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota ">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.mediaAs2}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.mediaAs2 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota ">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.mediaAs3}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.mediaAs3 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota ">
+													<f:convertNumber />
+												</h:outputText></td>
+
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.avaliacaoFinal}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.avaliacaoFinal >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.avaliacaoFinal2}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.avaliacaoFinal2 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.avaliacaoFinal3}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.avaliacaoFinal3 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText></td>
+
+											<td class="td media-trimestral texto-centro"><h:outputText
+													value="#{nota.mediaTrimestral}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="margin-left:10px; color: #{nota.mediaTrimestral >= 10 ? 'blue' : 'red'}">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.mediaTrimestral2}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="margin-left:10px; color: #{nota.mediaTrimestral2 >= 10 ? 'blue' : 'red'}">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.mediaTrimestral3}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="margin-left:10px; color: #{nota.mediaTrimestral3 >= 10 ? 'blue' : 'red'}">
+													<f:convertNumber />
+												</h:outputText></td>
+
+
+
+										</tr>
+									</ui:repeat>
+								</h:panelGroup>
+							</TBODY>
+						</table>
+						<h:panelGroup rendered="#{alunoBean.mediaAlunoTrimetralPorExtenso !=null}">
+							<h:outputText value="Classificação Trimestral (CT):" />
+
+							<h:outputLabel style="font-weight: 900;"
+								value="&#160; 
+								#{alunoBean.mediaAlunoTrimetral} 
+								&#160;" />
+							<h:outputText value="(" />
+							<h:outputLabel value="#{alunoBean.mediaAlunoTrimetralPorExtenso}" />
+							<h:outputText value=") valores." />
+						</h:panelGroup>
+					</h:panelGroup>
+
+
+					<!-- Tabela de nota do Segundo ciclo -->
+					<h:panelGroup
+						rendered="#{authenticationContext.matriculaEscolaLogada.classe.ciclo=='2º CICLO' and alunoBean.notas !=null}">
+						<table class="tblEditavel table" id="tblEditavel">
+
+							<THEAD>
+								<TR class="centralizar">
+									<th rowspan="2" class="padding-bottom">Disciplina</th>
+									<th colspan="3">AC</th>
+									<th rowspan="2" class="texto-centro padding-bottom">MAC</th>
+									<th colspan="2">AS</th>
+									<th rowspan="2" class="texto-centro padding-bottom">MAS</th>
+									<th rowspan="2" class="texto-centro padding-bottom">AP/AF</th>
+									<th rowspan="2" class="texto-centro">Media Trimestral</th>
+									<th rowspan="2" class="texto-centro padding-bottom">Resultado</th>
+								</TR>
+								<TR class="centralizar">
+									<th>1ª</th>
+									<th>2ª</th>
+									<th>3ª</th>
+									<th>1ª</th>
+									<th>2ª</th>
+								</TR>
+							</THEAD>
+							<TBODY>
+								<h:panelGroup
+									rendered="#{alunoBean.trimestreAtivo.descricao!=null}">
+									<ui:repeat var="nota" value="#{alunoBean.notas}">
+										<tr>
+											<td class="td nome-aluno"><h:outputText id="idNomeAluno"
+													value="#{nota.disciplina.descricao}"
+													title="#{nota.situacao}"
+													style="text-transform: uppercase; margin-left: 5px;" /></td>
+
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.ac1}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.ac1 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.ac12}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.ac12 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.ac13}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.ac13 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText></td>
+
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.ac2}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.ac2 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.ac22}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.ac22 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.ac23}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.ac23 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText></td>
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.ac3}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.ac3 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.ac32}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.ac32 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.ac33}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.ac33 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText></td>
+
+
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.mediaAc}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.mediaAc >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.mediaAc2}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.mediaAc2 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.mediaAc3}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.mediaAc3 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText></td>
+
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.as1}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.as1 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.as12}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.as12 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.as13}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.as13 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText></td>
+
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.as2}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.as2 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.as22}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.as22 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.as23}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.as23 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText></td>
+
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.mediaAs}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.mediaAs >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota ">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.mediaAs2}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.mediaAs2 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota ">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.mediaAs3}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.mediaAs3 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota ">
+													<f:convertNumber />
+												</h:outputText></td>
+
+											<td class="td texto-centro"><h:outputText
+													value="#{nota.avaliacaoFinal}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="color: #{nota.avaliacaoFinal >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.avaliacaoFinal2}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="color: #{nota.avaliacaoFinal2 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.avaliacaoFinal3}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="color: #{nota.avaliacaoFinal3 >= 10 ? 'blue' : 'red'}"
+													styleClass="inputLancarNota inputNota">
+													<f:convertNumber />
+												</h:outputText></td>
+
+											<td class="td media-trimestral texto-centro"><h:outputText
+													value="#{nota.mediaTrimestral}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}"
+													style="margin-left:10px; color: #{nota.mediaTrimestral >= 10 ? 'blue' : 'red'}">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.mediaTrimestral2}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}"
+													style="margin-left:10px; color: #{nota.mediaTrimestral2 >= 10 ? 'blue' : 'red'}">
+													<f:convertNumber />
+												</h:outputText> <h:outputText value="#{nota.mediaTrimestral3}"
+													rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}"
+													style="margin-left:10px; color: #{nota.mediaTrimestral3 >= 10 ? 'blue' : 'red'}">
+													<f:convertNumber />
+												</h:outputText></td>
+
+											<td class="td texto-centro"><h:panelGroup id="situacao">
+													<h:panelGroup
+														rendered="#{alunoBean.trimestreAtivo.descricao=='1º Trimestre'}">
+														<h:outputText value="#{nota.situacao}"
+															rendered="#{nota.situacao == 'Aprovado'  or nota.situacao == 'Dispensado' or nota.situacao == 'Admitido'}"
+															styleClass="lancarNotaSituacaoLa"
+															style="color: rgb(49, 12, 239);font-size: 15px;" />
+
+														<h:outputText value="#{nota.situacao}"
+															rendered="#{nota.situacao == 'Reprovado'}"
+															styleClass="lancarNotaSituacaoLa"
+															style="color: red;font-size: 15px;" />
+
+														<h:outputText value="-" rendered="#{nota.situacao==null}"
+															styleClass="inputLancarNota" />
+													</h:panelGroup>
+
+
+													<h:panelGroup
+														rendered="#{alunoBean.trimestreAtivo.descricao=='2º Trimestre'}">
+														<h:outputText value="#{nota.situacao2}"
+															rendered="#{nota.situacao2 == 'Aprovado'  or nota.situacao2 == 'Dispensado' or nota.situacao2 == 'Admitido'}"
+															styleClass="lancarNotaSituacaoLa"
+															style="color: rgb(49, 12, 239);font-size: 15px;" />
+
+														<h:outputText value="#{nota.situacao2}"
+															rendered="#{nota.situacao2 == 'Reprovado'}"
+															styleClass="lancarNotaSituacaoLa"
+															style="color: red;font-size: 15px;" />
+
+														<h:outputText value="-" rendered="#{nota.situacao2==null}"
+															styleClass="inputLancarNota" />
+													</h:panelGroup>
+
+													<h:panelGroup
+														rendered="#{alunoBean.trimestreAtivo.descricao=='3º Trimestre'}">
+														<h:outputText value="#{nota.situacao3}"
+															rendered="#{nota.situacao3 == 'Aprovado'  or nota.situacao3 == 'Dispensado' or nota.situacao3 == 'Admitido'}"
+															styleClass="lancarNotaSituacaoLa"
+															style="color: rgb(49, 12, 239);font-size: 15px;" />
+
+														<h:outputText value="#{nota.situacao3}"
+															rendered="#{nota.situacao3 == 'Reprovado'}"
+															styleClass="lancarNotaSituacaoLa"
+															style="color: red;font-size: 15px;" />
+
+														<h:outputText value="-" rendered="#{nota.situacao3==null}"
+															styleClass="inputLancarNota" />
+													</h:panelGroup>
+
+
+												</h:panelGroup></td>
+
+										</tr>
+									</ui:repeat>
+								</h:panelGroup>
+							</TBODY>
+						</table>
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

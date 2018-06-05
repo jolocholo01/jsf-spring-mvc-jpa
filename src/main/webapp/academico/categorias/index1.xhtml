@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sistema de Gestão Escolar</title>
+<style type="text/css">
+@IMPORT
+	url("#{request.contextPath}/resources/bootstrap3/css/bootstrap.min.css")
+	;
+
+@IMPORT
+	url("#{request.contextPath}/resources/bootstrap3/css/bootstrap-theme.min.css")
+	;
+
+@IMPORT url("#{request.contextPath}/resources/css/login.css");
+</style>
+</head>
+<h:body>
+
+	<div class="container" style="margin-top: 70px;">
+		<div class="row">
+			<div class="col-md-7  col-auto">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="titilo">Sistema de Gestão Escolar</h3>
+					</div>
+
+					<div class="panel-body "
+						style="margin-top: 60px; margin-bottom: 20px;">
+
+						<h:panelGroup rendered="#{authenticationContext.funcionarioAlocadoAMaisDeUmaPermisao==true}">
+							<ul>
+								<li style="margin-left: -27px;" errorStyle="color: #F00;">Selecione
+									a categoria que deseja entrar</li>
+							</ul>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{authenticationContext.funcionarioAlocadoAMaisDeUmaEscola==true}">
+							<ul>
+								<li style="margin-left: -27px;" errorStyle="color: #F00;">Selecione
+									a escola que deseja entrar</li>
+							</ul>
+						</h:panelGroup>
+						<h:messages styleClass="mensagem-senha"
+							style="margin-left: -27px;" errorStyle="color: #F00;" />
+						<h:form id="formulario" class="form-login formulario-login">
+							<div class="form-group row">
+								<h:selectOneMenu class="form-control"
+									rendered="#{authenticationContext.funcionarioAlocadoAMaisDeUmaPermisao==true}"
+									style="width: 97%; margin: auto;"
+									value="#{authenticationContext.funcionarioEscola}"
+									required="true" converter="funcionarioEscolaConverter"
+									requiredMessage="O campo categoria é obrigatório!">
+									<f:selectItem itemLabel="Selecione a categoria... "
+										itemValue="#{null}"></f:selectItem>
+									<f:selectItems
+										value="#{authenticationContext.funcionariosEscolas}"
+										var="funcionarioEscola"
+										itemLabel="#{funcionarioEscola.permissao.nome}"
+										itemValue="#{funcionarioEscola}"></f:selectItems>
+								</h:selectOneMenu>
+								<h:selectOneMenu class="form-control"
+									rendered="#{authenticationContext.funcionarioAlocadoAMaisDeUmaEscola==true}"
+									style="width: 97%; margin: auto;"
+									value="#{authenticationContext.escola}"
+									required="true" converter="escolaConverter"
+									requiredMessage="O campo escola é obrigatório!">
+									<f:selectItem itemLabel="Selecione a escola... "
+										itemValue="#{null}"></f:selectItem>
+									<f:selectItems
+										value="#{authenticationContext.escolas}"
+										var="escola"
+										itemLabel="#{escola.descricao}"
+										itemValue="#{escola}"></f:selectItems>
+								</h:selectOneMenu>
+							</div>
+
+							<h:commandButton value="Enviar Pedido"
+								rendered="#{authenticationContext.funcionarioAlocadoAMaisDeUmaEscola==true}"
+								class="btn btn-primary btn-autenticar active"
+								action="#{authenticationContext.autenticacaoPorPermissao}">
+
+							</h:commandButton>
+
+							<h:commandButton value="Enviar Pedido"
+								rendered="#{authenticationContext.funcionarioAlocadoAMaisDeUmaPermisao==true}"
+								class="btn btn-primary btn-autenticar active"
+								action="#{authenticationContext.autenticar}">
+
+							</h:commandButton>
+
+
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+		<h:form>
+			<p:panel header="Cadastro de Matriz Curricular">
+				<p:messages closable="true"
+					style=" margin: auto; width: 99%; margin-top: 4px; margin-bottom: 20px;" />
+
+				<h:panelGroup rendered="#{matrizBean.classeSelecionada==null}">
+					<h:panelGrid columns="2" style="margin-top: 3px;margin-left: 20px;">
+
+						<h:outputLabel value="Ano:" styleClass="text-lebal" />
+						<h:outputText
+							value="#{authenticationContext.calendarioEscolar.ano}"
+							style="margin-left: 10px;" />
+
+						<h:outputLabel value="Localidade:" styleClass="text-lebal" />
+						<h:outputText
+							value="#{authenticationContext.funcionarioEscolaLogada.escola.localidade}"
+							style="margin-left: 10px;text-transform: uppercase;" />
+					</h:panelGrid>
+
+					<h:dataTable styleClass="table table-bordered tabela-cor-header"
+						style="margin:auto;margin-bottom:10px; width: 98%;"
+						value="#{matrizBean.classes}" var="classe"
+						rowClasses="linha12 , linha11"
+						columnClasses="coluna1,coluna2,coluna3">
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#" />
+							</f:facet>
+							<h:outputText value=" #{classe.id}" style="margin-left:5px;" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Estrutura da Matriz" />
+							</f:facet>
+							<h:outputText
+								value="#{classe.tipoEnsino} > #{classe.ciclo} > #{classe.descricao}"
+								style="	text-transform: uppercase; margin-left:4px;" />
+						</h:column>
+
+						<h:column>
+							<h:commandLink action="#{matrizBean.selecionarClasse(classe)}"
+								immediate="true" title="Cadastrar Matriz">
+								<p:graphicImage url="#{buscarFotoBean.retornarImagesNota1}"
+									height="18" width="18" style="margin-left:3px;" />
+							</h:commandLink>
+
+						</h:column>
+
+					</h:dataTable>
+				</h:panelGroup>
+
+				<h:panelGroup rendered="#{matrizBean.classeSelecionada !=null}">
+					<h:panelGrid columns="2" style="margin: auto;">
+
+						<h:outputLabel value="Ano:" styleClass="text-lebal" />
+						<h:outputText
+							value="#{authenticationContext.calendarioEscolar.ano}"
+							style="margin-left: 10px;" />
+
+						<h:outputLabel value="Descrição de Matriz:"
+							styleClass="text-lebal" />
+						<h:outputText
+							value="#{matrizBean.classeSelecionada.tipoEnsino} >
+							 #{matrizBean.classeSelecionada.ciclo} > 
+							 #{matrizBean.classeSelecionada.descricao}"
+							style="margin-left: 10px;" />
+
+						<h:outputLabel value="Curso :" styleClass="text-lebal" />
+						<h:panelGroup>
+							<div class="col-sm-6">
+								<h:selectOneMenu value="#{matrizBean.matriz.curso}"
+									disabled="#{matrizBean.selecionarDisciplinaBoolean == true}"
+									style="margin-left: 10px;" styleClass=" form-control">
+									<f:selectItems value="#{matrizBean.tipoCursos}" var="turno"
+										itemLabel="#{turno}" itemValue="#{turno}" />
+								</h:selectOneMenu>
+							</div>
+						</h:panelGroup>
+
+						<h:outputLabel value="Área curricular :" styleClass="text-lebal"
+							rendered="#{matrizBean.classeSelecionada.ciclo == '2º CICLO'}" />
+						<h:panelGroup
+							rendered="#{matrizBean.classeSelecionada.ciclo == '2º CICLO'}">
+							<div class="col-sm-12">
+								<h:outputText value="#{matrizBean.tipoArea}"
+									rendered="#{matrizBean.selecionarDisciplinaBoolean == false}"
+									style="margin-left: 10px;" />
+								<h:selectOneMenu value="#{matrizBean.matriz.area}"
+									rendered="#{matrizBean.selecionarDisciplinaBoolean == true}"
+									style="margin-left: 10px;" styleClass=" form-control"
+									converter="areaConverter" required="true"
+									requiredMessage="O campo  área  é obrigatório.">
+									<f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+									<f:selectItems value="#{matrizBean.areas}" var="area"
+										itemLabel="#{area.descricao}" itemValue="#{area}" />
+								</h:selectOneMenu>
+							</div>
+						</h:panelGroup>
+						<h:inputHidden
+							rendered="#{matrizBean.classeSelecionada.ciclo == '2º CICLO' and 
+							matrizBean.selecionarDisciplinaBoolean == true}" />
+						<h:commandButton value="Buscar"
+							action="#{matrizBean.buscarDisciplinaDaClassePorArea}"
+							styleClass="btn btn-primary" style="margin-left: 30px;"
+							rendered="#{matrizBean.classeSelecionada.ciclo == '2º CICLO' and 
+							matrizBean.selecionarDisciplinaBoolean == true}" />
+					</h:panelGrid>
+
+
+					<p:dataTable styleClass="table tabela_selecao_disciplina"
+						style="margin:20px auto;" value="#{matrizBean.disciplinaClasses}"
+						var="disciplinaClasse"
+						selection="#{matrizBean.matriz.disciplinaClasses}"
+						rowKey="#{disciplinaClasse.id}"
+						rendered="#{matrizBean.selecionarDisciplinaBoolean == false}"
+						emptyMessage="Nenhum registo encontrado! ">
+
+						<p:column style="width:5%;text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#" />
+							</f:facet>
+							<h:outputText value="#{disciplinaClasse.disciplina.id}" />
+						</p:column>
+
+						<p:column style="width:40%; text-align:left;">
+							<f:facet name="header">
+								<h:outputText value="Componente Curricular" />
+							</f:facet>
+							<h:outputText value="#{disciplinaClasse.disciplina.descricao}" />
+						</p:column>
+						<p:column style="width:10%; 	text-align: center;  ">
+							<f:facet name="header">
+								<h:outputText value="C.H Semanal" />
+							</f:facet>
+							<h:outputText value="#{disciplinaClasse.credito}" />
+						</p:column>
+						<p:column style="width:10%; 	text-align: center;  ">
+							<f:facet name="header">
+								<h:outputText value="Obrigatória ?" />
+							</f:facet>
+							<h:outputText value="#{disciplinaClasse.obrigatoria?'Sim':'Não'}" />
+						</p:column>
+						<p:column selectionMode="multiple"
+							style="text-align:center; width:6%;">
+						</p:column>
+					</p:dataTable>
+
+
+					<p:dataTable styleClass="table tabela_selecao_disciplina"
+						style="margin:20px auto;"
+						value="#{matrizBean.disciplinaClassesSelecionadaSegundoCiclo}"
+						var="disciplinaClasse"
+						rendered="#{matrizBean.selecionarDisciplinaBoolean != false}"
+						selection="#{matrizBean.disciplinaClassesArea}"
+						rowKey="#{disciplinaClasse.id}"
+						emptyMessage="Nenhum registo encontrado! ">
+
+						<p:column style="width:5%;text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#" />
+							</f:facet>
+							<h:outputText value="#{disciplinaClasse.disciplina.id}" />
+						</p:column>
+
+						<p:column style="width:40%; text-align:left;">
+							<f:facet name="header">
+								<h:outputText value="Componente Curricular" />
+							</f:facet>
+							<h:outputText value="#{disciplinaClasse.disciplina.descricao}" />
+						</p:column>
+						<p:column style="width:10%; 	text-align: center;  ">
+							<f:facet name="header">
+								<h:outputText value="C.H Semanal" />
+							</f:facet>
+							<h:outputText value="#{disciplinaClasse.credito}" />
+						</p:column>
+						<p:column selectionMode="multiple"
+							style="text-align:center; width:6%;">
+						</p:column>
+					</p:dataTable>
+
+					<h:panelGrid columns="2" style="margin: auto auto  14px auto;">
+					<h:commandButton value="Voltar" immediate="true" actionListener="#{matrizBean.voltar}"
+							 styleClass="btn btn-success" />
+						<h:commandButton value="Seguinte" action="#{matrizBean.seguinte}"
+							styleClass="btn btn-primary" style="margin-left:4%;"
+							rendered="#{matrizBean.classeSelecionada.ciclo == '2º CICLO' and matrizBean.selecionarDisciplinaBoolean == false}" />
+
+						
+						<h:commandButton value="Cadastrar" action="#{matrizBean.salvar}"
+							styleClass="btn btn-primary" style="margin-left:4%;"
+							rendered="#{matrizBean.classeSelecionada.ciclo != '2º CICLO' or matrizBean.selecionarDisciplinaBoolean==true}" />
+
+					</h:panelGrid>
+				</h:panelGroup>
+			</p:panel>
+		</h:form>
+</html>

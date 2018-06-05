@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form id="form_dados_pessoais">
+	<h:panelGroup>
+		<div class="dados_pessoais">
+
+			<div class="imagem_usuario" style="margin-top: 20px;">
+
+
+				<h:panelGroup id="idFoto">
+					<p:graphicImage   cache="false"
+						value="#{buscarFotoBean.foto.fotoMontada}"
+						styleClass="foto-dados-usuario profile-img-tag"
+						rendered="#{buscarFotoBean.foto.fotografia !=null}" />
+					<p:graphicImage   cache="false" styleClass="foto-dados-usuario profile-img-tag"
+						value="#{buscarFotoBean.retornarFoto}"
+						rendered="#{buscarFotoBean.foto.fotografia ==null}"
+						style="float:right; margin-top: 5px; margin-right:8px;" />
+				</h:panelGroup>
+
+				
+					<h:panelGroup style="spanFile">
+
+						<h:outputLink value="#{request.contextPath}/aluno/perfil.jsf"
+							styleClass="actualizar-dados link-alterar-foto">Alterar foto e perfil
+						</h:outputLink>
+					</h:panelGroup>
+
+
+					<h:outputLink value="#{request.contextPath}/aluno/dados.jsf"
+						styleClass="actualizar-dados" style=" margin-top: 3%;">Meus dados pessoais
+				</h:outputLink>
+
+				
+			</div>
+			<br />
+			<div class="dados dados-aluno">
+				<p style="border-bottom: none; text-align: center;">Dados do
+					Estudante</p>
+
+				<h:panelGrid columns="2">
+
+
+					<h:outputLabel value="Nome: " styleClass="texto_label" />
+
+					<h:outputText value="#{buscarFotoBean.usuario.nome}"
+						style="margin-left: 10px;" />
+
+					<h:outputLabel value="Classe:" styleClass="texto_label" />
+					<h:outputText
+						value="#{authenticationContext.matriculaEscolaLogada.classe.descricao}"
+						style="margin-left: 10px; text-transform: uppercase;"
+						rendered="#{authenticationContext.matriculaEscolaLogada.classe.descricao !=null}" />
+					<h:outputText value="NÃO INFORMADA." style="margin-left: 10px;"
+						rendered="#{authenticationContext.matriculaEscolaLogada.classe.descricao ==null}" />
+
+					<h:outputLabel value="Turma:" styleClass="texto_label" />
+					<h:panelGroup>
+						<h:outputText
+							value="#{authenticationContext.matriculaEscolaLogada.turma.descricao} / #{authenticationContext.matriculaEscolaLogada.turma.turno.descricao}"
+							style="margin-left: 10px;"
+							rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao !=null}" />
+						<h:outputText value="NÃO DEFINIDA." style="margin-left: 10px;"
+							rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao ==null}" />
+					</h:panelGroup>
+					<h:outputLabel value="Situação:" styleClass="texto_label" />
+					<h:outputText
+						value="#{authenticationContext.matriculaEscolaLogada.ativo?'MATRICULADO':'NÃO MATRICULADO'}"
+						style="margin-left: 10px;" />
+					<h:outputLabel value="E-mail:" styleClass="texto_label" />
+					<h:panelGroup>
+
+						<h:panelGroup>
+							<h:outputText value="#{buscarFotoBean.usuario.email}"
+								style="margin-left: 10px;"
+								rendered="#{buscarFotoBean.usuario.ocultarEmail ==false and buscarFotoBean.usuario.email != null and buscarFotoBean.usuario.email !=''}" />
+							<h:outputText value="NÃO CADASTRADO" style="margin-left: 10px;"
+								rendered="#{buscarFotoBean.usuario.email == null or buscarFotoBean.usuario.email ==''}" />
+							<h:outputText value="INDISPONÍVEL" style="margin-left: 10px;"
+								rendered="#{ buscarFotoBean.usuario.ocultarEmail ==true and (buscarFotoBean.usuario.email !=null and buscarFotoBean.usuario.email !='')}" />
+
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGrid>
+			</div>
+		</div>
+
+	</h:panelGroup>
+
+</h:form>
+</html>

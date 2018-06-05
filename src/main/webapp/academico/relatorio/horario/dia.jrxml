@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2018-02-14T10:02:51 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e0412962-8641-4f18-b055-c7ef57da6af7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="413"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="579"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="ZGlzY2lwbGluYSBBUyAsNTc4LDgxLDdhOTJiMzZiLTJmYmMtNGNkOS05OWZiLWZkYzY1OWZmMTRk&#xA;Nztob3JhcmlvIEFTICwyNzYsNDMsYmI3OTA4ZTEtMDg5MS00ZDQzLWEwNGYtNTBmNDc1MTQxY2Ni&#xA;O2RpYXNlbWFuYSBBUyAsMTA2LDExNSwyMDA4NmVmNC0zMDc4LTRiMjktYjg5NS05MjMxZGViYmQx&#xA;Y2U7"/>
+	<queryString>
+		<![CDATA[SELECT disciplina.descricao,
+	diasemana.sigla
+FROM horario
+	INNER JOIN diasemana ON 
+	 horario.id_dia_semana = diasemana.id 
+	INNER JOIN disciplina  ON 
+	 horario.disciplina_id = disciplina.id]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="110" y="0" width="80" height="20" isRemoveLineWhenBlank="true" uuid="6495fc3a-3f77-4075-b596-bd97474d7ca4"/>
+				<box>
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{segunda}==null?"---":$P{segunda}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="190" y="0" width="90" height="20" isRemoveLineWhenBlank="true" uuid="68632394-3b57-4739-aa84-53c1d52c3b75"/>
+				<box>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{terca}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="280" y="0" width="88" height="20" isRemoveLineWhenBlank="true" uuid="ea1374bd-a404-490e-b0d1-670ca4644498"/>
+				<box>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{quarta}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="368" y="0" width="100" height="20" isRemoveLineWhenBlank="true" uuid="b3aedc82-3925-4c85-9ea9-af799df0e68b"/>
+				<box>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{quinta}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="468" y="0" width="88" height="20" isRemoveLineWhenBlank="true" uuid="b2902217-9346-4d33-aca2-23cd893e9f02"/>
+				<box>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sexta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

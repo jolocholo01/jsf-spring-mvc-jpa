@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<div
+	class="panel panel-defaul ui-panel ui-widget ui-widget-content ui-corner-all">
+	<div
+		class="panel-heading ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+
+		<h:panelGroup class="panel-title ui-panel-title">
+
+			<h:outputText value="Adicionar categoria do funcionário" />
+			<h:panelGroup styleClass="form-span">
+
+				<h:commandLink style="color: blue; float: right; font-weight: 500;"
+					value="Voltar para Pesquisa"
+					actionListener="#{funcionarioEscolaBean.voltarParaPequisa}"
+					immediate="true" />
+			</h:panelGroup>
+		</h:panelGroup>
+	</div>
+	<div class="panel-body">
+		<p:messages closable="true" />
+
+		<div class="form-group row">
+			<h:outputLabel value="Usuário  :"
+				styleClass="col-sm-2 control-label padding-top0" />
+
+			<h:outputText styleClass="col-sm-6 padding-left0"
+				value="#{funcionarioEscolaBean.funcionarioSelecionado.login}" />
+
+		</div>
+		<div class="form-group row">
+			<h:outputLabel value="Nome Completo : "
+				styleClass="col-sm-2 control-label" />
+			<div class="col-sm-9" style="padding-top: 7px;">
+				<h:outputText styleClass="col-sm-6 padding-left0"
+					value="#{funcionarioEscolaBean.funcionarioSelecionado.nome}">
+
+				</h:outputText>
+			</div>
+		</div>
+		<div class="form-group row">
+			<h:outputLabel value="Formação Académica :"
+				styleClass="col-sm-2 control-label" />
+			<div class="col-sm-6" style="padding-top: 7px;">
+				<h:outputText
+					value="#{funcionarioEscolaBean.funcionarioSelecionado.formacao}"
+					rendered="#{funcionarioEscolaBean.funcionarioSelecionado.formacao !=null or funcionarioEscolaBean.funcionarioSelecionado.formacao!=''}" />
+				<h:outputText value="NÃO DIFINIDA!"
+					rendered="#{funcionarioEscolaBean.funcionarioSelecionado.formacao==null or funcionarioEscolaBean.funcionarioSelecionado.formacao==''}" />
+
+			</div>
+
+		</div>
+		<div class="form-group row">
+			<h:outputLabel value="Telefone:" styleClass="col-sm-2 control-label" />
+			<div class="col-sm-6" style="padding-top: 7px;">
+				<h:outputText
+					value="#{funcionarioEscolaBean.funcionarioSelecionado.telefone}"
+					rendered="#{funcionarioEscolaBean.funcionarioSelecionado.telefone !=null or funcionarioEscolaBean.funcionarioSelecionado.telefone !=''}" />
+				<h:outputText value="NÃO DIFINIDO!"
+					rendered="#{funcionarioEscolaBean.funcionarioSelecionado.telefone==null or funcionarioEscolaBean.funcionarioSelecionado.telefone ==''}" />
+
+
+			</div>
+
+		</div>
+		<h:panelGroup
+			rendered="#{funcionarioEscolaBean.adicionarFuncionarioEscolaBoolean == false}">
+
+			<div class="form-group"
+				style="text-align: center; margin-left: -23%;">
+				<h:commandButton value="Voltar" styleClass="btn btn-success"
+					immediate="true"
+					actionListener="#{funcionarioEscolaBean.voltarParaPequisa}" />
+				<h:commandButton value="adicionar categoria"
+					actionListener="#{funcionarioEscolaBean.adicionarFuncionarioEscola}"
+					styleClass="btn btn-primary" style="margin-left: 1%;">
+				</h:commandButton>
+
+			</div>
+
+			<!-- Funcionario Selecionado com Lista de escolas e suas Categorias   -->
+
+			<h:dataTable value="#{funcionarioEscolaBean.funcionarioEscolas}"
+				var="funcionarioEscola"
+				styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
+				headerClass="cab-tabela" footerClass="fo-tabela"
+				style="margin-top: 20px;" rowClasses="linha2, linha1">
+
+				<h:column headerClass="thead">
+					<f:facet name="header">
+						<h:outputText value="#" />
+					</f:facet>
+					<h:outputText value="#{funcionarioEscola.escola.id}" />
+				</h:column>
+				<h:column headerClass="thead">
+					<f:facet name="header">
+						<h:outputText value="Escola" />
+					</f:facet>
+					<h:outputText value="#{funcionarioEscola.escola.descricao}" />
+				</h:column>
+				<h:column headerClass="thead">
+					<f:facet name="header">
+						<h:outputText value="Categoria" />
+					</f:facet>
+					<h:outputText value="#{funcionarioEscola.permissao.nome}" />
+				</h:column>
+				<h:column headerClass="thead">
+					<f:facet name="header">
+						<h:outputText value="Activo?" />
+					</f:facet>
+					<h:outputText value="#{funcionarioEscola.activo?'Sim':'Não'}" />
+				</h:column>
+				<h:column headerClass="thead">
+					<h:commandLink
+						actionListener="#{funcionarioEscolaBean.editar(funcionarioEscola)}"
+						title="Atualizar esta categoria?" styleClass="tooltip-left"
+						style="margin-right: 12px;">
+						<h:graphicImage url="#{buscarFotoBean.retornarImagesEditar}"
+							height="16" width="16"></h:graphicImage>
+					</h:commandLink>
+					<h:commandLink title="Excluir essa categoria?"
+						styleClass="tooltip-left"
+						actionListener="#{funcionarioEscolaBean.prepararExcluirCategoria(funcionarioEscola)}">
+						<h:graphicImage url="#{buscarFotoBean.retornarImagesExcluir}"
+							height="16" width="16"></h:graphicImage>
+						<p:ajax event="click"
+							update="formulario:id-panelGroup-confirma-modal1"
+							listener="#{funcionarioEscolaBean.prepararExcluirCategoria(funcionarioEscola)}" />
+						<f:passThroughAttribute name="data-toggle" value="modal" />
+						<f:passThroughAttribute name="data-target" value="#myModal" />
+					</h:commandLink>
+				</h:column>
+				<f:facet name="footer">
+					<h:outputText
+						value="#{funcionarioBean.qtdCategoriaEscontrada} categoria(s) encontrada(s)"></h:outputText>
+				</f:facet>
+			</h:dataTable>
+
+
+
+
+		</h:panelGroup>
+
+		<!-- Alocar Fincionario na escola  -->
+		<h:panelGroup
+			rendered="#{funcionarioEscolaBean.adicionarFuncionarioEscolaBoolean == true}">
+
+
+			<div class="form-group row">
+				<h:outputLabel value="Categoria: "
+					styleClass="col-sm-2 control-label" style="padding-top: 5mm;" />
+				<div class="col-sm-7">
+
+					<h:selectOneMenu
+						value="#{funcionarioEscolaBean.funcionarioEscola.permissao}"
+						styleClass="form-control" required="true"
+						requiredMessage="O campo categoria é obrigatório"
+						converter="permissaoConverter">
+						<f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+						<f:selectItems value="#{funcionarioEscolaBean.permissoes}"
+							var="permisao" itemLabel="#{permisao.nome}"
+							itemValue="#{permisao}" />
+
+					</h:selectOneMenu>
+
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<h:outputLabel styleClass="col-sm-2 control-label"
+					value="Data de Cadastro: " style="padding-top: 5mm;" />
+				<div class="col-sm-3">
+					<h:inputText
+						value="#{funcionarioEscolaBean.funcionarioEscola.dataCadastro}"
+						class="form-control">
+						<f:passThroughAttribute name="data-provide" value="datepicker" />
+						<f:passThroughAttribute name="data-date-language" value="pt-PT" />
+						<f:passThroughAttribute name="data-date-autoclose" value="true" />
+						<f:passThroughAttribute name="data-date-today-highlight"
+							value="true" />
+						<f:passThroughAttribute name="data-date-orientation"
+							value="bottom" />
+						<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" type="time" />
+
+					</h:inputText>
+
+				</div>
+			</div>
+			<div class="form-group row">
+				<h:outputLabel styleClass="col-sm-2 control-label" value="Activo?: " />
+				<div class="col-sm-3">
+					<h:selectBooleanCheckbox
+						disabled="#{funcionarioEscolaBean.funcionarioEscola.estado==false and funcionarioEscolaBean.funcionarioEscola.activo==true}"
+						value="#{funcionarioEscolaBean.funcionarioEscola.activo}"
+						class="form-checkbox" />
+
+				</div>
+			</div>
+			<div class="form-group"
+				style="text-align: center; margin-left: -23%;">
+				<h:commandButton value="Cancelar" styleClass="btn btn-danger"
+					immediate="true"
+					actionListener="#{funcionarioEscolaBean.voltarParaPequisa}" />
+				<h:commandButton value="Voltar" styleClass="btn btn-success"
+					immediate="true" style="margin: 1%;"
+					actionListener="#{funcionarioEscolaBean.voltar}" />
+				<h:commandButton value="Cadastrar"
+					actionListener="#{funcionarioEscolaBean.alocar}"
+					styleClass="btn btn-primary">
+				</h:commandButton>
+
+			</div>
+		</h:panelGroup>
+
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" data-backdrop="static"
+	style="padding-top: 210px;">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+
+				<h4 class="modal-title" id="myModalLabel">
+					<h:outputLabel value="Você Tem certeza?" />
+				</h4>
+
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" style="text-align: center">
+				<h:panelGroup id="id-panelGroup-confirma-modal1">
+					<h:outputText
+						value="Tem certeza que deseja excluir a categoria de&nbsp;" />
+					<h:outputLabel
+						value="#{funcionarioEscolaBean.funcionarioEscolaExclusao.permissao.nome}"
+						style="font-weight: 600;" />
+					<h:outputText value="&nbsp;do funcionario&nbsp;  " />
+					<h:outputLabel
+						value="#{funcionarioEscolaBean.funcionarioEscolaExclusao.funcionario.nome}"
+						style="font-weight: 600;" />
+					<h:outputText value="&nbsp;na&nbsp; " />
+					<h:outputLabel
+						value="#{funcionarioEscolaBean.funcionarioEscolaExclusao.escola.descricao}"
+						style="font-weight: 600;" />
+					<h:outputText value="?" />
+				</h:panelGroup>
+			</div>
+			<div class="modal-footer">
+				<h:commandButton type="button" title="Cancelar"
+					class="btn btn-success" value="Cancelar">
+					<f:passThroughAttribute name="data-dismiss" value="modal" />
+				</h:commandButton>
+				<h:commandButton title="Excluir" styleClass="btn btn-primary"
+					value="Excluir" action="#{funcionarioEscolaBean.excluirCategoria}">
+				</h:commandButton>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>

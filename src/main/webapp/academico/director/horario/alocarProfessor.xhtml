@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:panelGroup
+	rendered="#{horarioTurma.professorTurmaSelecionada ==null}">
+	<h:panelGrid
+		style="border: 1px solid #D3CACA; width:1070px; margin-top: 30px;margin-bottom: 10px;">
+		<h:panelGrid columns="2" style="margin-top: 30px; margin-left: 296px;">
+			<h:outputLabel value="Ano :" style="float: right;" />
+			<h:outputText
+				value="#{horarioTurma.turmaSelecionadaIncluirProfessor.ano}"
+				style="margin-left:10px;" />
+			<h:outputLabel value="Escola:" style="float: right;" />
+			<h:outputText
+				value="#{authenticationContext.funcionarioEscolaLogada.escola.descricao}"
+				style="text-transform: uppercase; margin-left:10px;" />
+			<h:outputLabel value="Turma:" style="float: right;" />
+			<h:outputText
+				value="#{horarioTurma.turmaSelecionadaIncluirProfessor.classe.sigla}ª #{horarioTurma.turmaSelecionadaIncluirProfessor.descricao}"
+				style="margin-left:10px;" />
+			<h:outputLabel value="Classe:" style="float: right;" />
+			<h:outputText
+				value="#{horarioTurma.turmaSelecionadaIncluirProfessor.classe.id} - #{horarioTurma.turmaSelecionadaIncluirProfessor.classe.tipoEnsino} > #{horarioTurma.turmaSelecionadaIncluirProfessor.classe.ciclo} > #{horarioTurma.turmaSelecionadaIncluirProfessor.classe.descricao}"
+				style="text-transform: uppercase; margin-left:10px;" />
+			<h:outputLabel value="Turno:" style="float: right;" />
+			<h:outputText
+				value="#{horarioTurma.turmaSelecionadaIncluirProfessor.turno.descricao}"
+				style="margin-left:10px;" />
+		</h:panelGrid>
+	</h:panelGrid>
+	<h:panelGrid styleClass="tabala_cadastro tabela_alocacao"
+		headerClass="cabecalhoTabela"
+		style="margin-left:0px; margin-top: 0px;">
+		<f:facet name="header">
+			<h:outputText value="Componentes Corriculares" />
+		</f:facet>
+
+		<h:dataTable style="width:1070px;"
+			value="#{horarioTurma.professorTurmas}" var="professorTurma"
+			rowClasses="linha2, linha1" styleClass="tabela2"
+			columnClasses="colunaAlocarProfessor1, colunaAlocarProfessor2,colunaAlocarProfessor3,colunaAlocarProfessor4,colunaAlocarProfessor5,colunaAlocarProfessor6,colunaAlocarProfessor7 ">
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Disciplina" style="margin:10px;" />
+				</f:facet>
+				<h:outputText
+					value="#{professorTurma.disciplina.id} - #{professorTurma.disciplina.descricao}"
+					style="margin:10px;">
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Professor" />
+				</f:facet>
+				<h:outputText value="#{professorTurma.professor.nome}"
+					title="PROFESSOR #{professorTurma.professor.nome}, FORMADO EM #{professorTurma.disciplina.descricao}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="CH" style="margin:10px;" />
+				</f:facet>
+				<h:outputText value="#{professorTurma.credito}"
+					style="margin:10px;"
+					rendered="#{professorTurma.credito !=null}">
+				</h:outputText>
+				<h:outputText value=" - " style="margin:10px;"
+					rendered="#{professorTurma.credito ==null}">
+				</h:outputText>
+			</h:column>
+
+			<h:column width="90" style="text-align:center">
+				<f:facet name="header">
+					<h:outputText value="Inicio da Alocação" />
+
+				</f:facet>
+				<h:outputText value="#{professorTurma.inicioAlocacao}"
+					style="margin:10px;">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" />
+				</h:outputText>
+			</h:column>
+			<h:column style="text-align:center;width: 130px;">
+				<f:facet name="header">
+					<h:outputText value="Fim da Alocação" style="  width: 130px;" />
+				</f:facet>
+				<h:outputText value="#{professorTurma.fimAlocacao}"
+					style="margin:10px;">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" />
+				</h:outputText>
+			</h:column>
+
+			<h:column style="text-align:center">
+				<h:commandLink style=" height:50px;"
+					action="#{horarioTurma.selecionarDisciplinaParaAlocarProfessor(professorTurma)}"
+					title="Incluir Horário para professor (na turma)"
+					rendered="#{professorTurma.professor.nome==null}">
+					<h:graphicImage url="#{buscarFotoBean.retornarImagesNext}" />
+				</h:commandLink>
+				<h:commandLink style=" height:50px;"
+					title="Alterar horário para professor (na turma)"
+					rendered="#{professorTurma.professor.nome!=null}">
+					<h:graphicImage url="#{buscarFotoBean.retornarImageseditarProfe}"
+						width="24" height="24" />
+				</h:commandLink>
+			</h:column>
+
+		</h:dataTable>
+		<f:facet name="footer">
+			<h:panelGrid columns="2" style="margin-left: 394px;margin-top: 12px;">
+				<h:commandButton value="Cadastrar Outra Turma" styleClass="btn btn-danger active"
+				 action="/academico/director/turma/cadastro?faces-redirect=true" />
+				<h:commandButton value="Voltar para Alocação de Horário"
+					style="margin-left: 10px;" styleClass="btn btn-primary active" 
+					action="#{horarioTurma.voltarIncluirProfessor(horarioTurma.turmaSelecionadaIncluirProfessor)}" />
+			</h:panelGrid>
+		</f:facet>
+	</h:panelGrid>
+</h:panelGroup>
+
+<h:panelGroup
+	rendered="#{horarioTurma.professorTurmaSelecionada != null}">
+
+	<h:panelGrid
+		style="border: 1px solid #D3CACA; width:1070px; margin-top: 30px;margin-bottom: 10px;">
+
+		<h:panelGrid columns="2" style="margin-top: 7px; margin-left: 296px;">
+
+			<h:outputLabel value="Escola:" style="float: right;" />
+			<h:outputText
+				value="#{authenticationContext.usuarioEscolaLogada.descricao}"
+				style="text-transform: uppercase; margin-left:10px;" />
+			<h:outputLabel value="Turma:" style="float: right;" />
+			<h:outputText
+				value="#{horarioTurma.turmaSelecionadaIncluirProfessor.classe.sigla}ª #{horarioTurma.turmaSelecionadaIncluirProfessor.descricao} / #{horarioTurma.turmaSelecionadaIncluirProfessor.turno.descricao}"
+				style="margin-left:10px;" />
+			<h:outputLabel value="Disciplina:" style="float: right;" />
+			<h:outputText
+				value="#{horarioTurma.professorTurmaSelecionada.disciplinaClasse.disciplina.descricao}"
+				style="text-transform: uppercase; margin-left:10px;" />
+		</h:panelGrid>
+	</h:panelGrid>
+	<h:panelGroup
+		rendered="#{horarioTurma.professorSelecionadoBooleano == false}">
+
+		<h:panelGrid
+			style="width: 900px; margin: auto; visibility: visible; float: inherit;"
+			styleClass="tabala_cadastro" headerClass="cabecalhoTabela">
+			<p:messages closable="true" />
+			<f:facet name="header">
+				<h:outputText value="Alocar Professor em Turma" />
+			</f:facet>
+
+
+			<h:panelGrid columns="2"
+				style="margin-left: 120px; margin-top: 10px;">
+
+
+				<h:outputLabel value="Carga Horária:" style="float:right" />
+				<h:outputText
+					value=" #{horarioTurma.professorTurmaSelecionada.disciplinaClasse.credito} tempos/Semana"
+					style="margin-left: 10px;" />
+				<h:outputText value="Matricula:" style="float:right" />
+				<h:inputText value="#{horarioTurma.professorSelecionado.numero}"
+					style="margin-left: 10px; width:26%" styleClass="form-control"
+					readonly="true" />
+				<h:outputText value="Professor:" style="float:right" />
+				<h:panelGroup>
+					<DIV class="form-inline">
+						<h:inputText
+							value="#{horarioTurma.professorSelecionado.funcionario.nome}"
+							style="margin-left: 10px; " size="60" required="true"
+							styleClass="form-control"
+							requiredMessage="O campo nome do professor é obrigatório" />
+						<h:commandLink style="margin-left:3px;"
+							title="Procurar o professor!" immediate="true"
+							action="#{horarioTurma.buscarProfessorParaIncluir}">
+							<h:graphicImage url="#{buscarFotoBean.retornarImagesBuscarDados}"
+								width="22" height="22" />
+						</h:commandLink>
+					</DIV>
+				</h:panelGroup>
+
+				<h:outputText value="Início da Alocação:" style="float:right" />
+				<h:panelGroup>
+					<DIV class="form-inline">
+						<h:inputText
+							value="#{horarioTurma.professorTurmaSelecionada.inicioAlocacao}"
+							style="margin-left: 10px; margin-top: 5px;"
+							styleClass="datepicker2 form-control" size="10">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" />
+						</h:inputText>
+					</DIV>
+				</h:panelGroup>
+				<h:outputText value="Fim da Alocação:" style="float:right" />
+				<h:panelGroup>
+					<DIV class="form-inline">
+						<h:inputText
+							value="#{horarioTurma.professorTurmaSelecionada.fimAlocacao}"
+							style="margin-left: 10px;margin-top: 5px;" size="10"
+							styleClass="datepicker2 form-control">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare"/>
+						</h:inputText>
+					</DIV>
+				</h:panelGroup>
+				<h:outputText value="Horário da Turma:" />
+				<h:panelGroup>
+					<h:panelGrid columns="6" style="  margin-top: 20px;">
+						<h:panelGrid>
+							<f:facet name="header">
+								<h:outputText value="Horários" style="margin-left:42px;" />
+							</f:facet>
+							<h:dataTable value="#{horarioTurma.horariosProfessor}"
+								var="horario" style="margin-left: 10px;" columnClasses="coluna0">
+								<h:column>
+									<h:outputText value="#{horario.horarioAula.ordem}º."
+										style="  margin: 3px 3px 3px 4px;">
+									</h:outputText>
+									<h:outputText value="#{horario.horarioAula.aulaInicial}"
+										style="  margin: 3px 3px 3px 4px;">
+										<f:convertDateTime pattern="HH:mm" timeZone="Africa/Harare" />
+									</h:outputText>
+									<h:outputText value=" - " style="  margin: 3px 3px 3px 4px;" />
+									<h:outputText value="#{horario.horarioAula.aulaFinal}"
+										style="  margin: 3px 3px 3px 4px;">
+										<f:convertDateTime pattern="HH:mm" timeZone="Africa/Harare" />
+									</h:outputText>
+								</h:column>
+							</h:dataTable>
+						</h:panelGrid>
+						<h:panelGrid style="  margin: 3px 3px 3px 30px;">
+							<f:facet name="header">Seg</f:facet>
+							<h:selectManyCheckbox
+								value="#{horarioTurma.professorAlocadoSegunda}"
+								layout="pageDirection" style="margin-left: 5px;"
+								converter="horarioProfessorConverter">
+								<f:selectItems value="#{horarioTurma.horariosProfessor}"
+									var="horario1" itemValue="#{horario1}" itemLabel=" " />
+							</h:selectManyCheckbox>
+						</h:panelGrid>
+						<h:panelGrid style="  margin: 3px 3px 3px 4px;">
+							<f:facet name="header">Ter</f:facet>
+							<h:selectManyCheckbox value="#{horarioTurma.professorAlocadoTerca}" layout="pageDirection"
+								style="margin-left: 5px;" converter="horarioProfessorConverter">
+								<f:selectItems value="#{horarioTurma.horariosProfessor}"
+									var="horario1" itemValue="#{horario1}" itemLabel=" " />
+							</h:selectManyCheckbox>
+						</h:panelGrid>
+						<h:panelGrid style="  margin: 3px 3px 3px 4px;">
+							<f:facet name="header">Qua</f:facet>
+							<h:selectManyCheckbox value="#{horarioTurma.professorAlocadoQuarta}" layout="pageDirection"
+								style="margin-left: 5px;" converter="horarioProfessorConverter">
+								<f:selectItems value="#{horarioTurma.horariosProfessor}"
+									var="horario1" itemValue="#{horario1}" itemLabel=" " />
+							</h:selectManyCheckbox>
+						</h:panelGrid>
+						<h:panelGrid style="  margin: 3px 3px 3px 4px;">
+							<f:facet name="header">Qui</f:facet>
+							<h:selectManyCheckbox value="#{horarioTurma.professorAlocadoQuinta}" layout="pageDirection"
+								style="margin-left: 5px;" converter="horarioProfessorConverter" >
+								<f:selectItems value="#{horarioTurma.horariosProfessor}" var="horario1"
+									itemValue="#{horario1}" itemLabel=" " />
+							</h:selectManyCheckbox>
+						</h:panelGrid>
+						<h:panelGrid style="  margin: 3px 3px 3px 4px;">
+							<f:facet name="header">Sex</f:facet>
+							<h:selectManyCheckbox value="#{horarioTurma.professorAlocadoSexta}" layout="pageDirection"
+								style="margin-left: 5px;" converter="horarioProfessorConverter" >
+								<f:selectItems value="#{horarioTurma.horariosProfessor}" var="horario1"
+									itemValue="#{horario1}" itemLabel=" " />
+							</h:selectManyCheckbox>
+						</h:panelGrid>
+
+					</h:panelGrid>
+					<h:commandButton value="Cadastrar Alocação"
+						action="#{horarioTurma.salvarProfessorTurma}" />
+					<h:commandButton value="Voltar" immediate="true"
+						style="margin-left:10px;"
+						action="#{horarioTurma.voltarAlocacaoProfessor}" />
+				</h:panelGroup>
+
+			</h:panelGrid>
+		</h:panelGrid>
+	</h:panelGroup>
+
+
+
+	<!-- Pesquisa de professor -->
+	<h:panelGroup
+		rendered="#{horarioTurma.professorSelecionadoBooleano !=false}">
+		<h:panelGrid
+			style="width: 900px; margin: auto; visibility: visible; float: inherit;"
+			styleClass="tabala_cadastro" headerClass="cabecalhoTabela">
+			<f:facet name="header">
+				<h:outputText value="Consultar Professor" style="float: left;" />
+			</f:facet>
+			<p:messages closable="true" />
+
+			<h:panelGrid columns="2" style="margin-left:14%;">
+				<h:outputText value="Nome do Professor: " />
+				<h:inputText value="#{horarioTurma.nomeProfessor}" size="50"
+					styleClass="form-control" style="margin-left:20px;" required="true"
+					requiredMessage="O campo nome é obrigatório" />
+
+				<f:facet name="footer">
+					<h:panelGrid columns="2" style="margin-left:29%;  margin-top: 2%;">
+						<h:commandButton value="Buscar" style="margin-left:10px;"
+							action="#{horarioTurma.buscarProfessorDaEscola}" />
+						<h:commandButton value="Voltar" immediate="true"
+							style="margin-left:10px;"
+							action="#{horarioTurma.voltarProfessorParaIncluir}" />
+					</h:panelGrid>
+				</f:facet>
+			</h:panelGrid>
+			<f:facet name="footer">
+				<h:dataTable value="#{horarioTurma.professoresEscola}" var="professoresEscola"
+					border="0" cellpadding="1" cellspacing="1"
+					style=" margin: auto; margin-top: 1%;  margin-bottom: 1%; max-width: 80%;"
+					styleClass="table table-bordered table-hover "
+					headerClass="tabela-cabecalho-alocar-professor">
+					<h:column>
+
+						<f:facet name="header">
+							<h:outputText value="#" />
+						</f:facet>
+						<h:outputText value="#{professoresEscola.funcionario.id}" />
+					</h:column>
+					<h:column>
+
+						<f:facet name="header">
+							<h:outputText value="Matrícula" />
+						</f:facet>
+						<h:commandLink value="#{professoresEscola.funcionario.numero}"
+							action="#{horarioTurma.buscarProfessorDaEscolaSelecionado(professor)}"
+							title="Selecionar este professor" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Nome Completo" />
+						</f:facet>
+						<h:outputText value="#{professoresEscola.funcionario.nome}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Formação" />
+						</f:facet>
+						<h:outputText value="#{professoresEscola.funcionario.formacao}"
+							rendered="#{professoresEscola.funcionario.formacao !=null}" />
+						<h:outputText value="NÃO INFORMADO"
+							style="  color: rgb(128, 176, 12);"
+							rendered="#{professoresEscola.funcionario.formacao==null}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Sexo" />
+						</f:facet>
+						<h:outputText
+							value="#{professoresEscola.funcionario.sexo ? 'Masculino':'Femenino'}" />
+					</h:column>
+				</h:dataTable>
+			</f:facet>
+		</h:panelGrid>
+	</h:panelGroup>
+
+
+
+</h:panelGroup>
+</html>

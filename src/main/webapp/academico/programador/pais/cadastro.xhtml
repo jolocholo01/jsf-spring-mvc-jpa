@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<ui:composition template="/academico/principal/templete.xhtml">
+	<ui:define name="titulo">
+		<h:outputText value="Pesquisa de País"
+			rendered="#{paisBean.cadastroPaisBoolean ==false}" />
+
+		<h:panelGroup rendered="#{paisBean.cadastroPaisBoolean ==true}">
+			<h:outputText value="Novo País"
+				rendered="#{paisBean.novoPaisBoolean ==true}" />
+			<h:outputText value="Atualização de País"
+				rendered="#{paisBean.editarPaisBoolean ==true}" />
+
+
+		</h:panelGroup>
+	</ui:define>
+	<ui:define name="menu">
+		<ui:include src="/academico/programador/template/menu.xhtml" />
+	</ui:define>
+	<ui:define name="dados_pessoas">
+		<ui:include src="/academico/programador/template/dados_pessoas.xhtml" />
+	</ui:define>
+
+
+	<ui:define name="ambiente_comum">
+		<h:form id="form" styleClass="form-horizontal">
+			<!--Panel-->
+			<div class="card">
+				<h4 class="card-header primary-color white-text ">
+
+					<h:outputText value="Pesquisa de País" style="font-weight: 700;"
+						rendered="#{paisBean.cadastroPaisBoolean ==false}" />
+					<h:outputText value="Novo País" style="font-weight: 700;"
+						rendered="#{paisBean.cadastroPaisBoolean !=false}" />
+
+					<h:panelGroup styleClass="form-span">
+						<h:commandLink value="Novo País" actionListener="#{paisBean.novo}"
+							immediate="true"
+							rendered="#{paisBean.cadastroPaisBoolean==false}" />
+						<h:commandLink value="Voltar para Pesquisa"
+							actionListener="#{paisBean.voltar}" immediate="true"
+							rendered="#{paisBean.cadastroPaisBoolean !=false}" />
+					</h:panelGroup>
+				</h4>
+				<div class="card-body">
+					<p:messages id="mensagem" closable="true" />
+					<!-- Pesquisa de funcionario -->
+					<h:panelGroup rendered="#{paisBean.cadastroPaisBoolean ==false}">
+
+
+
+						<div class="form-group">
+							<div class="col-sm-6" style="padding-left: 0;">
+								<div class="input-group">
+
+
+									<h:inputText styleClass="form-control"
+										value="#{paisBean.pesquisa}" required="true"
+										requiredMessage="O campo procurar é Obrigatório">
+										<f:passThroughAttribute name="placeholder"
+											value="Qual país que você está procurar?" />
+										<f:passThroughAttribute name="autofocus" value="true" />
+									</h:inputText>
+									<span class="input-group-btn"> <h:commandButton
+											styleClass="btn btn-primary" value="Buscar!"
+											actionListener="#{paisBean.buscar}" />
+									</span>
+								</div>
+
+							</div>
+						</div>
+
+						<h:dataTable value="#{paisBean.paises}" var="pais"
+							id="tabela-escola"
+							styleClass="table table-bordered tabelaProfessor  tabela-funcionario example"
+							headerClass="cab-tabela" footerClass="fo-tabela"
+							style="margin-top: 20px;" rowClasses="linha2, linha1">
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#" />
+								</f:facet>
+								<h:outputText value=" #{pais.id}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="País" />
+								</f:facet>
+								<h:outputText value="#{pais.nome}" style=" margin-left:4px;" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Continente" />
+								</f:facet>
+								<h:outputText value="#{pais.continente}"
+									style=" margin-left:4px;" />
+							</h:column>
+
+							<h:column headerClass="center">
+								<f:facet name="header">
+									<h:outputText value="Data de cadastro" />
+								</f:facet>
+								<h:outputText value="#{pais.dataCadastro}"
+									style="float: left;padding-left: 7px;">
+									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" />
+								</h:outputText>
+							</h:column>
+							<h:column>
+								<div class="form-group row" style="margin-bottom: 0;">
+									<h:commandLink title="Editar dados dessae País?"
+										immediate="true" action="#{paisBean.editar(pais)}"
+										styleClass="tooltip-left"
+										style="margin-left:10px; color: black;">
+										<span class="glyphicon glyphicon-pencil"></span>
+									</h:commandLink>
+
+
+									<h:commandLink immediate="true" title="Excluir esse País?"
+										styleClass="tooltip-left" id="id-excluir"
+										style="color: black; margin-left:10px;">
+										<span class="glyphicon glyphicon-remove"></span>
+										<p:ajax event="click"
+											listener="#{paisBean.prepararParExcluir(pais)}"
+											update="form:id-panelGroup-confirma-modal" />
+										<f:passThroughAttribute name="data-toggle" value="modal" />
+										<f:passThroughAttribute name="data-target" value="#myModal" />
+									</h:commandLink>
+								</div>
+							</h:column>
+							<f:facet name="footer">
+								<h:outputText
+									value=" #{paisBean.qtdPaisesEncontrados} #{paisBean.qtdPaisesEncontrados==1?'país': paisBean.qtdPaisesEncontrados==0?'país':'paises'} encontrado(s)"></h:outputText>
+							</f:facet>
+						</h:dataTable>
+					</h:panelGroup>
+
+					<!-- Cadastro e edicao -->
+					<h:panelGroup rendered="#{paisBean.cadastroPaisBoolean==true}">
+
+
+						<div class="form-group row">
+							<h:outputLabel value="Continente :"
+								styleClass="col-sm-3 control-label texto-label" />
+							<div class="col-sm-8">
+
+								<h:selectOneMenu
+									requiredMessage="O campo continente é obrigatório"
+									value="#{paisBean.pais.continente}" styleClass="form-control">
+
+									<f:passThroughAttribute name="autofocus" value="true" />
+									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+
+									<f:selectItems value="#{paisBean.continentes}" var="continente"
+										itemLabel="#{continente}" itemValue="#{continente}" />
+
+								</h:selectOneMenu>
+							</div>
+						</div>
+
+
+						<div class="form-group row">
+							<h:outputLabel value="País :"
+								styleClass="col-sm-3 control-label texto-label" />
+							<div class="col-sm-6">
+								<h:inputText value="#{paisBean.pais.nome}"
+									styleClass="form-control" required="true"
+									requiredMessage="O campo país é obrigatório">
+									<f:passThroughAttribute name="placeholder"
+										value="Preenche com o nome do país" />
+								</h:inputText>
+
+
+							</div>
+						</div>
+
+						<div class="form-group row">
+
+							<h:outputLabel value="Data de Cadastro :"
+								styleClass="col-sm-3 control-label texto-label" />
+							<div class="col-sm-3">
+								<h:inputText styleClass="form-control"
+									value="#{paisBean.pais.dataCadastro}">
+									<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"/>
+									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+									<f:passThroughAttribute name="data-provide" value="datepicker" />
+									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
+									<f:passThroughAttribute name="data-date-autoclose" value="true" />
+									<f:passThroughAttribute name="data-date-today-highlight"
+										value="true" />
+									<f:passThroughAttribute name="data-date-orientation"
+										value="bottom" />
+								</h:inputText>
+
+							</div>
+
+						</div>
+
+						<div class="form-group row">
+							<h:outputLabel styleClass="col-sm-3 col-form-label"
+								value="Observação : " />
+							<div class="col-sm-8">
+								<h:inputTextarea cols="3" value="#{paisBean.pais.observacao}"
+									styleClass="form-control" rows="4"
+									onkeydown="return quatidadeCarrateres(this, 255, event);">
+									<f:ajax event="keyup" render="contador"
+										listener="#{paisBean.contarQuantidadeCarateres}" />
+								</h:inputTextarea>
+								<h:panelGroup id="contador">
+									<h:outputText style="margin-left: 10px; "
+										value="Máximo 255 caracteres, digitado #{paisBean.quantidadeCaracteres} caracteres." />
+								</h:panelGroup>
+							</div>
+						</div>
+
+
+						<div class="form-inline">
+
+							<h:commandButton value="Cadastrar" action="#{paisBean.salvar}"
+								style="margin-left: 11%;margin-top:2%;"
+								styleClass="btn btn-primary" />
+
+
+							<h:commandButton value="Voltar" immediate="true"
+								action="#{paisBean.voltar}" styleClass="btn btn-success"
+								style="margin-left: 1%; margin-top:2%;" />
+						</div>
+
+
+
+					</h:panelGroup>
+				</div>
+			</div>
+			<!-- Modal -->
+
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" data-backdrop="static"
+				style="padding-top: 210px;">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">
+								<h:outputLabel value="Você Tem certeza?" />
+
+							</h4>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<h:panelGroup id="id-panelGroup-confirma-modal">
+								<h:outputText
+									value="Tem certeza que deseja excluir o país de&nbsp;" />
+								<h:outputLabel value="#{paisBean.paisSelecionado.nome}"
+									style="font-weight: 600;" />
+								<h:outputText value="&nbsp;do continente&nbsp;  " />
+								<h:outputLabel value="#{paisBean.paisSelecionado.continente}"
+									style="font-weight: 600;" />
+								<h:outputText value="?" />
+							</h:panelGroup>
+						</div>
+						<div class="modal-footer">
+							<h:commandButton type="button" title="Cancelar"
+								class="btn btn-success" value="Cancelar">
+								<f:passThroughAttribute name="data-dismiss" value="modal" />
+							</h:commandButton>
+							
+							<h:commandButton title="Excluir" styleClass="btn btn-primary"
+								
+								value="Excluir" action="#{paisBean.excluir}">
+							</h:commandButton>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

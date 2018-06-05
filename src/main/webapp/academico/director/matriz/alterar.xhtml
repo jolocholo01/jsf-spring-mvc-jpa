@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/academico/principal/index.xhtml">
+	<ui:define name="titulo">Alteração de Matriz Curricular</ui:define>
+	<ui:define name="cabacalho">
+		<style>
+.corpo {
+	min-height: 550px;
+}
+</style>
+
+	</ui:define>
+	<ui:define name="titulo_do_corpo">
+		<ui:include src="/academico/director/template/titulo_do_corpo.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="nome_usuario">
+		<ui:include src="/academico/director/template/nome_usuario.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="ambiente_comum">
+		<h:form id="form_menu">
+			<div class="menu menubar">
+				<ul class="btn1 btn-green">
+					<li style="width: 65px;"><h:outputLink
+							value="#{request.contextPath}/director/index.jsf">
+							 Principal
+						</h:outputLink></li>
+					<h:outputText value=" > " style="font-size:21px;" />
+					<li style="width: 244px;"><h:outputLink
+							value="#{request.contextPath}/director/gerenciar-matriz.jsf"
+							> Alteração de Matriz Curricular </h:outputLink> </li>
+				</ul>
+			</div>
+		</h:form>
+		<ui:include src="/academico/escola/matriz/alterar.xhtml"></ui:include>
+	</ui:define>
+</ui:composition>
+</html>

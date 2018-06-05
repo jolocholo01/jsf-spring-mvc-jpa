@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2018-01-26T07:10:33 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="aluno" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b87a085-095b-4f9d-a71c-09f2a9e9c1e0">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="337"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="657"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="796"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="190"/>
+	<parameter name="idMatricula" class="java.lang.Integer"/>
+	<parameter name="password" class="java.lang.String"/>
+	<parameter name="turma" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT usuario.datanascimento,
+	usuario.login,
+	usuario.mae,
+	usuario.nome,
+	classe.descricao AS classe,
+	distrito.provincia AS provinciaEscola,
+	distrito.nome AS distritoEscola,
+	matricula.horamatricula,
+	matricula.datamatricula,
+	matricula.ano,
+	matricula.curso,
+	usuario.pai,
+	aluno.bairro,
+	matricula.numerorecibo,
+	matricula.tipoarea,
+	usuario.senhaalterada,
+	usuario.email,
+	transferencia.finalizada,
+	transferencia.motivo,
+	escolaOrigem.descricao AS escolaOrigem,
+	escolaDestino.descricao AS escolaDestino,
+	transferencia.situacao
+FROM matricula
+	INNER JOIN aluno ON 
+	 matricula.id_aluno = aluno.id 
+	INNER JOIN usuario ON 
+	 aluno.id = usuario.id 
+	INNER JOIN classe ON 
+	 matricula.idclasse = classe.id 
+	INNER JOIN transferencia ON 
+	 matricula.id = transferencia.id_matricula 
+	INNER JOIN escola AS escolaOrigem ON 
+	 transferencia.id_escola_origem = escolaOrigem.id 
+	INNER JOIN escola AS escolaDestino ON 
+	 transferencia.id_escola_destino = escolaDestino.id 
+	INNER JOIN distrital ON 
+	 escolaOrigem.id_direcao_distrital = distrital.id 
+	INNER JOIN distrito ON 
+	 distrital.distrito_id = distrito.id 
+WHERE 
+	 matricula.id = 43]]>
+	</queryString>
+	<field name="datanascimento" class="java.sql.Date"/>
+	<field name="login" class="java.lang.String"/>
+	<field name="mae" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="classe" class="java.lang.String"/>
+	<field name="provinciaescola" class="java.lang.String"/>
+	<field name="distritoescola" class="java.lang.String"/>
+	<field name="horamatricula" class="java.sql.Time"/>
+	<field name="datamatricula" class="java.sql.Timestamp"/>
+	<field name="ano" class="java.lang.Integer"/>
+	<field name="curso" class="java.lang.String"/>
+	<field name="pai" class="java.lang.String"/>
+	<field name="bairro" class="java.lang.String"/>
+	<field name="numerorecibo" class="java.lang.String"/>
+	<field name="tipoarea" class="java.lang.String"/>
+	<field name="senhaalterada" class="java.lang.Boolean"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="finalizada" class="java.lang.Boolean"/>
+	<field name="motivo" class="java.lang.String"/>
+	<field name="escolaorigem" class="java.lang.String"/>
+	<field name="escoladestino" class="java.lang.String"/>
+	<field name="situacao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="101" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement x="0" y="2" width="555" height="25" uuid="8928c791-766d-4d70-a69f-d8ad18f0536f"/>
+				<imageExpression><![CDATA["emblema.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="29" width="555" height="12" uuid="3ee7d9eb-6d51-43f0-b50c-e19ee072fd9b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["REPÚBLICA DE MOÇAMBIQUE"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="55" width="555" height="12" uuid="6a0c7943-4c88-484c-86df-680cd0fc4c82">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["GOVERNO DO DISTRITO DE "+$F{distritoescola}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="69" width="555" height="17" uuid="50a4a99e-da4f-4412-aba8-a989a67998e0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="0">
+					<pen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TRANSFERÊNCIA DE ALUNO ENTRES AS ESCOLAS DA MESMA REDE DE ENSINO"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="42" width="555" height="12" uuid="ba06552b-b3cf-4bf8-ad2f-e2e4015bdea6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PROVÍNCIA DE "+$F{provinciaescola}.replace("MANICA", "Manica" ).replace("TETE", "Tete" ).replace("SOFALA", "Sofala" ).replace("GAZA", "Gaza" ).replace("INHAMBANE", "Inhambane" ).replace("ZAMBEZIA", "Zambezia").replace("NAMPULA", "Nampula").replace("NIASSA", "Niassa").replace("CABO_DELEGADO", "Cabo Delegado").replace( "MAPUTO", "Maputo" ).toUpperCase()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="50" splitType="Stretch">
+			<textField pattern="">
+				<reportElement x="520" y="34" width="35" height="15" uuid="0ced6c1c-93f7-41dd-ae0b-3179389e6709">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="1" leftPadding="1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Currie new" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ano}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="422" y="10" width="45" height="15" uuid="f62c3d38-2379-4eb5-b6e2-fb5c658d0663">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Currie new" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{horamatricula}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="455" y="10" width="100" height="15" uuid="4bff696d-72ff-4117-8365-8de2c4fbab03"/>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Currie new" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datamatricula}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="49" width="555" height="1" uuid="561a6322-5e60-4ef2-bdd7-daf98b9594ef"/>
+				<graphicElement>
+					<pen lineWidth="0.3"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="3" y="10" width="67" height="15" uuid="c4125020-2c1a-403a-b452-6d5ab5021326">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<text><![CDATA[Recib. nº:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="225" y="11" width="52" height="15" uuid="8a1dadac-106f-4f21-b80e-1ef3c7aaaac4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<text><![CDATA[Curso:]]></text>
+			</staticText>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="269" y="11" width="81" height="15" uuid="c8dc4cda-154c-4b43-a820-b216c0bb558e"/>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Currie new" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="34" width="159" height="13" uuid="edbf0fc3-ed8d-4c9a-9c9c-819e2d9e14ea"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dados de Aluno:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="434" y="34" width="86" height="15" uuid="b769f146-5336-46bc-b493-f4602423cafc">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<text><![CDATA[Ano Lectivo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="352" y="10" width="73" height="15" uuid="84cfc4b8-8b4a-4baa-ad67-cc79199ae801">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<text><![CDATA[Emitido em:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="10" width="146" height="15" uuid="be92b52f-31a4-4913-be0d-f064558bccd7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Courier New" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numerorecibo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="151" splitType="Stretch">
+			<staticText>
+				<reportElement x="274" y="5" width="24" height="15" uuid="e8cb83eb-dcd4-4ccf-a8da-3ce151961bc8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="0" bottomPadding="1"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Currie new" size="10"/>
+				</textElement>
+				<text><![CDATA[Nº:]]></text>
+			</staticText>
+			<textField pattern="yyyy">
+				<reportElement x="294" y="5" width="88" height="15" uuid="a7260097-8a60-43f6-b199-fd3201a1d696">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Currie new" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{login}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy">
+				<reportElement x="262" y="23" width="170" height="15" uuid="cd337a2d-603b-4002-bc67-331e99911ca5">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5">
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Currie new" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mae}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="42" width="50" height="15" uuid="89147197-6f39-4981-a5be-8d75b1c76973">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Morada:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="66" width="47" height="15" uuid="27aa7a63-2f5d-4adb-a033-9d2cf71d403f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Classe:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="5" width="187" height="15" uuid="2f1b6ff5-8db3-4e62-a099-6055a94bfe2c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="4">
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="5" width="86" height="15" uuid="0790e18c-f2fe-4187-b84b-df6117827470">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nome Completo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="23" width="57" height="15" uuid="16db1e10-7b58-458e-aeef-54d4b6bad4ef">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Filiação:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="53" y="24" width="177" height="14" uuid="809121bd-86be-453d-bf0a-cadcaa48bb98">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="4">
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pai}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="229" y="23" width="37" height="15" uuid="f70b2c44-26f9-4fd8-89af-0f5321e4dcb2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<text><![CDATA[e de:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="48" y="42" width="162" height="15" uuid="1ccc07d0-3377-4c55-b714-5761592e9501">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bairro}==null?"Não definida".toUpperCase():$F{bairro}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="46" y="66" width="77" height="15" uuid="f28b1bcf-637d-4e64-9085-e3dd4e63e49b">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{classe}==null?"Não definida":$F{classe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="205" y="66" width="260" height="15" uuid="32b0c6c5-f7d1-4c70-ae1c-4be4456f5dba">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoarea}==null?"":$F{classe}+$F{tipoarea}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="66" width="80" height="15" uuid="9e009bce-b3e6-4b12-a4c0-2bcd20e51840"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoarea}==null?"":"Área que tem:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="382" y="5" width="39" height="15" uuid="4b73ad56-acde-4256-b29d-2fd063dc0f39">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{senhaalterada}?"":"Senha:"]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy">
+				<reportElement x="420" y="5" width="90" height="15" isRemoveLineWhenBlank="true" uuid="c0785747-9103-40a5-9acc-c5956348cf38">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Currie new" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{senhaalterada}?"":$P{password}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="216" y="43" width="85" height="15" isRemoveLineWhenBlank="true" uuid="f325f70d-d71b-44b9-b949-ce573be8988f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}==null?"":"E-mail:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" mode="Opaque" x="262" y="43" width="234" height="15" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" uuid="2233dc61-8027-42e4-992b-21b7b22f90a0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}.toString().trim().equals("")?"Nenhum e - mail cadastrado":$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="88" width="327" height="15" uuid="66187190-0b26-4200-bd0e-889b224cd42a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["O aluno acima referido, pediu uma transferência da "]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="310" y="88" width="246" height="15" uuid="d242fbcc-2422-4eb6-91ac-f9576de20fcd">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="0">
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{escolaorigem}.replace( "Escola ", "E" ).replace( "Secundária", "S" ).replace( "Secundaria", "S" )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="105" width="44" height="15" uuid="7665f1c1-dfec-4fd6-92a9-88c372fd359a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["para "]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="36" y="105" width="254" height="15" uuid="533fdd5a-0458-4504-b1b3-e94d4e427cc0">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="0">
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{escoladestino}.replace( "Escola ", "E" ).replace( "Secundária", "S" ).replace( "Secundaria", "S" )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="289" y="105" width="191" height="15" uuid="dbfded75-2f53-4dd3-a573-5508c129e623">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[". O estado da transferência "]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="461" y="103" width="95" height="17" uuid="64a6f634-6686-444c-b822-cc5fcf46a29a">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="0">
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{situacao}.replace( "Transferido", "Finalizado" )]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="89" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="59" splitType="Stretch">
+			<staticText>
+				<reportElement x="310" y="44" width="251" height="15" uuid="fe217ad3-428e-4154-a22e-065c629d2bba">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Currie new" size="9"/>
+				</textElement>
+				<text><![CDATA[______/_____/________]]></text>
+			</staticText>
+			<line>
+				<reportElement x="310" y="36" width="246" height="1" uuid="0c92e75f-6eb5-4858-911a-c5cc94202030"/>
+				<graphicElement>
+					<pen lineWidth="0.3"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="310" y="6" width="246" height="20" uuid="43587673-7e30-4d58-8bfe-b5c2af3c6770"/>
+				<box topPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Currie new" size="10"/>
+				</textElement>
+				<text><![CDATA[Auto]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

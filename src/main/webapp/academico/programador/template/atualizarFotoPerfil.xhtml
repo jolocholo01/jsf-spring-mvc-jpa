@@ -1,0 +1,108 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/academico/principal/templete.xhtml">
+	<ui:define name="titulo">
+	Atualizar Meu Perfil 
+			</ui:define>
+
+	<ui:define name="menu">
+		<ui:include src="/academico/programador/template/menu.xhtml" />
+	</ui:define>
+	<ui:define name="dados_pessoas">
+		<ui:include
+			src="/academico/programador/template/dados_pessoas.xhtml" />
+	</ui:define>
+
+	<ui:define name="ambiente_comum">
+		<h:form id="form_ambiente_comum" styleClass="form-atualizar"
+			enctype="multipart/form-data">
+
+			<!--Panel-->
+			<div class="card">
+				<h4 class="card-header primary-color white-text ">
+
+					<h:outputText value="Meu Perfil" style="font-weight: 700;" />
+
+				</h4>
+				<div class="card-body">
+					<p:messages closable="true" />
+
+					<div class="form-group row">
+						<h:outputLabel styleClass="col-sm-2 col-form-label"
+							value="Alterar Foto:" />
+						<div class="col-sm-3">
+							<h:inputFile label="Escolher arquivo" styleClass="profile-img"
+								value="#{buscarFotoBean.fotografia}"
+								style="  margin-left: -30%;">
+							</h:inputFile>
+						</div>
+					</div>
+					<div class="form-group row">
+						<h:outputLabel styleClass="col-sm-4 col-form-label"
+							value=" Ocultar E–mail na
+							Área Pública?" />
+						<div class="col-sm-2">
+							<h:selectOneMenu value="#{buscarFotoBean.usuario.ocultarEmail}"
+								styleClass="form-control ocultar-email"
+								style=" margin-left:-49%">
+								<f:selectItem itemLabel="Não" itemValue="#{false}" />
+								<f:selectItem itemLabel="Sim" itemValue="#{true}" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<h:outputLabel styleClass="col-sm-2 col-form-label"
+							value="Estado Civil : " />
+
+						<div class="col-sm-5">
+							<h:panelGroup id="idEstadoCivil">
+								<h:selectOneMenu style=" margin-left:-11%"
+									value="#{buscarFotoBean.usuario.estadoCivil}"
+									styleClass="form-control">
+									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+									<f:selectItems value="#{buscarFotoBean.estadoCivils}"
+										var="estadoCivil" itemLabel="#{estadoCivil}"
+										itemValue="#{estadoCivil}" />
+								</h:selectOneMenu>
+							</h:panelGroup>
+
+						</div>
+
+					</div>
+
+					<h:panelGroup>
+						<h:outputLabel value="Formação acadêmica/profissional:" />
+
+					</h:panelGroup>
+					<h:inputTextarea value="#{buscarFotoBean.funcionario.formacao}"
+						styleClass="form-control ocultar-email" rows="5"
+						style="max-width: 82%;" />
+
+
+					<div style="margin-top: 1%;margin-left: 23%;">
+						<h:commandButton action="#{buscarFotoBean.atualizar}"
+							value="Atualizar Perfil" styleClass="btn btn-primary" />
+						<h:commandButton immediate="true"
+							action="/academico/programador/index?faces-redirect=true"
+							value="Cancelar" style="margin-left: 1%;"
+							styleClass="btn btn-success" />
+					</div>
+
+				</div>
+			</div>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

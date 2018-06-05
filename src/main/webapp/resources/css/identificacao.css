@@ -1,0 +1,12 @@
+.selecao-tabela td input {
+	margin-right: 4px;
+}
+
+.tabela-identificacao {
+	margin-bottom: 0;
+}
+
+.tabela-identificacao>tfoot>tr>td, .tabela-identificacao>tfoot>tr>th {
+	background: #EFEDED;
+	padding: 5px;
+}

@@ -1,0 +1,26 @@
+.margin-top-15px{
+	margin-top:-15px;
+}
+
+.mensagem-aviso {
+	background: rgba(240, 254, 195, 0.73) none repeat scroll 0% 0%;
+	width: 99%;
+	margin: auto;
+	border: 1px solid #eee;
+	margin-bottom: 15px;
+}
+
+.mensagem-aviso ul {
+	padding-left: 3%;
+	font-family: "Berlin Sans FB";
+	font-size: 16px;
+}
+
+.mensagem-aviso ul .aviso {
+	font-size: 19px;
+	 
+}
+
+.mensagem-aviso ul li {
+	margin-left: 14px;
+}

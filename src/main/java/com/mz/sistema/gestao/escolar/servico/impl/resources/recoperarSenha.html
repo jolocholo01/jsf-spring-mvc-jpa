@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<title>Recuperação de Senha</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="//fonts.googleapis.com/css?family=Raleway:400,300,600" />
+<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css" />
+<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+<link rel="stylesheet" href="../../css/main.css"
+	th:href="@{/css/main.css}" />
+</head>
+<body style="background: rgb(252, 252, 252); padding-top: 20px;">
+	<div
+		style="width: 84%; margin: auto; background: #fff; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+		<div
+			style="background: rgb(2, 2, 8); padding: 10px; color: white; text-align: center; font-weight: 900; font-size: 36px; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+			Sistema de Gestão Escolar</div>
+		<div style="font-size: 15px; text-align: justify; padding: 4%;">
+			<form th:action="@{/enviarTempleteSenha}">
+
+				<p>
+					Caro(a) <b> {usuario.nome} </b>
+				</p>
+
+				Recebeu este email porque pediu para redefinir a sua senha no SIGE.
+				Para proceder com a redefinição da sua senha, clique no link que se
+				segue: <br />
+				<br />
+				<div style="width: 59%; margin: auto;">
+					<a style="color: #00b2b2;"
+						href="{linkEnviado}?key={emailFormatoHash}&token={parametro}">{link}</a>
+				</div>
+				<br /> Este link estará disponível por 24 horas. Assim que terminar
+				o periodo, o link ficará desactivado e terá que fazer um
+				novo pedido de redefinição de senha. 
+				<br /> <br />
+				Se o link acima não funcionar, copie o endereço abaixo e cole na barra de endereços do seu navegador de internet:
+				<br /><br />
+				<div style="margin: auto;">
+					<a style="color: #00b2b2;"
+						href="{linkEnviado}?key={emailFormatoHash}&token={parametro}">{linkEnviado}?key={emailFormatoHash}&token={parametro}</a>
+				</div>
+				
+				
+				<br /> <br /> <b> NOTA
+					IMPORTANTE:</b> <br /> <br /> Tem-se registado muitos casos em que o
+				usuário confunde-se após alterar a sua senha, acabando por tentar
+				introduzir a senha no lugar do usuário.<br /> A opção ALTERAR SENHA
+				abrange somente a sua senha, isto é, a única informação que é
+				alterada é a sua senha. O seu usuário é e irá sempre ser o mesmo,
+				sendo que somente a sua senha é que é diferente. Ao entrar no
+				sistema, use o mesmo usuário que sempre usou e a sua nova senha.
+
+				<p>
+
+					Aviso: <ul style="text-decoration: none;">
+						<li>Este email é enviado de forma automática pelo SIGE.</li> <br />
+						<li>Esta conta de e-mail NÃO É MONITORADA, então, por favor,
+							NÃO RESPONDA a este e-mail.</li>
+					</ul>
+				</p>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

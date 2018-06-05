@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:panelGroup id="form-alterar-vinculo">
+	<div id="usuario_ano">
+		<div class="nome-usuario">
+			<h:outputText value="Nome do Usuário: " style="margin-left: 20px; " />
+			<h:panelGroup>
+				<h:outputText value="#{authenticationContext.usuarioLogado.nome}"
+					style="font-weight: bold;margin-left: 2px; " />
+
+				<h:outputLink styleClass="alterar-vinculo"
+					rendered="#{authenticationContext.quantidadeCategorias!=1}">Alterar vínculo
+				 <p:ajax event="click" listener="#{authenticationContext.alterarVinculo}" update="form1:id-panelGroup-confirma-modal1" />
+					<f:passThroughAttribute name="data-toggle" value="modal" />
+					<f:passThroughAttribute name="data-target" value="#myModal1" />
+
+				</h:outputLink>
+
+			</h:panelGroup>
+			<br /> <br />
+			<h:outputText value="Gênero: " style="margin-left: 20px; " />
+			<h:outputText
+				value="#{authenticationContext.usuarioLogado.sexo?'MASCULINO':'FEMININO'}"
+				style="font-weight: bold;margin-left: 2px;" />
+
+		</div>
+
+		<h:panelGrid styleClass="calendario">
+			<h:outputText value="Calendário Escolar " style="margin-left: 20px; " />
+			<h:outputText value="#{authenticationContext.calendarioEscolar.ano}"
+				style="font-weight: bold; margin-left: 68px; " />
+		</h:panelGrid>
+	</div>
+
+</h:panelGroup>
+</html>

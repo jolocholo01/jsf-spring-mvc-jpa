@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/academico/principal/index.xhtml">
+	<ui:define name="titulo">Matrícula por Aluno</ui:define>
+	<ui:define name="cabacalho">
+		<style>
+.corpo {
+	min-height: 550px;
+}
+</style>
+
+	</ui:define>
+	<ui:define name="titulo_do_corpo">
+		<ui:include src="/academico/adjunto/template/titulo_do_corpo.xhtml" />
+	</ui:define>
+	<ui:define name="nome_usuario">
+		<ui:include src="/academico/adjunto/template/nome_usuario.xhtml" />
+	</ui:define>
+	<ui:define name="ambiente_comum">
+		<h:form id="form_menu">
+			<div class="menu menubar">
+				<ul class="btn1 btn-green">
+					<li style="width: 65px;"><h:outputLink
+							value="#{request.contextPath}/director-adjunto/index.jsf">
+							 Principal
+						</h:outputLink></li>
+					<h:outputText value=" > " style="font-size:21px;" />
+					<li style="width: 227px;"><h:commandLink
+							action="#{matriculaBean.retornarMatriculaPorAluno}">
+							Efetuar a Inscrição de Aluno
+						</h:commandLink></li>
+				</ul>
+			</div>
+		</h:form>
+
+
+		<h:form>
+
+			<h:panelGroup rendered="#{matriculaBean.turmaSelecionada==null}">
+				<h:panelGroup rendered="#{matriculaBean.inscricaoMatricula==false}">
+
+					<p:panel header="Seleção de Turma para Matrícula">
+						<p:messages closable="true" />
+						<h:panelGrid
+							style="visibility:visible;margin:auto; margin-top: 10px;">
+
+
+
+							<h:panelGrid columns="2"
+								style=" margin-left: 19%; margin-top: 2%;">
+
+								<h:outputLabel value="Escola:" styleClass="text-lebal" />
+								<h:outputText
+									value="#{authenticationContext.funcionarioEscolaLogada.escola.descricao}"
+									style="text-transform: uppercase;margin-left: 20px;" />
+
+								<h:outputLabel value="Turno :" style=" margin-top: 5px;"
+									styleClass="text-lebal" />
+
+								<h:selectOneMenu value="#{matriculaBean.turma.turno}"
+									converter="turnoConverter" required="true"
+									styleClass="form-control"
+									requiredMessage="O campo turno é obrigatório"
+									style="width: 180px; text-transform: uppercase;  margin-left: 20px; margin-top: 5px;">
+									<f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+									<f:selectItems
+										value="#{matriculaBean.obterTodosTurnosDaEscola}" var="turno"
+										itemLabel="#{turno.descricao}" itemValue="#{turno}" />
+								</h:selectOneMenu>
+								<h:outputLabel value="Nome do Aluno :" style=" margin-top: 5px;"
+									styleClass="text-lebal" />
+								<h:panelGroup>
+									<DIV class="form-inline">
+										<h:inputText size="27" styleClass="form-control"
+											value="#{matriculaBean.idAluno}"
+											style="margin-left: 20px; padding: 5px;margin-top: 5px;width:230px">
+											<p:ajax event="blur" listener="#{matriculaBean.buscarAlunoPorId}" 
+											update="idNomeAluno idEnacaregadoAluno idDataNascimentoAluno idEnacaregadoAlunoLabel"/>
+										</h:inputText>
+										<h:commandLink title="Selecione o aluno!"
+											action="#{matriculaBean.buscarAlunoParaMatricula}"
+											immediate="true">
+											<h:graphicImage
+												url="#{buscarFotoBean.retornarImagesProcurar}"
+												style="margin-left: 7px; height:19px;" />
+										</h:commandLink>
+										<h:panelGroup id="idNomeAluno">
+											<h:outputText
+												value="#{matriculaBean.matriculaPorAluno.aluno.nome}"
+												style="margin-left: 10px; text-transform: uppercase;" />
+										</h:panelGroup>
+									</DIV>
+								</h:panelGroup>
+								<h:outputLabel value="Data de Nascimento :"
+									styleClass="text-lebal" />
+								<h:panelGroup id="idDataNascimentoAluno">
+									<h:outputText
+										value="#{matriculaBean.matriculaPorAluno.aluno.dataNascimento}"
+										style=" margin-left: 20px; letter-spacing: 0;"
+										rendered="#{matriculaBean.matriculaPorAluno.aluno.dataNascimento !=null}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" />
+									</h:outputText>
+									<h:outputText value=" / /" style=" margin-left: 20px; "
+										rendered="#{matriculaBean.matriculaPorAluno.aluno.dataNascimento ==null}">
+									</h:outputText>
+								</h:panelGroup>
+								<h:panelGroup id="idEnacaregadoAlunoLabel">
+								<h:outputLabel value="Nome do Responsável :"
+									styleClass="text-lebal"
+									rendered="#{matriculaBean.matriculaPorAluno.aluno.nomeEncaregado !=null}" />
+									</h:panelGroup>
+								<h:panelGroup id="idEnacaregadoAluno">
+									<h:outputText
+										value="#{matriculaBean.matriculaPorAluno.aluno.nomeEncaregado}"
+										style=" text-transform: uppercase;  margin-left: 20px;"
+										rendered="#{matriculaBean.matriculaPorAluno.aluno.nomeEncaregado !=null}" />
+								</h:panelGroup>
+								<f:facet name="footer">
+									<h:commandButton value="Consultar" styleClass="btn btn-primary"
+										action="#{matriculaBean.consultarTurma}"
+										style="margin-left: 40%;  margin-top: 3%;" />
+								</f:facet>
+							</h:panelGrid>
+							<f:facet name="footer">
+								<p:dataTable value="#{matriculaBean.turmas}" var="turma"
+									style="margin: 7px;" styleClass="tabela1"
+									emptyMessage="Nenhuma Turma encontrada! ">
+									<p:column style="width:350px;">
+										<f:facet name="header">
+											<h:outputText value="Descricao da Matriz Curricular" />
+										</f:facet>
+										<h:outputText
+											value="#{turma.classe.ciclo} >#{turma.classe.tipoEnsino} > #{turma.classe.descricao}"
+											style="text-transform: uppercase;" />
+									</p:column>
+
+									<p:column style="text-align:center;">
+										<f:facet name="header">
+											<h:outputText value="Turma" />
+										</f:facet>
+										<h:outputText value="#{turma.descricao}"
+											style="text-transform: uppercase;" />
+									</p:column>
+									<p:column style="text-align:center;">
+										<f:facet name="header">
+											<h:outputText value="Turno" />
+										</f:facet>
+										<h:outputText value="#{turma.turno.descricao}"
+											style="text-transform: uppercase;" />
+									</p:column>
+									<p:column style="width: 12%;text-align:center;">
+										<f:facet name="header">
+											<h:outputText value="Sala" />
+										</f:facet>
+										<h:outputText value="#{turma.sala.sala}"
+											style="text-transform: uppercase;"
+											rendered="#{turma.sala.sala !=null}" />
+										<h:outputText value="NÃO DEFINIDO"
+											style="  color: rgb(21, 125, 216);"
+											rendered="#{turma.sala.sala ==null}" />
+									</p:column>
+									<p:column style="width: 8%;text-align:center;">
+										<f:facet name="header">
+											<h:outputText value="Inscritos" />
+										</f:facet>
+										<h:outputText value="#{turma.inscrito}"
+											style="text-transform: uppercase;" />
+									</p:column>
+									<p:column style="width:5%;">
+										<h:commandLink title="Clique aqui para matricular!"
+											action="#{matriculaBean.buscarTurmaSelecionada(turma)}">
+											<h:graphicImage url="#{buscarFotoBean.retornarImagesAluno}" />
+										</h:commandLink>
+									</p:column>
+
+								</p:dataTable>
+
+							</f:facet>
+						</h:panelGrid>
+					</p:panel>
+				</h:panelGroup>
+
+				<!-- Pesquisa de alunos -->
+				<h:panelGroup
+					rendered="#{matriculaBean.inscricaoMatricula != false}">
+
+
+					<p:panel header="Consultar Aluno"
+						style="width: 95%; margin-left: 3%; margin-top: 70px;">
+						<p:messages closable="true" style="margin: auto; width:99%;" />
+
+						<h:panelGrid columns="2"
+							style="margin-left: 8%; margin-top: 10px;	">
+
+							<h:outputLabel value="Nome do Aluno :" styleClass="text-lebal" />
+							<h:inputText styleClass="form-control"
+								value="#{matriculaBean.nomeAluno}"
+								style=" margin-left: 20px; width: 124%;" />
+
+							<f:facet name="footer">
+								<h:panelGrid columns="2"
+									style=" width: 630px; margin-left: 0px;  margin-top: 10px; margin-bottom: 10px;">
+									<h:commandButton value="Consultar"
+										action="#{matriculaBean.buscarAlunoDaConsulta}"
+										styleClass="text-lebal btn btn-primary" />
+									<h:commandButton value="Voltar" style="margin-left: 10px;"
+										action="#{matriculaBean.voltarConsulta}"
+										styleClass="btn btn-success" />
+
+								</h:panelGrid>
+							</f:facet>
+						</h:panelGrid>
+						<f:facet name="footer">
+							<h:dataTable
+								value="#{matriculaBean.procuararEstudantesMatriculadoParaAltearcao}"
+								var="matricula" styleClass="table table-bordered table-hover "
+								style="border: 1px solid #D3CACA; max-width:94%; margin: auto auto 1% auto;"
+								headerClass="ui-state-default">
+
+
+								<h:column style=" text-align: center;">
+									<f:facet name="header">
+										<h:outputText value="#" />
+									</f:facet>
+									<h:commandLink value="#{matricula.aluno.id}"
+										action="#{matriculaBean.buscarAlunoSelecionado(matricula)}"
+										style="color:rgb(38, 26, 233);font-weight: bold;" />
+								</h:column>
+								<h:column style="width: 40%;">
+									<f:facet name="header">
+										<h:outputText value="Nome do Aluno" />
+									</f:facet>
+									<h:outputText value="#{matricula.aluno.nome}"
+										style="text-transform: uppercase;" />
+								</h:column>
+								<h:column width="150" style="text-align:center">
+									<f:facet name="header">
+										<h:outputText value="Data de Nascimento" />
+									</f:facet>
+									<h:outputText value="#{matricula.aluno.dataNascimento}">
+										<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"/>
+									</h:outputText>
+								</h:column>
+								<h:column style="width: 37%;">
+									<f:facet name="header">
+										<h:outputText value="Nome do Responsável" />
+									</f:facet>
+									<h:outputText value="#{matricula.aluno.nomeEncaregado}"
+										style="text-transform: uppercase;">
+									</h:outputText>
+								</h:column>
+							</h:dataTable>
+						</f:facet>
+					</p:panel>
+
+
+				</h:panelGroup>
+			</h:panelGroup>
+
+			<!-- matricula de alunos -->
+			<h:panelGroup rendered="#{matriculaBean.turmaSelecionada !=null}">
+				<p:panel header="Cadastro de Matricula" style="margin-top:20px;">
+					<p:messages closable="true" />
+
+
+					<h:panelGrid columns="2" style="width: 100%;">
+						<h:panelGrid columns="2"
+							style="  margin-left: 10%; margin-top:2%;   width: 82%;">
+
+							<h:outputLabel value="Classe :" styleClass="text-lebal" />
+							<h:outputText
+								value="#{matriculaBean.turmaSelecionada.classe.descricao}"
+								style="text-transform: uppercase;margin-left: 2%;" />
+
+							<h:outputLabel value="Sala :" styleClass="text-lebal" />
+							<h:outputText value="#{matriculaBean.turmaSelecionada.sala.sala}"
+								style="text-transform: uppercase;margin-left: 2%;" />
+
+							<h:outputLabel value="Turma :" styleClass="text-lebal" />
+							<h:outputText
+								value="#{matriculaBean.turmaSelecionada.descricao} / #{matriculaBean.turmaSelecionada.turno.descricao}"
+								style="text-transform: uppercase;margin-left: 2%;" />
+
+							<h:outputLabel value="Aluno :" styleClass="text-lebal" />
+							<h:outputText
+								value="#{matriculaBean.matriculaPorAluno.aluno.nome}"
+								style="text-transform: uppercase;margin-left: 2%;" />
+							<h:outputLabel value="Data de Nascimento :"
+								styleClass="text-lebal" />
+							<h:outputText
+								value="#{matriculaBean.matriculaPorAluno.aluno.dataNascimento}"
+								style="margin-left: 2%;">
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare"/>
+							</h:outputText>
+						</h:panelGrid>
+
+						<f:facet name="footer">
+							<h:panelGrid style="width:100%;">
+								<p:dataTable
+									value="#{matriculaBean.disciplinaDaClassse.disciplinaClasses}"
+									var="disciplinaDaClassse"
+									style="margin:auto;margin-top: 20px; width: 400px;"
+									styleClass="tabela1" disabledTextSelection="true"
+									rowKey="#{disciplinaDaClassse.disciplina.id}"
+									selection="#{matriculaBean.disciplinaSelecionadas}"
+									emptyMessage="Nenhuma disciplina cadastrada">
+
+									<p:column style="width: 100px;">
+										<f:facet name="header">
+											<h:outputText value="Codigo" />
+										</f:facet>
+										<h:outputText value="#{disciplinaDaClassse.disciplina.id}"
+											style="text-transform: uppercase;" />
+									</p:column>
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Disciplina" />
+										</f:facet>
+										<h:outputText
+											value="#{disciplinaDaClassse.disciplina.descricao}">
+										</h:outputText>
+									</p:column>
+									<p:column selectionMode="multiple"
+										rendered="#{matriculaBean.turmaSelecionada.classe.descricao =='10ª CLASSE' or matriculaBean.turmaSelecionada.classe.descricao =='11ª CLASSE' or matriculaBean.turmaSelecionada.classe.descricao =='12ª CLASSE'}"
+										style="text-align:center; width:40px;">
+									</p:column>
+
+								</p:dataTable>
+							</h:panelGrid>
+						</f:facet>
+					</h:panelGrid>
+					<h:panelGrid columns="2" styleClass="table-salvar-aluno-turna">
+						<h:commandButton value="Voltar" styleClass="btn btn-success"
+							action="#{matriculaBean.voltarMatricula}" />
+						<h:commandButton value="Confirmar" styleClass="btn btn-primary"
+							action="#{matriculaBean.salvarAlunoTurma}"
+							style="  margin-left: 13%;" />
+
+					</h:panelGrid>
+				</p:panel>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/academico/principal/templete.xhtml">
+	<ui:define name="titulo">
+		<h:panelGroup
+			rendered="#{funcionarioBean.funcionarioSelecionado==null}">
+
+			<h:outputText value="Pesquisa de Funcionário"
+				rendered="#{funcionarioBean.estadoCadastro==false}" />
+			<h:outputText value="Novo Funcionário"
+				rendered="#{funcionarioBean.estadoCadastro !=false}" />
+		</h:panelGroup>
+		<h:outputText value="Alocar de Funcionário na Escola"
+			rendered="#{funcionarioBean.funcionarioSelecionado !=null}" />
+
+	</ui:define>
+
+	<ui:define name="menu">
+		<ui:include src="/academico/director-ditrital/template/menu.xhtml" />
+	</ui:define>
+	<ui:define name="dados_pessoas">
+		<ui:include
+			src="/academico/director-ditrital/template/dados_pessoas.xhtml" />
+	</ui:define>
+	<ui:define name="ambiente_comum">
+
+
+		<h:form id="formulario" styleClass="form-horizontal">
+			<h:panelGroup
+				rendered="#{funcionarioBean.funcionarioSelecionado==null}">
+
+				<!--Panel-->
+				<div class="card">
+					<h4 class=" peg-titulo card-header primary-color white-text ">
+
+						<h:outputText value="Pesquisa de Funcionário"
+							style="font-weight: 700;"
+							rendered="#{funcionarioBean.estadoCadastro==false}" />
+						<h:outputText value="Novo Funcionário" style="font-weight: 700;"
+							rendered="#{funcionarioBean.estadoCadastro !=false}" />
+
+						<h:panelGroup styleClass="form-span">
+							<h:commandLink value="Novo Funcionário"
+								actionListener="#{funcionarioBean.novoFuncionario}"
+								immediate="true"
+								rendered="#{funcionarioBean.estadoCadastro==false}" />
+							<h:commandLink value="Voltar para Pesquisa"
+								actionListener="#{funcionarioBean.voltarPesquisa}"
+								immediate="true"
+								rendered="#{funcionarioBean.estadoCadastro !=false}" />
+						</h:panelGroup>
+					</h4>
+					<div class="card-body">
+						<p:messages id="mensagem" closable="true" />
+						<!-- Pesquisa de funcionario -->
+						<h:panelGroup rendered="#{funcionarioBean.estadoCadastro ==false}">
+
+
+
+							<div class="form-group">
+								<div class="col-sm-6" style="padding-left: 0;">
+									<div class="input-group">
+										<h:inputText styleClass="form-control"
+											value="#{funcionarioBean.pesquisa}" required="true"
+											requiredMessage="Aviso: O campo procurar é Obrigatório">
+											<f:passThroughAttribute name="placeholder"
+												value="Qual funcionário que você está procurar?" />
+											<f:passThroughAttribute name="autofocus" value="true" />
+										</h:inputText>
+										<span class="input-group-btn"> <h:commandButton
+												styleClass="btn btn-primary" value="Buscar!"
+												action="#{funcionarioBean.buscarFuncionarioPorNomePorUsuarioPorTelefone}" />
+										</span>
+									</div>
+
+								</div>
+							</div>
+
+							<h:dataTable value="#{funcionarioBean.funcionarios}"
+								var="funcionario" id="tabela-funcionario"
+								styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
+								headerClass="cab-tabela" footerClass="fo-tabela"
+								style="margin-top: 20px;" rowClasses="linha2, linha1">
+
+								<h:column headerClass="thead">
+									<f:facet name="header">
+										<h:outputText value="Usuário" />
+									</f:facet>
+									<h:outputText value="#{funcionario.login}" />
+								</h:column>
+								<h:column headerClass="thead">
+									<f:facet name="header">
+										<h:outputText value="Nome do Funcionário" />
+									</f:facet>
+									<h:outputText value="#{funcionario.nome}"
+										styleClass="tooltip-top btn-bottom"
+										rendered="#{funcionario.enderenco.distrito ==null and funcionario.pais ==null}"
+										title="Dados indisponivel no momento!">
+									</h:outputText>
+									<h:outputText value="#{funcionario.nome}"
+										styleClass="tooltip-top btn-bottom"
+										rendered="#{funcionario.enderenco.distrito !=null}"
+										title="Nascido na província de #{funcionario.enderenco.distrito.provincia} 
+											distrito de #{funcionario.enderenco.distrito.nome} formado em #{funcionario.formacao} ">
+									</h:outputText>
+									<h:outputText value="#{funcionario.nome}"
+										styleClass="tooltip-top btn-bottom"
+										rendered="#{funcionario.pais !=null}"
+										title="Nascido em #{funcionario.pais.nome}, formado em #{funcionario.formacao} ">
+									</h:outputText>
+								</h:column>
+								<h:column headerClass="thead">
+									<f:facet name="header">
+										<h:outputText value="Telefone" />
+									</f:facet>
+									<h:outputText value="#{funcionario.telefone}"
+										rendered="#{funcionario.telefone !=null}" />
+									<h:outputText value="NÃO INFORMADO"
+										rendered="#{funcionario.telefone ==null}" />
+								</h:column>
+								<h:column headerClass="thead">
+									<f:facet name="header">
+										<h:outputText value="Data de Cadastro" />
+									</f:facet>
+									<h:outputText value="#{funcionario.dataCadastro}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare"/>
+									</h:outputText>
+								</h:column>
+								<h:column headerClass="thead">
+									<h:commandLink
+										actionListener="#{funcionarioBean.editar(funcionario)}"
+										title="Atualizar dados deste funcionário?"
+										styleClass="tooltip-left" style="margin-right: 12px;">
+										<h:graphicImage url="#{buscarFotoBean.retornarImagesEditar}"
+											styleClass="icon-editar" />
+									</h:commandLink>
+
+									<h:commandLink title="Alocar funcionário na Escola"
+										actionListener="#{funcionarioBean.buscarDadosFuncionaroSelecionado(funcionario)}"
+										styleClass="tooltip-left" style="margin-right: 12px;">
+										<h:graphicImage url="#{buscarFotoBean.retornarImagesFun}"
+											styleClass="icon-alocar"></h:graphicImage>
+									</h:commandLink>
+
+									<h:commandLink title="Emitir dados do Funcionário"
+										actionListener="#{funcionarioBean.impromirRecibo(funcionario)}"
+										styleClass="tooltip-left" style="margin-right: 12px;">
+										<h:graphicImage url="#{buscarFotoBean.retornarImagesEmitir}"
+											 styleClass="icon-emitir"></h:graphicImage>
+									</h:commandLink>
+
+									<h:commandLink title="Excluir este funcionário?"
+										styleClass="tooltip-left">
+										<h:graphicImage url="#{buscarFotoBean.retornarImagesExcluir}"
+											styleClass="icon-excluir"></h:graphicImage>
+										<p:ajax event="click"
+											update="formulario:id-panelGroup-confirma-modal"
+											listener="#{funcionarioBean.prepararExclusao(funcionario)}" />
+										<f:passThroughAttribute name="data-toggle" value="modal" />
+										<f:passThroughAttribute name="data-target" value="#myModal" />
+									</h:commandLink>
+								</h:column>
+								<f:facet name="footer">
+									<h:outputText
+										value="#{funcionarioBean.funcionarioEncontrado} funcionário(s) encontrado(s)"></h:outputText>
+								</f:facet>
+							</h:dataTable>
+						</h:panelGroup>
+
+
+
+
+						<!-- Cadastro de Funcionário -->
+
+
+
+
+						<h:panelGroup rendered="#{funcionarioBean.estadoCadastro !=false}">
+
+							<h:panelGroup rendered="#{funcionarioBean.estadoAvancar==false}">
+								<div class="form-group row">
+									<h:outputLabel value="Nome Completo: "
+										styleClass="col-sm-2 col-form-label" />
+
+									<div class="col-sm-6">
+										<h:inputText value="#{funcionarioBean.funcionario.nome}"
+											class="form-control"
+											onblur="this.value = this.value.toUpperCase();"
+											required="true" requiredMessage="O campo Nome é obrigatório" />
+									</div>
+									<h:outputLabel styleClass="col-sm-1 col-form-label"
+										value="Sexo:" />
+									<div class="col-sm-3">
+										<h:selectOneRadio styleClass="form-check"
+											value="#{funcionarioBean.funcionario.sexo}">
+											<f:selectItem itemLabel="Masculino" itemValue="true" />
+											<f:selectItem itemLabel="Femenino" itemValue="false" />
+											<f:ajax event="change" execute="idEstadoCivil"
+												render="idEstadoCivil" />
+										</h:selectOneRadio>
+									</div>
+
+								</div>
+								<div class="form-group row">
+									<h:outputLabel styleClass="col-sm-2 col-form-label"
+										value="Filiação: " />
+									<div class="col-sm-5">
+										<h:inputText value="#{funcionarioBean.funcionario.pai}"
+											class="form-control"
+											onblur="this.value = this.value.toUpperCase();"
+											required="true"
+											requiredMessage="O campo Nome do Pai é obrigatório" />
+									</div>
+									<h:outputLabel styleClass="col-sm col-form-label"
+										value="e de : " />
+									<div class="col-sm-4">
+										<h:inputText value="#{funcionarioBean.funcionario.mae}"
+											class="form-control"
+											onblur="this.value = this.value.toUpperCase();"
+											required="true"
+											requiredMessage="O campo Nome da Mãe é obrigatório" />
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<h:outputLabel styleClass="col-sm-2 col-form-label"
+										value="Nacionalidade: " />
+									<div class="col-sm-3">
+										<h:selectOneMenu styleClass="form-control input-select"
+											value="#{funcionarioBean.funcionario.nascionalidade}"
+											required="true"
+											requiredMessage="O campo Nacionalidade é obrigatório">
+											<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+											<f:selectItem itemLabel="MOÇAMBICANA" itemValue="Moçambicana" />
+											<f:selectItem itemLabel="ESTRANGEIRA" itemValue="Estrangeira" />
+
+
+											<p:ajax event="change"
+												listener="#{funcionarioBean.bucarPaises}"
+												update="idPais idInputPais idDistritoLocalNasci" />
+										</h:selectOneMenu>
+									</div>
+									<h:panelGroup id="idPais">
+
+										<h:outputLabel styleClass="col-sm col-form-label"
+											value="País : "
+											rendered="#{funcionarioBean.funcionario.nascionalidade =='Estrangeira'}" />
+
+										<h:outputLabel styleClass="col-sm col-form-label"
+											value="Província : "
+											rendered="#{funcionarioBean.funcionario.nascionalidade !='Estrangeira'}" />
+									</h:panelGroup>
+
+									<div class="col-sm-5">
+										<h:panelGroup id="idInputPais">
+											<h:selectOneMenu required="true"
+												requiredMessage="O campo País é obrigatório"
+												value="#{funcionarioBean.funcionario.pais}"
+												styleClass="form-control input-select"
+												rendered="#{funcionarioBean.funcionario.nascionalidade =='Estrangeira'}"
+												converter="paisConverter">
+												<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+												<f:selectItems value="#{funcionarioBean.paises}" var="pais"
+													itemLabel="#{pais.nome}" itemValue="#{pais}" />
+											</h:selectOneMenu>
+											<h:selectOneMenu required="true"
+												requiredMessage="O campo Província é obrigatório"
+												value="#{funcionarioBean.distrito.provincia}"
+												styleClass="form-control input-select"
+												rendered="#{funcionarioBean.funcionario.nascionalidade !='Estrangeira'}">
+												<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+												<f:selectItems value="#{funcionarioBean.provincias}"
+													var="provincia" itemLabel="#{provincia.label}"
+													itemValue="#{provincia.label}" />
+												<p:ajax event="change" update="combo-distrito"
+													listener="#{funcionarioBean.bucarDistritoDaProvincia}" />
+											</h:selectOneMenu>
+										</h:panelGroup>
+									</div>
+
+
+								</div>
+								<h:panelGroup id="idDistritoLocalNasci">
+									<h:panelGroup
+										rendered="#{funcionarioBean.funcionario.nascionalidade !='Estrangeira'}">
+										<div class="form-group row">
+											<h:outputLabel styleClass="col-sm-2 col-form-label"
+												value="Distrito : " />
+											<div class="col-sm-4">
+												<h:panelGroup id="combo-distrito">
+													<h:selectOneMenu required="true"
+														requiredMessage="O campo Distrito é obrigatório"
+														value="#{funcionarioBean.funcionario.enderenco.distrito}"
+														styleClass="form-control input-select"
+														converter="disctritoConverter"
+														disabled="#{funcionarioBean.distrito.provincia==null}">
+														<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+														<f:selectItems value="#{funcionarioBean.distritos}"
+															var="distrito" itemLabel="#{distrito.nome}"
+															itemValue="#{distrito}" />
+													</h:selectOneMenu>
+												</h:panelGroup>
+											</div>
+											<h:outputLabel styleClass="col-sm col-form-label"
+												value="Local de Nasci : " />
+											<div class="col-sm-4">
+												<h:inputText
+													value="#{funcionarioBean.funcionario.localNascimento}"
+													class="form-control" />
+											</div>
+										</div>
+									</h:panelGroup>
+								</h:panelGroup>
+								<div class="form-group row">
+									<h:outputLabel styleClass="col-sm-2 col-form-label"
+										value="Data Nasci. : " />
+									<div class="col-sm-3">
+										<h:inputText
+											value="#{funcionarioBean.funcionario.dataNascimento}"
+											class="form-control" required="true"
+											requiredMessage="O campo Data Nasci. é obrigatório" >
+
+											<f:passThroughAttribute name="data-provide"
+												value="datepicker" />
+											<f:passThroughAttribute name="data-date-format"
+												value="dd/mm/yyyy" />
+											<f:passThroughAttribute name="data-date-language"
+												value="pt-PT" />
+											<f:passThroughAttribute name="data-date-autoclose"
+												value="true" />
+											<f:passThroughAttribute name="data-date-today-highlight"
+												value="true" />
+											<f:passThroughAttribute name="data-date-orientation"
+												value="bottom" />
+											<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+											<f:convertDateTime pattern="dd/MM/yyyy" type="time" timeZone="Africa/Harare" />
+
+										</h:inputText>
+
+									</div>
+									<h:outputLabel styleClass="col-sm col-form-label"
+										value="Nº de Documento : *" />
+									<div class="col-sm-4">
+										<h:inputText
+											value="#{funcionarioBean.funcionario.numeroDocumento}"
+											class="form-control" />
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<h:outputLabel styleClass="col-sm-2 col-form-label"
+										value="Local de Emissão : " />
+
+									<div class="col-sm-5">
+										<h:inputText
+											value="#{funcionarioBean.funcionario.localEmissao}"
+											class="form-control" />
+									</div>
+
+									<h:outputLabel styleClass="col-sm col-form-label"
+										value="Data de Emissão : " />
+									<div class="col-sm-3">
+										<h:inputText
+											value="#{funcionarioBean.funcionario.dataEmissao}"
+											class="form-control">
+											<f:passThroughAttribute name="data-provide"
+												value="datepicker" />
+											<f:passThroughAttribute name="data-date-language"
+												value="pt-PT" />
+											<f:passThroughAttribute name="data-date-autoclose"
+												value="true" />
+											<f:passThroughAttribute name="data-date-today-highlight"
+												value="true" />
+											<f:passThroughAttribute name="data-date-orientation"
+												value="top" />
+											<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+											<f:convertDateTime pattern="dd/MM/yyyy" type="time" timeZone="Africa/Harare"/>
+
+										</h:inputText>
+
+									</div>
+								</div>
+								<div class="form-group row">
+									<h:outputLabel styleClass="col-sm-2 col-form-label"
+										value="Estado Civil : " />
+
+									<div class="col-sm-3">
+										<h:panelGroup id="idEstadoCivil">
+											<h:selectOneMenu
+												value="#{funcionarioBean.funcionario.estadoCivil}"
+												styleClass="form-control">
+												<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+												<f:selectItems value="#{funcionarioBean.estadoCivils}"
+													var="estadoCivil" itemLabel="#{estadoCivil}"
+													itemValue="#{estadoCivil}" />
+											</h:selectOneMenu>
+										</h:panelGroup>
+
+									</div>
+
+									<h:outputLabel styleClass="col-sm col-form-label"
+										value="Morada : " />
+									<div class="col-sm-5">
+										<h:inputText value="#{funcionarioBean.funcionario.morada}"
+											styleClass="form-control" />
+									</div>
+								</div>
+								<div class="form-group" style="text-align: center;">
+									<h:commandButton value="Cancelar" styleClass="btn btn-danger"
+										action="#{funcionarioBean.directorDistritalIndex}"
+										immediate="true" style="background-color: #423637;" />
+									<h:commandButton value="Voltar" styleClass="btn btn-success"
+										action="#{funcionarioBean.voltarPesquisa}" immediate="true"
+										style="margin-left:1%;" />
+									<h:commandButton value="Avançar "
+										actionListener="#{funcionarioBean.avancar}"
+										styleClass="btn btn-primary" style="margin-left:1%;">
+
+									</h:commandButton>
+								</div>
+
+							</h:panelGroup>
+
+
+
+							<!-- Segunda fase de cadastro  -->
+							<h:panelGroup rendered="#{funcionarioBean.estadoAvancar !=false}">
+
+
+								<div class="form-group row">
+									<h:outputLabel styleClass="col-sm-3 col-form-label"
+										value="Usuário : " />
+									<div class="col-sm-3">
+										<h:inputText disabled="true"
+											value="#{funcionarioBean.funcionario.login}"
+											styleClass="form-control" />
+									</div>
+								</div>
+								<div class="form-group row">
+									<h:outputLabel styleClass="col-sm-3 col-form-label"
+										value="E-mail : " />
+									<div class="col-sm-8">
+										<h:inputText value="#{funcionarioBean.funcionario.email}"
+											styleClass="form-control"
+											validatorMessage="Email inválido. Por favor introduza um Email correcto!">
+											<f:passThroughAttribute name="placeholder"
+												value="exemplo@exemplos.com" />
+
+							<f:validateRegex
+								pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]">
+
+							</f:validateRegex>
+										</h:inputText>
+									</div>
+								</div>
+								<div class="form-group row">
+									<h:outputLabel styleClass="col-sm-3 col-form-label"
+										value="Telefone : " />
+									<div class="col-sm-3">
+										<h:inputText value="#{funcionarioBean.funcionario.telefone}"
+											styleClass="form-control"
+											onblur="return formata_mascara(this, event)" />
+									</div>
+								</div>
+								<div class="form-group row">
+									<h:outputLabel styleClass="col-sm-3 col-form-label"
+										value="Função: " />
+									<div class="col-sm-5">
+										<h:selectOneMenu value="#{funcionarioBean.funcionario.funcao}" styleClass="form-control">
+											<f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+											<f:selectItems value="#{funcionarioBean.tipoFuncoes}"
+												var="funcao" itemLabel="#{funcao.label}"
+												itemValue="#{funcao.label}"/>
+										</h:selectOneMenu>
+									</div>
+								</div>
+								<div class="form-group row">
+									<h:outputLabel styleClass="col-sm-3 col-form-label"
+										value="Formação Académica : " />
+									<div class="col-sm-8">
+										<h:inputText value="#{funcionarioBean.funcionario.formacao}"
+											styleClass="form-control" />
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<h:outputLabel styleClass="col-sm-3 col-form-label"
+										value="Data de Cadastro : " />
+									<div class="col-sm-3">
+										<h:inputText
+											value="#{funcionarioBean.funcionario.dataCadastro}"
+											class="form-control">
+											<f:passThroughAttribute name="data-provide"
+												value="datepicker" />
+											<f:passThroughAttribute name="data-date-language"
+												value="pt-PT" />
+											<f:passThroughAttribute name="data-date-autoclose"
+												value="true" />
+											<f:passThroughAttribute name="data-date-today-highlight"
+												value="true" />
+											<f:passThroughAttribute name="data-date-orientation"
+												value="bottom" />
+											<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+											<f:convertDateTime pattern="dd/MM/yyyy" type="time" timeZone="Africa/Harare"/>
+
+										</h:inputText>
+
+									</div>
+								</div>
+								<div class="form-group row">
+									<h:outputLabel styleClass="col-sm-3 col-form-label"
+										value="Observação : " />
+									<div class="col-sm-8">
+										<h:inputTextarea cols="3"
+											value="#{funcionarioBean.funcionario.observacao}"
+											styleClass="form-control"
+											onkeydown="return quatidadeCarrateres(this, 255, event);">
+											<f:ajax event="keyup" render="contador"
+												listener="#{funcionarioBean.transformar}" />
+										</h:inputTextarea>
+										<h:panelGroup id="contador">
+											<h:outputText style="margin-left: 10px; "
+												value="Máximo 255 caracteres, digitado #{funcionarioBean.quantidadeCaracteres} caracteres." />
+										</h:panelGroup>
+									</div>
+								</div>
+
+
+								<div class="form-group" style="text-align: center;">
+								<h:commandButton value="Cancelar" styleClass="btn btn-danger"
+										action="#{funcionarioBean.voltarPesquisa}"
+										immediate="true" style="background-color: #423637;" />
+								
+									<h:commandButton value="Voltar" immediate="true"
+										actionListener="#{funcionarioBean.voltarAvancar}"
+										styleClass="btn btn-success" style="margin-left:1%;"/>
+									<h:commandButton value="Atualizar "
+										styleClass="btn btn-primary" style="margin-left:1%;"
+										actionListener="#{funcionarioBean.salvar}"
+										rendered="#{funcionarioBean.funcionario.id !=null}" />
+									<h:commandButton value="Salvar " styleClass="btn btn-primary"
+										style="margin-left:1%;"
+										actionListener="#{funcionarioBean.salvar}"
+										rendered="#{funcionarioBean.funcionario.id ==null}" />
+								</div>
+							</h:panelGroup>
+						</h:panelGroup>
+
+
+					</div>
+				</div>
+				<!--/.Panel-->
+			</h:panelGroup>
+
+			<!-- Alocar de Funcionário na Escola -->
+			<h:panelGroup
+				rendered="#{funcionarioBean.funcionarioSelecionado !=null}">
+				<ui:include
+					src="/academico/director-ditrital/funcionario/alocar.xhtml" />
+
+			</h:panelGroup>
+
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" data-backdrop="static"
+				style="padding-top: 210px;">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+
+							<h4 class="modal-title" id="myModalLabel">
+								<h:outputLabel value="Você Tem certeza?" />
+							</h4>
+
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" style="text-align: center">
+							<h:panelGroup id="id-panelGroup-confirma-modal">
+								<h:outputText
+									value="Tem certeza que deseja excluir o  funcionário" />
+								<h:outputText value=" de nome " />
+								<h:outputLabel
+									value="#{funcionarioBean.funcionarioExclusao.nome}"
+									style="font-weight: 600;" />
+								<h:outputText value="?" />
+							</h:panelGroup>
+						</div>
+						<div class="modal-footer">
+							<h:commandButton type="button" title="Cancelar"
+								class="btn btn-success" value="Cancelar">
+								<f:passThroughAttribute name="data-dismiss" value="modal" />
+							</h:commandButton>
+							<h:commandButton title="Excluir" styleClass="btn btn-primary"
+								value="Excluir" action="#{funcionarioBean.excluir}">
+							</h:commandButton>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

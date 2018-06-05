@@ -1,0 +1,171 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd 
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceXmlLocation" value="classpath:/META-INF/persistence.xml" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="true" />
+				<property name="generateDdl" value="true" />
+			</bean>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.connection.characterEncoding">utf8</prop>
+				<prop key="hibernate.connection.charSet">utf8"</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${database.driverClassName}" />
+		<property name="url" value="${database.url}" />
+		<property name="username" value="${database.username}" />
+		<property name="password" value="${database.password}" />
+
+	</bean>
+
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<!-- configuracao de Spring Security 4.1.3 -->
+	<sec:global-method-security
+		secured-annotations="enabled" />
+
+	<sec:http pattern="/css/*" security="none" />
+	<sec:http pattern="/css/**" security="none" />
+	<sec:http pattern="/fonts/*" security="none" />
+	<sec:http pattern="/fonts/**" security="none" />
+	<sec:http pattern="/js/*" security="none" />
+	<sec:http pattern="/js/**" security="none" />
+	<sec:http pattern="/resources/images/*" security="none" />
+	<sec:http pattern="/resources/images/**" security="none" />
+	<sec:http pattern="/javax.faces.resource/**" security="none" />
+	<sec:http pattern="/login/login.jsp" security="none" />
+	<sec:http pattern="/login.jsp" security="none" />
+
+	<sec:http use-expressions="false">
+		<sec:form-login login-page="/login.jsp"
+			always-use-default-target="false" authentication-success-handler-ref="LoginSuccessHandler"
+			authentication-failure-handler-ref="authenticationFailureHandler" />
+		<sec:logout logout-success-url="/login.jsp" />
+		<sec:access-denied-handler error-page="/login.jsp" />
+
+		<sec:intercept-url pattern="/aluno/**" access="ROLE_ALUNO" />
+		<sec:intercept-url pattern="/cadastro-de-aluno/**"
+			access="ROLE_SECRETARIO,ROLE_PEDAGOGICO, ROLE_DIRECTOR" />
+
+		<sec:intercept-url pattern="/secretario/**" access="ROLE_SECRETARIO" />
+
+		<sec:intercept-url pattern="/professor/**" access="ROLE_PROFESSOR" />
+
+		<sec:intercept-url pattern="/director-adjunto/**"
+			access="ROLE_DIRECTOR_ADJUNTO" />
+
+		<sec:intercept-url pattern="/disciplina/**" access="ROLE_DIRECTOR_ADJUNTO" />
+
+		<!--Interceptar url de diretor da escola -->
+		<sec:intercept-url pattern="/director/**" access="ROLE_DIRECTOR" />
+
+		<!-- <sec:intercept-url pattern=" /listagem/**" access="ROLE_DIRECTOR" 
+			/> <sec:intercept-url pattern=" /cadastro/**" access="ROLE_DIRECTOR" /> -->
+		<sec:intercept-url pattern="/academico/disciplina/**"
+			access="ROLE_DIRECTOR_ADJUNTO, ROLE_DIRECTOR" />
+
+
+		<sec:intercept-url pattern="/director-ditrital/**"
+			access="ROLE_DIRECTOR_DISTRITO" />
+
+			<sec:intercept-url pattern="/programador/**"
+			access="ROLE_PROGRAMADOR" />
+
+		<!-- <sec:intercept-url pattern="/ministerio/**" access="ROLE_MINISTRO" 
+			/> -->
+		<!-- Repeticao de url de ususario para garantir a seguranca -->
+		<sec:intercept-url pattern="/academico/aluno/**"
+			access="ROLE_ALUNO, ROLE_SECRETARIO" />
+		<sec:intercept-url pattern="/academico/professor/**"
+			access="ROLE_PROFESSOR" />
+		<sec:intercept-url pattern="/academico/adjunto/**"
+			access="ROLE_DIRECTOR_ADJUNTO" />
+		<sec:intercept-url pattern="/adjunto/**" access="ROLE_DIRECTOR_ADJUNTO" />
+
+		<sec:intercept-url pattern="/academico/director/**"
+			access="ROLE_DIRECTOR" />
+
+
+		<sec:intercept-url pattern="/academico/secretario/**"
+			access="ROLE_SECRETARIO" />
+
+		<sec:intercept-url pattern="/academico/director-ditrital/**"
+			access="ROLE_DIRECTOR_DISTRITO" />
+<sec:intercept-url pattern="/academico/programador/**"
+			access="ROLE_PROGRAMADOR" />
+
+
+		<sec:intercept-url pattern="/academico/ministerio/**"
+			access="ROLE_MINISTRO" />
+		<!-- <sec:intercept-url pattern="/nova/**" access="ROLE_DIRECTOR_DISTRITO" 
+			/> <sec:intercept-url pattern="/nova/**" access="ROLE_DIRECTOR" /> <sec:intercept-url 
+			pattern="/nova/**" access="ROLE_DIRECTOR_ADJUNTO" /> <sec:intercept-url pattern="/nova/**" 
+			access="ROLE_PROFESSOR" /> <sec:intercept-url pattern="/nova/**" access="ROLE_ALUNO" 
+			/> <sec:intercept-url pattern="/nova/**" access="ROLE_ALUNO" /> -->
+
+		<sec:logout success-handler-ref="logoutHandler"
+			delete-cookies="SPRING_SECURITY_REMEMBER_ME_COOKIE, JSESSIONID" />
+		<sec:csrf disabled="true" />
+	</sec:http>
+	<bean id="logoutHandler"
+		class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
+		<property name="defaultTargetUrl" value="/login/" />
+		<property name="redirectStrategy" ref="authenticationFailureRedirectStrategy" />
+	</bean>
+
+	<bean id="authenticationFailureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<property name="defaultFailureUrl" value="/login/failure" />
+		<property name="redirectStrategy" ref="authenticationFailureRedirectStrategy" />
+	</bean>
+
+	<bean id="customAuthenticationProvider"
+		class="com.mz.sistema.gestao.escolar.autenticacao.CustomAuthenticationProvider" />
+
+	<sec:authentication-manager>
+		<sec:authentication-provider ref="customAuthenticationProvider" />
+	</sec:authentication-manager>
+
+
+
+	<bean id="dataSourcePropertiesPlaceHolder"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="location" value="classpath:/application.properties" />
+	</bean>
+
+	<jpa:repositories base-package="com.mz.sistema.gestao.escolar.repositorio" />
+
+	<context:component-scan base-package="com.mz.sistema.gestao.escolar" />
+	<task:annotation-driven />
+	<context:annotation-config />
+
+	<!-- E chamado essa classe depois de fazer login e redireciona para expecifica 
+		classe -->
+	<bean id="LoginSuccessHandler"
+		class="com.mz.sistema.gestao.escolar.autenticacao.LoginSuccessHandler" />
+
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+</beans>

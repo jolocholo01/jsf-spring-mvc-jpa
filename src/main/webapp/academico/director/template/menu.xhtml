@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<div class="menu" style="margin-top: -10px;">
+	<ul>
+		<li style="width: 120px;"><h:outputLink value="">
+				<span> <h:graphicImage
+						url="#{buscarFotoBean.retornarImagesRelatorio}"
+						class="ajustamento" style="margin-top:2px;" /></span> Escola</h:outputLink>
+			<ul class="row row_outline1">
+				<li style="width: 300px;" class="li li_top"><h:outputLink
+						value="#{request.contextPath}/director/identificacao.jsf"
+						styleClass="fundo">
+						<span class="espacamento">Identificação da Escola</span>
+					</h:outputLink></li>
+				<li style="width: 300px;" class="li "><h:outputLink
+						value="#{request.contextPath}/director/sala.jsf"
+						styleClass="fundo">
+						<span class="espacamento">Sala </span>
+
+					</h:outputLink></li>
+				<li style="width: 300px;" class="li "><h:commandLink
+						action="#{disciplinaClasseBean.cadastroDisciplinaClasseDirector}"
+						styleClass="fundo">
+						<span class="espacamento">Gerenciar Disciplinas na Classe</span>
+
+					</h:commandLink></li>
+				<li style="width: 300px;" class="li "><h:outputLink value="#"
+						styleClass="fundo">
+						<span class="espacamento">Matriz Curricular</span>
+						<span class="seta_para_direita">&#9654;</span>
+					</h:outputLink>
+					<ul class="row_outline1" style="left: 301px;">
+						<li style="width: 310px;" class="li_left li_top"><h:outputLink
+								value="#{request.contextPath}/director/cadastrar-matriz.jsf"
+								styleClass="fundo">
+								<span class="espacamento">Cadastro de Matriz Curricular</span>
+								</h:outputLink> </li>
+						<li style="width: 310px;" class="li_left li_bottom"><h:outputLink
+								value="#{request.contextPath}/director/gerenciar-matriz.jsf"
+								styleClass="fundo">
+								<span class="espacamento">Gerenciar Matriz Curricular</span>
+							</h:outputLink></li>
+
+					</ul></li>
+
+				<li style="width: 300px;" class="li"><h:outputLink value="#"
+						styleClass="fundo">
+						<span class="espacamento"> Aluno</span>
+						<span class="seta_para_direita">&#9654;</span>
+					</h:outputLink>
+					<ul class="row_outline1" style="left: 301px;">
+						<li style="width: 230px;" class="li_left li_top"><h:outputLink
+								value="#{request.contextPath}/director/aluno.jsf"
+								styleClass="fundo">
+								<span class="espacamento"> Cadastro de aluno </span>
+							</h:outputLink></li>
+
+						<li style="width: 230px;" class="li_left li_bottom"><h:outputLink
+								value="#" styleClass="fundo">
+								<span class="espacamento"> Consulta de aluno </span>
+							</h:outputLink></li>
+					</ul></li>
+				<li style="width: 300px;" class="li"><h:outputLink value=""
+						styleClass="fundo">
+						<span class="espacamento"> Transferência</span>
+						<span class="seta_para_direita">&#9654;</span>
+					</h:outputLink>
+					<ul class="row_outline1" style="left: 301px;">
+						<li style="width: 300px;" class="li li_top li_left"><h:outputLink
+								value="#{request.contextPath}/director/transferencia.jsf"
+								styleClass="fundo">
+								<span class="espacamento"> Quadro de transferência</span>
+							</h:outputLink></li>
+
+						<li style="width: 300px;" class="li li_bottom"><h:outputLink
+								value="#{request.contextPath}/director/transferencia/receber.jsf"
+								styleClass="fundo">
+								<span class="espacamento"> Receber transferência </span>
+							</h:outputLink></li>
+
+					</ul></li>
+				<li style="width: 300px;" class="li "><h:outputLink value="#"
+						styleClass="fundo">
+						<span class="espacamento">Horários</span>
+						<span class="seta_para_direita">&#9654;</span>
+					</h:outputLink>
+					<ul class="row_outline1" style="left: 301px;">
+						<li style="width: 290px;" class="li_left li_top"><h:commandLink
+								action="#{horarioAulaBean.cadastroHorarioAulaDirector}"
+								styleClass="fundo">
+								<span class="espacamento">Gerenciar Horário de Aula </span>
+							</h:commandLink></li>
+
+						<li style="width: 290px;" class="li_left li_bottom"><h:outputLink
+								styleClass="fundo"
+								value="#{request.contextPath}/director/horario.jsf">
+								<span class="espacamento">Gerenciar Horários das Turmas</span>
+							</h:outputLink></li>
+
+					</ul></li>
+
+
+				<li style="width: 300px;" class="li li_bottom"><h:outputLink
+						value="#" styleClass="fundo">
+						<span class="espacamento"> Calendário Escolar</span>
+					</h:outputLink></li>
+
+			</ul></li>
+
+		<h:panelGroup styleClass="span_seta" />
+
+		<li style="width: 110px;"><h:outputLink value="#">
+				<span> <h:graphicImage
+						url="#{buscarFotoBean.retornarImagesMatricula}"
+						style="width: 23px; height: 22px;    margin-top: 5%;"
+						class="ajustamento" /></span>Matrículas</h:outputLink>
+			<ul class="row row_outline1">
+
+				<li style="width: 300px;" class="li li_top li_left"><h:outputLink
+						value="#{request.contextPath}/director/matricula.jsf"
+						styleClass="fundo">
+						<span class="espacamento"> Quadro de matrícula </span>
+					</h:outputLink></li>
+				<li style="width: 300px;" class="li li_left"><h:outputLink
+						value="#{request.contextPath}/director/matricula/renovar.jsf"
+						styleClass="fundo">
+						<span class="espacamento"> Matrícula/renovação de aluno</span>
+					</h:outputLink></li>
+
+
+				<li style="width: 300px;" class="li li_bottom"><h:commandLink
+						action="#{matriculaBean.consultarMatriculasPorAluno}"
+						styleClass="fundo">
+						<span class="espacamento"> Consultar Matrículas por Aluno </span>
+					</h:commandLink></li>
+			</ul></li>
+
+
+		<h:panelGroup styleClass="span_seta" />
+		<li style="width: 100px;"><h:outputLink value="">
+				<span> <h:graphicImage
+						url="#{buscarFotoBean.retornarImagesTurma}" class="ajustamento"
+						style="margin-top:2px;" /></span>Turmas</h:outputLink>
+			<ul class="row row_outline1">
+				<li style="width: 266px;" class="li li_top"><h:outputLink
+						value="#{request.contextPath}/director/turma.jsf"
+						styleClass="fundo">
+						<span class="espacamento">Gerenciar Turmas</span>
+					</h:outputLink></li>
+
+				<li style="width: 266px;" class="li"><h:outputLink
+						value="#{request.contextPath}/director/alocar-professor.jsf"
+						styleClass="fundo">
+						<span class="espacamento">Alocar Professor em Turma</span>
+					</h:outputLink></li>
+				<li style="width: 266px;" class="li"><h:outputLink
+						value="#{request.contextPath}/director/alocar-alunos.jsf"
+						styleClass="fundo">
+						<span class="espacamento"> Alocar alunos em Turma</span>
+
+					</h:outputLink></li>
+				<li style="width: 266px;" class="li li_bottom"><h:outputLink
+						value="#" styleClass="fundo">
+						<span class="espacamento"> Avaliação da Turma</span>
+						<span class="seta_para_direita">&#9654;</span>
+					</h:outputLink>
+					<ul class="row_outline1" style="left: 267px;">
+
+						<li style="width: 342px;" class="li li_top"><h:outputLink
+								value="#" styleClass="fundo">
+								<span class="espacamento">Lançar notas numa turma</span>
+							</h:outputLink></li>
+						<li style="width: 342px;" class="li li_left li_bottom"><h:outputLink
+								value="#" styleClass="fundo">
+								<span class="espacamento">Encerar a Turma</span>
+							</h:outputLink></li>
+						
+
+					</ul></li>
+			</ul></li>
+		<h:panelGroup styleClass="span_seta" />
+		<li style="width: 120px;"><h:outputLink value="#">
+				<span> <h:graphicImage
+						url="#{buscarFotoBean.retornarImagesFunc}"
+						style="width: 23px;height: 25px; margin-top: 3%;"
+						class="ajustamento" /></span>Funcionário</h:outputLink>
+			<ul class="row row_outline1">
+
+				<li class="li li_bottom" style="width: 250px;"><h:outputLink
+						value="#{request.contextPath}/director/funcionario.jsf"
+						styleClass="fundo">
+						<span class="espacamento">Gerenciar Funcionário</span>
+					</h:outputLink></li>
+
+			</ul></li>
+
+
+		<h:panelGroup styleClass="span_seta" />
+		<li style="width: 160px;"><h:outputLink value="#">
+				<span> <h:graphicImage
+						url="#{buscarFotoBean.retornarImagesPassword}"
+						style="width: 25px;height: 27px;margin-top: 3px;"
+						class="ajustamento" /></span>Personalizações</h:outputLink>
+			<ul class="row row_outline1">
+
+				<li class="li" style="width: 210px;"><h:outputLink
+						value="#{request.contextPath}/director/senha.jsf"
+						styleClass="fundo">
+						<span class="espacamento">Alterar senha</span>
+					</h:outputLink></li>
+				<li class="li li_bottom" style="width: 210px;"><h:outputLink
+						value="#{request.contextPath}/director/dados.jsf"
+						styleClass="fundo">
+						<span class="espacamento">Meus Dados Pessoais</span>
+					</h:outputLink></li>
+			</ul></li>
+
+	</ul>
+</div>
+</html>

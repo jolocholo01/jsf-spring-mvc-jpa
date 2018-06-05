@@ -1,0 +1,396 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<ui:composition template="/academico/principal/templete.xhtml">
+	<ui:define name="titulo">
+		<h:outputText value="Pesquisa de disciplina da classe"
+			rendered="#{disciplinaClasseBean.cadastroDisciplinaClasseBoolean==false}" />
+
+		<h:panelGroup
+			rendered="#{disciplinaClasseBean.cadastroDisciplinaClasseBoolean ==true}">
+			<h:outputText value="Alocar Disciplina"
+				rendered="#{disciplinaClasseBean.novaDisciplinaClasseBoolean ==true}" />
+			<h:outputText value="Editar Disciplina"
+				rendered="#{disciplinaClasseBean.editarDisciplinaClasseBoolean== true}" />
+		</h:panelGroup>
+	</ui:define>
+	<ui:define name="menu">
+		<ui:include src="/academico/director-ditrital/template/menu.xhtml" />
+	</ui:define>
+	<ui:define name="dados_pessoas">
+		<ui:include
+			src="/academico/director-ditrital/template/dados_pessoas.xhtml" />
+	</ui:define>
+
+
+	<ui:define name="ambiente_comum">
+		<h:form id="form" styleClass="form-horizontal">
+			<!--Panel-->
+			<div class="card">
+				<h4 class="peg-titulo card-header primary-color white-text ">
+
+					<h:outputText value="Pesquisa de Disciplina da classe"
+						style="font-weight: 700;"
+						rendered="#{disciplinaClasseBean.cadastroDisciplinaClasseBoolean==false}" />
+
+					<h:panelGroup
+						rendered="#{disciplinaClasseBean.cadastroDisciplinaClasseBoolean ==true}">
+						<h:outputText value="Alocar Disciplina" style="font-weight: 700;"
+							rendered="#{disciplinaClasseBean.novaDisciplinaClasseBoolean ==true}" />
+						<h:outputText value="Editar Alocação" style="font-weight: 700;"
+							rendered="#{disciplinaClasseBean.editarDisciplinaClasseBoolean == true}" />
+					</h:panelGroup>
+
+					<h:panelGroup styleClass="form-span">
+						<h:commandLink value="Nova Alocação"
+							actionListener="#{disciplinaClasseBean.novaAlocacao}"
+							immediate="true"
+							rendered="#{disciplinaClasseBean.cadastroDisciplinaClasseBoolean==false}" />
+						<h:commandLink value="Voltar para Pesquisa"
+							actionListener="#{disciplinaClasseBean.voltarParaPequisaAlocacao}"
+							immediate="true"
+							rendered="#{disciplinaClasseBean.cadastroDisciplinaClasseBoolean !=false}" />
+					</h:panelGroup>
+				</h4>
+				<div class="card-body">
+					<p:messages id="mensagem" closable="true" />
+					<!-- Pesquisa de funcionario -->
+					<h:panelGroup
+						rendered="#{disciplinaClasseBean.disciplinaClasse==null}">
+
+
+
+						<div class="form-group">
+							<div class="col-sm-6" style="padding-left: 0;">
+								<div class="input-group">
+
+									<h:selectOneMenu value="#{disciplinaClasseBean.idClasse}"
+										styleClass="form-control" required="true"
+										requiredMessage="O campo Classe é obrigatório"
+										style=" text-transform: uppercase; height: 33px; ">
+										<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+										<f:selectItems value="#{disciplinaClasseBean.classes}"
+											var="classe" itemLabel="#{classe.descricao}"
+											itemValue="#{classe.id}" />
+
+									</h:selectOneMenu>
+
+									<span class="input-group-btn"> <h:commandButton
+											styleClass="btn btn-primary" value="Buscar!"
+											actionListener="#{disciplinaClasseBean.pesquisaDeDisciplinaNaClasse}" />
+									</span>
+								</div>
+
+							</div>
+						</div>
+
+						<h:dataTable value="#{disciplinaClasseBean.disciplinaClasses}"
+							var="disciplinaClasse" id="tabela-escola"
+							styleClass="table table-bordered tabelaProfessor tabela-hover  tabela-funcionario"
+							headerClass="cab-tabela" footerClass="fo-tabela"
+							style="margin-top: 20px;" rowClasses="linha2, linha1">
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#" />
+								</f:facet>
+								<h:outputText value=" #{disciplinaClasse.disciplina.id}"
+									style="margin-left:5px;" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Descrição" />
+								</f:facet>
+								<h:outputText value="#{disciplinaClasse.disciplina.descricao}"
+									style=" margin-left:4px;">
+								</h:outputText>
+
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Crédito" />
+								</f:facet>
+								<h:outputText value="#{disciplinaClasse.credito}"
+									style=" margin-left:4px;" />
+							</h:column>
+							<h:column headerClass="center">
+								<f:facet name="header">
+									<h:outputText value="Área" />
+								</f:facet>
+								<h:outputText value="#{disciplinaClasse.area.descricao}" />
+							</h:column>
+
+							<h:column>
+								<h:commandLink title="Editar" immediate="true"
+									action="#{disciplinaClasseBean.editar(disciplinaClasse)}">
+									<h:graphicImage url="#{buscarFotoBean.retornarImagesEditar}"
+										style=" width:21px; height: 20px; " />
+								</h:commandLink>
+								<h:commandLink immediate="true" title="Excluir!" id="id-excluir"
+									style="margin-left:10px;">
+									<p:graphicImage url="#{buscarFotoBean.retornarImagesExcluir}"
+										height="16" width="16" />
+									<p:ajax event="click"
+										listener="#{disciplinaClasseBean.prepararParaExcluir(disciplinaClasse)}"
+										update="form:id-panelGroup-confirma-modal" />
+									<f:passThroughAttribute name="data-toggle" value="modal" />
+									<f:passThroughAttribute name="data-target" value="#myModal" />
+								</h:commandLink>
+							</h:column>
+							<f:facet name="footer">
+								<h:outputText
+									value=" #{disciplinaClasseBean.qtdDisciplinaClasseEncontradas} disciplina(s) 
+									encontrada(s)"></h:outputText>
+							</f:facet>
+						</h:dataTable>
+					</h:panelGroup>
+
+
+					<!-- Cadastro e edicao -->
+					<h:panelGroup
+						rendered="#{disciplinaClasseBean.disciplinaClasse !=null}">
+
+						<div class="form-group row">
+							<h:outputLabel value="Classe : "
+								styleClass="col-sm-3 control-label texto-label">
+								<h:panelGroup styleClass="asteristico">*</h:panelGroup>
+							</h:outputLabel>
+
+							<div class="col-sm-4">
+								<h:panelGroup id="combo-classe">
+									<h:selectOneMenu
+										value="#{disciplinaClasseBean.disciplinaClasse.classe}"
+										styleClass="form-control" required="true"
+										requiredMessage="O campo Classe é obrigatório"
+										style=" text-transform: uppercase;  "
+										converter="classeCicloConverter">
+										<f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+										<f:selectItems value="#{disciplinaClasseBean.classes}"
+											var="classe" itemLabel="#{classe.descricao}"
+											itemValue="#{classe}" />
+										<p:ajax event="change"
+											listener="#{disciplinaClasseBean.buscarAreas}"
+											update="form:combo-area" />
+									</h:selectOneMenu>
+								</h:panelGroup>
+							</div>
+						</div>
+
+
+						<div class="form-group row">
+							<h:outputLabel value="Disciplina : "
+								styleClass="col-sm-3 control-label texto-label">
+								<h:panelGroup styleClass="asteristico">*</h:panelGroup>
+							</h:outputLabel>
+							<div class="col-sm-6">
+								<h:panelGroup id="combo-disciplina">
+									<h:selectOneMenu
+										value="#{disciplinaClasseBean.disciplinaClasse.disciplina}"
+										styleClass="form-control" required="true"
+										requiredMessage="O campo Disciplina é obrigatório"
+										style=" text-transform: uppercase;  "
+										converter="disciplinaConverter">
+										<f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+										<f:selectItems value="#{disciplinaClasseBean.disciplinas}"
+											var="disciplina" itemLabel="#{disciplina.descricao}"
+											itemValue="#{disciplina}" />
+									</h:selectOneMenu>
+								</h:panelGroup>
+							</div>
+						</div>
+
+
+						<div class="form-group row">
+							<h:outputLabel value="Crédito : "
+								styleClass="col-sm-3 control-label texto-label">
+								<h:panelGroup styleClass="asteristico">*</h:panelGroup>
+							</h:outputLabel>
+							<div class="col-sm-2">
+								<h:panelGroup>
+									<h:inputText
+										value="#{disciplinaClasseBean.disciplinaClasse.credito}"
+										maxlength="2" required="true"
+										requiredMessage="O campo crédito é obrigatório"
+										onkeypress="return aceitarApenaNumero(this, event)"
+										styleClass=" form-control" />
+								</h:panelGroup>
+							</div>
+						</div>
+
+
+
+						<div class="form-group row">
+							<h:outputLabel value="Área : "
+								styleClass="col-sm-3 control-label texto-label">
+								<h:panelGroup styleClass="asteristico">*</h:panelGroup>
+							</h:outputLabel>
+							<div class="col-sm-6">
+								<h:panelGroup id="combo-area">
+									<h:selectOneMenu
+										value="#{disciplinaClasseBean.disciplinaClasse.area}"
+										styleClass="form-control" required="true"
+										requiredMessage="O campo Área é obrigatório"
+										style=" text-transform: uppercase;  "
+										converter="areaConverter">
+										<f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
+										<f:selectItems value="#{disciplinaClasseBean.areas}"
+											var="area" itemLabel="#{area.descricao}" itemValue="#{area}" />
+									</h:selectOneMenu>
+								</h:panelGroup>
+							</div>
+						</div>
+						<div class="form-group row">
+							<h:outputLabel value="Obrigatória ?"
+								styleClass="col-sm-3 control-label texto-label">
+							</h:outputLabel>
+							<div class="col-sm-6">
+								<h:panelGroup>
+									<h:selectOneRadio
+										value="#{disciplinaClasseBean.disciplinaClasse.obrigatoria}"
+										styleClass="form-check">
+										<f:selectItem itemLabel="Sim" itemValue="true" />
+										<f:selectItem itemLabel="Não" itemValue="false" />
+									</h:selectOneRadio>
+								</h:panelGroup>
+							</div>
+						</div>
+						<div class="form-group row">
+							<h:outputLabel value="Data de Cadastro :"
+								styleClass="col-sm-3 control-label texto-label" />
+							<div class="col-sm-3">
+								<h:inputText styleClass="form-control"
+									value="#{disciplinaClasseBean.disciplinaClasse.dataCadastro}"
+									required="true"
+									requiredMessage="O campo Data de Cadastro é obrigatório">
+									<f:convertDateTime pattern="dd/MM/yyyy" type="date"  timeZone="Africa/Harare"/>
+									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+									<f:passThroughAttribute name="data-provide" value="datepicker" />
+									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
+									<f:passThroughAttribute name="data-date-autoclose" value="true" />
+									<f:passThroughAttribute name="data-date-today-highlight"
+										value="true" />
+									<f:passThroughAttribute name="data-date-orientation"
+										value="bottom" />
+								</h:inputText>
+
+							</div>
+						</div>
+						<div class="form-group row">
+							<h:outputLabel value="Activa :"
+								styleClass="col-sm-3 control-label texto-label" />
+							<div class="col-sm-3">
+								<h:selectBooleanCheckbox
+									value="#{disciplinaClasseBean.disciplinaClasse.ativa}" />
+
+							</div>
+
+						</div>
+						<div class="form-group row">
+							<h:outputLabel styleClass="col-sm-3 col-form-label"
+								value="Observação : " />
+							<div class="col-sm-8">
+								<h:inputTextarea cols="3"
+									value="#{disciplinaClasseBean.disciplinaClasse.observacao}"
+									styleClass="form-control"
+									onkeydown="return quatidadeCarrateres(this, 255, event);">
+									<f:ajax event="keyup" render="contador"
+										listener="#{disciplinaClasseBean.obterQtdCarateres}" />
+								</h:inputTextarea>
+								<h:panelGroup id="contador">
+									<h:outputText style="margin-left: 10px; "
+										value="Máximo 255 caracteres, digitado #{disciplinaClasseBean.quantidadeCaracteres} caracteres." />
+								</h:panelGroup>
+							</div>
+						</div>
+
+
+
+						<div class="form-inline">
+							<h:commandButton value="Voltar" immediate="true"
+								actionListener="#{disciplinaClasseBean.voltarParaPequisaAlocacao}"
+								styleClass="btn btn-success"
+								style="margin-left: 18%; margin-top:2%;" />
+
+							<h:commandButton value="Alocar"
+								action="#{disciplinaClasseBean.salvar}"
+								style="margin-left: 1%;margin-top:2%;"
+								styleClass="btn btn-primary" />
+
+						</div>
+						<div class="form-inline"
+							style="text-align: center; margin-top: 2%;">
+							<h:outputLabel styleClass="col-sm-9 control-label texto-label">
+								<h:panelGroup styleClass="asteristico">*</h:panelGroup>
+								<h:outputLabel value="Campos de preenchimento obrigatório." style="margin-left:8px;"/>
+								
+							</h:outputLabel>
+						</div>
+					</h:panelGroup>
+				</div>
+			</div>
+			<!-- Modal -->
+
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" data-backdrop="static"
+				style="padding-top: 210px;">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">
+								<h:outputLabel value="Você Tem certeza?" />
+
+							</h4>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" style="text-align: center;">
+
+							<h:panelGroup id="id-panelGroup-confirma-modal">
+								<h:outputText value="Tem certeza que deseja excluir a " />
+
+								<h:outputLabel
+									value="#{disciplinaClasseBean.disciplinaClasseExclusao.disciplina.descricao}"
+									style="font-weight: 600;" />
+								<h:outputLabel value=" &nbsp;da Área de&nbsp; " />
+								<h:outputLabel
+									value=" #{disciplinaClasseBean.disciplinaClasseExclusao.area.descricao}"
+									style="font-weight: 600;" />
+								<h:outputLabel value=" &nbsp;da&nbsp; " />
+								<h:outputLabel
+									value=" #{disciplinaClasseBean.disciplinaClasseExclusao.classe.descricao}"
+									style="font-weight: 600;" />
+								<h:outputText value="?" />
+							</h:panelGroup>
+						</div>
+						<div class="modal-footer">
+							<h:commandButton type="button" title="Cancelar"
+								class="btn btn-success" value="Cancelar">
+								<f:passThroughAttribute name="data-dismiss" value="modal" />
+							</h:commandButton>
+							<h:commandButton title="Excluir" type="button"
+								styleClass="btn btn-primary" value="Excluir">
+								<f:passThroughAttribute name="data-dismiss" value="modal" />
+								<p:ajax event="click" update="form:tabela-escola form:mensagem"
+									listener="#{disciplinaClasseBean.excluir}" />
+							</h:commandButton>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

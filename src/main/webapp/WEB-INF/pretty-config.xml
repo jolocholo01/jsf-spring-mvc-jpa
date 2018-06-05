@@ -1,0 +1,854 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.3"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.3
+   http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.3.xsd">
+
+	<url-mapping>
+		<pattern value="/categoria/index.jsf" />
+		<view-id value="/academico/categorias/index.jsf" />
+	</url-mapping>
+
+
+	<!--Configuracao de url do login -->
+	<url-mapping>
+		<pattern value="/login.jsp" />
+		<view-id value="/login/login.jsp" />
+	</url-mapping>
+	<!--Configuracao de url do login -->
+	<url-mapping>
+		<pattern value="/login.jsp" />
+		<view-id value="/login/login.jsf" />
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/negado.jsp" />
+		<view-id value="/login/negado.jsf" />
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/senha.html" />
+		<view-id value="/login/senha.html" />
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/nova/senha.html" />
+		<view-id value="/rest/senha.html" />
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/senha.jsf" />
+		<view-id value="/login/senha.jsf"></view-id>
+		<action onPostback="false">#{recoperarSenhaBean.iniciarBean}</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/nova/senha.html" />
+		<view-id value="/rest/senha.html"></view-id>
+	</url-mapping>
+
+
+	<!--Configuracao de url do professor -->
+	<url-mapping id="professor">
+		<pattern value="/professor/index.jsf" />
+		<view-id value="/academico/professor/index.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{professorTurmaBean.iniciarBean}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/professor/variasEscolas/index.jsf" />
+		<view-id value="/academico/professor/variasEscolas/index.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/professor/nota.jsf" />
+		<view-id value="/academico/professor/nota/turma.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/professor/horario.jsf" />
+		<view-id value="/academico/professor/horario/horario.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{horarioBean.iniciarBeanHorarioProfessor}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/professor/turma.jsf" />
+		<view-id value="/academico/professor/horario/turma.jsf" />
+	</url-mapping>
+	<url-mapping id="cadastroProfessor">
+		<pattern value="/professor/cadastro.jsf" />
+		<view-id value="/academico/professor/cadastro.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/professor/perfil.jsf" />
+		<view-id value="/academico/professor/template/atualizarFotoPerfil.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{buscarFotoBean.iniciarMeusPerfil}</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/professor/dados.jsf" />
+		<view-id value="/academico/professor/template/meusdados.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{buscarFotoBean.inicirBean}</action>
+		<action onPostback="false">#{buscarFotoBean.iniciarAtualizacaoDados}
+		</action>
+
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/professor/senha.jsf" />
+		<view-id value="/academico/professor/template/senha.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{buscarFotoBean.inicirBean}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/professor/nota/relatorio.jsf" />
+		<view-id value="/academico/professor/nota/relatorio.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+
+
+	<!--Configuracao de url do aluno -->
+
+	<url-mapping id="aluno">
+		<pattern value="/aluno/index.jsf" />
+		<view-id value="/academico/aluno/index.jsf" />
+		<action onPostback="false">authenticationContext.buscarMatriculaEscolaLogada
+		</action>
+		<action onPostback="false">authenticationContext.buscarDisciplinasLecionadosPorProfessoresDaTurma
+		</action>
+	</url-mapping>
+	<url-mapping id="cadastroAluno">
+		<pattern value="/cadastro-de-aluno/index.jsf" />
+		<view-id value="/academico/cadAluno/cadastro.jsf" />
+	</url-mapping>
+	<url-mapping id="HorarioAluno">
+		<pattern value="/aluno/horario.jsf" />
+		<view-id value="/academico/aluno/horario/horario.jsf" />
+		<action onPostback="false">#{horarioBean.iniciarBeanHorarioAluno}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/aluno/doc.jsf" />
+		<view-id value="/academico/aluno/matricula/doc.jsf" />
+		<action onPostback="false">#{matriculaBean.iniciarBeanDoc}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/aluno/senha.jsf" />
+		<view-id value="/academico/aluno/template/senha.jsf" />
+		<action onPostback="false">#{buscarFotoBean.inicirBean}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/aluno/perfil.jsf"></pattern>
+		<view-id value="/academico/aluno/template/atualizarFotoPerfil.jsf" />
+		<action onPostback="false">#{buscarFotoBean.iniciarMeusPerfil}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/aluno/dados.jsf" />
+		<view-id value="/academico/aluno/template/meusDadosPessoais.jsf" />
+		<action onPostback="false">#{buscarFotoBean.iniciarAtualizacaoDados}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/aluno/nota.jsf" />
+		<view-id value="/academico/aluno/nota/nota.jsf" />
+
+		<action onPostback="false">#{alunoBean.iniciarBean}</action>
+	</url-mapping>
+
+
+	<!--Configuracao de url do Diretor da escola -->
+	<url-mapping>
+		<pattern value="/director/index.jsf" />
+		<view-id value="/academico/director/index.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{escolaBean.iniciarBean}
+		</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/director/matricula/renovar.jsf" />
+		<view-id value="/academico/director/matricula/renovacao.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{matriculaBean.iniciarBean}</action>
+		<action onPostback="false">#{alunoBean.iniciarQuadroMatriculas}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director/turma.jsf" />
+		<view-id value="/academico/director/turma/cadastro.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{turmaBean.iniciarBean}</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/director/alocar-alunos.jsf" />
+		<view-id value="/academico/director/turma/alunosTurma.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarQuadroMatriculas}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarEntumacao}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director/alocar-professor.jsf" />
+		<view-id value="/academico/director/turma/professorTurma.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{professorTurmaBean.iniciarAlocacao}
+		</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/director/matricula.jsf" />
+		<view-id value="/academico/director/matricula/matricula.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarQuadroMatriculas}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director/transferencia/receber.jsf" />
+		<view-id value="/academico/director/transferencia/receber.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{transferenciaBean.iniciarBean}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director/transferencia.jsf" />
+		<view-id value="/academico/director/transferencia/quadroTransferenca.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{transferenciaBean.iniciarBean}
+		</action>
+	</url-mapping>
+
+
+	<url-mapping>
+		<pattern value="/director/horario.jsf" />
+		<view-id value="/academico/director/horario/horario.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{horarioTurma.dadosDoHorario}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director/classe/disciplina.jsf" />
+		<view-id value="/academico/director/classe/disciplina.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{disciplinaClasseBean.iniciarBean}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director/aluno.jsf" />
+		<view-id value="/academico/director/aluno/cadastro.jsf" />
+		<action onPostback="false">#{alunoBean.iniciarBean}</action>
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director/funcionario.jsf" />
+		<view-id value="/academico/director/funcionario/cadastro.jsf" />
+		<action onPostback="false">#{funcionarioEscolaBean.iniciarBean}
+		</action>
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+
+
+
+
+	<url-mapping id="aluno">
+		<pattern value="/director/aluno.jsf" />
+		<view-id value="/academico/director/aluno/cadastro.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping id="alterarTurma">
+		<pattern value="/director/aluno/alterar.jsf" />
+		<view-id value="/academico/director/aluno/alterar.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping id="turma">
+		<pattern value="/director/turma.jsf" />
+		<view-id value="/academico/director/turma/cadastro.jsf" />
+		<action onPostback="false">#{turmaBean.iniciarBean}</action>
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping id="alterarTurma">
+		<pattern value="/director/turma/alterar.jsf" />
+		<view-id value="/academico/director/turma/alterar.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/director/cadastrar-matriz.jsf" />
+		<view-id value="/academico/director/matriz/cadastrar.jsf" />
+		<action onPostback="false">#{matrizBean.iniciarBean}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director/dados.jsf" />
+		<view-id value="/academico/director/template/meusdados.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{buscarFotoBean.inicirBean}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director/perfil.jsf" />
+		<view-id value="/academico/director/template/atualizarFotoPerfil.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director/senha.jsf" />
+		<view-id value="/academico/director/template/senha.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{buscarFotoBean.inicirBean}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director/sala.jsf" />
+		<view-id value="/academico/director/sala/sala.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director/identificacao.jsf" />
+		<view-id value="/academico/director/escola/identificacao.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{escolaBean.iniciarIdntificacaoDaEscola}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director/identificacao.jsf" />
+		<view-id value="/academico/director/escola/identificacao.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{escolaBean.iniciarIdntificacaoDaEscola}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director/gerenciar-matriz.jsf" />
+		<view-id value="/academico/director/matriz/alterar.jsf" />
+		<action onPostback="false">#{matrizBean.iniciarBean}
+		</action>
+	</url-mapping>
+	<!--Configuracao de url de Director da escola -->
+
+
+
+
+	<!--Configuracao de url de Director Adjunto Pedagógico da escola -->
+		<url-mapping>
+		<pattern value="/director-adjunto/alocar-alunos.jsf" />
+		<view-id value="/academico/adjunto/turma/alunosTurma.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarQuadroMatriculas}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarEntumacao}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/cadastrar-matriz.jsf" />
+		<view-id value="/academico/adjunto/matriz/cadastrar.jsf" />
+		<action onPostback="false">#{matrizBean.iniciarBean}
+		</action>
+	</url-mapping>
+<url-mapping>
+		<pattern value="/director-adjunto/gerenciar-matriz.jsf" />
+		<view-id value="/academico/adjunto/matriz/alterar.jsf" />
+		<action onPostback="false">#{matrizBean.iniciarBean}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/horario.jsf" />
+		<view-id value="/academico/adjunto/horario/horario.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{horarioTurma.dadosDoHorario}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/turma.jsf" />
+		<view-id value="/academico/adjunto/turma/cadastro.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{turmaBean.iniciarBean}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/index.jsf" />
+		<view-id value="/academico/adjunto/index.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{transferenciaBean.pedidoscaregadoPorPoll}
+		</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/director-adjunto/transferencia/receber.jsf" />
+		<view-id value="/academico/adjunto/transferencia/receber.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{transferenciaBean.iniciarBean}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/transferencia/pedido.jsf" />
+		<view-id value="/academico/adjunto/transferencia/receber.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{transferenciaBean.iniciarPedidoTransferenciaBean}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/transferencia.jsf" />
+		<view-id value="/academico/adjunto/transferencia/quadroTransferenca.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{transferenciaBean.iniciarBean}
+		</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/director-adjunto/matriz.jsf" />
+		<view-id value="/academico/adjunto/classe/matriz.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/matriz/manutencao.jsf" />
+		<view-id value="/academico/adjunto/classe/manutencao_matriz.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/sala.jsf" />
+		<view-id value="/academico/adjunto/sala/sala.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/senha.jsf" />
+		<view-id value="/academico/adjunto/template/senha.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{buscarFotoBean.inicirBean}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/dados.jsf" />
+		<view-id value="/academico/adjunto/template/meusdados.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{buscarFotoBean.iniciarAtualizacaoDados}
+		</action>
+
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/perfil.jsf" />
+		<view-id value="/academico/adjunto/template/atualizarFotoPerfil.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{buscarFotoBean.iniciarMeusPerfil}
+		</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/director-adjunto/identificacao.jsf" />
+		<view-id value="/academico/adjunto/escola/identificacao.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{escolaBean.iniciarIdntificacaoDaEscola}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/turma.jsf" />
+		<view-id value="/academico/adjunto/turma/cadastro.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{turmaBean.iniciarBean}</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/director-adjunto/alocar-alunos.jsf" />
+		<view-id value="/academico/adjunto/turma/alunosTurma.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarQuadroMatriculas}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarEntumacao}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/alocar-professor.jsf" />
+		<view-id value="/academico/adjunto/turma/professorTurma.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{professorTurmaBean.iniciarAlocacao}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/aluno.jsf" />
+		<view-id value="/academico/adjunto/aluno/cadastro.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarBean}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-adjunto/aluno/consultar.jsf" />
+		<view-id value="/academico/adjunto/aluno/consultar.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{matriculaBean.iniciarBean}</action>
+	</url-mapping>
+
+
+	<!--Configuracao de url de a director ditrital da educacao -->
+	<url-mapping id="distrito">
+		<pattern value="/director-ditrital/index.jsf" />
+		<view-id value="/academico/director-ditrital/index.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+	</url-mapping>
+	<url-mapping id="distrito">
+		<pattern value="/director-ditrital/classe.jsf" />
+		<view-id value="/academico/director-ditrital/classe/cadastro.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-ditrital/classe.jsf" />
+		<view-id value="/academico/director-ditrital/classe/classe.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-ditrital/classe/disciplina.jsf" />
+		<view-id value="/academico/director-ditrital/classe/disciplina.jsf" />
+		<action onPostback="false">#{disciplinaClasseBean.iniciarBean}
+		</action>
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-ditrital/disciplina.jsf" />
+		<view-id value="/academico/director-ditrital/disciplina/cadastro.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-ditrital/area.jsf" />
+		<view-id value="/academico/director-ditrital/area/cadastro.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-ditrital/escola/cadastro.jsf" />
+		<view-id value="/academico/director-ditrital/escola/cadastro.jsf"></view-id>
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/director-ditrital/gerenciar-funcionario.jsf" />
+		<view-id value="/academico/director-ditrital/funcionario/cadastro.jsf"></view-id>
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+		<action onPostback="false">#{funcionarioBean.iniciarBean}
+		</action>
+		<action onPostback="false">#{escolaBean.iniciarBean}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-ditrital/calendario.jsf" />
+		<view-id value="/academico/director-ditrital/calendario/gerenciar.jsf"></view-id>
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/director-ditrital/funcionario/transferencia.jsf" />
+		<view-id value="/academico/director-ditrital/funcionario/transferencia.jsf"></view-id>
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-ditrital/funcionario/alocar.jsf" />
+		<view-id value="/academico/director-ditrital/funcionario/alocar.jsf"></view-id>
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-ditrital/dados.jsf" />
+		<view-id value="/academico/director-ditrital/template/meusdados.jsf"></view-id>
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+		<action onPostback="false">#{buscarFotoBean.iniciarAtualizacaoDados}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-ditrital/perfil.jsf" />
+		<view-id
+			value="/academico/director-ditrital/template/atualizarFotoPerfil.jsf"></view-id>
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+		<action onPostback="false">#{buscarFotoBean.iniciarMeusPerfil}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/director-ditrital/senha.jsf" />
+		<view-id value="/academico/director-ditrital/template/senha.jsf"></view-id>
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+		<action onPostback="false">#{buscarFotoBean.inicirBean}</action>
+	</url-mapping>
+
+
+	<!--Configuracao de url da secretaria da escola -->
+
+
+	<url-mapping>
+		<pattern value="/secretario/index.jsf" />
+		<view-id value="/academico/secretario/index.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/senha.jsf" />
+		<view-id value="/academico/secretario/template/senha.jsf" />
+		<action onPostback="false">#{buscarFotoBean.inicirBean}</action>
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/dados.jsf" />
+		<view-id value="/academico/secretario/template/meusdados.jsf" />
+		<action onPostback="false">#{buscarFotoBean.iniciarAtualizacaoDados}
+		</action>
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/perfil.jsf" />
+		<view-id value="/academico/secretario/template/atualizarFotoPerfil.jsf" />
+		<action onPostback="false">#{buscarFotoBean.iniciarMeusPerfil}
+		</action>
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/consultar-matricula.jsf" />
+		<view-id value="/academico/secretario/matricula/consultar.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/identificacao-da-escola.jsf" />
+		<view-id value="/academico/secretario/escola/identificacao.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{escolaBean.iniciarIdntificacaoDaEscola}
+		</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/secretario/transferencia/turma.jsf" />
+		<view-id value="/academico/secretario/transferencia/turma.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/transferencia/escola.jsf" />
+		<view-id value="/academico/secretario/transferencia/escola.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarQuadroMatriculas}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/aluno.jsf" />
+		<view-id value="/academico/secretario/aluno/cadastro.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarBean}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/aluno/consultar.jsf" />
+		<view-id value="/academico/secretario/aluno/consultar.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{matriculaBean.iniciarBean}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/matricula/renovar.jsf" />
+		<view-id value="/academico/secretario/matricula/renovacao.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{matriculaBean.iniciarBean}</action>
+		<action onPostback="false">#{alunoBean.iniciarQuadroMatriculas}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/turma.jsf" />
+		<view-id value="/academico/secretario/turma/cadastro.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{turmaBean.iniciarBean}</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/secretario/alocar-alunos.jsf" />
+		<view-id value="/academico/secretario/turma/alunosTurma.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarQuadroMatriculas}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarEntumacao}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/alocar-professor.jsf" />
+		<view-id value="/academico/secretario/turma/professorTurma.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{professorTurmaBean.iniciarAlocacao}
+		</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/secretario/matricula.jsf" />
+		<view-id value="/academico/secretario/matricula/matricula.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarQuadroMatriculas}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/transferencia/receber.jsf" />
+		<view-id value="/academico/secretario/transferencia/receber.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{transferenciaBean.iniciarBean}
+		</action>
+		<url-mapping>
+			<pattern value="/secretario/transferencia.jsf" />
+			<view-id value="/academico/secretario/transferencia/quadroTransferenca.jsf" />
+			<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+			</action>
+			<action onPostback="false">#{transferenciaBean.iniciarBean}
+			</action>
+		</url-mapping>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/enturmacao.jsf" />
+		<view-id value="/academico/secretario/matricula/enturmar.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarQuadroMatriculas}
+		</action>
+		<action onPostback="false">#{alunoBean.iniciarEntumacao}</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/sala.jsf" />
+		<view-id value="/academico/secretario/sala/sala.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/secretario/transferencia.jsf" />
+		<view-id value="/academico/secretario/transferencia/quadroTransferenca.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+		<action onPostback="false">#{transferenciaBean.iniciarBean}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/programador/index.jsf" />
+		<view-id value="/academico/programador/index.jsf" />
+
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/programador/senha.jsf" />
+		<view-id value="/academico/programador/template/senha.jsf"></view-id>
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+		<action onPostback="false">#{buscarFotoBean.inicirBean}</action>
+	</url-mapping>
+
+	<url-mapping>
+		<pattern value="/programador/dados.jsf" />
+		<view-id value="/academico/programador/template/meusdados.jsf"></view-id>
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+		<action onPostback="false">#{buscarFotoBean.iniciarAtualizacaoDados}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/programador/distrito.jsf" />
+		<view-id value="/academico/programador/distrito/cadastro.jsf"></view-id>
+		<action onPostback="false">#{distritoBean.iniciarBean}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/programador/turno.jsf" />
+		<view-id value="/academico/programador/turno/cadastro.jsf"></view-id>
+		<action onPostback="false">#{turnoBean.iniciarBean}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/programador/perfil.jsf" />
+		<view-id value="/academico/programador/template/atualizarFotoPerfil.jsf"></view-id>
+		<action onPostback="false">#{authenticationContext.buscarUsuarioDirecaoDistritalLogado}
+		</action>
+		<action onPostback="false">#{buscarFotoBean.iniciarMeusPerfil}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/programador/permissao.jsf" />
+		<view-id value="/academico/programador/permissao/cadastro.jsf"></view-id>
+		<action onPostback="false">#{permissaoBean.iniciarBean}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/programador/pais.jsf" />
+		<view-id value="/academico/programador/pais/cadastro.jsf"></view-id>
+		<action onPostback="false">#{paisBean.iniciarBean}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/programador/funcionario.jsf" />
+		<view-id value="/academico/programador/funcionario/cadastro.jsf"></view-id>
+		<action onPostback="false">#{funcionarioBean.iniciarBeanProgramador}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/programador/unidade-distrital.jsf" />
+		<view-id value="/academico/programador/direccao_distrital/cadastro.jsf"></view-id>
+		<action onPostback="false">#{direccaoDistritalBean.iniciarBean}
+		</action>
+	</url-mapping>
+</pretty-config>
+
+
+
+
+
+
+
+
+
+

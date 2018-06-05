@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<ui:composition template="/academico/principal/templete.xhtml">
+	<ui:define name="titulo">
+		<h:outputText value="Pesquisa de Turno"
+			rendered="#{turnoBean.cadastroTurnoBoolean ==false}" />
+
+		<h:panelGroup
+			rendered="#{turnoBean.cadastroTurnoBoolean ==true}">
+			<h:outputText value="Novo Turno"
+				rendered="#{turnoBean.novoTurnoBoolean ==true}" />
+			<h:outputText value="Atualização de Distrito"
+				rendered="#{turnoBean.editarTurnoBoolean ==true}" />
+
+
+		</h:panelGroup>
+	</ui:define>
+	<ui:define name="menu">
+		<ui:include src="/academico/programador/template/menu.xhtml" />
+	</ui:define>
+	<ui:define name="dados_pessoas">
+		<ui:include src="/academico/programador/template/dados_pessoas.xhtml" />
+	</ui:define>
+
+
+	<ui:define name="ambiente_comum">
+		<h:form id="form" styleClass="form-horizontal">
+			<!--Panel-->
+			<div class="card">
+				<h4 class="card-header primary-color white-text ">
+
+					<h:outputText value="Pesquisa de Distrito"
+						style="font-weight: 700;"
+						rendered="#{turnoBean.cadastroTurnoBoolean ==false}" />
+					<h:outputText value="Novo Turno" style="font-weight: 700;"
+						rendered="#{turnoBean.cadastroTurnoBoolean !=false}" />
+
+					<h:panelGroup styleClass="form-span">
+						<h:commandLink value="Novo Turno"
+							actionListener="#{turnoBean.novo}" immediate="true"
+							rendered="#{turnoBean.cadastroTurnoBoolean==false}" />
+						<h:commandLink value="Voltar para Pesquisa"
+							actionListener="#{turnoBean.voltar}" immediate="true"
+							rendered="#{turnoBean.cadastroTurnoBoolean !=false}" />
+					</h:panelGroup>
+				</h4>
+				<div class="card-body">
+					<p:messages id="mensagem" closable="true" />
+					<!-- Pesquisa de funcionario -->
+					<h:panelGroup
+						rendered="#{turnoBean.cadastroTurnoBoolean ==false}">
+
+
+
+						<div class="form-group">
+							<div class="col-sm-6" style="padding-left: 0;">
+								<div class="input-group">
+
+
+									<h:inputText styleClass="form-control"
+										value="#{turnoBean.pesquisa}" required="true"
+										requiredMessage="O campo procurar é Obrigatório">
+										<f:passThroughAttribute name="placeholder"
+											value="Qual turno que você está procurar?" />
+										<f:passThroughAttribute name="autofocus" value="true" />
+									</h:inputText>
+									<span class="input-group-btn"> <h:commandButton
+											styleClass="btn btn-primary" value="Buscar!"
+											actionListener="#{turnoBean.buscar}" />
+									</span>
+								</div>
+
+							</div>
+						</div>
+
+						<h:dataTable value="#{turnoBean.turnos}" var="turno"
+							id="tabela-escola"
+							styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
+							headerClass="cab-tabela" footerClass="fo-tabela"
+							style="margin-top: 20px;" rowClasses="linha2, linha1">
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#" />
+								</f:facet>
+								<h:outputText value=" #{turno.id}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Curso" />
+								</f:facet>
+								<h:outputText value="#{turno.curso}" style=" margin-left:4px;" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Descrição" />
+								</f:facet>
+								<h:outputText value="#{turno.descricao.label}" style=" margin-left:4px;" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Hora Inicial" />
+								</f:facet>
+								<h:outputText value="#{turno.horaInicio}"
+									>
+									<f:convertDateTime pattern="HH:mm"/>
+									</h:outputText>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Hora Final" />
+								</f:facet>
+								<h:outputText value="#{turno.horaFim}"
+									>
+									<f:convertDateTime pattern="HH:mm"/>
+									</h:outputText>
+							</h:column>
+							<h:column>
+								<div class="form-group row" style="margin-bottom: 0;">
+									<h:commandLink title="Editar este turno?"
+										immediate="true" action="#{turnoBean.editar(turno)}"
+										styleClass="tooltip-left"
+										style="margin-left:10px; color: black;">
+										<span class="glyphicon glyphicon-pencil"></span>
+									</h:commandLink>
+
+
+									<h:commandLink immediate="true" title="Excluir esse turno?"
+										styleClass="tooltip-left" id="id-excluir"
+										style="color: black; margin-left:10px;">
+										<span class="glyphicon glyphicon-remove"></span>
+										<p:ajax event="click"
+											listener="#{turnoBean.prepararParExcluir(turno)}"
+											update="form:id-panelGroup-confirma-modal" />
+										<f:passThroughAttribute name="data-toggle" value="modal" />
+										<f:passThroughAttribute name="data-target" value="#myModal" />
+									</h:commandLink>
+								</div>
+							</h:column>
+							<f:facet name="footer">
+								<h:outputText
+									value=" #{turnoBean.qtdTurnosEncontrados} turno(s) encontrado(s)"></h:outputText>
+							</f:facet>
+						</h:dataTable>
+					</h:panelGroup>
+
+					<!-- Cadastro e edicao -->
+					<h:panelGroup
+						rendered="#{turnoBean.cadastroTurnoBoolean==true}">
+
+
+						<div class="form-group row">
+							<h:outputLabel value="Curso :"
+								styleClass="col-sm-3 control-label texto-label" />
+							<div class="col-sm-6">
+
+								<h:selectOneMenu
+									requiredMessage="O campo curso é obrigatório"
+									value="#{turnoBean.turno.curso}"
+									styleClass="form-control">
+
+
+									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+
+									<f:selectItems value="#{turnoBean.cursos}"
+										var="curso" itemLabel="#{curso}"
+										itemValue="#{curso}" />
+
+								</h:selectOneMenu>
+							</div>
+						</div>
+
+
+						<div class="form-group row">
+							<h:outputLabel value="Turno :"
+								styleClass="col-sm-3 control-label texto-label" />
+							<div class="col-sm-5">
+
+								<h:selectOneMenu
+									requiredMessage="O campo turno é obrigatório"
+									value="#{turnoBean.turno.descricao}"
+									styleClass="form-control">
+
+
+									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+
+									<f:selectItems value="#{turnoBean.tipoTurnos}"
+										var="tipoTurno" itemLabel="#{tipoTurno}"
+										itemValue="#{tipoTurno}" />
+
+								</h:selectOneMenu>
+							</div>
+						</div>
+
+						<div class="form-group row">
+
+							<h:outputLabel value="Hora inicial :"
+								styleClass="col-sm-3 control-label texto-label" />
+							<div class="col-sm-3">
+									<h:selectOneMenu
+									requiredMessage="O campo hora inicial é obrigatório"
+									value="#{turnoBean.turno.horaInicio}"
+									styleClass="form-control">
+
+
+									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+
+									<f:selectItems value="#{turnoBean.aulas}"
+										var="aula" itemLabel="#{aula.label}"
+										itemValue="#{aula.label}" />
+<f:convertDateTime pattern="HH:mm"/>
+								</h:selectOneMenu>
+							</div>
+
+						</div>
+						<div class="form-group row">
+
+							<h:outputLabel value="Hora final :"
+								styleClass="col-sm-3 control-label texto-label" />
+							<div class="col-sm-3">
+									<h:selectOneMenu
+									requiredMessage="O campo hora final é obrigatório"
+									value="#{turnoBean.turno.horaFim}"
+									styleClass="form-control">
+
+
+									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+
+									<f:selectItems value="#{turnoBean.aulas}"
+										var="aula" itemLabel="#{aula.label}"
+										itemValue="#{aula.label}" />
+<f:convertDateTime pattern="HH:mm"/>
+								</h:selectOneMenu>
+							</div>
+
+						</div>
+
+						<div class="form-group row">
+							<h:outputLabel styleClass="col-sm-3 col-form-label"
+								value="Observação : " />
+							<div class="col-sm-8">
+								<h:inputTextarea cols="3"
+									value="#{turnoBean.turno.observacao}"
+									styleClass="form-control" rows="4"
+									onkeydown="return quatidadeCarrateres(this, 255, event);">
+									<f:ajax event="keyup" render="contador"
+										listener="#{turnoBean.contarQuantidadeCarateres}" />
+								</h:inputTextarea>
+								<h:panelGroup id="contador">
+									<h:outputText style="margin-left: 10px; "
+										value="Máximo 255 caracteres, digitado #{turnoBean.quantidadeCaracteres} caracteres." />
+								</h:panelGroup>
+							</div>
+						</div>
+
+
+						<div class="form-inline">
+
+							<h:commandButton value="Cadastrar"
+								action="#{turnoBean.salvar}"
+								style="margin-left: 11%;margin-top:2%;"
+								styleClass="btn btn-primary" />
+
+
+							<h:commandButton value="Voltar" immediate="true"
+								action="#{turnoBean.voltar}" styleClass="btn btn-success"
+								style="margin-left: 1%; margin-top:2%;"
+								rendered="#{escolaBean.editarEscolaBoolean ==false and escolaBean.activarEscolaBoolean ==false}" />
+						</div>
+
+
+
+					</h:panelGroup>
+				</div>
+			</div>
+			<!-- Modal -->
+
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" data-backdrop="static"
+				style="padding-top: 210px;">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">
+								<h:outputLabel value="Você Tem certeza?" />
+
+							</h4>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<h:panelGroup id="id-panelGroup-confirma-modal">
+								<h:outputText
+									value="Tem certeza que deseja excluir o turno da  " />
+								<h:outputLabel value=" #{turnoBean.turnoSelecionado.descricao.label}"
+									style="font-weight: 600;" />
+								<h:outputText value="&nbsp;do curso " />
+								<h:outputLabel
+									value=" #{turnoBean.turnoSelecionado.curso}"
+									style="font-weight: 600;" />
+
+								<h:outputText value="?" />
+							</h:panelGroup>
+
+
+						</div>
+						<div class="modal-footer">
+							<h:commandButton type="button" title="Cancelar"
+								class="btn btn-success" value="Cancelar">
+								<f:passThroughAttribute name="data-dismiss" value="modal" />
+							</h:commandButton>
+
+							<h:commandButton title="Excluir" styleClass="btn btn-primary"
+								value="Excluir" action="#{turnoBean.excluir}">
+							</h:commandButton>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/academico/principal/index.xhtml">
+	<ui:define name="titulo">
+		<h:outputText rendered="#{notaBean.selecionarturma == false}"
+			value="Selecção de turma" />
+		<h:outputText rendered="#{notaBean.selecionarturma == true}"
+			value="Lançar Nota de Aluno" />
+	</ui:define>
+
+
+	<ui:define name="cabacalho">
+		<link rel="stylesheet"
+			href="#{request.contextPath}/resources/css/nota.css" />
+		<style>
+.corpo {
+	min-height: 200px;
+}
+
+.corpo_para_fundo {
+	min-height: 557px;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="titulo_do_corpo">
+		<ui:include src="/academico/professor/template/titulo_do_corpo.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="nome_usuario">
+		<ui:include src="/academico/professor/template/nome_usuario.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="ambiente_comum">
+		<h:form id="form_menu">
+
+			<div class="menu menubar">
+				<ul class="btn1 btn-green">
+					<li style="width: 65px;"><h:commandLink
+							action="#{notaBean.voltarLançarNotas}"> Principal
+							</h:commandLink></li>
+					<h:outputText value=" > " style="font-size:21px;" />
+					<li style="width: 216px;"><h:commandLink
+							rendered="#{notaBean.selecionarturma == false}"
+							action="#{notaBean.lançarNotas}">
+							Emitir cadernata de professor
+						</h:commandLink> <h:commandLink rendered="#{notaBean.selecionarturma == true}"
+							action="#{notaBean.buscarCadernetaProfessor}"
+							style="margin-left:-40px;">
+							 Lançar Nota de Aluno
+						</h:commandLink></li>
+				</ul>
+			</div>
+		</h:form>
+
+		<h:form id="form_ambiente_comum">
+			<h:panelGroup rendered="#{notaBean.selecionarturma == false}">
+
+				<h:panelGrid
+					style=" width:100%;  margin-bottom: 14px; font-size: 30px;color: rgb(142, 147, 233);text-align: center;margin-top: 52px;"
+					rendered="#{professorTurmaBean.turmasProfessor ==null}"
+					styleClass="horarioIndispnivel">
+					<h:outputText value="Turmas indisponível no sistema." />
+
+				</h:panelGrid>
+
+
+				<p:panel header="Selecionar Turma" style="margin: 20px 6px 0px;"
+					styleClass="panel-professor-turma"
+					rendered="#{professorTurmaBean.turmasProfessor !=null}">
+
+					<h:panelGrid style="margin-top:30px;"></h:panelGrid>
+					<h:panelGrid styleClass="table table-sem-border">
+						<h:outputLabel value="Minhas Turmas" styleClass="margin-left" />
+
+						<h:dataTable border="0" cellpadding="1" cellspacing="1"
+							styleClass="tabelaProfessor table table-bordered"
+							value="#{professorTurmaBean.turmasProfessor}" var="professor"
+							style="border: 4px solid #d8e3ef;; background: #d8e3ef; "
+							rowClasses="linha1, linha2"
+							columnClasses="coluna1, coluna2, coluna3, coluna4,, ,coluna5, coluna6"
+							headerClass="cabecalhoTabela1">
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Turma" styleClass="margin-left" />
+								</f:facet>
+								<h:outputText
+									value=" #{professor.turma.classe.sigla}ª / #{professor.turma.descricao}"
+									styleClass="margin-left" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Classe" styleClass="margin-left" />
+								</f:facet>
+								<h:outputText value="#{professor.turma.classe.descricao}"
+									style="	text-transform: uppercase;" styleClass="margin-left" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Disciplina" styleClass="margin-left" />
+								</f:facet>
+								<h:outputText value="#{professor.disciplina.descricao}"
+									styleClass="margin-left" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Sala" styleClass="margin-left" />
+								</f:facet>
+								<h:outputText value="Não informada"
+									rendered="#{professor.turma.sala.numero ==null}" />
+								<h:outputText value=" #{professor.turma.sala.numero}"
+									style="	text-transform: uppercase; "
+									rendered="#{professor.turma.sala.numero !=null}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Turno" styleClass="margin-left" />
+								</f:facet>
+								<h:outputText value="Não informado"
+									rendered="#{professor.turma.turno.descricao ==null or professor.turma.turno.descricao ==''}" />
+								<h:outputText value=" #{professor.turma.turno.descricao}"
+									style="	text-transform: uppercase; "
+									rendered="#{professor.turma.turno.sigla !=null}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Horario" styleClass="margin-left" />
+								</f:facet>
+								<h:outputText value="Não difinido"
+									rendered="#{professor.horario ==null}" />
+								<h:outputText value=" #{professor.horario}"
+									style="	text-transform: uppercase; font-weight: 500;"
+									rendered="#{professor.horario !=null}" />
+							</h:column>
+							<h:column headerClass="cabecalhoTabela1 quantidadeAluno">
+								<f:facet name="header">
+									<h:outputText value="Qtd. de Alunos" />
+								</f:facet>
+
+								<h:outputText value="#{professor.turma.inscrito}"
+									style="margin-right: 5px;" />
+							</h:column>
+							<h:column>
+								<h:commandLink
+									action="#{notaBean.selecionarTurmaComProfessorDisciplina(professor)}"
+									title="Selecionar esta turma?"
+									update="form_menu form_dados_pessoais form_ambiente_comum"
+									style=" background-color: #FFF; " styleClass="tooltip-left">
+									<h:graphicImage url="#{buscarFotoBean.retornarImagesNext}"
+										style=" width:21px; height: 20px; " />
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="left" />
+								</h:commandLink>
+							</h:column>
+
+						</h:dataTable>
+
+					</h:panelGrid>
+				</p:panel>
+
+
+			</h:panelGroup>
+			<h:panelGroup rendered="#{notaBean.selecionarturma !=false}">
+				<ui:include src="/academico/professor/nota/nota.xhtml"></ui:include>
+			</h:panelGroup>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

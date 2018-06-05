@@ -1,0 +1,57 @@
+.cabacalho_tabala {
+	text-align: left;
+	font-size: 16px;
+	font-family: sans-serif, Arial;
+	font-weight: bold;
+	color: #0e0707;
+	padding: 5px;
+	background: #EDEDED 0%;
+}
+
+.linha2 {
+	background: #EEF9FB none repeat scroll 0% 0%;
+	height: 10px;
+}
+
+.linha1 {
+	background: #F1FFFF;
+	
+}
+
+.ui-datepicker-trigger {
+	padding-bottom: 4px;
+}
+
+.sexo input[type=checkbox], input[type=radio] {
+	margin-left: 20px;
+	margin-top: 3px;
+}
+
+.text-lebal {
+	float: right;
+}
+
+.texto_cabecalho {
+	letter-spacing: 1px;
+	text-shadow: 2px 2px #000000, 0px 15px 10px rgba(0, 0, 0, 0.4), 0px 15px
+		2px rgba(0, 0, 0, 0.1), 0px 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.texto_sub_cabecalho {
+	box-shadow: 0px 2px 0px #D3CACA;
+}
+
+.texto-tranf-input, .texto-tranf-input option {
+	text-transform: uppercase;
+}
+
+.linhaTabela .a, .linhaTabela .dataFinal {
+	margin-left: 20px;
+}
+
+.linhaTabela .dataInicio {
+	margin-left: 10px;
+}
+.linha11{
+  background: #FAFAFA;
+  }

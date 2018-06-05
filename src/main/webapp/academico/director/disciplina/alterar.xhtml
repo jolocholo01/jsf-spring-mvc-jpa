@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/academico/principal/index.xhtml">
+	<ui:define name="titulo">Alterar Dados Pessoais</ui:define>
+	<ui:define name="titulo_do_corpo">
+		<ui:include src="/academico/director/template/titulo_do_corpo.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="nome_usuario">
+		<ui:include src="/academico/director/template/nome_usuario.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="menu">
+		<ui:include src="/academico/director/template/menu.xhtml" />
+	</ui:define>
+	<ui:define name="dados_pessoas">
+		<ui:include src="/academico/director/template/dados_pessoas.xhtml" />
+	</ui:define>
+	<ui:define name="ambiente_comum">
+		<h:form>
+			<h:panelGroup id="id_pesquisa_estudante"
+				rendered="#{matriculaBean.inscricaoMatricula==false}">
+				<h:panelGrid columns="2" styleClass="tabala_cadastro"
+					style="width: 620px; " headerClass="cabecalhoTabela">
+					<f:facet name="header">
+						<h:outputText value="Formulário de Pesquisa"
+							styleClass="texto_cabecalho" />
+					</f:facet>
+					<h:outputLabel value="Escola: "
+						style=" margin-top: 10px; margin-left: 20px;" />
+					<h:outputText
+						value="#{authenticationContext.usuarioEscolaLogada.descricao} "
+						style=" margin-top: 10px; " />
+					<h:outputLabel value="Ano Escolar: " style=" margin-left: 20px;" />
+					<h:outputText value="2017" size="30" />
+					<h:outputLabel value="Ciclo :" style=" margin-left: 20px;" />
+					<h:selectOneMenu 
+						style="width:150px; ">
+						<f:selectItem itemLabel="Selecione ..." itemValue="#{null}" />
+						<f:selectItems value="#{disciplinaBean.ciclos}" var="ciclo"
+							itemLabel="#{ciclo.label}" itemValue="#{ciclo}" />
+					</h:selectOneMenu>
+
+					<h:outputLabel value="Nome da Disciplina:"
+						style=" margin-top: 10px; margin-left: 20px;" />
+					<h:inputText value="#{disciplinaBean.disciplina.descricao}"
+						style=" margin-top: 10px;" size="50" />
+
+
+					<f:facet name="footer">
+						<h:panelGrid
+							style="background: rgb(237, 236, 236) none repeat scroll 0% 0%; width: 620px;">
+							<h:panelGroup>
+								<h:commandButton value="Buscar"
+									action="#{disciplinaBean.buscarDisciplina}"
+									style="margin-left:250px;" />
+								<h:commandButton value="Cancelar"
+									action="/academico/director/director.jsf" />
+							</h:panelGroup>
+						</h:panelGrid>
+					</f:facet>
+				</h:panelGrid>
+				<h:dataTable value="#{disciplinaBean.disciplinas}" var="disciplina"
+					border="0" cellpadding="1" cellspacing="1"
+					style="margin-top: 50px; margin-left: 30px; width:620px; padding: 3px;"
+					headerClass="cabacalho_tabala" rowClasses="linha1, linha2">
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Ciclo"></h:outputText>
+						</f:facet>
+						<h:outputText value="#{disciplina}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Nome da Disciplina "></h:outputText>
+						</f:facet>
+						<h:outputText value="#{disciplina.descricao}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Sigla" />
+						</f:facet>
+						<h:outputText value="#{disciplina.sigla}"
+							style="text-transform: uppercase;" />
+					</h:column>
+
+					<h:column>
+						<h:commandLink title="Selecionar Estudante" update="@form"
+							style=" background-color: #FFF;">
+							<h:graphicImage url="#{buscarFotoBean.retornarImagesProximo}"
+								style=" width:21px; hegth: 21px; margin-left:10px;margin-right: 10px;" />
+						</h:commandLink>
+					</h:column>
+				</h:dataTable>
+			</h:panelGroup>
+			<h:panelGroup id="id_inscriacao_estudante"
+				rendered="#{matriculaBean.inscricaoMatricula !=false}">
+
+				<p:messages />
+				<h:panelGrid columns="2" styleClass="tabala_cadastro"
+					style="width: 980px;" headerClass="cabecalhoTabela">
+					<f:facet name="header">
+						<h:outputText value="Formulário de Alteração de Dados Pessoais" />
+					</f:facet>
+
+
+				</h:panelGrid>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

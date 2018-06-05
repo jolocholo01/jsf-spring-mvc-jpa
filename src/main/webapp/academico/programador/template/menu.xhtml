@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<nav
+	class="navbar navbar-expand-md navbar-dark bg-dark fixed-top menu-horizontal">
+<a class="navbar-brand"
+	href="#{request.contextPath}/programador/index.jsf">SIGE</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse"
+	data-target="#navbarsExampleDefault"
+	aria-controls="navbarsExampleDefault" aria-expanded="false"
+	aria-label="Toggle navigation">
+	<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Configurações</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+				<h:outputLink
+					value="#{request.contextPath}/programador/distrito.jsf"
+					styleClass="dropdown-item">Cadastro de distrito</h:outputLink>
+				<h:outputLink value="#{request.contextPath}/programador/pais.jsf"
+					styleClass="dropdown-item">Cadastro de país</h:outputLink>
+				<h:outputLink
+					value="#{request.contextPath}/programador/permissao.jsf"
+					styleClass="dropdown-item">Cadastro de permissão</h:outputLink>
+					<h:outputLink
+					value="#{request.contextPath}/programador/turno.jsf"
+					styleClass="dropdown-item">Cadastro de turno</h:outputLink>
+				<h:outputLink
+					value="#{request.contextPath}/programador/unidade-distrital.jsf"
+					styleClass="dropdown-item">Cadastro de unidade distrital</h:outputLink>
+			</div></li>
+
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Funcionário</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+
+				<h:outputLink
+					value="#{request.contextPath}/programador/funcionario.jsf"
+					styleClass="dropdown-item">Cadastro de Funcionário</h:outputLink>
+			</div></li>
+
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Personalizações</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+				<h:outputLink value="#{request.contextPath}/programador/senha.jsf"
+					styleClass="dropdown-item">Alterar senha
+						</h:outputLink>
+				<h:outputLink value="#{request.contextPath}/programador/dados.jsf"
+					styleClass="dropdown-item">Meus dados Pessoais
+					</h:outputLink>
+
+			</div></li>
+	</ul>
+	<h:panelGroup class="form-inline my-2 my-lg-0 form_sair">
+
+		<h:commandLink value="Sair" styleClass="botao" title="Sair do sistema"
+			action="#{authenticationContext.logout}" />
+	</h:panelGroup>
+</div>
+</nav>
+</html>

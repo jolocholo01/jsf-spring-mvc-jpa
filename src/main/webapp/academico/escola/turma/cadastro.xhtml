@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+
+		<h:form id="form-turma">
+
+			<div
+				class="panel panel-defaul ui-panel ui-widget ui-widget-content ui-corner-all"
+				style="margin-bottom: 2%;">
+				<div
+					class="panel-heading ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+
+					<h:panelGroup class="panel-title ui-panel-title">
+						<h:outputText value="Cadastrar Turma" style="font-weight: 700;" />
+
+						<h:commandLink
+							style="color: blue; float: right; font-weight: 500;"
+							value="Nova Turma" actionListener="#{turmaBean.novaTurma}"
+							immediate="true" rendered="#{turmaBean.turmaSelecionada==null}" />
+						<h:commandLink
+							style="color: blue; float: right; font-weight: 500;"
+							value="Voltar para Pesquisa" actionListener="#{turmaBean.voltar}"
+							immediate="true" rendered="#{turmaBean.turmaSelecionada !=null}" />
+					</h:panelGroup>
+				</div>
+				<div class="panel-body">
+
+					<p:messages closable="true" />
+
+					<h:panelGroup rendered="#{turmaBean.turmaSelecionada==null}">
+						<div class="form-group row">
+
+							<h:outputLabel value="Curso: "
+								styleClass="col-sm-3 control-label texto-label textfim" />
+							<div class="col-sm-2">
+								<h:selectOneMenu value="#{turmaBean.turma.curso}"
+									styleClass="form-control" required="true"
+									requiredMessage="O campo curso é obrigatório">
+									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+									<f:selectItems value="#{alunoBean.cursos}" var="curso"
+										itemLabel="#{curso}" itemValue="#{curso}" />
+									<p:ajax event="change"
+										listener="#{turmaBean.buscarMatrizesCurriculares}"
+										update="idArea " />
+								</h:selectOneMenu>
+
+							</div>
+						</div>
+
+
+						<div class="form-group row">
+							<h:outputLabel value="Classe:"
+								styleClass="col-sm-3 control-label texto-label textfim" />
+							<div class="col-sm-5">
+								<h:selectOneMenu value="#{turmaBean.turma.classe}"
+									converter="classeCicloConverter" required="true"
+									requiredMessage="O campo classe é obrigatório"
+									styleClass="form-control" style="text-transform: uppercase;">
+									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+									<f:selectItems value="#{turmaBean.obterClasseDaEScola}"
+										var="classe"
+										itemLabel="#{classe.id} - #{classe.tipoEnsino} > #{classe.ciclo} > #{classe.descricao}"
+										itemValue="#{classe}" />
+
+
+									<p:ajax event="change"
+										listener="#{turmaBean.buscarMatrizesCurriculares}"
+										update="idArea" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+
+						<h:panelGroup id="idArea">
+							<h:panelGroup
+								rendered="#{turmaBean.turma.classe.ciclo=='2º CICLO'}">
+								<div class="form-group row">
+
+
+									<h:outputLabel value="Área Curricular: "
+										styleClass="col-sm-3 control-label texto-label textfim" />
+									<div class="col-sm-6">
+										<h:selectOneMenu value="#{turmaBean.turma.area}"
+											styleClass="form-control" required="true"
+											requiredMessage="O campo área curricular é obrigatório">
+											<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+											<f:selectItems value="#{turmaBean.matrizes}" var="matriz"
+												itemLabel="#{matriz.classe.descricao} #{matriz.tipoArea}"
+												itemValue="#{matriz.tipoArea}" />
+
+										</h:selectOneMenu>
+									</div>
+								</div>
+							</h:panelGroup>
+						</h:panelGroup>
+
+
+
+
+						<div class="form-group row">
+							<h:outputLabel value="Período lectivo:"
+								styleClass="col-sm-3 control-label texto-label textfim" />
+							<div class="col-sm-1">
+								<h:inputText styleClass="form-control"
+									value="#{turmaBean.turma.ano}"
+									onkeypress="return aceitarApenaNumero(this , event );" />
+							</div>
+
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-5">
+								<h:commandButton value="Listar quadro de Turmas"
+									style="margin-left:3px;float: right;"
+									action="#{turmaBean.listarTurmas}"
+									styleClass="btn btn-primary active " />
+
+
+							</div>
+						</div>
+
+						<h:dataTable id="tabela-turma" value="#{turmaBean.turmas}"
+							var="turma"
+							styleClass="tabelaProfessor tabela-renovar table table-bordered">
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Cód." />
+								</f:facet>
+								<h:outputText value="#{turma.id}" style=" margin-left:4px;" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Turma " />
+								</f:facet>
+								<h:outputText
+									value="#{turma.classe.sigla}ª - #{turma.descricao} - #{turma.turno.sigla}"
+									style=" margin-left:4px;" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Classe " />
+								</f:facet>
+								<h:outputText value="#{turma.classe.descricao}"
+									style=" margin-left:4px;" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Capacidade" />
+								</f:facet>
+								<h:outputText value="#{turma.capacidade}"
+									style=" margin-left:4px;" />
+							</h:column>
+							
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Situação" />
+								</f:facet>
+								<h:outputText value="#{turma.ativo?'ABERTA':'FECHADA'}"
+									style=" margin-left:4px;" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Sala" />
+								</f:facet>
+								<h:outputText value="SALA Nº #{turma.sala.numero}"
+									style=" margin-left:4px;" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Turno" />
+								</f:facet>
+
+								<div class="col-sm-2">
+									<h:outputText value="#{turma.turno.descricao}" />
+
+								</div>
+							</h:column>
+							<h:column>
+								<h:commandLink
+									actionListener="#{turmaBean.buscarTurmaSelecionada(turma)}"
+									immediate="true" title="Atalizar esta turma??"
+									styleClass="tooltip-left" style="margin-left:10px;">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</h:commandLink>
+
+								<h:commandLink title="Excluir esta turma?" immediate="true"
+									styleClass="btn-link btn-xs tooltip-left"
+									style="margin-left:10px;">
+									<span class="glyphicon glyphicon-remove"></span>
+									<p:ajax event="click"
+										update="form-turma:id-panelGroup-confirma-modal"
+										listener="#{turmaBean.prepararExclusao(turma)}" />
+									<f:passThroughAttribute name="data-toggle" value="modal" />
+									<f:passThroughAttribute name="data-target" value="#myModal" />
+								</h:commandLink>
+							</h:column>
+							<f:facet name="footer">
+								<h:outputText
+									value=" #{turmaBean.quantidadeTurmas} turma(s) encontrada(s)"></h:outputText>
+							</f:facet>
+						</h:dataTable>
+
+					</h:panelGroup>
+					<h:panelGroup rendered="#{turmaBean.turmaSelecionada!=null}">
+						<div class="form-group row">
+							<h:outputLabel value="Curso: "
+								styleClass="col-sm-3 control-label texto-label textfim" />
+							<div class="col-sm-2">
+								<h:selectOneMenu value="#{turmaBean.turmaSelecionada.curso}"
+									styleClass="form-control" required="true"
+									requiredMessage="O campo curso é obrigatório">
+									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+									<f:selectItems value="#{alunoBean.cursos}" var="curso"
+										itemLabel="#{curso}" itemValue="#{curso}" />
+									<p:ajax event="change"
+										listener="#{turmaBean.buscarMatrizesCurriculares}"
+										update="idArea2" />
+									<p:ajax event="change" listener="#{turmaBean.buscarTurnos}"
+										update="idTurno" />
+								</h:selectOneMenu>
+
+							</div>
+						</div>
+
+
+						<div class="form-group row">
+							<h:outputLabel value="Estrutura Curricular:"
+								styleClass="col-sm-3 control-label texto-label textfim" />
+							<div class="col-sm-5">
+								<h:selectOneMenu value="#{turmaBean.turmaSelecionada.classe}"
+									converter="classeCicloConverter" required="true"
+									requiredMessage="O campo Estrutura Curricular é obrigatório"
+									styleClass="form-control" style="text-transform: uppercase;">
+									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+									<f:selectItems value="#{turmaBean.obterClasseDaEScola}"
+										var="classe"
+										itemLabel="#{classe.id} - #{classe.tipoEnsino} > #{classe.ciclo} > #{classe.descricao}"
+										itemValue="#{classe}" />
+
+
+									<p:ajax event="change"
+										listener="#{turmaBean.buscarMatrizesCurriculares}"
+										update="idArea2" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+
+						<h:panelGroup id="idArea2">
+							<h:panelGroup
+								rendered="#{turmaBean.turmaSelecionada.classe.ciclo=='2º CICLO'}">
+								<div class="form-group row">
+
+
+									<h:outputLabel value="Área Curricular: "
+										styleClass="col-sm-3 control-label texto-label textfim" />
+									<div class="col-sm-6">
+										<h:selectOneMenu value="#{turmaBean.turmaSelecionada.area}"
+											styleClass="form-control" required="true"
+											requiredMessage="O campo área curricular é obrigatório">
+											<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+											<f:selectItems value="#{turmaBean.matrizes}" var="matriz"
+												itemLabel="#{matriz.classe.descricao} #{matriz.tipoArea}"
+												itemValue="#{matriz.tipoArea}" />
+
+										</h:selectOneMenu>
+									</div>
+								</div>
+							</h:panelGroup>
+						</h:panelGroup>
+
+
+
+
+						<div class="form-group row">
+							<h:outputLabel value="Período lectivo:"
+								styleClass="col-sm-3 control-label texto-label textfim" />
+							<div class="col-sm-1">
+								<h:inputText styleClass="form-control"
+									value="#{turmaBean.turmaSelecionada.ano}"
+									onkeypress="return aceitarApenaNumero(this , event );">
+
+								</h:inputText>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<h:outputLabel value="Turma :"
+								styleClass="col-sm-3 control-label texto-label textfim" />
+							<div class="col-sm-2">
+								<h:inputText styleClass="form-control"
+									onchange="this.value = this.value.toUpperCase();"
+									value="#{turmaBean.turmaSelecionada.descricao}" />
+							</div>
+						</div>
+						<div class="form-group row">
+							<h:outputLabel value="Capacidade de Sala de Aula :"
+								styleClass="col-sm-3 control-label texto-label textfim" />
+							<div class="col-sm-1">
+								<h:inputText styleClass="form-control"
+									value="#{turmaBean.turmaSelecionada.capacidade}"
+									onkeypress="return aceitarApenaNumero(this , event );" />
+							</div>
+						</div>
+
+						<div class="form-group row">
+
+							<h:outputLabel value="Turno: "
+								styleClass="col-sm-3 control-label texto-label textfim" />
+							<div class="col-sm-3">
+								<h:selectOneMenu id="idTurno"
+									value="#{turmaBean.turmaSelecionada.turno}"
+									styleClass="form-control" required="true"
+									converter="turnoConverter"
+									requiredMessage="O campo Turno é obrigatório">
+									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+									<f:selectItems value="#{turmaBean.turnos}" var="turno"
+										itemLabel="#{turno.descricao} " itemValue="#{turno}" />
+
+								</h:selectOneMenu>
+							</div>
+						</div>
+
+						<div class="form-group row">
+
+							<h:outputLabel value="Aberta?: "
+								styleClass="col-sm-3 control-label textfim" />
+							<div class="col-sm-3">
+								<h:selectBooleanCheckbox styleClass="form-chackbox"
+									value="#{turmaBean.turmaSelecionada.ativo}" />
+							</div>
+						</div>
+
+						<div class="form-group row">
+
+							<h:outputLabel value="Sala: "
+								styleClass="col-sm-3 control-label texto-label textfim" />
+							<div class="col-sm-3">
+								<h:selectOneMenu id="idSala"
+									value="#{turmaBean.turmaSelecionada.sala}"
+									styleClass="form-control" required="true"
+									converter="salaConverter"
+									requiredMessage="O campo Sala é obrigatório">
+									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+									<f:selectItems value="#{turmaBean.obterSalaDaEScola}"
+										var="sala" itemLabel="SALA Nº #{sala.numero} "
+										itemValue="#{sala}" />
+
+								</h:selectOneMenu>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-5">
+								<h:commandButton value="Cadastrar Turma"
+									style="margin-left:3px;float: right;"
+									actionListener="#{turmaBean.salvarTurma}"
+									styleClass="btn btn-primary active " />
+
+
+							</div>
+						</div>
+					</h:panelGroup>
+				</div>
+
+			</div>
+
+
+
+			<!-- Modal -->
+
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" data-backdrop="static"
+				style="padding-top: 210px;">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">
+								<h:outputLabel value="Você Tem certeza?" />
+
+							</h4>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<h:panelGroup aria-hidden="true">&times;
+									<p:ajax event="click" update="form-turma:tabela-turma" />
+								</h:panelGroup>
+							</button>
+						</div>
+						<div class="modal-body">
+							<h:panelGroup id="id-panelGroup-confirma-modal">
+								<h:outputText value="Tem certeza que deseja excluir a turma" />
+								<h:outputLabel
+									value="&nbsp;#{turmaBean.turmaSelecionadaExclusao.descricao} &nbsp;"
+									style="font-weight: 600;" />
+								<h:outputText value="do turno da" />
+								<h:outputLabel
+									value="&nbsp;#{turmaBean.turmaSelecionadaExclusao.turno.descricao} &nbsp;"
+									style="font-weight: 600; text-transform: lowercase;" />
+								<h:outputText value="da" />
+								<h:outputLabel
+									value="&nbsp;#{turmaBean.turmaSelecionadaExclusao.classe.descricao}"
+									style="font-weight: 600; text-transform: lowercase;" />
+								<h:outputText value="?" />
+							</h:panelGroup>
+						</div>
+						<div class="modal-footer">
+							<h:commandButton type="button" title="Cancelar"
+								class="btn btn-success" value="Cancelar">
+								<f:passThroughAttribute name="data-dismiss" value="modal" />
+								<p:ajax event="click" update="form-turma:tabela-turma" />
+
+
+							</h:commandButton>
+							<h:commandButton title="Excluir" action="#{turmaBean.excluir}"
+								styleClass="btn btn-primary" value="Excluir">
+
+							</h:commandButton>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</h:form>
+	
+</html>

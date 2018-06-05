@@ -1,0 +1,17 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/main/webapp/academico/programador/funcionario/relatorio/cadastro.jrxml=UTF-8
+encoding//src/main/webapp/academico/relatorio/aluno/dados_aluno.jrxml=UTF-8
+encoding//src/main/webapp/academico/relatorio/aluno/lista_alunos_por_situacao.jrxml=UTF-8
+encoding//src/main/webapp/academico/relatorio/aluno/listar_alunos_por_disciplina.jrxml=UTF-8
+encoding//src/main/webapp/academico/relatorio/aluno/listar_notas_por_aluno.jrxml=UTF-8
+encoding//src/main/webapp/academico/relatorio/aluno/notas_alunos_anual_por_disciplina.jrxml=UTF-8
+encoding//src/main/webapp/academico/relatorio/aluno/transferencia_aluno.jrxml=UTF-8
+encoding//src/main/webapp/academico/relatorio/funcionario/cadastro.jrxml=UTF-8
+encoding//src/main/webapp/academico/relatorio/horario/aluno.jrxml=UTF-8
+encoding//src/main/webapp/academico/relatorio/horario/dia.jrxml=UTF-8
+encoding//src/main/webapp/academico/relatorio/horario/turma.jrxml=UTF-8
+encoding//src/test/java=UTF-8
+encoding//src/test/resources=UTF-8
+encoding/<project>=UTF-8

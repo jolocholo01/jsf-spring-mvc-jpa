@@ -1,0 +1,24 @@
+
+.tabela-senha{
+	margin-left: -183px;
+	
+}
+.font-size16{
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; !important;
+}
+@media ( max-width : 1030px) {
+	.tabela-senha {
+		margin-left: -80px;
+	}
+}
+@media ( max-width : 1200px) {
+	.tabela-senha {
+		margin-left: -100px;
+	}
+}
+@media ( max-width : 998px) {
+	.tabela-senha {
+		margin-left: 0;
+		
+	}
+}

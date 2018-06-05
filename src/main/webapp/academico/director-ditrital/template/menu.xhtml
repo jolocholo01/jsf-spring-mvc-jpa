@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<nav
+	class="navbar navbar-expand-md navbar-dark bg-dark fixed-top menu-horizontal">
+<a class="navbar-brand"
+	href="#{request.contextPath}/director-ditrital/index.jsf">SIGE</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse"
+	data-target="#navbarsExampleDefault"
+	aria-controls="navbarsExampleDefault" aria-expanded="false"
+	aria-label="Toggle navigation">
+	<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Escola</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+				<h:commandLink action="#{escolaBean.cadastroEscola}"
+					styleClass="dropdown-item">Gerenciar Unidade Escolar</h:commandLink>
+				<h:commandLink action="#{areaCurricularBean.cadastroAreaCurricular}"
+					styleClass="dropdown-item">Área Curricular</h:commandLink>
+				<h:commandLink action="#{classeBean.cadastroClasse}"
+					styleClass="dropdown-item">Classe</h:commandLink>
+				<h:commandLink
+					action="#{disciplinaClasseBean.cadastroDisciplinaClasseDirectorDistrital}"
+					styleClass="dropdown-item">Gerenciar Disciplinas na Classe</h:commandLink>
+
+			</div></li>
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Calendário</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+				<h:commandLink action="#{calendarioBean.cadastroCalendario}"
+					styleClass="dropdown-item">Gerenciar Calendário Escolar</h:commandLink>
+			</div></li>
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Funcionário</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+
+				<h:outputLink
+					value="#{request.contextPath}/director-ditrital/gerenciar-funcionario.jsf"
+					styleClass="dropdown-item">Gerenciar Funcionário</h:outputLink>
+
+
+				<h:outputLink
+					value="#{request.contextPath}/director-ditrital/funcionario/transferencia.jsf"
+					styleClass="dropdown-item">Transferência de Funcionário</h:outputLink>
+
+				
+			</div></li>
+
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Personalizações</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+				<h:outputLink
+					value="#{request.contextPath}/director-ditrital/senha.jsf"
+					styleClass="dropdown-item">Alterar senha
+						</h:outputLink>
+				<h:outputLink
+					value="#{request.contextPath}/director-ditrital/dados.jsf"
+					styleClass="dropdown-item">Meus dados Pessoais
+					</h:outputLink>
+
+			</div></li>
+	</ul>
+	<h:panelGroup class="form-inline my-2 my-lg-0 form_sair">
+
+		<h:commandLink value="Sair" styleClass="botao" title="Sair do sistema"
+			action="#{authenticationContext.logout}" />
+	</h:panelGroup>
+</div>
+</nav>
+</html>

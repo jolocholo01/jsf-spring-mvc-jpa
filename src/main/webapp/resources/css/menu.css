@@ -1,0 +1,152 @@
+.text-align-center{
+	text-align: center;
+}
+.menubar ul li a {
+	letter-spacing: 1px;
+}
+
+.menubar ul {
+	background: linear-gradient(to bottom, rgb(247, 249, 232) 0%,
+		rgb(246, 246, 235) 47%, rgb(240, 240, 225) 100%);
+	box-shadow: 0 2px 0 #B9B3B3;
+	background: linear-gradient(to bottom, #fdf1cb, #fdf1cb, #fdf1cb);
+}
+
+.menubar ul span {
+	margin-left: 7px;
+}
+
+.menu {
+	background: #f6f2cb;
+	border: 0;
+}
+
+.menu ul {
+	list-style: none;
+}
+
+.menu ul li {
+	/* width: 120px; */
+	height: 35px;
+	text-align: center;
+	line-height: 35px;
+	display: inline-block;
+	position: relative;
+	margin: 0px 5px 0px 5px;
+}
+
+.menu ul li a {
+	text-decoration: none;
+	color: RGBA(42, 42, 29, 0.86);
+	font-weight: bold;
+	display: block;
+}
+
+.menu ul li:hover>a {
+	background: #d8e3ef;
+}
+
+.menu ul li .ajustamento {
+	width: 30px;
+	height: 30px;
+	float: left;
+	/*    margin-left: 2px;*/
+	display: inline-block;
+}
+
+.menu ul .span_seta {
+	border-right: #000 solid 2px;
+}
+
+.menu ul ul {
+	border: none;
+	width: 120px;
+	left: 0px;
+	left: 18px;
+	position: absolute;
+	display: none;
+}
+
+.menu ul ul.row_outline {
+	outline: 1px solid #000;
+}
+
+.menu ul ul.row_outline1 .li {
+	border-right: 1px solid #000;
+	border-left: 1px solid #000;
+}
+
+.menu ul ul.row_outline1 .li_left {
+	border-right: 1px solid #000;
+}
+
+.menu ul ul.row_outline1 .li_top {
+	border-top: 1px solid #000; //
+	border-bottom: -10px solid #F1FFFF;
+}
+
+.menu ul ul.row_outline1 .li_bottom {
+	border-bottom: 1px solid #000;
+	height: 36px;
+}
+
+.menu ul ul li {
+	border: none;
+	margin-left: -2px;
+	background: #F1FFFF;
+	max-width: 391px;
+	height: 35px;
+	text-align: left;
+	outline: none;
+}
+
+.menu ul li:hover>ul {
+	display: block;
+}
+
+object, embed {
+	outline: 0;
+}
+
+.menu ul ul li ul {
+	position: absolute;
+	/*margin-left: 0px;*/
+	top: 0px;
+	left: 392px;
+	border: none;
+	display: none;
+	outline: -1px solid #000;;
+}
+
+.menu ul ul li:hover>ul {
+	display: block;
+}
+
+.fundo {
+	background: url("../../resources/images/fundo.PNG") no-repeat;
+}
+
+.espacamento {
+	margin-left: 50px;
+}
+
+.seta_para_direita {
+	float: right;
+	font-size: 10pt;
+	position: absolute;
+	text-align: center;
+	right: 4px;
+}
+
+.menubar ul li a:HOVER {
+	background: none;
+	color: #7b2b99;
+	text-decoration: underline;
+}
+
+.menu .img-ajustada {
+	height: 22px !important;
+	width: 25px !important;
+	margin-top: 6px;
+	padding-left: 2px;
+}

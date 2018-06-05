@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/academico/principal/index.xhtml">
+	<ui:define name="titulo">Horário da minha turma	</ui:define>
+	<ui:define name="cabacalho">
+
+		<link rel="stylesheet"
+			href="#{request.contextPath}/resources/css/horario.css" />
+
+	</ui:define>
+
+	<ui:define name="titulo_do_corpo">
+		<ui:include src="/academico/aluno/template/titulo_do_corpo.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="nome_usuario">
+		<ui:include src="/academico/aluno/template/nome_usuario.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="ambiente_comum">
+
+		<h:form id="form_menu">
+			<div class="menu menubar">
+				<ul>
+					<li style="width: 65px;"><h:outputLink
+							value="#{request.contextPath}/aluno/index.jsf">
+							 Principal
+						</h:outputLink></li>
+					<h:panelGroup>
+						<h:outputText value=" > " style="font-size:21px;" />
+					</h:panelGroup>
+					<li style="width: 185px;"><h:outputLink
+							value="#{request.contextPath}/aluno/horario.jsf">
+							  Horário da minha turma
+						</h:outputLink></li>
+				</ul>
+			</div>
+		</h:form>
+
+		<h:form style="padding-top:20px; padding-bottom:20px;">
+			<h:panelGrid
+				style=" width:100%;  margin-bottom: 14px; font-size: 30px;color: rgb(142, 147, 233);text-align: center;margin-top: 52px;"
+				rendered="#{horarioBean.horarioMinhaTurmaBoolean !=false}"
+				styleClass="horarioIndispnivel">
+				<h:outputText value="Horários indisponível no sistema." />
+
+			</h:panelGrid>
+
+
+			<p:panel header="Horário da minha turma"
+				rendered="#{horarioBean.horarioMinhaTurmaBoolean ==false}">
+				<div class="form-group row" style="margin-left: -1px">
+
+					<h:outputLabel value="Classe: "
+						styleClass="col-sm-1 control-label texto-label textfim" />
+					<div class="col-sm-2 texto-label">
+						<h:outputText
+							value="#{authenticationContext.matriculaEscolaLogada.classe.descricao}"
+							styleClass="form-control-static" />
+					</div>
+					<h:outputLabel value="Sala nº: "
+						styleClass="col-sm-1 control-label texto-label textfim" />
+					<div class="col-sm-1 texto-label">
+						<h:outputText
+							value="#{authenticationContext.matriculaEscolaLogada.turma.sala.numero}"
+							styleClass="form-control-static" />
+					</div>
+					<h:outputLabel value="Turma: "
+						styleClass="col-sm-1 control-label texto-label textfim" />
+					<div class="col-sm-2 texto-label">
+						<h:outputText
+							value="#{authenticationContext.matriculaEscolaLogada.turma.descricao} / #{authenticationContext.matriculaEscolaLogada.turma.turno.descricao}"
+							styleClass="form-control-static "
+							rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao !=null}" />
+						<h:outputText value="NÃO DEFINIDA!"
+							styleClass="form-control-static "
+							rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao ==null}" />
+					</div>
+				</div>
+
+				<br />
+				<br />
+
+				<h:outputLabel value="Tabela de Horários"
+					style="letter-spacing: 2px; margin-left:.5%;" />
+
+
+				<h:dataTable id="tabela-horarios"
+					styleClass="table tabela tabelaHorarioAluno tabela-horarios"
+					value="#{horarioBean.horarioAulas}" var="horarioAula"
+					style="width: 99%;margin: auto;margin-bottom: .5%;">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Horários" />
+						</f:facet>
+						<h:outputText value="#{horarioAula.aulaInicial}"
+							style="margin-left:10px;">
+							<f:convertDateTime pattern="HH : mm" timeZone="Africa/Harare" />
+						</h:outputText>
+						<h:outputText value=" - " style="margin:10px;">
+						</h:outputText>
+						<h:outputText value="#{horarioAula.aulaFinal}"
+							style="margin-right:10px;">
+							<f:convertDateTime pattern="HH : mm" timeZone="Africa/Harare" />
+						</h:outputText>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Segunda</f:facet>
+
+
+
+						<ui:repeat var="horario"
+							value="#{horarioBean.getHorariosTurma(horarioAula)}">
+							<h:panelGroup rendered="#{horario.diaSemana.sigla =='SEG'}">
+								<h:outputText
+									value=" #{horario.disciplina.descricao}"
+									rendered="#{horario.professor.nome ==null}">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="top" />
+								</h:outputText>
+								<h:outputText
+									value=" #{horario.disciplina.descricao}"
+									title="PROFESSOR(A) #{horario.professor.nome}"
+									rendered="#{horario.professor.nome !=null}">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="top" />
+								</h:outputText>
+							</h:panelGroup>
+						</ui:repeat>
+
+					</h:column>
+					<h:column>
+						<f:facet name="header">Terça</f:facet>
+						<ui:repeat var="horario" value="#{horarioBean.horarios}">
+							<h:panelGroup rendered="#{horario.diaSemana.sigla =='TER'}">
+								<h:outputText
+									value=" #{horario.disciplina.descricao}"
+									rendered="#{horario.professor.nome ==null}">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="top" />
+								</h:outputText>
+								<h:outputText
+									value=" #{horario.disciplina.descricao}"
+									title="PROFESSOR(A) #{horario.professor.nome}"
+									rendered="#{horario.professor.nome !=null}">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="top" />
+								</h:outputText>
+							</h:panelGroup>
+						</ui:repeat>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Quarta</f:facet>
+						<ui:repeat var="horario" value="#{horarioBean.horarios}">
+							<h:panelGroup rendered="#{horario.diaSemana.sigla =='QUA'}">
+								<h:outputText
+									value=" #{horario.disciplina.descricao}"
+									rendered="#{horario.professor.nome ==null}">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="top" />
+								</h:outputText>
+								<h:outputText
+									value=" #{horario.disciplina.descricao}"
+									title="PROFESSOR(A) #{horario.professor.nome}"
+									rendered="#{horario.professor.nome !=null}">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="top" />
+								</h:outputText>
+							</h:panelGroup>
+						</ui:repeat>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Quinta</f:facet>
+						<ui:repeat var="horario" value="#{horarioBean.horarios}">
+							<h:panelGroup rendered="#{horario.diaSemana.sigla =='QUI'}">
+								<h:outputText
+									value=" #{horario.disciplina.descricao}"
+									rendered="#{horario.professor.nome ==null}">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="top" />
+								</h:outputText>
+								<h:outputText
+									value=" #{horario.disciplina.descricao}"
+									title="PROFESSOR(A) #{horario.professor.nome}"
+									rendered="#{horario.professor.nome !=null}">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="top" />
+								</h:outputText>
+							</h:panelGroup>
+						</ui:repeat>
+
+					</h:column>
+					<h:column>
+						<f:facet name="header">Sexta</f:facet>
+						<ui:repeat var="horario" value="#{horarioBean.horarios}">
+							<h:panelGroup rendered="#{horario.diaSemana.sigla =='SEX'}">
+								<h:outputText
+									value=" #{horario.disciplina.descricao}"
+									rendered="#{horario.professor.nome ==null}">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="top" />
+								</h:outputText>
+								<h:outputText
+									value=" #{horario.disciplina.descricao}"
+									title="PROFESSOR(A) #{horario.professor.nome}"
+									rendered="#{horario.professor.nome !=null}">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="top" />
+								</h:outputText>
+							</h:panelGroup>
+						</ui:repeat>
+
+					</h:column>
+				</h:dataTable>
+
+				<ui:remove>
+					<h:commandLink
+						actionListener="#{horarioBean.imprimirHorarioMinhaTurma}">
+						<p:graphicImage url="#{buscarFotoBean.retornarImagesPrinter}"></p:graphicImage>
+					</h:commandLink>
+				</ui:remove>
+			</p:panel>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
+
+

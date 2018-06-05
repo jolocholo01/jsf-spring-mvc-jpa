@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/academico/principal/index.xhtml">
+	<ui:define name="titulo">
+		Consulta de Calendário escolar
+	</ui:define>
+
+
+
+
+	<ui:define name="titulo_do_corpo">
+		<ui:include src="/academico/professor/template/titulo_do_corpo.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="nome_usuario">
+		<ui:include src="/academico/professor/template/nome_usuario.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="ambiente_comum">
+		<h:form id="form_menu">
+
+			<div class="menu menubar">
+				<ul class="btn1 btn-green ui-widget-header">
+					<li style="width: 65px;"><h:outputLink
+							value="#{request.contextPath}/professor/index.jsf">
+							 Principal
+						</h:outputLink></li>
+					<h:outputText value=" > " style="font-size:21px;" />
+					<li style="width: 250px;"><h:commandLink
+							action="#{professorBean.consultarCalendadrioEscolar}">
+							 Consulta de Calendário escolar
+						</h:commandLink></li>
+				</ul>
+			</div>
+		</h:form>
+
+		<h:form id="form_ambiente_comum">
+			<p:panel header="Consulta de Calendário escolar"
+				style="margin: 20px 6px 0px;">
+
+				<p:messages closable="true" />
+				<h:panelGrid style="margin-left: 20px;margin-top: 27px;">
+					<h:outputLabel value="Ano Lectivo:" />
+					<h:inputText value="#{professorBean.ano}" styleClass="form-control"
+						style="  width: 139px;"
+						onkeypress="return aceitarApenaNumero(this , event );" />
+				</h:panelGrid>
+
+				<div class="form-box-botao">
+					<h:commandButton value="Pesquisar"
+						action="#{professorBean.buncarCalendarioEscolar}"
+						styleClass="btn btn-primary botao" />
+				</div>
+			</p:panel>
+			<h:panelGroup rendered="#{professorBean.calendarios !=null}">
+
+				<p:panel header="Resultado" style="margin: 20px 6px 0px;">
+
+					<h:dataTable value="#{professorBean.calendarios}" var="calendario"
+						styleClass="table table-bordered table-hover"
+						style="margin-top: 40px; margin-left: 20px; margin-right: 20px; max-width: 97%;"
+						headerClass="cabecalhoTabela1">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#"></h:outputText>
+							</f:facet>
+							<h:outputText value=" #{calendario.id}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Descrição do Calendário Escolar"></h:outputText>
+							</f:facet>
+							<h:outputText value=" Calendário Escolar de #{calendario.ano}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Ano"></h:outputText>
+							</f:facet>
+							<h:outputText value=" #{calendario.ano}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Periodo Lectivo"></h:outputText>
+							</f:facet>
+							<h:outputText
+									value="#{calendario.dataIncio}" >
+										<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"  type="date" />
+								</h:outputText>
+								<h:outputText
+									value=" - " >										
+								</h:outputText>
+								<h:outputText
+									value="#{calendario.dataFim}" >
+										<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"  type="date" />
+								</h:outputText>
+						</h:column>
+						<h:column headerClass="textoCabecalho">
+							<f:facet name="header">
+								<h:outputText value="Visualisar" />
+							</f:facet>
+							<h:commandLink style="margin-left:50px;">
+								<h:graphicImage
+									url="#{buscarFotoBean.retornarImagesBook}" />
+							</h:commandLink>
+						</h:column>
+					</h:dataTable>
+				</p:panel>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

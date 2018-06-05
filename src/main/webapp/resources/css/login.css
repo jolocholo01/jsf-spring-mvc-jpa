@@ -1,0 +1,13 @@
+.formulario-login .usuario {
+	background: url(../images/icons.png) 9px 15px no-repeat;
+}
+/* .formulario-login .senha {
+	background: url(../images/icons.png) 7px -47px no-repeat;
+} */
+
+.formulario-login .senha {
+	background: url(../images/icons.png) 7px -47px no-repeat;
+}
+.mensagem-senha li {
+     list-style-type: circle !important; 
+}

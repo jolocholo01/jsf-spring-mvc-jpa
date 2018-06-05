@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdbcDataAdapter class="net.sf.jasperreports.data.jdbc.JdbcDataAdapterImpl"><name>conexao de sistema_gestao_escolar Data Adapter </name><driver>org.postgresql.Driver</driver><username>postgres</username><password>postgree</password><savePassword>true</savePassword><url>jdbc:postgresql://localhost:5432/sistema_gestao_escolar</url><database></database><serverAddress></serverAddress></jdbcDataAdapter>

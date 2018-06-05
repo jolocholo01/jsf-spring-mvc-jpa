@@ -1,0 +1,385 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/academico/principal/index.xhtml">
+	<ui:define name="titulo">Quadro de transferência de aluno</ui:define>
+
+	<ui:define name="cabacalho">
+		<link rel="stylesheet"
+			href="#{request.contextPath}/resources/css/horario.css" />
+	</ui:define>
+
+	<ui:define name="titulo_do_corpo">
+		<ui:include src="/academico/director/template/titulo_do_corpo.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="nome_usuario">
+		<ui:include src="/academico/director/template/nome_usuario.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="ambiente_comum">
+
+		<!-- <h:inputText >
+	<f:passThroughAttribute name="placeholder" value="Texto do placeholder"/>
+	</h:inputText> -->
+		<!-- menus -->
+		<h:form id="form_menu">
+			<div class="menu menubar">
+				<ul>
+					<li style="width: 65px;"><h:outputLink
+							value="#{request.contextPath}/academico/director/index.jsf">
+							 Principal
+						</h:outputLink></li>
+					<h:panelGroup>
+						<h:outputText value=" > " style="font-size:21px;" />
+					</h:panelGroup>
+					<li><h:outputLink
+							value="#{request.contextPath}/director/transferencia/receber.jsf">
+							Quadro de transferência de aluno
+						</h:outputLink></li>
+				</ul>
+			</div>
+		</h:form>
+		<h:form id="form" styleClass="form-horizontal"
+			style="margin-bottom:4%;">
+
+
+			<p:panel header="Gerenciar transferência de aluno"
+				rendered="#{transferenciaBean.estadoMatriculaSelacionada==false}">
+
+				<p:messages closable="true"></p:messages>
+
+				<div class="form-group" style="margin-left: 1%;">
+
+					<div class="col-sm-7">
+
+						<div class="input-group">
+							<h:inputText onkeyup="this.value = this.value.toUpperCase();"
+								value="#{transferenciaBean.pesquisa}" styleClass="form-control ">
+								<f:passThroughAttribute name="placeholder"
+									value="Qual o nome ou usuário do aluno que você está procurar?" />
+								<p:ajax event="keyup"
+									listener="#{transferenciaBean.buscarTransferenciasPesquisado}"
+									update="tabela" />
+							</h:inputText>
+							<span class="input-group-btn"> <h:commandLink
+									actionListener="#{transferenciaBean.buscarTransferenciasPesquisado}"
+									styleClass="btn btn-primary active botao"
+									style="margin-left: 0px;">
+									<h:panelGroup styleClass="glyphicon glyphicon-search"></h:panelGroup>
+								Buscar
+							</h:commandLink>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<h:dataTable id="tabela" value="#{transferenciaBean.transferencias}"
+					styleClass="tabelaProfessor tabela-renovar table table-bordered"
+					var="transferencia"
+					style="margin: auto;margin-top: 2%;max-width: 99%;margin-bottom: 2%;">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Matrícula " />
+						</f:facet>
+						<h:outputText value="#{transferencia.matricula.numero}"
+							style=" margin-left:4px;" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Nome " />
+						</f:facet>
+						<h:outputText title="TRANSFERÊNCIA CONCLUIDA"
+							styleClass="tooltip-top"
+							value="#{transferencia.matricula.aluno.nome}"
+							style=" margin-left:4px;"
+							rendered="#{transferencia.situacao=='Transferido'}" />
+						<h:outputText title="TRANSFERÊNCIA EM ANÁLISE"
+							styleClass="tooltip-top"
+							value="#{transferencia.matricula.aluno.nome}"
+							style=" margin-left:4px;"
+							rendered="#{transferencia.situacao=='Em análise'}" />
+						<h:outputText title="TRANSFERÊNCIA CANCELADA"
+							styleClass="tooltip-top"
+							value="#{transferencia.matricula.aluno.nome}"
+							style=" margin-left:4px;"
+							rendered="#{transferencia.situacao=='Cancelado'}" />
+
+						<h:outputText title="TRANSFERÊNCIA FINALIZADA"
+							styleClass="tooltip-top"
+							value="#{transferencia.matricula.aluno.nome}"
+							style=" margin-left:4px;"
+							rendered="#{transferencia.situacao=='Finalizado'}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Data Nasci." />
+						</f:facet>
+						<h:outputText
+							value="#{transferencia.matricula.aluno.dataNascimento}"
+							style=" margin-left:4px;">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Classe" />
+						</f:facet>
+						<h:outputText value="#{transferencia.matricula.classe.descricao}"
+							style=" margin-left:4px;" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Escola Destino" />
+						</f:facet>
+						<h:outputText value="#{transferencia.escolaDestino.descricao}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Situação" />
+						</f:facet>
+						<h:outputText value="#{transferencia.matricula.situacao}"
+							style=" margin-left:4px; background: #f1909052;border-radius: 4px; padding: 2px;" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Opções" />
+						</f:facet>
+						<ul class="nav nav-pills nav-bar"
+							id="bs-example-navbar-collapse-1">
+
+							<li role="presentation" class="dropdown"><a
+								class="dropdown-toggle" data-toggle="dropdown" href="#"
+								role="button" aria-haspopup="true" aria-expanded="false"> +
+									<span class="caret"></span>
+							</a>
+								<ul class="dropdown-menu " role="menu">
+									<li><h:commandLink immediate="true"
+											actionListener="#{alunoBean.imprimirReciboInscricaoDoAluno(matricula)}">
+											<p:graphicImage url="#{buscarFotoBean.retornarImagesPrinter}"
+												height="16" width="16" style="margin-left:-6px;" />
+														 Imprimir declaração											
+														
+										</h:commandLink></li>
+
+									<h:panelGroup rendered="#{transferencia.finalizada ==false}">
+										<li><h:commandLink immediate="true"
+												styleClass="tooltip-left">
+												<span class="glyphicon
+												glyphicon-remove"></span>
+														Excluir														
+														<p:ajax event="click"
+													update="form:id-panelGroup-confirma-modal"
+													listener="#{transferenciaBean.prepararExclusao(transferencia)}" />
+												<f:passThroughAttribute name="data-toggle" value="modal" />
+												<f:passThroughAttribute name="data-target" value="#myModal" />
+											</h:commandLink></li>
+									</h:panelGroup>
+
+								</ul></li>
+						</ul>
+
+					</h:column>
+					<f:facet name="footer">
+						<h:outputText
+							value=" #{transferenciaBean.quantidadeAlunos} aluno(s) encontrado(s)"></h:outputText>
+					</f:facet>
+				</h:dataTable>
+			</p:panel>
+			<p:panel header="Alocar  na turma aluno transferido"
+				rendered="#{transferenciaBean.estadoMatriculaSelacionada==true}">
+
+
+
+
+				<p:messages closable="true" style="width:99%; margin:auto;" />
+
+
+				<div class="form-group row">
+					<h:outputLabel value="Nome Completo:"
+						styleClass="col-sm-3 control-label texto-label textfim" />
+
+					<div class="col-sm-6 texto-label">
+						<h:outputText
+							value="#{transferenciaBean.transferenciaSelacionada.matricula.aluno.nome}"
+							styleClass="form-control-static texto-label textfim" />
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<h:outputLabel value="Escola de origem:"
+						styleClass="col-sm-3 control-label texto-label textfim" />
+
+					<div class="col-sm-6 texto-label">
+						<h:outputText
+							value="#{transferenciaBean.transferenciaSelacionada.escolaOrigem.descricao}"
+							styleClass="form-control-static texto-label textfim"
+							style="text-transform: uppercase;" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<h:outputLabel value="Classe:"
+						styleClass="col-sm-3 control-label texto-label textfim" />
+
+					<div class="col-sm-6 texto-label">
+						<h:outputText
+							value="#{transferenciaBean.transferenciaSelacionada.classe.descricao}"
+							styleClass="form-control-static texto-label textfim" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<h:outputLabel value="Turma de origem:"
+						styleClass="col-sm-3 control-label texto-label textfim" />
+
+					<div class="col-sm-6 texto-label">
+						<h:outputText
+							value="#{transferenciaBean.transferenciaSelacionada.turmaOrigem.classe.sigla}ª #{transferenciaBean.transferenciaSelacionada.turmaOrigem.descricao} / #{transferenciaBean.transferenciaSelacionada.turmaOrigem.turno.descricao}"
+							styleClass="form-control-static texto-label textfim"
+							rendered="#{transferenciaBean.transferenciaSelacionada.turmaOrigem.descricao !=null}" />
+						<h:outputText value="Sem turma"
+							styleClass="form-control-static texto-label textfim"
+							rendered="#{transferenciaBean.transferenciaSelacionada.turmaOrigem.descricao ==null}" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<h:outputLabel
+						styleClass="col-sm-3 control-label texto-label textfim"
+						value="Data de enturmação : " />
+					<div class="col-sm-2">
+						<h:inputText
+							value="#{transferenciaBean.transferenciaSelacionada.dataCadastro}"
+							class="form-control">
+
+							<f:passThroughAttribute name="data-provide" value="datepicker" />
+							<f:passThroughAttribute name="data-date-format"
+								value="dd/mm/yyyy" timeZone="Africa/Harere" />
+							<f:passThroughAttribute name="data-date-language" value="pt-PT" />
+							<f:passThroughAttribute name="data-date-autoclose" value="true" />
+							<f:passThroughAttribute name="data-date-today-highlight"
+								value="true" />
+							<f:passThroughAttribute name="data-date-orientation"
+								value="bottom" />
+							<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+							<f:convertDateTime pattern="dd/MM/yyyy" type="time"
+								timeZone="Africa/Harere" />
+
+						</h:inputText>
+
+					</div>
+
+				</div>
+				<div class="form-group row">
+					<h:outputLabel value="Turma de destino:"
+						styleClass="col-sm-3 control-label texto-label textfim" />
+
+					<div class="col-sm-3">
+						<h:selectOneMenu
+							value="#{transferenciaBean.transferenciaSelacionada.matricula.turmaDestino}"
+							styleClass="form-control" converter="turmaConverter"
+							required="true"
+							requiredMessage="O campo turma de destino é obrigatório">
+							<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+							<f:selectItems value="#{transferenciaBean.turmas}" var="turma"
+								itemLabel=" #{turma.classe.sigla}ª - #{turma.descricao} - #{turma.turno.sigla}"
+								itemValue="#{turma}" />
+
+						</h:selectOneMenu>
+					</div>
+				</div>
+				<div class="form-group row">
+					<h:outputLabel value="Motivo da transferência:"
+						styleClass="col-sm-3 control-label texto-label textfim" />
+
+					<div class="col-sm-6 texto-label" style="text-align: justify;">
+						<h:outputText
+							value="#{transferenciaBean.transferenciaSelacionada.motivo}"
+							styleClass="form-control-static texto-label textfim"
+							rendered="#{transferenciaBean.transferenciaSelacionada.motivo !=null}" />
+						<h:outputText value="Não cadastrado!"
+							styleClass="form-control-static texto-label textfim"
+							rendered="#{transferenciaBean.transferenciaSelacionada.motivo ==null or transferenciaBean.transferenciaSelacionada.motivo ==''}" />
+					</div>
+				</div>
+
+				<div class="form-group row"
+					style="text-align: center; padding-top: 2%;">
+
+					<div class="col-sm-7 ">
+						<h:commandButton value="&#8666; Voltar " immediate="true"
+							actionListener="#{transferenciaBean.voltar}"
+							styleClass="btn btn-primary active" />
+						<h:commandButton value="✔  Confirmar "
+							actionListener="#{transferenciaBean.salvar}"
+							style="margin-left:2%;" styleClass="btn btn-primary active" />
+					</div>
+				</div>
+
+			</p:panel>
+
+
+
+			<!-- Modal -->
+
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" data-backdrop="static"
+				style="padding-top: 210px;">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel">
+								<h:outputLabel value="Você Tem certeza?" />
+
+							</h4>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<h:panelGroup aria-hidden="true">&times;
+									<p:ajax event="click" update="form:tabela" />
+								</h:panelGroup>
+							</button>
+						</div>
+						<div class="modal-body">
+							<h:panelGroup id="id-panelGroup-confirma-modal">
+								<h:outputText
+									value="Tem certeza que deseja excluir a solicitação de transferência de aluno de nome" />
+								<h:outputLabel
+									value="&nbsp;#{transferenciaBean.transferenciaSelacionadaExclusao.matricula.aluno.nome} &nbsp;"
+									style="font-weight: 600;" />
+								<h:outputText value="da" />
+								<h:outputLabel
+									value="&nbsp;#{transferenciaBean.transferenciaSelacionadaExclusao.escolaOrigem.descricao} &nbsp;"
+									style="font-weight: 600;" />
+								<h:outputText value="para" />
+								<h:outputLabel
+									value="&nbsp;#{transferenciaBean.transferenciaSelacionadaExclusao.escolaDestino.descricao}"
+									style="font-weight: 600;" />
+								<h:outputText value="?" />
+							</h:panelGroup>
+						</div>
+						<div class="modal-footer">
+							<h:commandButton type="button" title="Cancelar"
+								class="btn btn-success" value="Cancelar">
+								<f:passThroughAttribute name="data-dismiss" value="modal" />
+								<p:ajax event="click" update="form:tabela" />
+
+
+							</h:commandButton>
+							<h:commandButton title="excluir!"
+								action="#{transferenciaBean.excluir}"
+								styleClass="btn btn-primary" value="Excluir">
+
+							</h:commandButton>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

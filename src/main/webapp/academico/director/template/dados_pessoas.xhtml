@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:form id="form_dados_pessoais">
+	<div class="dados_pessoais">
+		<h3 style="margin-left: 100px;">Gestão da Escola</h3>
+		<div class="imagem_usuario" style="margin-top: 20px;">
+
+			<h:panelGroup id="idFoto">
+				<p:graphicImage   cache="false"
+					value="#{buscarFotoBean.foto.fotoMontada}"
+					styleClass="foto-dados-usuario profile-img-tag"
+					rendered="#{buscarFotoBean.foto.fotografia !=null}" />
+				<p:graphicImage   cache="false" styleClass="foto-dados-usuario profile-img-tag"
+					value="#{buscarFotoBean.retornarFoto}"
+					rendered="#{buscarFotoBean.foto.fotografia ==null}"
+					style="float:right; margin-top: 5px; margin-right:8px;" />
+			</h:panelGroup>
+				<h:panelGroup>
+
+					<h:outputLink value="#{request.contextPath}/director/perfil.jsf"
+						styleClass="actualizar-dados link-alterar-foto">Alterar Foto e Perfil
+						</h:outputLink>
+
+
+				</h:panelGroup>
+				<h:outputLink value="#{request.contextPath}/director/dados.jsf"
+					styleClass="actualizar-dados" style="  margin-top: 11px;">Actualizar meus dados
+				</h:outputLink>
+
+
+		</div>
+		<h:panelGrid style="margin-left: 20px; margin-top: 20px;">
+
+		</h:panelGrid>
+		<div class="dados" style="margin-top: 1px;">
+
+			<p style="border-bottom: none; text-align: center;">DADOS DA
+				ESCOLA</p>
+
+			<div class="d">
+
+				<h:panelGrid columns="2"
+					styleClass="table table-sem-border sem padding">
+
+					<h:outputLabel value="Total de Alunos: " />
+					<h:outputText value="#{escolaBean.totalAlunosDaEscola}"
+						styleClass="margin-left30" style="margin-top: 10px;" />
+
+					<h:outputLabel value="Total de Professores: " />
+					<h:outputText value="#{escolaBean.totalProfessoresDaEscola}"
+						styleClass="margin-left30" />
+
+
+					<h:outputLabel value="Total de Turmas: " />
+					<h:outputText value="#{escolaBean.totalTurmaDaEscola}"
+						styleClass="margin-left30" />
+
+
+					<h:outputLabel value="Alunos alocados nas turmas:"
+						style="margin-top: 4px;" />
+					<h:outputText
+						value="#{escolaBean.totalAlunosAlocadoEmTurmasDaEscola}"
+						styleClass="margin-left30" />
+				</h:panelGrid>
+			</div>
+
+			<p style="border-bottom: none; margin-left: 9px;">
+				Calendário escolar em vigor:
+				<h:outputText value="#{authenticationContext.calendarioEscolar.ano}" />
+			</p>
+			<div class="d">
+				<h:dataTable value="#{calendarioBean.trimestres}" var="trimestre"
+					style="margin: 10px;height: 76px;" columnClasses="linhaTabela">
+					<h:column>
+						<h:outputLabel value="#{trimestre.descricao} :"
+							styleClass="descricao" />
+
+						<h:outputText value="#{trimestre.dataInicio}"
+							style="marin-left:20px;" styleClass="dataInicio">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+
+						<h:outputText value="a" styleClass="a" />
+
+						<h:outputText value="#{trimestre.dataFinal}"
+							styleClass="dataFinal">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</h:column>
+				</h:dataTable>
+			</div>
+			<h:panelGroup rendered="#{not empty escolaBean.pieModel}">
+				<p:chart type="pie" model="#{escolaBean.pieModel}"
+					style="width:98%x;height:40%; margin-top:12px;" />
+			</h:panelGroup>
+		</div>
+	</div>
+</h:form>
+</html>

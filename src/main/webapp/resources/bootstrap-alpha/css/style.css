@@ -1,0 +1,307 @@
+.tesx-right{
+	text-align: right;
+}
+
+@media ( max-width : 580px) {
+	.tesx-right{
+	text-align: left;
+}
+.link {
+		padding-left: 2%;
+		padding-top: 17%;
+	
+	}
+}
+
+
+.margin{
+	 margin-top: 10px;
+     margin-left: 5px;
+     margin-right:5px;
+}
+.nao-ha-dado {
+   
+    /* background: #FFFFEA none repeat scroll 0% 0%; */
+    display: block;
+     border-radius: 3px; s
+}
+.ui-widget-header {
+    border: 1px solid #dddddd;
+    background: #e9e9e9;
+    color: #333333;
+    font-weight: bold;
+}
+.imagem_usuario .link {
+	float: left;
+	padding-left: 4%;
+	padding-top: 8%;
+}
+
+.imagem_usuario .foto-do-usuario {
+	margin-top: 1%;
+	margin-left: 2%;
+	float: left;
+	border: 2px solid #A4A4A4;
+	border-radius: 95px;
+	width: 130px;
+	height: 130px;
+}
+@media ( max-width : 329px) {
+	.imagem_usuario .foto-do-usuario {
+		margin-top: 9%;
+		margin-left: 2%;
+		float: left;
+		border: 2px solid #A4A4A4;
+		border-radius: 95px;
+		width: 80px;
+		height: 80px;
+	}
+	.imagem_usuario .link {
+		padding-top: 15%;
+		font-size: 11px;
+	}
+	.gestao {
+		font-size: 16px;
+	}
+	.distrito {
+		font-size: 15px;
+	}}
+@media ( max-width : 430px) {
+	.tabela-funcionario, .peg-titulo{
+	font-size: 12px;
+	}
+}
+@media ( max-width : 385px) {
+	.tabela-funcionario{
+	font-size: 9px;
+	}
+}
+@media ( max-width : 348px) {
+	.tabela-funcionario{
+	font-size: 7px;
+	}
+}
+.asteristico {
+	color: blue;
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.tabela-hover tr:HOVER {
+	background: rgb(249, 249, 249) none repeat scroll 0% 0%;;
+}
+
+.linha2 { //
+	background: rgb(249, 249, 249) none repeat scroll 0% 0%;
+}
+
+.tabela-funcionario td, .tabela-funcionario th {
+	/* padding: 0.50% !important; */
+}
+
+.imagem {
+	background: url("../../images/search.png") no-repeat;
+	height: 30px;
+}
+
+.form-span a {
+	float: right;
+	font-size: 12pt;
+}
+
+#pick-list-panel select {
+	border: 1px solid #ddd;
+	/* 	min-height: 600px; */
+	overflow: visible;
+	/* width: 480px; */
+	margin-top: 20px;
+	width: 270px;
+	height: 153px;
+}
+
+#pick-list-panel select option {
+	padding: 5px 8px 5px 8px;
+	/* width: 442px; */
+	text-transform: uppercase;
+}
+
+#pick-list-panel {
+	/* width: 1100px; */
+	/* 	margin: 100px auto; */
+	width: 449px;
+}
+
+#pick-list-left {
+	float: left;
+	/* width: 520px; */
+	margin-left: 10px;
+	width: 10%;
+}
+
+#pick-list-main {
+	float: left;
+	width: 50px;
+	margin-left: 55%;
+	padding-top: 8%;
+	/* padding-top: 250px; */
+	/* margin-right: 20px; */
+}
+
+#pick-list-right {
+	float: right;
+	/* width: 520px;*/
+	width: 20%;
+
+	/* margin-top: 28px; */
+}
+
+#pick-list-main input[type='submit'] {
+	margin-bottom: 3px;
+	cursor: pointer;
+	width: 30px;
+
+	/*border: 1px solid #DDD;
+                padding: 3px 6px;
+                background: #e6e6e6;
+                border-right: 3px;*/
+}
+
+.tabela-sem-border-padding>tbody>tr>td, .tabela-sem-border-padding>tbody>tr>th,
+	.tabela-sem-border-padding>tfoot>tr>td, .tabela-sem-border-padding>tfoot>tr>th,
+	.tabela-sem-border-padding>thead>tr>td, .tabela-sem-border-padding>thead>tr>th
+	{
+	padding: 0;
+	vertical-align: inherit;
+	border-top: none;
+}
+
+.func-table .col-chec {
+	width: 3%;
+}
+
+.func-table .col-label {
+	width: 12%;
+}
+
+.tabela-funcionario thead tr {
+	background: rgb(255, 255, 222);
+}
+
+.tabela-funcionario tfoot tr td {
+	padding: 4px;
+	text-align: center;
+	background: #eaf5ff;
+	font-weight: bold;
+	font-weight: 600;
+}
+
+.bold {
+	font-weight: 600;
+}
+
+.dados .text_label {
+	font-weight: bold;
+	margin-left: 20px;
+}
+
+.input-select, .input-select option {
+	text-transform: uppercase;
+}
+
+.input-select option {
+	padding: 2px 2px 2px 7px;
+}
+
+.texto_label {
+	float: right;
+}
+
+.tabela-sem-border>tbody>tr>td, .tabela-sem-border>tbody>tr>th,
+	.tabela-sem-border>tfoot>tr>td, .tabela-sem-border>tfoot>tr>th,
+	.tabela-sem-border>thead>tr>td, .tabela-sem-border>thead>tr>th {
+	vertical-align: inherit;
+	border-top: medium none;
+}
+
+.dados {
+	font-size: 14px;
+	margin-top: 20px;
+	background: url("../../images/fundo_imagem_usuario.PNG");
+	padding-bottom: 12px;
+}
+
+.dados p {
+	font-size: 18px;
+	margin-left: 20px;
+	margin-right: 20px;
+	padding-top: 20px;
+	border-bottom: 1px solid #00F;
+	color: #00F;
+	font-weight: bold;
+}
+
+.form_sair {
+	margin-right: 2%;
+}
+
+.form_sair .botao {
+	padding: 2px 10px 2px 10px;
+	background: #127d00;
+	color: #fff;
+	text-decoration: none;
+	border-radius: 4px;
+	font-size: 17px;
+	box-shadow: 1px 1px 1px rgba(34, 34, 34, 0.85);
+	transform-origin: 1px;
+	font-weight: bold;
+	text-shadow: 0px 2px #000000, 0px 15px 10px rgba(0, 0, 0, 0.4), 0px 15px
+		2px rgba(0, 0, 0, 0.1), 0px 15px 30px rgba(0, 0, 0, 0.1);
+	height: 100%;
+	/* background-color: #222/; */
+	overflow: hidden;
+}
+
+.menu-horizontal {
+	font-size: 13pt;
+}
+
+.fundo {
+	background: #9FCDFF;
+	padding: 1.25% !important;
+}
+
+.border-radius {
+	border-radius: 3px !important;
+}
+
+.imagem_usuario, .dados {
+	border-radius: 2px;
+}
+
+.imagem_usuario {
+	border-radius: 2px;
+	height: 140px;
+	background: transparent url("../../images/fundo_imagem_usuario.PNG")
+		repeat scroll 0% 0%;
+}
+
+.usuario, .gestao {
+	font-weight: 600 !important;
+}
+
+.gestao {
+	padding: 4%;
+}
+
+.usuario {
+	padding-top: 13px !important;
+}
+
+.form-cadastro .linha {
+	margin-top: 2%;
+}
+@media (min-width: 1200px)
+.by {
+    width: 1351px;
+    max-width: 100%;
+}

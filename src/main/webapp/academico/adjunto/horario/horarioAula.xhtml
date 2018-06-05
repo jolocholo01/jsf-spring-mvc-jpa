@@ -1,0 +1,371 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/academico/principal/index.xhtml">
+	<ui:define name="titulo">Gerenciar Horário de Aula</ui:define>
+	<ui:define name="titulo_do_corpo">
+		<ui:include src="/academico/adjunto/template/titulo_do_corpo.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="nome_usuario">
+		<ui:include src="/academico/adjunto/template/nome_usuario.xhtml"></ui:include>
+	</ui:define>
+
+
+	<ui:define name="ambiente_comum">
+		<h:form id="form_menu">
+			<div class="menu menubar">
+				<ul class="btn1 btn-green">
+					<li ><h:outputLink
+							value="#{request.contextPath}/director-adjunto/index.jsf">
+							 Principal
+						</h:outputLink></li>
+					<h:outputText value=" > " style="font-size:21px;" />
+					<li ><h:commandLink
+							action="#{horarioAulaBean.cadastroHorarioAula}">Gerenciar Horário de Aula
+								</h:commandLink></li>
+				</ul>
+			</div>
+		</h:form>
+
+
+
+		<h:form id="form">
+			<h:panelGroup
+				rendered="#{horarioAulaBean.horarioAulaSelecionadoPraraEditar ==null}">
+				<p:panel header="Cadastro do Horários de Aula"
+					styleClass="panel-horario-aula"
+					style="min-height: 262.188px; margin-bottom:20px;">
+
+					<p:messages closable="true" style="max-width:99%; margin:auto;" />
+
+					<h:panelGrid
+						styleClass="table table-sem-border-padding tabela-horario-aula-nome-escola"
+						columns="2" style="  margin: 23px 23% 0;" id="idDescricaoTurno">
+						<h:outputLabel value="Escola: " styleClass="text-lebal"
+							rendered="#{horarioAulaBean.horarioAula.turno  ==null}" />
+						<h:outputText
+							value="#{authenticationContext.funcionarioEscolaLogada.escola.descricao}"
+							style="margin-left: 13px; letter-spacing: 1px;text-transform: uppercase;"
+							rendered="#{horarioAulaBean.horarioAula.turno  ==null}" />
+
+						<h:outputLabel value="Turno:" styleClass="text-lebal"
+							style="margin-top: 12px;"
+							rendered="#{horarioAulaBean.horarioAula.turno  ==null}" />
+
+						<h:selectOneMenu value="#{horarioAulaBean.horarioAula.turno}"
+							converter="turnoConverter" styleClass="form-control"
+							rendered="#{horarioAulaBean.horarioAula.turno  ==null}"
+							style="text-transform: uppercase; width:150px; margin-left: 13px; margin-bottom:30px;"
+							required="true" requiredMessage="O campo turno é obrigatório ">
+							<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+							<f:selectItems value="#{turnoBean.obterTurnoDaEscola}"
+								var="turno" itemLabel="#{turno.descricao}" itemValue="#{turno}" />
+							<p:ajax event="change"
+								update="idDescricaoTurno  table idtabelaHorarioAula" />
+						</h:selectOneMenu>
+
+
+					</h:panelGrid>
+
+					<h:panelGrid columns="2" style=" margin-left: 194px;" id="table">
+
+						<h:outputLabel value="Escola: " styleClass="text-lebal"
+							rendered="#{horarioAulaBean.horarioAula.turno  !=null}" />
+						<h:outputText
+							value="#{authenticationContext.funcionarioEscolaLogada.escola.descricao}"
+							style="margin-left: 13px; letter-spacing: 1px;text-transform: uppercase;"
+							rendered="#{horarioAulaBean.horarioAula.turno  !=null}" />
+
+						<h:outputLabel value="Turno:" styleClass="text-lebal"
+							rendered="#{horarioAulaBean.horarioAula.turno  !=null}" />
+
+
+						<h:panelGrid columns="3" style="visibility: visible;"
+							rendered="#{horarioAulaBean.horarioAula.turno  !=null}">
+
+							<h:selectOneMenu value="#{horarioAulaBean.horarioAula.turno}"
+								converter="turnoConverter" styleClass="form-control"
+								disabled="true"
+								style="text-transform: uppercase; width:150px; margin-left: 13px;">
+								<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+								<f:selectItems value="#{turnoBean.obterTurnoDaEscola}"
+									var="turno" itemLabel="#{turno.descricao}" itemValue="#{turno}" />
+							</h:selectOneMenu>
+							<h:outputLabel value="Ordem:" styleClass="text-lebal"
+								style=" margin-left:43px;" />
+							<h:inputText
+								value="#{horarioAulaBean.horarioAulaSelecionado.ordem}"
+								style="margin-left: 13px; width: 90px;" required="true"
+								requiredMessage="O campo ordem é obrigatório " maxlength="2"
+								styleClass="form-control"
+								onkeypress="return aceitarApenaNumero(this, event)" />
+							<h:inputHidden
+								value="#{horarioAulaBean.obterDescricaoDoTurno.descricao}" />
+						</h:panelGrid>
+
+						<h:outputLabel value="Hora Inicial:" styleClass="text-lebal"
+							rendered="#{horarioAulaBean.horarioAula.turno  !=null}" />
+
+						<h:panelGrid columns="3"
+							rendered="#{horarioAulaBean.horarioAula.turno  !=null}">
+							<h:selectOneMenu
+								value="#{horarioAulaBean.horarioAulaSelecionado.aulaInicial}"
+								style="text-transform: uppercase; width:150px; margin-left: 13px;margin-right: 20px;  margin-bottom: 2px"
+								required="true" styleClass="form-control"
+								requiredMessage="O campo Hora Inicial é obrigatório ">
+								<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+								<f:selectItems value="#{turnoBean.aulas}" var="aula"
+									itemLabel="#{aula.label}" itemValue="#{aula.label}" />
+								<f:convertDateTime pattern="HH:mm" type="time" />
+								<p:ajax event="change" update="idHoraFim1 " />
+							</h:selectOneMenu>
+
+							<h:outputLabel value="Hora Final:" styleClass="text-lebal" />
+
+
+							<h:panelGroup id="idHoraFim1">
+								<h:inputText disabled="true"
+									styleClass="desabilitado form-control"
+									style="margin-left: 13px; width: 90px;"
+									value="#{horarioAulaBean.horarioAulaSelecionado.aulaFinal}">
+									<f:convertDateTime pattern="HH:mm" type="time" />
+								</h:inputText>
+							</h:panelGroup>
+						</h:panelGrid>
+
+
+						<f:facet name="footer">
+							<h:panelGroup id="idBotao">
+								<h:panelGrid columns="3"
+									rendered="#{horarioAulaBean.horarioAula.turno  !=null}"
+									style="margin-left: 38%;margin-top: 2%;margin-bottom: 2%;">
+									<h:commandButton value="Cadastrar"
+										styleClass="btn btn-primary botao"
+										action="#{horarioAulaBean.salvar}" />
+									<h:commandButton value="Voltar" immediate="true"
+										action="#{horarioAulaBean.volatrDaSelecaoDeTurno}"
+										style="margin-left: 12%;" styleClass="btn btn-success botao" />
+
+
+								</h:panelGrid>
+							</h:panelGroup>
+						</f:facet>
+
+					</h:panelGrid>
+
+
+					<h:panelGroup id="idtabelaHorarioAula">
+						<h:panelGrid style="width:600px; margin: auto; margin-top:10px;"
+							headerClass="table-horario-aula cabecalhoDoTitulo cor-fundo ui-widget-header"
+							rendered="#{horarioAulaBean.horarioAula.turno  !=null}">
+
+							<f:facet name="header">
+								<h:outputText value="Horários de Aula Cadastrados" />
+							</f:facet>
+
+							<h:dataTable value="#{horarioAulaBean.horarioAulas}"
+								var="horarioAula" styleClass="table table-bordered table-hover "
+								headerClass="cabecalhoDoTitulo backgroundTitulo"
+								columnClasses="colunaHorarioAula1, colunaHorarioAula2, colunaHorarioAula3,colunaHorarioAula4, coluna-horario-aula">
+
+
+								<h:column style="text-align: center;">
+									<f:facet name="header">
+										<h:outputText value="Hora de Início" />
+									</f:facet>
+									<h:outputText value="#{horarioAula.aulaInicial}">
+										<f:convertDateTime pattern="HH:mm" type="time" timeZone="Africa/Harare" />
+									</h:outputText>
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Hora de Fim" />
+									</f:facet>
+									<h:outputText value="#{horarioAula.aulaFinal}"
+										style="text-align: center;">
+										<f:convertDateTime pattern="HH:mm" type="time" timeZone="Africa/Harare"/>
+									</h:outputText>
+								</h:column>
+								<h:column style="text-align: center;">
+									<f:facet name="header">
+										<h:outputText value="Turno" />
+									</f:facet>
+									<h:outputText value="#{horarioAula.turno.descricao}"
+										style="text-align: center;" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Ordem" />
+									</f:facet>
+									<h:outputText value="#{horarioAula.ordem}" />
+								</h:column>
+								<h:column>
+									<h:commandLink immediate="true" title="Editar!"
+										action="#{horarioAulaBean.editarHorarioAula(horarioAula)}">
+										<p:graphicImage url="#{buscarFotoBean.retornarImagesEditar}"
+											height="18" width="18" style="margin-left:3px;" />
+									</h:commandLink>
+
+									<h:commandLink immediate="true" title="Excluir!"
+										id="id-excluir" style="margin-left:10px;">
+										<p:graphicImage url="#{buscarFotoBean.retornarImagesExcluir}"
+											height="16" width="16" />
+										<p:ajax event="click" update="form:id-panelGroup-horario-aula"
+											listener="#{horarioAulaBean.prepararExcluirHorarioAula(horarioAula)}" />
+										<f:passThroughAttribute name="data-toggle" value="modal" />
+										<f:passThroughAttribute name="data-target" value="#myModal" />
+									</h:commandLink>
+
+								</h:column>
+							</h:dataTable>
+						</h:panelGrid>
+					</h:panelGroup>
+				</p:panel>
+			</h:panelGroup>
+
+
+
+			<!-- Edicao de Horarios de Aulas -->
+			<h:panelGroup
+				rendered="#{horarioAulaBean.horarioAulaSelecionadoPraraEditar !=null}">
+				<p:panel header="Manutenção do Horários de Aula"
+					styleClass="panel-horario-aula">
+					<h:panelGrid columns="2"
+						styleClass="table table-sem-border-padding"
+						style="margin-left:21px; margin-top: 10px;">
+
+						<h:outputLabel value="Escola: " styleClass="text-lebal"
+							rendered="#{horarioAulaBean.horarioAula.turno  !=null}" />
+						<h:outputText
+							value="#{authenticationContext.funcionarioEscolaLogada.escola.descricao}"
+							style=" margin-left: 13px; letter-spacing: 1px;text-transform: uppercase;" />
+
+						<h:outputLabel value="Turno:" styleClass="text-lebal"
+							style="margin-top: 19px;" />
+
+						<h:panelGrid columns="3"
+							style="visibility: visible; margin-left: 13px;">
+							<h:selectOneMenu
+								value="#{horarioAulaBean.horarioAulaSelecionadoPraraEditar.turno}"
+								converter="turnoConverter" styleClass="form-control"
+								disabled="true" style="text-transform: uppercase; width:150px; ">
+								<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+								<f:selectItems value="#{turnoBean.obterTurnoDaEscola}"
+									var="turno" itemLabel="#{turno.descricao}" itemValue="#{turno}" />
+							</h:selectOneMenu>
+
+
+							<h:outputLabel value="Ordem:" style="  margin-left: 43px;" />
+							<h:inputText
+								value="#{horarioAulaBean.horarioAulaSelecionadoPraraEditar.ordem}"
+								style="margin-left: 13px; width: 47%;" required="true"
+								onkeypress="return aceitarApenaNumero(this, event)"
+								requiredMessage="O campo ordem é obrigatório " maxlength="2"
+								styleClass="form-control" />
+						</h:panelGrid>
+
+						<h:outputLabel value="Hora Inicial:" styleClass="text-lebal"
+							style="margin-top: 19px;" />
+						<h:panelGrid columns="3">
+							<h:selectOneMenu
+								value="#{horarioAulaBean.horarioAulaSelecionadoPraraEditar.aulaInicial}"
+								style="text-transform: uppercase; width:150px; margin-left: 13px;margin-right: 20px;  margin-bottom: 2px"
+								required="true" styleClass="form-control"
+								requiredMessage="O campo Hora Inicial é obrigatório ">
+								<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+								<f:selectItems value="#{turnoBean.aulas}" var="aula"
+									itemLabel="#{aula.label}" itemValue="#{aula.label}" />
+								<f:convertDateTime pattern="HH:mm" type="time" timeZone="Africa/Harare"/>
+								<p:ajax event="change" update="idHoraFim11 " />
+							</h:selectOneMenu>
+
+							<h:outputLabel value="Hora Final:" styleClass="text-lebal" />
+
+							<h:panelGroup id="idHoraFim11">
+								<h:inputText disabled="true"
+									styleClass="desabilitado form-control"
+									style="margin-left: 13px; width: 47%;"
+									value="#{horarioAulaBean.horarioAulaSelecionadoPraraEditar.aulaFinal}">
+									<f:convertDateTime pattern="HH:mm" type="time" timeZone="Africa/Harare" />
+								</h:inputText>
+							</h:panelGroup>
+						</h:panelGrid>
+					</h:panelGrid>
+					<h:panelGrid columns="2"
+						styleClass="table table-sem-border-padding"
+						style="max-width: 63%;">
+						<h:commandButton value="Cofirmar"
+							action="#{horarioAulaBean.cadastrarEdicao}"
+							styleClass="btn btn-primary botao text-lebal" />
+
+						<h:commandButton value="Voltar" immediate="true"
+							action="#{horarioAulaBean.voltarEditarHorarioAula}"
+							styleClass="btn btn-success botao" style="margin-left: 17px;" />
+					</h:panelGrid>
+				</p:panel>
+			</h:panelGroup>
+
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" data-backdrop="static"
+				style="padding-top: 210px;">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">
+								<h:outputLabel value="Você Tem certeza?" />
+							</h4>
+						</div>
+						<div class="modal-body">
+							<h:panelGroup id="id-panelGroup-horario-aula">
+								<h:outputText value="Tem certeza que deseja excluir  " />
+								<h:outputLabel value=" o Horário?" rendered="#{horarioAulaBean.horarioAulaSelecionadoPraraExclusao.aulaInicial==null or horarioAulaBean.horarioAulaSelecionadoPraraExclusao.aulaFinal==null}"/>
+								
+								<h:panelGroup rendered="#{horarioAulaBean.horarioAulaSelecionadoPraraExclusao.aulaInicial !=null or horarioAulaBean.horarioAulaSelecionadoPraraExclusao.aulaFinal !=null}">
+								<h:outputLabel value="Horário " />
+									<h:outputText value=" das " />
+									<h:outputLabel
+										value=" #{horarioAulaBean.horarioAulaSelecionadoPraraExclusao.formatoAulaInicial}">
+									</h:outputLabel>
+									<h:outputText value=" – " style="margin:5px;" />
+									<h:outputLabel
+										value=" #{horarioAulaBean.horarioAulaSelecionadoPraraExclusao.formatoAulaFinal}">
+									</h:outputLabel>
+									<h:outputText value=" do período da " />
+									<h:outputLabel
+										value="#{horarioAulaBean.horarioAulaSelecionadoPraraExclusao.turno.descricao.label}" />
+									<h:outputText value="?" />
+								</h:panelGroup>
+							</h:panelGroup>
+						</div>
+						<div class="modal-footer">
+							<h:commandButton type="button" title="Cancelar" class="btn btn-success"
+								value="Cancelar">
+								<f:passThroughAttribute name="data-dismiss" value="modal" />
+							</h:commandButton>
+							<h:commandButton title="Excluir" 
+								type="button" styleClass="btn btn-primary" value="Excluir">
+								<f:passThroughAttribute name="data-dismiss" value="modal" />
+								<p:ajax event="click" update="@form"
+									listener="#{horarioAulaBean.excluirHorarioAula}" />
+							</h:commandButton>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

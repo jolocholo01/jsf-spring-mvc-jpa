@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/academico/principal/index.xhtml">
+	<ui:define name="titulo">Portal de Estudante</ui:define>
+	<ui:define name="cabacalho">
+		<link rel="stylesheet"
+			href="#{request.contextPath}/resources/css/estilo_aluno.css" />
+		<style>
+.dados_pessoais {
+	min-height: 400px;
+}
+</style>
+	</ui:define>
+	<ui:define name="titulo_do_corpo">
+		<ui:include src="/academico/aluno/template/titulo_do_corpo.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="nome_usuario">
+		<ui:include src="/academico/aluno/template/nome_usuario.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="menu">
+		<h:form>
+			<ui:include src="/academico/aluno/template/menu.xhtml" />
+		</h:form>
+	</ui:define>
+	<ui:define name="dados_pessoas">
+		<ui:include src="/academico/aluno/template/dados_pessoas.xhtml" />
+	</ui:define>
+	<ui:define name="ambiente_comum">
+		<h:form>
+			
+				<div class="table-responsive"
+					style=" padding-top: 12px; padding-right: 5px; padding-left: 0px; overflow: hidden;">
+					<h:panelGrid styleClass="tabela_aluno" style="border:0;">
+						<f:facet name="header">
+							<h:outputText value="Lista das Disciplinas por Professor" />
+						</f:facet>
+					</h:panelGrid>
+					<h:dataTable value="#{authenticationContext.professorTurmas}"
+						var="alunoTurma" styleClass=" alunoTurma table table-bordered table-hover  "
+						headerClass="cabecalhoTabelaAluno">
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#" style="margin-left:5px;" />
+							</f:facet>
+							<h:outputText value="#{alunoTurma.disciplina.id}"
+								style="margin-left:5px;" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Disciplina" style="margin-left:5px;" />
+							</f:facet>
+							<h:outputText value="#{alunoTurma.disciplina.descricao}"
+								style="margin-left:5px;" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Professor" style="margin-left:5px;" />
+							</f:facet>
+							<h:panelGroup rendered="#{alunoTurma.professor.nome !=null}">
+								<h:outputText value="#{alunoTurma.professor.nome}"
+									style="margin-left:5px;"
+									rendered="#{alunoTurma.professor.formacao !=null and alunoTurma.professor.formacao !=''}">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="top" />
+									<f:passThroughAttribute name="title"
+										value="Formado em #{alunoTurma.professor.formacao}." />
+								</h:outputText>
+
+								<h:outputText value="#{alunoTurma.professor.nome}"
+									style="margin-left:5px;"
+									rendered="#{alunoTurma.professor.formacao ==null or alunoTurma.professor.formacao ==''}">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="top" />
+									<f:passThroughAttribute name="title"
+										value="Não foi definida a formação académica." />
+								</h:outputText>
+							</h:panelGroup>
+							<h:outputText value="NÃO INFORMADO."
+								style="margin-left:5px; color: #D710F9;"
+								rendered="#{alunoTurma.professor.nome ==null}" />
+						</h:column>
+
+					</h:dataTable>
+				</div>
+			
+
+			​
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

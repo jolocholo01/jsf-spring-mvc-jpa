@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:panelGroup>
+	<div class="menu" style="margin-top: -10px;">
+		<ul>
+			<li><h:outputLink value="#">
+					<span> <h:graphicImage
+							url="#{buscarFotoBean.retornarImagesLivro}" class="ajustamento"
+							style="margin-top:2px;" /></span>Ensino</h:outputLink>
+				<ul class="row row_outline1">
+					<li style="width: 300px;" class="li li_top"><h:outputLink
+							value="#{request.contextPath}/aluno/horario.jsf"
+							styleClass="fundo">
+							<span class="espacamento"> Horário da minha turma</span>
+						</h:outputLink></li>
+					<li style="width: 300px;" class="li li_bottom"><h:outputLink
+							styleClass="fundo" value="#{request.contextPath}/aluno/nota.jsf">
+							<span class="espacamento"> Minhas notas de frequência</span>
+						</h:outputLink></li>
+
+
+				</ul></li>
+
+			<h:panelGroup styleClass="span_seta" />
+
+			<li><h:outputLink value="">
+					<span> <h:graphicImage
+							url="#{buscarFotoBean.retornarImagesMatricula}"
+							style="margin-top:3px; margin-left:2px; height: 25px; width:20px"
+							class="ajustamento" /></span> Matrículas</h:outputLink>
+				<ul class="row row_outline1">
+
+					<li class="li li_top" style="width: 320px;"><h:outputLink
+							value="#" styleClass="fundo">
+							<span class="espacamento">Consultar pauta de frequência</span>
+						</h:outputLink></li>
+					<li class="li  li_bottom" style="width: 320px;"><h:outputLink
+							value="#{request.contextPath}/aluno/doc.jsf" styleClass="fundo">
+							<span class="espacamento">Documentos</span>
+						</h:outputLink></li>
+				</ul></li>
+
+			<h:panelGroup class="span_seta" />
+			<li style="width: 160px;"><h:outputLink value="#">
+					<span> <h:graphicImage
+							url="#{buscarFotoBean.retornarImagesPassword}"
+							style="width: 25px;height: 27px;margin-top: 3px;"
+							class="ajustamento" /></span>Personalizações</h:outputLink>
+				<ul class="row row_outline1">
+
+					<li class="li" style="width: 210px;"><h:outputLink
+							value="#{request.contextPath}/aluno/senha.jsf" styleClass="fundo">
+							<span class="espacamento">Alterar senha</span>
+						</h:outputLink></li>
+					<li class="li li_bottom" style="width: 210px;"><h:outputLink
+							value="#{request.contextPath}/aluno/dados.jsf" styleClass="fundo">
+							<span class="espacamento">Meus Dados Pessoais</span>
+						</h:outputLink></li>
+				</ul></li>
+
+		</ul>
+	</div>
+</h:panelGroup>
+</html>

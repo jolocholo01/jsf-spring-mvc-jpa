@@ -1,0 +1,78 @@
+
+
+.horario-outro-professor input[type="checkbox"],
+	.horario-professor-outra-turma input[type="checkbox"] {
+	display: none;
+}
+
+.horario-outro-professor input[type="checkbox"]+label,
+	.horario-professor-outra-turma input[type="checkbox"]+label {
+	display: inline-block;
+	height: 13px;
+	width: 13px;
+	position: relative;
+	border-radius: 3px;
+	cursor: not-allowed;
+	float: left;
+	margin-left: 3px;
+	margin-bottom: 1%;
+	border: 1px solid #b59090;
+}
+
+.horario-outro-professor input[type="checkbox"]+label {
+	background: #942004;
+}
+
+.horario-professor-outra-turma input[type="checkbox"]+label {
+	background: #b7da64;
+}
+
+.horario tbody td {
+	padding: 3px;
+}
+
+.horario .coluna1, .horario .horarios1 {
+	width: 40px;
+}
+
+.horario .coluna0 {
+	width: 120px;
+}
+
+.margin-bottom2 {
+	margin-bottom: 2%;
+}
+
+.colunaHorarioProfessor1 {
+	width: 14%;
+}
+
+.tabelaHorarioProfessor thead th {
+	text-align: center;
+	/* 	background: #C3C4CE;
+ */
+	background: #F2EBF5;
+}
+
+.tabelaCabecalho {
+	background: #F2EBF5;
+}
+
+.colunaHorarioProfessor2, .colunaHorarioProfessor3,
+	.colunaHorarioProfessor4, .colunaHorarioProfessor5,
+	.colunaHorarioProfessor6 {
+	width: 186px;
+	text-align: center;
+}
+
+.horarioIndispnivel {
+	text-shadow: 2px 1px 0px #090909;
+}
+
+.corpo {
+	min-height: 200px;
+}
+
+.corpo_para_fundo {
+	min-height: 556px;
+}
