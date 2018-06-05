@@ -5,14 +5,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -24,48 +26,53 @@ import com.mz.sistema.gestao.escolar.util.Mensagem;
 @Service
 public class EnvioEmailServicoImpl implements EnvioEmailServico {
 
-	
 	@Override
 	// @Scheduled(fixedDelay = 5000)
-	public void enviarEmail(String assunto, String texto, List<File> anexos, String... destinatarios) {
+	public void enviarEmail(String assunto, String texto, List<File> anexos, List<String> destinatarios) {
 		try {
-			JavaMailSenderImpl enviarEmail = new JavaMailSenderImpl();
-			enviarEmail.setHost("smtp.gmail.com");
-			enviarEmail.setPort(587);
-			enviarEmail.setProtocol("smtp");
-			enviarEmail.setUsername("sigescmz@gmail.com");
-			enviarEmail.setPassword("sigescmz2016");
-			enviarEmail.setDefaultEncoding("utf-8");
+			// Create a Properties object to contain connection configuration
+			// information.
+			Properties props = System.getProperties();
+			props.put("mail.transport.protocol", "smtp");
+			props.put("mail.smtp.port", 587);
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.smtp.auth", "true");
 
-			Properties properties = new Properties();
-			properties.setProperty("username", "sigescmz@gmail.com");
-			properties.setProperty("password", "sigescmz2016");
-			properties.setProperty("mail.smtp.auth", "true");
-			properties.setProperty("mail.smtp.starttls.enable", "true");
-			properties.setProperty("mail.transport.protocol", "smtp");
-			enviarEmail.setJavaMailProperties(properties);
+			// Create a Session object to represent a mail session with the
+			// specified properties.
+			Session session = Session.getDefaultInstance(props);
 
-			MimeMessage msg = enviarEmail.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(msg, true);
-			helper.setFrom("sigescmz@gmail.com");
-			helper.setSubject(assunto);
-			helper.setText(texto, true);
+			// Create a message with the specified information.
+			MimeMessage msg = new MimeMessage(session);
+			msg.setFrom(new InternetAddress("sigescmz@gmail.com", "Sistema de Gestão Escolar"));
+			StringBuilder builder = new StringBuilder();
+			builder.append(destinatarios);
+			String emails = builder.toString().replace("[", "").replace("]", "");
+			System.out.println("E- mail do destinatario:" + destinatarios);
+			System.out.println("E- mail:" + emails);
+			msg.setRecipient(Message.RecipientType.TO, new InternetAddress(emails));
+			msg.setSubject(assunto);
+			msg.setContent(texto, "text/html");
 
-			for (String destinatario : destinatarios) {
-				helper.addTo(destinatario);
-			}
-			for (String destinatario : destinatarios) {
-				helper.addTo(destinatario);
-			}
+			// Add a configuration set header. Comment or delete the
+			// next line if you are not using a configuration set
+			msg.setHeader("X-SES-CONFIGURATION-SET", "ConfigSet");
 
-			if (anexos != null && !anexos.isEmpty()) {
-				for (File anexo : anexos) {
-					FileSystemResource attachment = new FileSystemResource(anexo);
-					helper.addAttachment(anexo.getName(), attachment);
-				}
-			}
-			enviarEmail.send(msg);
-			System.out.println("Enviando email...");
+			// Create a transport.
+			Transport transport = session.getTransport();
+
+			// Send the message.
+
+			System.out.println("Enviando email..."); // Connect to Amazon SES
+														// using the SMTP
+														// username and password
+														// you specified above.
+			transport.connect("smtp.gmail.com", "sigescmz@gmail.com", "sigescmz2016");
+
+			// Send the email.
+			transport.sendMessage(msg, msg.getAllRecipients());
+
+			System.out.println("E-mail enviado!");
 		} catch (Exception e) {
 			Mensagem.mensagemErro("Não conseguiu enviar o e - mail, tente  mais tarde. ");
 			e.printStackTrace();
@@ -77,8 +84,9 @@ public class EnvioEmailServicoImpl implements EnvioEmailServico {
 	@Async
 	public void enviarEmailUsuario(Usuario usuario, RecoperarSenha recoperarSenha, String url) {
 		String assunto = "Recoperação da Senha";
-		String linkEnviado = url.replace("/senha.html", "/nova/senha.html");;
-		
+		String linkEnviado = url.replace("/senha.html", "/nova/senha.html");
+		;
+
 		String texto = pegarHtmlEmail("resources/recoperarSenha.html");
 		System.out.println("Templete do Html Enviado : " + linkEnviado);
 		String emailFormatoHas = recoperarSenha.getCodigo();
@@ -88,7 +96,9 @@ public class EnvioEmailServicoImpl implements EnvioEmailServico {
 		texto = texto.replace("{link}", url);
 		texto = texto.replace("{linkEnviado}", linkEnviado);
 		try {
-			enviarEmail(assunto, texto, null, usuario.getEmail());
+			List<String> emails = new ArrayList<>();
+			emails.add(usuario.getEmail());
+			enviarEmail(assunto, texto, null, emails);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -8,6 +8,6 @@ import com.mz.sistema.gestao.escolar.modelo.Usuario;
 
 public interface EnvioEmailServico {
 	public void enviarEmail(String assunto, String texto, 
-			List<File> anexos, String... destinatarios);
+			List<File> anexos,  List<String> destinatarios);
 	public void enviarEmailUsuario(Usuario usuario,RecoperarSenha recoperarSenha, String url);
 }
