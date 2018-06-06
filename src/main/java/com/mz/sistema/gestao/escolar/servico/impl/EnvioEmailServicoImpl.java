@@ -24,10 +24,8 @@ import com.mz.sistema.gestao.escolar.util.Mensagem;
 @Service
 public class EnvioEmailServicoImpl implements EnvioEmailServico {
 	static final String HTML = String.join(System.getProperty("line.separator"),
-			"<!DOCTYPE html><html><head>" + "<meta charset=utf-8>" + "<title>Sistema de Gestão Escolar</title>"
-					+ "<style type='text/css'>" + ".body{background: #f7f9fb;color: rgb(0, 0, 0) !important;  padding-bottom: 2%;padding-top: 2%;}"
-					+ ".corpo{width: 75%; margin:auto; background: #fff; border-radius: 15px;}"
-					+ "</style>" + "</head>" + "<body class='body'><div class='corpo'>"
+
+			"<div style='background: #f7f9fb;color: rgb(0, 0, 0) !important;  padding-bottom: 2%;padding-top: 2%;'><div style='width: 75%; margin:auto; background: #fff; border-radius: 15px;'>"
 					+ "<table border='0' cellpadding='0' cellspacing='0' width='100%'"
 					+ " style='border-collapse: collapse; border-spacing: 0; padding: 0; table-layout: auto'>"
 					+ " <tbody>" + "  <tr style='padding: 0'><td valign='middle'>"
@@ -36,10 +34,10 @@ public class EnvioEmailServicoImpl implements EnvioEmailServico {
 					+ "<div style='font-size: 114%; text-align: justify; padding: 4%;font-family: -webkit-body;'>"
 					+ "<p>Caro(a) <b> {usuario.nome} </b></p>"
 					+ "Recebeu este email porque pediu para redefinir a sua senha no SIGE. Para proceder com a redefinição da sua senha, clique no link que se segue: <br /><br />"
-					+ "<div style='text-align: center;'><a style='color: #00b2b2;' href='{linkEnviado}?key={emailFormatoHash}&token={parametro}'>{link}</a></div>"
+					+ "<div style='text-align: center;'><a style='color: #00b2b2;text-decoration: none;' href='{linkEnviado}?key={emailFormatoHash}&token={parametro}'>{link}</a></div>"
 					+ "<br /> Este link estará disponível por 24 horas. Assim que terminar o periodo, o link ficará desactivado e terá que fazer um novo pedido de redefinição de senha. <br /> <br />"
 					+ "Se o link acima não funcionar, copie o endereço abaixo e cole na barra de endereços do seu navegador de internet:<br /><br />"
-					+ "<div style='text-align: justify;'>  <a style='color: #00b2b2;'"
+					+ "<div style='text-align: justify;'>  <a style='color: #00b2b2;text-decoration: none;'"
 					+ "href='{linkEnviado}?key={emailFormatoHash}&token={parametro}'>{linkEnviado}?key={emailFormatoHash}&token={parametro}</a>"
 					+ "</div> <br /> <br /> <b> NOTA"
 					+ "IMPORTANTE:</b> <br /> Tem-se registado muitos casos em que o usuário confunde-se após alterar a sua senha, acabando por tentar"
@@ -54,8 +52,7 @@ public class EnvioEmailServicoImpl implements EnvioEmailServico {
 					+ "<div align='center' valign='middle'"
 					+ "style='border-collapse: collapse !important; border-top-color: #ccc; border-top-style: solid; border-top-width: 1px; padding: 30px 0 20px; word-break: break-word'>"
 					+ " Atenciosamente, Equipa de Desenvolvimento de SIGE <br/>  ©&#160;<span> {ano}"
-					+ "</span>&#160;&#160;|&#160; SIGE</div></div></td></tr></tbody></table></div>"
-					+ " </body></html>");
+					+ "</span>&#160;&#160;|&#160; SIGE</div></div></td></tr></tbody></table></div>" + " </div>");
 
 	@Override
 	// @Scheduled(fixedDelay = 5000)
