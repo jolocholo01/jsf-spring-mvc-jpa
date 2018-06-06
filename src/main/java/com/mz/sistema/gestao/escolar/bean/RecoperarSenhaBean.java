@@ -65,6 +65,15 @@ public class RecoperarSenhaBean implements Serializable {
 						"O e - mail introduzido não existe nos nossos registos! Por favor, faça seu registo no menu dados pessoais.");
 				return;
 			}
+			if (usuario.getEnganoNoEnvioEmail() == null) {
+				
+			}else
+			if (usuario.getEnganoNoEnvioEmail() == true) {
+				Mensagem.mensagemInfo(
+						"Não é possivel enviar o email para este endereço porque não pertence a nenhuma conta de email "
+						+ "ou o usuário da conta pediu para que não recebesse emails via o nosso sistema! ");
+				return;
+			}
 			if (usuario.getRecoperarSenha() == null) {
 			} else {
 				if (usuario.getRecoperarSenha().getId() != null)

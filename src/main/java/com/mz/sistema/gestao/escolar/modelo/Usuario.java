@@ -46,11 +46,12 @@ public class Usuario implements Serializable, UserDetails {
 	private boolean ativo;
 	private boolean sexo;
 	private boolean ocultarEmail = false;
-	private boolean senhaAlterada = false;
+	private boolean senhaAlterada = false;	
 	private Date dataNascimento;
 	private String pai;
 	private String mae;
 	private String email;
+	private Boolean enganoNoEnvioEmail = false;
 	private String nascionalidade;
 	private EstadoCivil estadoCivil;
 	private String novaSenha;
@@ -309,5 +310,15 @@ public class Usuario implements Serializable, UserDetails {
 	public void setSenhaAlterada(boolean senhaAlterada) {
 		this.senhaAlterada = senhaAlterada;
 	}
+
+	public Boolean getEnganoNoEnvioEmail() {
+		return enganoNoEnvioEmail;
+	}
+
+	public void setEnganoNoEnvioEmail(Boolean enganoNoEnvioEmail) {
+		this.enganoNoEnvioEmail = enganoNoEnvioEmail;
+	}
+
+	
 
 }
