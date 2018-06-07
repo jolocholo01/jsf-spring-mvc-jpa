@@ -60,6 +60,10 @@ public class EnvioEmailServicoImpl implements EnvioEmailServico {
 		try {
 			// Create a Properties object to contain connection configuration
 			// information.
+			//sigescmz@gmail.com sigescmz2016
+			//sigesmoz@gmail.com  sigesmoz2018 
+			String email="sigesmoz@gmail.com";
+			String password="sigesmoz2018";
 			Properties props = System.getProperties();
 			props.put("mail.transport.protocol", "smtp");
 			props.put("mail.smtp.port", 587);
@@ -72,7 +76,7 @@ public class EnvioEmailServicoImpl implements EnvioEmailServico {
 
 			// Create a message with the specified information.
 			MimeMessage msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress("sigescmz@gmail.com", "SIGE"));
+			msg.setFrom(new InternetAddress(email, "SIGE"));
 			StringBuilder builder = new StringBuilder();
 			builder.append(destinatarios);
 			String emails = builder.toString().replace("[", "").replace("]", "");
@@ -96,7 +100,7 @@ public class EnvioEmailServicoImpl implements EnvioEmailServico {
 														// using the SMTP
 														// username and password
 														// you specified above.
-			transport.connect("smtp.gmail.com", "sigescmz@gmail.com", "sigescmz2016");
+			transport.connect("smtp.gmail.com", email, password);
 
 			// Send the email.
 			transport.sendMessage(msg, msg.getAllRecipients());
