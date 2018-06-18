@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/academico/principal/index.xhtml">
+	<ui:define name="titulo">Identificação da Escola</ui:define>
+	<ui:define name="cabacalho">
+		<link rel="stylesheet"
+			href="#{request.contextPath}/resources/css/horario_turma.css" />
+	</ui:define>
+	<ui:define name="titulo_do_corpo">
+		<ui:include src="/academico/secretario/template/titulo_do_corpo.xhtml"></ui:include>
+	</ui:define>
+	<ui:define name="nome_usuario">
+		<ui:include src="/academico/secretario/template/nome_usuario.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="ambiente_comum">
+		<h:form id="form_menu">
+			<div class="menu menubar">
+				<ul class="btn1 btn-green">
+					<li><h:outputLink
+							value="#{request.contextPath}/secretario/index.jsf">
+							 Principal
+						</h:outputLink></li>
+					<h:outputText value=" > " style="font-size:21px;" />
+					<li><h:outputLink
+							value="#{request.contextPath}/secretario/identificacao-da-escola.jsf">Identificar Escola
+								</h:outputLink></li>
+				</ul>
+			</div>
+		</h:form>
+		<h:form>
+			<p:panel header="Identificação da Escola" style="margin-bottom: 6%;">
+				<p:messages closable="true"
+					style=" margin: auto; width: 99%; margin-top: 2%; " />
+
+				<h:panelGrid
+					styleClass="table table-sem-border-padding tabela-identificacao"
+					columns="2" style=" margin-top: 3px;">
+
+					<h:outputLabel value="Ano:" styleClass="text-lebal" />
+					<h:outputText
+						value="#{authenticationContext.calendarioEscolar.ano}"
+						style="margin-left: 10px;" />
+
+
+					<h:outputLabel value="Unidade Escolar:" styleClass="text-lebal" />
+					<h:outputText value="#{escolaBean.escolaSelecionada.descricao}"
+						style="margin-left: 10px;text-transform: uppercase;" />
+
+					<h:outputLabel value="Director(a):" styleClass="text-lebal" />
+					<h:outputText value="#{escolaBean.directorDaEscolaLogada.nome}"
+						style="margin-left: 10px;" />
+
+
+					<h:outputLabel value="Turno:" styleClass="text-lebal" />
+					<h:selectManyCheckbox disabled="true"
+						value="#{escolaBean.escolaSelecionada.turnos}"
+						styleClass="selecao-tabela selecionarTurnosDaEscola"
+						style="margin-left: 10px;" converter="turnoConverter">
+						<f:selectItems value="#{escolaBean.turnos}" var="turno"
+							itemLabel="#{turno.descricao}" itemValue="#{turno}" />
+					</h:selectManyCheckbox>
+
+
+
+					<h:outputLabel value="Classe:" styleClass="text-lebal" />
+					<h:selectManyCheckbox disabled="true"
+						value="#{escolaBean.escolaSelecionada.classes}"
+						styleClass="selecao-tabela selecionarTurnosDaEscola1"
+						style="margin-left: 10px;" converter="classeConverter">
+						<f:selectItems value="#{escolaBean.classes}" var="classe"
+							itemLabel="#{classe.descricao}" itemValue="#{classe}" />
+					</h:selectManyCheckbox>
+
+					<h:outputLabel value="Bairro: " styleClass="text-lebal" />
+					<h:outputText value="#{escolaBean.escolaSelecionada.bairro}"
+						rendered="#{escolaBean.escolaSelecionada.bairro !=null}"
+						style="margin-left: 10px;text-transform: uppercase;" />
+					<h:outputText value="INDISPONIVEL NO MOMENTO"
+						style="margin-left: 10px;"
+						rendered="#{escolaBean.escolaSelecionada.bairro ==null}" />
+
+					<h:outputLabel value="Localidade:" styleClass="text-lebal" />
+					<h:outputText value="#{escolaBean.escolaSelecionada.localidade}"
+						style="margin-left: 10px;text-transform: uppercase;" />
+
+
+					<h:outputLabel value="Distrito:" styleClass="text-lebal" />
+					<h:outputText
+						value="#{escolaBean.escolaSelecionada.distrital.endereco.distrito.nome}"
+						style="margin-left: 10px;text-transform: uppercase;" />
+					<h:outputLabel value="Província:" styleClass="text-lebal" />
+					<h:outputText
+						value="#{escolaBean.escolaSelecionada.distrital.endereco.distrito.provincia.label}"
+						style="margin-left: 10px;text-transform: uppercase;" />
+
+
+
+
+				</h:panelGrid>
+
+
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

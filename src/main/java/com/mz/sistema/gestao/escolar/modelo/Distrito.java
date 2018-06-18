@@ -36,6 +36,13 @@ public class Distrito implements Serializable {
 		this.provincia = provincia;
 	}
 
+	public Distrito(Long id, String nome, String provincia) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.provincia = provincia;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {

@@ -8,13 +8,35 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-		<h:form id="form" styleClass="form-horizontal">
-			<h:panelGroup rendered="#{alunoBean.editarMatricula==false}">
+<h:form id="form" styleClass="form-horizontal">
+	<h:panelGroup rendered="#{alunoBean.editarMatricula==false}">
 
-				<p:panel header="Lista de alunos na turma"
+		<div class="card">
+			<h3 class="peg-titulo card-header primary-color white-text">
+
+
+				<h:outputText value="Lista de alunos na turma"
+					style="font-weight: 700;"
+					rendered="#{alunoBean.renovarMatriculaSelecionadaBoolean==false}" />
+				<h:outputText
+					value="Formulário de Transferência de aluno para uma Escola"
+					rendered="#{alunoBean.renovarMatriculaSelecionadaBoolean==true}" />
+				<h:outputText rendered="#{alunoBean.editarMatricula==true}"
+					value="Editar turma de aluno" />
+				<h:panelGroup styleClass="form-span">
+
+				</h:panelGroup>
+			</h3>
+
+			<p:messages closable="true"
+				style=" margin-left: 5px;margin-right:5px;" />
+
+			<div class="card-body">
+
+
+
+				<h:panelGroup
 					rendered="#{alunoBean.renovarMatriculaSelecionadaBoolean==false}">
-
-					<p:messages closable="true"></p:messages>
 
 					<div class="form-group row">
 						<h:selectBooleanCheckbox value="true" disabled="true"
@@ -22,7 +44,7 @@
 							style=" margin-top: 2%;" />
 						<h:outputLabel value="Ano :"
 							styleClass="col-sm-2 control-label texto-label textfim" />
-						<div class="col-sm-1">
+						<div class="col-sm-2">
 							<h:inputText id="idAno" value="#{alunoBean.matricula.ano}"
 								styleClass="form-control">
 								<p:ajax event="change"
@@ -47,8 +69,7 @@
 								styleClass="form-control" converter="classeCicloConverter">
 								<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
 								<f:selectItems value="#{alunoBean.obterTodasClasses}"
-									var="classe"
-									itemLabel="#{classe.ordem}. #{classe.tipoEnsino} &gt; #{classe.ciclo} &gt; #{classe.descricao}"
+									var="classe" itemLabel="#{classe.descricao}"
 									itemValue="#{classe}" />
 								<p:ajax event="change"
 									listener="#{alunoBean.buscarMatrizesCurriculares}"
@@ -60,7 +81,7 @@
 						</div>
 						<h:outputLabel value="Curso: "
 							styleClass="col-sm-1 control-label texto-label" />
-						<div class="col-sm-2">
+						<div class="col-sm-3">
 							<h:selectOneMenu id="idCurso"
 								value="#{alunoBean.matricula.curso}" styleClass="form-control">
 								<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
@@ -85,7 +106,7 @@
 								<h:outputLabel value="Área Curricular: "
 									styleClass="col-sm-2 control-label texto-label textfim" />
 								<div class="col-sm-6">
-									<h:selectOneMenu value="#{alunoBean.matricula.tipoArea}"
+									<h:selectOneMenu  disabled="#{empty alunoBean.matrizes}" value="#{alunoBean.matricula.tipoArea}"
 										styleClass="form-control" required="true"
 										requiredMessage="O campo área curricular é obrigatório">
 										<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
@@ -108,7 +129,7 @@
 							styleClass="col-sm-2 control-label texto-label textfim" />
 						<div class="col-sm-4">
 							<h:panelGroup id="idDisciplina">
-								<h:selectOneMenu value="#{alunoBean.matricula.turma}"
+								<h:selectOneMenu disabled="#{empty alunoBean.turmas}" value="#{alunoBean.matricula.turma}"
 									styleClass="form-control" converter="turmaConverter">
 									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
 									<f:selectItems value="#{alunoBean.turmas}" var="turma"
@@ -126,29 +147,23 @@
 							actionListener="#{alunoBean.buscarMatriculas}"
 							styleClass=" btn btn-primary " />
 						<h:commandButton value=" Cancelar" immediate="true"
-							action="/academico/secretario/index?faces-redirect=true"
+							action="#{buscarFotoBean.voltar}"
 							styleClass=" btn btn-success" style="margin-left:10px" />
 					</div>
 
 					<h:dataTable id="tabela" value="#{alunoBean.matriculas}"
-						styleClass="tabelaProfessor tabela-renovar table table-bordered"
+						styleClass="tabelaProfessor table table-bordered table-bordered   tabela-funcionario left"
 						var="matricula"
 						style="margin: auto;margin-top: 2%;max-width: 99%;margin-bottom: 2%;">
 
 						<h:column>
 							<f:facet name="header">
-								<h:outputText value="Matrícula " />
+								<h:outputText value="# " />
 							</f:facet>
-							<h:outputText value="#{matricula.numero}"
-								style=" margin-left:4px;" />
+							<h:outputText value="#{matricula.numeroAlunoTurma>=10?'':'0'}#{matricula.numeroAlunoTurma}" />
 						</h:column>
 
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Ano " />
-							</f:facet>
-							<h:outputText value="#{matricula.ano}" style=" margin-left:4px;" />
-						</h:column>
+
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="Nome " />
@@ -173,7 +188,7 @@
 							</f:facet>
 							<h:outputText value="#{matricula.aluno.dataNascimento}"
 								style=" margin-left:4px;">
-								<f:convertDateTime pattern="dd/MM/yyyy"   timeZone="Africa/Harare" />
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" />
 							</h:outputText>
 						</h:column>
 
@@ -213,24 +228,27 @@
 								id="bs-example-navbar-collapse-1">
 
 								<li role="presentation" class="dropdown"><a
-									class="dropdown-toggle" data-toggle="dropdown" href="#"
+									class="dropdown-toggle link" data-toggle="dropdown" href="#"
 									role="button" aria-haspopup="true" aria-expanded="false"> +
 										<span class="caret"></span>
 								</a>
 									<ul class="dropdown-menu " role="menu">
+									<ui:remove>
 										<li><h:commandLink
 												actionListener="#{alunoBean.editarAlunoTurma(matricula)}"
-												immediate="true" styleClass="tooltip-left">
+												styleClass="tooltip-left link">
 												<span class="glyphicon glyphicon-pencil"></span> Editar
-												</h:commandLink></li>
-										<li><h:commandLink
-												actionListener="#{alunoBean.selecionarMatricula(matricula)}"
-												immediate="true" styleClass="tooltip-left">
-												<p:graphicImage
-													url="#{buscarFotoBean.retornarImagesTransferencia}"
-													height="20" width="20" style="margin-left:-6px;" />
+												</h:commandLink></li></ui:remove>
+										<ui:remove>
+											<li><h:commandLink
+													actionListener="#{alunoBean.selecionarMatricula(matricula)}"
+													immediate="true" styleClass="tooltip-left">
+													<p:graphicImage
+														url="#{buscarFotoBean.retornarImagesTransferencia}"
+														height="20" width="20" style="margin-left:-6px;" />
 														Transferência de Escola
 												</h:commandLink></li>
+										</ui:remove>
 										<li><h:commandLink immediate="true"
 												actionListener="#{alunoBean.imprimirReciboInscricaoDoAluno(matricula)}">
 												<p:graphicImage
@@ -262,10 +280,8 @@
 								value=" #{alunoBean.qtdAlunoMatriculado} aluno(s) encontrado(s)"></h:outputText>
 						</f:facet>
 					</h:dataTable>
-				</p:panel>
-				<p:panel
-					header="Formulário de Transferência de aluno para uma Escola"
-					style="margin: 1% 6px 3%;"
+				</h:panelGroup>
+				<h:panelGroup
 					rendered="#{alunoBean.renovarMatriculaSelecionadaBoolean==true}">
 
 					<p:messages closable="true" />
@@ -483,11 +499,11 @@
 							styleClass="btn btn-success active"
 							style="margin-left: 6px;margin-top: 6px;" />
 					</div>
-				</p:panel>
-			</h:panelGroup>
-			<h:panelGroup rendered="#{alunoBean.editarMatricula==true}">
-				<p:panel header="Editar turma de aluno" style="margin-bottom: 4%;">
-					<p:messages closable="true" style="width:99%; margin:auto; " />
+
+				</h:panelGroup>
+				<h:panelGroup rendered="#{alunoBean.editarMatricula==true}">
+
+
 
 					<div class="form-group row">
 						<h:outputLabel value="Período lectivo:"
@@ -518,7 +534,7 @@
 							<h:outputText
 								value="#{alunoBean.matriculaSelecionada.aluno.dataNascimento}"
 								style=" margin-left:4px;">
-								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare"/>
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" />
 							</h:outputText>
 						</div>
 					</div>
@@ -586,72 +602,73 @@
 						<div class="col-sm-8" style="text-align: center">
 							<h:commandButton value="&#8666;  Voltar"
 								actionListener="#{alunoBean.voltar}"
-								styleClass=" btn btn-primary " immediate="true"/>
-							<h:commandButton value="✔  Cadastrar" 
-								
+								styleClass=" btn btn-primary " immediate="true" />
+							<h:commandButton value="✔  Cadastrar"
 								styleClass=" btn btn-success" style="margin-left:10px" />
 						</div>
 					</div>
-				</p:panel>
-			</h:panelGroup>
-			<!-- Modal -->
 
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel" data-backdrop="static"
-				style="padding-top: 210px;">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h4 class="modal-title" id="myModalLabel">
-								<h:outputLabel value="Você Tem certeza?" />
+				</h:panelGroup>
 
-							</h4>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<h:panelGroup aria-hidden="true">&times;
+			</div>
+		</div>
+	</h:panelGroup>
+
+	<!-- Modal -->
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" data-backdrop="static"
+		style="padding-top: 210px;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">
+						<h:outputLabel value="Você Tem certeza?" />
+
+					</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<h:panelGroup aria-hidden="true">&times;
 									<p:ajax event="click" update="form:tabela" />
-								</h:panelGroup>
-							</button>
-						</div>
-						<div class="modal-body">
-							<h:panelGroup id="id-panelGroup-confirma-modal">
-								<h:outputText value="Tem certeza que deseja excluir a turma de" />
-								<h:outputLabel
-									value="&nbsp;#{alunoBean.matriculaSelecionadaExclusao.aluno.nome} &nbsp;"
-									style="font-weight: 600;" />
-								<h:outputText value="da" />
-								<h:outputLabel
-									value="&nbsp;#{alunoBean.matriculaSelecionadaExclusao.classe.descricao} &nbsp;"
-									style="font-weight: 600;" />
-								<h:outputText value="do curso" />
-								<h:outputLabel
-									value="&nbsp;#{alunoBean.matriculaSelecionadaExclusao.curso}"
-									style="font-weight: 600;" />
-								<h:outputText value="&nbsp;da área curricular de"
-									rendered="#{alunoBean.matriculaSelecionadaExclusao.tipoArea !=null}" />
-								<h:outputLabel
-									value="&nbsp; #{alunoBean.matriculaSelecionadaExclusao.classe.descricao} #{alunoBean.matriculaSelecionadaExclusao.tipoArea}"
-									style="font-weight: 600;"
-									rendered="#{alunoBean.matriculaSelecionadaExclusao.tipoArea !=null}" />
-								<h:outputText value="?" />
-							</h:panelGroup>
-						</div>
-						<div class="modal-footer">
-							<h:commandButton type="button" title="Cancelar"
-								class="btn btn-success" value="Cancelar">
-								<f:passThroughAttribute name="data-dismiss" value="modal" />
-								<p:ajax event="click" update="form:tabela" />
+						</h:panelGroup>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h:panelGroup id="id-panelGroup-confirma-modal">
+						<h:outputText value="Tem certeza que deseja excluir " />
 
+						<h:outputText value="&#160;a aluna&#160;"
+							rendered="#{alunoBean.matriculaSelecionadaExclusao.aluno.sexo==false}" />
+						<h:outputText value="&#160;o aluno&#160;"
+							rendered="#{alunoBean.matriculaSelecionadaExclusao.aluno.sexo==true}" />
+						<h:outputLabel
+							value="&nbsp;#{alunoBean.matriculaSelecionadaExclusao.aluno.nome} &nbsp;"
+							style="font-weight: 600;" />
+						<h:outputText value="da turma&#160;" />
+						<h:outputLabel
+							value="&nbsp;#{alunoBean.matriculaSelecionadaExclusao.classe.sigla}ª #{alunoBean.matriculaSelecionadaExclusao.turma.descricao}"
+							style="font-weight: 600;" />
+						<h:outputText value="&nbsp;do curso" />
+						<h:outputLabel
+							value="&nbsp;#{alunoBean.matriculaSelecionadaExclusao.curso}"
+							style="font-weight: 600;text-transform: lowercase;" />
 
-							</h:commandButton>
-							<h:commandButton title="Excluir"
-								action="#{alunoBean.excluirEnturmacao}"
-								styleClass="btn btn-primary" value="Excluir">
+						<h:outputText value="?" />
+					</h:panelGroup>
+				</div>
+				<div class="modal-footer">
+					<h:commandButton  title="Cancelar"
+						class="btn btn-success" value="Cancelar">
+						
+					</h:commandButton>
+					<h:commandButton title="Excluir"
+						action="#{alunoBean.excluirEnturmacao}"
+						styleClass="btn btn-primary" value="Excluir">
 
-							</h:commandButton>
-						</div>
-					</div>
+					</h:commandButton>
 				</div>
 			</div>
-		</h:form>
+		</div>
+	</div>
+</h:form>
 </html>

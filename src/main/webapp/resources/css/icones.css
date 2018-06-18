@@ -1,3 +1,49 @@
+.link{
+text-decoration: none;
+}
+
+.border{
+	border: 1px solid #e9ecef;
+	border-radius: 3px;
+}
+
+.cabacalho {
+	background: antiquewhite;
+}
+
+.bottom0 {
+	margin-bottom: 0px!important;
+}
+
+.td {
+	background-color: #fff;
+}
+
+.linha2 {
+	/* background: #EEF9FB none repeat scroll 0% 0%; */
+	height: 10px;
+}
+
+.linha1 {
+	background: #F1FFFF;
+}
+
+.texto-center, .opcoes {
+	text-align: center;
+}
+
+.peg-titulo {
+	font-size: 19px;
+}
+
+.table-horario-aula {
+	text-align: center;
+}
+
+.ui-panel {
+	padding: 0em;
+}
+
 .icon-emitir, .icon-alocar {
 	height: 20px;
 	width: 20px;
@@ -12,10 +58,106 @@
 	font-size: 12px;
 }
 
-.alunoTurma>tbody>tr>td, .alunoTurma>tbody>tr>th,
-	.alunoTurma>tfoot>tr>td, .alunoTurma>tfoot>tr>th,
-	.alunoTurma>thead>tr>td, .alunoTurma>thead>tr>th {
-	    line-height: 1;
+.cabecalhoTabela {
+	background: #d8e3ef;
+}
+
+.tabelaProfessor>tbody>tr>td {
+	text-align: center;
+}
+
+.formatar_texto {
+	font-weight: bold;
+}
+
+.horario {
+	font-size: 12px;
+	width: 16%;
+}
+
+.tabelaProfessor>tbody>tr>td, .tabelaProfessor>tbody>tr>th,
+	.tabelaProfessor>tfoot>tr>td, .tabelaProfessor>tfoot>tr>th,
+	.tabelaProfessor>thead>tr>td, .tabelaProfessor>thead>tr>th {
+	border: 1px solid #ddd;
+}
+
+.left>tbody>tr>td {
+	text-align: left;
+}
+.center{
+	text-align: center !important;
+}
+
+.tabelaProfessor>tbody>tr>td {
+	padding: 6px;
+}
+
+.alunoTurma>tbody>tr>td, .alunoTurma>tbody>tr>th, .alunoTurma>tfoot>tr>td,
+	.alunoTurma>tfoot>tr>th, .alunoTurma>thead>tr>td, .alunoTurma>thead>tr>th
+	{
+	line-height: 1;
+}
+
+.dados .dados-escola {
+	margin-left: 9px;
+	background: #fff;
+	height: 20%;
+	width: 95%;
+	border-radius: 4px;
+}
+
+.bottom0 {
+	margin-bottom: 0 !important;
+}
+
+.left_1 {
+	margin-left: 1%;
+}
+
+.tabale-sem-border-padding td, .tabale-sem-border-padding th {
+	padding: 0rem;
+	border: 0px;
+}
+
+.tabale-sem-border-padding .dataInicio {
+	font-weight: 700;
+}
+
+.tabale-sem-border-padding .a, .tabale-sem-border-padding .dataInicio {
+	padding: 5%;
+}
+
+.table-sem-border-padding>tbody>tr>td, .table-sem-border-padding>thead>tr>th
+.selecao-tabela td, .selecao-tabela th {
+	border: 0;
+	padding: 0;
+	border: 0px !important;
+}
+
+.selecao-tabela td, .selecao-tabela th {
+	vertical-align: top;
+	border-top: 0px solid #e9ecef;
+}
+
+.tabela-identificacao {
+	margin-bottom: 0;
+}
+
+.tabela-identificacao>tfoot>tr>td, .tabela-identificacao>tfoot>tr>th {
+	background: #EFEDED;
+	padding: 5px;
+}
+
+.selecao-tabela td input {
+	margin-right: 4px;
+}
+
+.panel-titulo {
+	font-weight: 700;
+}
+
+.coluna-acompanhamento-matricula {
+	text-align: center;
 }
 
 @media ( max-width : 504px) {
@@ -33,11 +175,23 @@
 	.dados {
 		font-size: 12px;
 	}
+	.textfim {
+		text-align: left;
+	}
+}
+
+@media ( max-width : 600px) {
+	.textfim {
+		text-align: left;
+	}
 }
 
 @media ( max-width : 430px) {
 	.tabela-funcionario {
 		font-size: 9px;
+	}
+	.textfim {
+		text-align: left;
 	}
 }
 
@@ -45,16 +199,25 @@
 	.tabela-funcionario {
 		font-size: 7px;
 	}
+	.textfim {
+		text-align: left;
+	}
 }
 
 @media ( max-width : 335px) {
 	.tabela-funcionario {
 		font-size: 5px;
 	}
+	.textfim {
+		text-align: left;
+	}
 }
 
 @media ( max-width : 295px) {
 	.tabela-funcionario {
 		font-size: 4px;
+	}
+	.textfim {
+		text-align: left;
 	}
 }

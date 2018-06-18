@@ -9,9 +9,7 @@
 
 
 <!-- buscar Caderneta do Professor que existem campos para editar as notas  -->
-<p:panel header="Caderneta do professor" style="margin: 20px 6px 30px;">
 
-	<h:panelGrid style="margin-top:10px; " />
 
 	<h:panelGrid columns="2" style="float:left;margin-left:10px;">
 		<h:outputLabel value="Escola:" />
@@ -406,7 +404,7 @@
 									<f:convertNumber />
 								</h:inputText></td>
 
-							<td class="td texto-centro" style="padding-top: 6px;"><h:panelGroup
+							<td class="td texto-centro resultado" style="padding-top: 6px;"><h:panelGroup
 									id="situacao">
 									<h:panelGroup
 										rendered="#{notaBean.trimestreSelecionado.descricao=='1º Trimestre' }">
@@ -414,11 +412,11 @@
 										<h:outputText value="#{nota.situacao}"
 											rendered="#{nota.situacao == 'Aprovado' or nota.situacao == 'Dispensado' or nota.situacao == 'Admitido'}"
 											styleClass="lancarNotaSituacaoLa"
-											style="color: rgb(49, 12, 239);font-size: 15px;" />
+											style="color: rgb(49, 12, 239);" />
 										<h:outputText value="#{nota.situacao}"
 											rendered="#{nota.situacao == 'Reprovado'}"
 											styleClass="lancarNotaSituacaoLa"
-											style="color: red;font-size: 15px;" />
+											style="color: red;" />
 
 										<h:outputText value="-" rendered="#{nota.situacao==null}"
 											styleClass="inputLancarNota" />
@@ -430,12 +428,12 @@
 										<h:outputText value="#{nota.situacao2}"
 											rendered="#{nota.situacao2 == 'Aprovado' or nota.situacao2 == 'Dispensado' or nota.situacao2 == 'Admitido'}"
 											styleClass="lancarNotaSituacaoLa"
-											style="color: rgb(49, 12, 239);font-size: 15px;" />
+											style="color: rgb(49, 12, 239);" />
 
 										<h:outputText value="#{nota.situacao2}"
 											rendered="#{nota.situacao2 == 'Reprovado'}"
 											styleClass="lancarNotaSituacaoLa"
-											style="color: red;font-size: 15px;" />
+											style="color: red;" />
 
 										<h:outputText value="-" rendered="#{nota.situacao2==null}"
 											styleClass="inputLancarNota" />
@@ -447,12 +445,12 @@
 										<h:outputText value="#{nota.situacao3}"
 											rendered="#{nota.situacao3 == 'Aprovado' or nota.situacao3 == 'Dispensado' or nota.situacao3 == 'Admitido'}"
 											styleClass="lancarNotaSituacaoLa"
-											style="color: rgb(49, 12, 239);font-size: 15px;" />
+											style="color: rgb(49, 12, 239);" />
 
 										<h:outputText value="#{nota.situacao3}"
 											rendered="#{nota.situacao3 == 'Reprovado'}"
 											styleClass="lancarNotaSituacaoLa"
-											style="color: red;font-size: 15px;" />
+											style="color: red;" />
 
 										<h:outputText value="-" rendered="#{nota.situacao3==null}"
 											styleClass="inputLancarNota" />
@@ -485,6 +483,6 @@
 			<h:outputText value="Lembrem - se que a turma esta fechada" />
 		</h:panelGrid>
 	</h:panelGrid>
-</p:panel>
+
 </html>
 

@@ -27,7 +27,7 @@
 		<!-- dados de funcionario selecionado  -->
 
 		<h:panelGroup
-			rendered="#{funcionarioBean.adicionarFuncionarioEscolaBoolean != true}">
+			rendered="#{funcionarioBean.adicionarFuncionarioEscolaBoolean == false}">
 
 			<h:outputLabel value="Usuário :" />
 			<h:outputText value="#{funcionarioBean.funcionarioSelecionado.login}"
@@ -94,7 +94,7 @@
 				</h:column>
 				<h:column headerClass="thead">
 					<f:facet name="header">
-						<h:outputText value="Categoria" />
+						<h:outputText value="Cargo" />
 					</f:facet>
 					<h:outputText value="#{funcionarioEscola.permissao.nome}" />
 				</h:column>
@@ -173,9 +173,9 @@
 			</div>
 
 			<div class="form-group row">
-				<h:outputLabel value="Categoria: "
+				<h:outputLabel value="Cargo: "
 					styleClass="col-sm-2 col-form-label" />
-				<div class="col-sm-7">
+				<div class="col-sm-5">
 
 					<h:selectOneMenu
 						value="#{funcionarioBean.funcionarioEscola.permissao}"

@@ -7,92 +7,128 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:form id="form_dados_pessoais">
-	<h:panelGroup>
-		<div class="dados_pessoais">
 
-			<div class="imagem_usuario" style="margin-top: 20px;">
+<div class="fh">
+	<div class="rp bqq agk border-radius">
+
+		<div class="rq awx fundo">
+			<h:form>
+
+				<h3 class="rr gestao" style="text-align: center;">
+					<h:outputText styleClass="distrito"
+						value="#{authenticationContext.matriculaEscolaLogada.escola.descricao}" />
+
+				</h3>
+
+				<div class="imagem_usuario">
+
+					<h:panelGroup id="idFoto">
+						<p:graphicImage cache="false"
+							value="#{buscarFotoBean.foto.fotoMontada}"
+							rendered="#{buscarFotoBean.foto.fotografia !=null}"
+							styleClass="foto-do-usuario profile-img-tag" />
+						<p:graphicImage cache="false"
+							value="#{buscarFotoBean.retornarFoto}"
+							rendered="#{buscarFotoBean.foto.fotografia ==null}"
+							styleClass="foto-do-usuario profile-img-tag" />
+					</h:panelGroup>
 
 
-				<h:panelGroup id="idFoto">
-					<p:graphicImage   cache="false"
-						value="#{buscarFotoBean.foto.fotoMontada}"
-						styleClass="foto-dados-usuario profile-img-tag"
-						rendered="#{buscarFotoBean.foto.fotografia !=null}" />
-					<p:graphicImage   cache="false" styleClass="foto-dados-usuario profile-img-tag"
-						value="#{buscarFotoBean.retornarFoto}"
-						rendered="#{buscarFotoBean.foto.fotografia ==null}"
-						style="float:right; margin-top: 5px; margin-right:8px;" />
-				</h:panelGroup>
+					<div class="link">
 
-				
-					<h:panelGroup style="spanFile">
+
 
 						<h:outputLink value="#{request.contextPath}/aluno/perfil.jsf"
-							styleClass="actualizar-dados link-alterar-foto">Alterar foto e perfil
+							styleClass="actualizar-dados link-alterar-foto">Alterar Foto e Perfil
 						</h:outputLink>
-					</h:panelGroup>
+
+						<br />
+						<h:outputLink value="#{request.contextPath}/aluno/dados.jsf"
+							styleClass="actualizar-dados">Actualizar meus dados
+					</h:outputLink>
 
 
-					<h:outputLink value="#{request.contextPath}/aluno/dados.jsf"
-						styleClass="actualizar-dados" style=" margin-top: 3%;">Meus dados pessoais
-				</h:outputLink>
+					</div>
 
-				
-			</div>
-			<br />
-			<div class="dados dados-aluno">
-				<p style="border-bottom: none; text-align: center;">Dados do
-					Estudante</p>
-
-				<h:panelGrid columns="2">
+				</div>
 
 
-					<h:outputLabel value="Nome: " styleClass="texto_label" />
+				<ul class="bqs">
+					<h6 style="text-align: center;">
+						<br />
+						<h:outputText value="#{buscarFotoBean.usuario.nome} "
+							style="font-weight: bold;" />
 
-					<h:outputText value="#{buscarFotoBean.usuario.nome}"
-						style="margin-left: 10px;" />
+					</h6>
+					<h:form styleClass="form-horizontal">
+						<div class="dados" style="margin-top: 1px; padding-bottom: 12px;">
+							<p style="border-bottom: none; text-align: center;">Dados
+								Pessoais</p>
+<div style="margin-left: 2%;">
+							<div class="form-group row bottom0">
+								<h:outputLabel value="Nome:"
+									styleClass="col-sm-2 control-label texto-right " />
+								<div class="col-sm-8">
+									<h:outputText value="#{buscarFotoBean.usuario.nome}" />
+								</div>
+							</div>
+							<div class="form-group row bottom0">
+								<h:outputLabel value="Classe:"
+									styleClass="col-sm-2 control-label texto-right " />
+								<div class="col-sm-6">
+									<h:outputText
+										value="#{authenticationContext.matriculaEscolaLogada.classe.descricao}"
+										style="text-transform: uppercase;"
+										rendered="#{authenticationContext.matriculaEscolaLogada.classe.descricao !=null}" />
+									<h:outputText value="NÃO INFORMADA."
+										rendered="#{authenticationContext.matriculaEscolaLogada.classe.descricao ==null}" />
+								</div>
+							</div>
 
-					<h:outputLabel value="Classe:" styleClass="texto_label" />
-					<h:outputText
-						value="#{authenticationContext.matriculaEscolaLogada.classe.descricao}"
-						style="margin-left: 10px; text-transform: uppercase;"
-						rendered="#{authenticationContext.matriculaEscolaLogada.classe.descricao !=null}" />
-					<h:outputText value="NÃO INFORMADA." style="margin-left: 10px;"
-						rendered="#{authenticationContext.matriculaEscolaLogada.classe.descricao ==null}" />
+							<div class="form-group row bottom0">
+								<h:outputLabel value="Turma:"
+									styleClass="col-sm-2 control-label texto-right " />
+								<div class="col-sm-8">
+									<h:panelGroup>
+										<h:outputText
+											value="#{authenticationContext.matriculaEscolaLogada.turma.descricao} / #{authenticationContext.matriculaEscolaLogada.turma.turno.descricao}"
+											rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao !=null}" />
+										<h:outputText value="NÃO DEFINIDA."
+											rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao ==null}" />
+									</h:panelGroup>
+								</div>
+							</div>
+							<div class="form-group row bottom0">
+								<h:outputLabel value="Situação:"
+									styleClass="col-sm-2 control-label texto-right " />
+								<div class="col-sm-6">
+									<h:outputText
+										value="#{authenticationContext.matriculaEscolaLogada.ativo?'MATRICULADO':'NÃO MATRICULADO'}" />
+								</div>
+							</div>
+							<div class="form-group row bottom0">
+								<h:outputLabel value="E-mail:"
+									styleClass="col-sm-2 control-label texto-right " />
+								<div class="col-sm-8">
+									
+									<h:panelGroup>
+										<h:outputText value="#{buscarFotoBean.usuario.email}"
+											rendered="#{buscarFotoBean.usuario.ocultarEmail ==false and buscarFotoBean.usuario.email != null and buscarFotoBean.usuario.email !=''}" />
+										<h:outputText value="NÃO CADASTRADO"
+											rendered="#{buscarFotoBean.usuario.email == null or buscarFotoBean.usuario.email ==''}" />
+										<h:outputText value="INDISPONÍVEL"
+											rendered="#{ buscarFotoBean.usuario.ocultarEmail ==true and (buscarFotoBean.usuario.email !=null and buscarFotoBean.usuario.email !='')}" />
 
-					<h:outputLabel value="Turma:" styleClass="texto_label" />
-					<h:panelGroup>
-						<h:outputText
-							value="#{authenticationContext.matriculaEscolaLogada.turma.descricao} / #{authenticationContext.matriculaEscolaLogada.turma.turno.descricao}"
-							style="margin-left: 10px;"
-							rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao !=null}" />
-						<h:outputText value="NÃO DEFINIDA." style="margin-left: 10px;"
-							rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao ==null}" />
-					</h:panelGroup>
-					<h:outputLabel value="Situação:" styleClass="texto_label" />
-					<h:outputText
-						value="#{authenticationContext.matriculaEscolaLogada.ativo?'MATRICULADO':'NÃO MATRICULADO'}"
-						style="margin-left: 10px;" />
-					<h:outputLabel value="E-mail:" styleClass="texto_label" />
-					<h:panelGroup>
+									</h:panelGroup></div>
+							</div>
+							</div>
+						</div>
 
-						<h:panelGroup>
-							<h:outputText value="#{buscarFotoBean.usuario.email}"
-								style="margin-left: 10px;"
-								rendered="#{buscarFotoBean.usuario.ocultarEmail ==false and buscarFotoBean.usuario.email != null and buscarFotoBean.usuario.email !=''}" />
-							<h:outputText value="NÃO CADASTRADO" style="margin-left: 10px;"
-								rendered="#{buscarFotoBean.usuario.email == null or buscarFotoBean.usuario.email ==''}" />
-							<h:outputText value="INDISPONÍVEL" style="margin-left: 10px;"
-								rendered="#{ buscarFotoBean.usuario.ocultarEmail ==true and (buscarFotoBean.usuario.email !=null and buscarFotoBean.usuario.email !='')}" />
-
-						</h:panelGroup>
-					</h:panelGroup>
-				</h:panelGrid>
-			</div>
+					</h:form>
+				</ul>
+			</h:form>
 		</div>
+	</div>
 
-	</h:panelGroup>
-
-</h:form>
+</div>
 </html>

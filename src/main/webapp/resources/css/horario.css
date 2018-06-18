@@ -14,7 +14,7 @@
 	border-radius: 3px;
 	cursor: not-allowed;
 	float: left;
-	margin-left: 3px;
+/* 	margin-left: 3px; */
 	margin-bottom: 1%;
 	border: 1px solid #b59090;
 }
@@ -27,15 +27,15 @@
 	background: #b7da64;
 }
 
-.horario tbody td {
+.tabela-horario tbody td {
 	padding: 3px;
 }
 
-.horario .coluna1, .horario .horarios1 {
+.tabela-horario .coluna1, .tabela-horario .horarios1 {
 	width: 40px;
 }
 
-.horario .coluna0 {
+.tabela-horario .coluna0 {
 	width: 120px;
 }
 
@@ -75,4 +75,8 @@
 
 .corpo_para_fundo {
 	min-height: 556px;
+}
+.tabela-horarios thead tr{
+	background: #efeaea;
+	text-align: center;
 }

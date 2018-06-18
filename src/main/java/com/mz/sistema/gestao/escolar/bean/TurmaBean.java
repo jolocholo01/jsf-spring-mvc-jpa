@@ -3,9 +3,13 @@ package com.mz.sistema.gestao.escolar.bean;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,14 +28,17 @@ import com.mz.sistema.gestao.escolar.modelo.Matriz;
 import com.mz.sistema.gestao.escolar.modelo.Sala;
 import com.mz.sistema.gestao.escolar.modelo.Turma;
 import com.mz.sistema.gestao.escolar.modelo.Turno;
+import com.mz.sistema.gestao.escolar.modelo.Usuario;
 import com.mz.sistema.gestao.escolar.servico.ClasseServico;
 import com.mz.sistema.gestao.escolar.servico.EscolaServico;
+import com.mz.sistema.gestao.escolar.servico.GeradorDeRelatoriosServico;
 import com.mz.sistema.gestao.escolar.servico.HorarioAulaServico;
 import com.mz.sistema.gestao.escolar.servico.MatriculaServico;
 import com.mz.sistema.gestao.escolar.servico.MatrizServico;
 import com.mz.sistema.gestao.escolar.servico.SalaServico;
 import com.mz.sistema.gestao.escolar.servico.TurmaServico;
 import com.mz.sistema.gestao.escolar.servico.TurnoServico;
+import com.mz.sistema.gestao.escolar.util.DataUtils;
 import com.mz.sistema.gestao.escolar.util.Mensagem;
 
 @Named
@@ -105,6 +112,8 @@ public class TurmaBean {
 	private EscolaServico escolaServico;
 	@Autowired
 	private MatrizServico matrizServico;
+	@Autowired
+	private GeradorDeRelatoriosServico geradorDeRelatoriosServico;
 
 	public void iniciarBean() {
 		turma = new Turma();
@@ -384,6 +393,27 @@ public class TurmaBean {
 
 	public void buscarSala() {
 		this.procurarSalaParaCadastrarNaTurma = true;
+	}
+
+	public void emitirDisciplinasLecionadasPeloProfessor() {
+		try {
+
+			String caminho = "/academico/relatorio/horario/minhas_turmas.jasper";
+			Usuario professor = authenticationContext.getUsuarioLogado();
+			FuncionarioEscola funcionarioEscola = authenticationContext.getFuncionarioEscolaLogada();
+			Escola escola = funcionarioEscola.getEscola();
+
+			Map<String, Object> parametro = new HashMap<>();
+
+			parametro.put("idProfessor", professor.getId());
+			parametro.put("idEscola", escola.getId());
+
+			geradorDeRelatoriosServico.geraPdf(caminho, parametro, "Minhas turmas.pdf");
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
 	}
 
 	public void procularaSala() {

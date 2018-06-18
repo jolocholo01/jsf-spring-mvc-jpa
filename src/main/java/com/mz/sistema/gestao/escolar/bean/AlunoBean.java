@@ -60,6 +60,7 @@ import com.mz.sistema.gestao.escolar.util.DataUtils;
 import com.mz.sistema.gestao.escolar.util.GeradorCodigo;
 import com.mz.sistema.gestao.escolar.util.Mensagem;
 import com.mz.sistema.gestao.escolar.util.StringUtil;
+import com.mz.sistema.gestao.escolar.util.TipoLetra;
 import com.mz.sistema.gestao.escolar.util.ValorExtenso;
 
 @Named
@@ -222,6 +223,7 @@ public class AlunoBean {
 		renovarMatriculaBoolean = false;
 		escolherSegundoCriterioBoolean = true;
 		escolherTerceiroCriterioBoolean = true;
+		this.turmas=new ArrayList<>();
 	}
 
 	public void buscarAluno() {
@@ -384,6 +386,7 @@ public class AlunoBean {
 			FuncionarioEscola funcionarioEscola = authenticationContext.getFuncionarioEscolaLogada();
 			Escola escola = funcionarioEscola.getEscola();
 			matricula.setEscola(escola);
+			matricula.setEscolaOrigem(escola);
 			matricula.setAluno(alunoSelecionado);
 			matricula.getAluno().setAtivo(true);
 			matricula.getAluno().setAtivo(true);
@@ -537,7 +540,7 @@ public class AlunoBean {
 				}
 			}
 			if (quantidadeMatriculado == 0) {
-				Mensagem.mensagemErro("ERRO: selecione pelo menos um aluno para alocar nesta turma.");
+				Mensagem.mensagemErro("ERRO: selecione pelo meno um aluno para alocar nesta turma!");
 				return;
 			}
 			Turma turma = turmaServico.obterTurmaPorId(matricula.getTurma().getId());
@@ -576,6 +579,8 @@ public class AlunoBean {
 
 	public void prepararExcluirMatricula(Matricula matricula) {
 		this.matriculaSelecionadaExclusao = matricula;
+		String nomeAluno = TipoLetra.capitalizeString(this.matriculaSelecionadaExclusao.getAluno().getNome());
+		this.matriculaSelecionadaExclusao.getAluno().setNome(nomeAluno);
 	}
 
 	public void excluir() {
@@ -597,7 +602,7 @@ public class AlunoBean {
 
 		} catch (Exception e) {
 			Mensagem.mensagemErro(
-					"ERRO: Não foi possível excluir esse registo pois exitem dependências a ele em outras tabelas!");
+					"ERRO: Não foi possível excluir esse registo pois existe dependência a ele em outras tabelas!");
 		}
 	}
 
@@ -609,7 +614,7 @@ public class AlunoBean {
 
 				} else if (notas != null) {
 					matriculaSelecionadaExclusao.setNotas(new ArrayList<>(notas));
-
+					matriculaSelecionadaExclusao.getAluno().setNome(matriculaSelecionadaExclusao.getAluno().getNome().toUpperCase());
 					matriculaServico.excluir(matriculaSelecionadaExclusao);
 
 					Mensagem.mensagemInfo("Aviso: matrícula foi excluida com sucesso!");
@@ -621,7 +626,7 @@ public class AlunoBean {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Mensagem.mensagemErro(
-					"ERRO: Não foi possível excluir esse registo pois exitem dependências a ele em outras tabelas!");
+					"ERRO: Não foi possível excluir esse registo pois exitem dependência a ele em outras tabelas!");
 		}
 	}
 
@@ -665,7 +670,7 @@ public class AlunoBean {
 		Exception e) {
 			e.printStackTrace();
 			Mensagem.mensagemErro(
-					"ERRO: Não foi possível excluir esse registo pois exitem dependências a ele em outras tabelas!");
+					"ERRO: Não foi possível excluir esse registo pois existe dependência a ele em outras tabelas!");
 		}
 	}
 

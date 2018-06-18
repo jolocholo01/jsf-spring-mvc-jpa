@@ -1,4 +1,4 @@
-.tesx-right{
+.tesx-right, .texto-right, .textfim{
 	text-align: right;
 }
 
@@ -183,7 +183,7 @@
 	width: 12%;
 }
 
-.tabela-funcionario thead tr {
+.tabela-funcionario thead tr, .tabela-cor-header thead tr{
 	background: rgb(255, 255, 222);
 }
 
@@ -198,9 +198,10 @@
 .bold {
 	font-weight: 600;
 }
-
-.dados .text_label {
+.text_label {
 	font-weight: bold;
+}
+.dados .text_label {
 	margin-left: 20px;
 }
 
@@ -231,7 +232,7 @@
 }
 
 .dados p {
-	font-size: 18px;
+
 	margin-left: 20px;
 	margin-right: 20px;
 	padding-top: 20px;

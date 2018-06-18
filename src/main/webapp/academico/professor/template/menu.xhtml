@@ -5,73 +5,76 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:panelGroup>
-	<div class="menu" style="margin-top: -10px;">
+	
+	
+<nav
+	class="navbar navbar-expand-md navbar-dark bg-dark fixed-top menu-horizontal">
+<a class="navbar-brand"
+	href="#{request.contextPath}/professor/index.jsf">SIGE</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse"
+	data-target="#navbarsExampleDefault"
+	aria-controls="navbarsExampleDefault" aria-expanded="false"
+	aria-label="Toggle navigation">
+	<span class="navbar-toggler-icon"></span>
+</button>
 
-		<ul>
-			<li><h:outputLink value="">
-					<span> <h:graphicImage
-							url="#{buscarFotoBean.retornarImagesLivro}" class="ajustamento"
-							style="margin-top:2px;" /></span>Ensino</h:outputLink>
-				<ul class="row row_outline1">
-					<li style="width: 300px;" class="li li_top"><h:outputLink
-							value="#{request.contextPath}/professor/horario.jsf"
-							styleClass="fundo">
-							<span class="espacamento"> Meus Horários </span>
-						</h:outputLink></li>
-					<li style="width: 300px;" class="li"><h:outputLink
-							value="#{request.contextPath}/professor/turma.jsf"
-							styleClass="fundo">
-							<span class="espacamento">Minhas Turmas</span>
-						</h:outputLink></li>
-					<li style="width: 300px;" class="li li_bottom"><h:commandLink
-							action="#{professorBean.consultarCalendadrioEscolar}"
-							styleClass="fundo">
-							<span class="espacamento"> Calendário Escolar</span>
-						</h:commandLink></li>
+<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Ensino</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/professor/horario.jsf">
+							 Meus Horários
+					</h:outputLink>
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/professor/turma.jsf">
+							Minhas Turmas
+					</h:outputLink>
+				<h:commandLink action="#{professorBean.consultarCalendadrioEscolar}"
+					styleClass="dropdown-item">
+							Calendário Escolar
+						</h:commandLink>
 
-				</ul></li>
-			<h:panelGroup class="span_seta" />
-			<li style="width: 100px;"><h:outputLink value="#">
-					<span> <h:graphicImage
-							url="#{buscarFotoBean.retornarImagesNota}" class="ajustamento"
-							style="margin-top:2px;" /></span>Notas</h:outputLink>
-				<ul class="row row_outline1">
-					<li style="width: 320px;" class="li li_top"><h:commandLink
-							action="#{notaBean.lançarNotas}" styleClass="fundo">
-							<span class="espacamento"> Lançar Notas</span>
-						</h:commandLink></li>
+			</div></li>
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Notas</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+				<h:commandLink action="#{notaBean.listarTurmaParaLancarNotas}"
+					styleClass="dropdown-item">
+							 Lançar Notas
+						</h:commandLink>
 
-					<li style="width: 320px;" class="li li_bottom"><h:commandLink
-							action="#{notaBean.relatorioNotas}" styleClass="fundo">
-							<span class="espacamento">Emitir cadernata de professor</span>
-						</h:commandLink></li>
+				<h:commandLink action="#{notaBean.relatorioNotas}"
+					styleClass="dropdown-item">
+							Emitir minhas cadernatas
+						</h:commandLink>
 
-				</ul></li>
-			<h:panelGroup class="span_seta" />
+			</div></li>
 
 
-				
-			<li style="width: 160px;"><h:outputLink value="#">
-					<span> <h:graphicImage
-							url="#{buscarFotoBean.retornarImagesPassword}"
-							class="ajustamento" style="margin-top:2px;" /></span>Personalizações</h:outputLink>
-				<ul class="row row_outline1">
 
-					<li class="li li_top" style="width: 250px;"><h:outputLink
-							value="#{request.contextPath}/professor/senha.jsf"
-							styleClass="fundo">
-							<span class="espacamento">Alterar senha</span>
-						</h:outputLink></li>
-					<li class="li  li_bottom" style="width: 250px;"><h:outputLink
-							value="#{request.contextPath}/professor/dados.jsf"
-							styleClass="fundo">
-							<span class="espacamento">Meus Dados Pessoais</span>
-						</h:outputLink></li>
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Personalizações</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+				<h:outputLink value="#{request.contextPath}/professor/senha.jsf"
+					styleClass="dropdown-item">Alterar senha
+						</h:outputLink>
+				<h:outputLink value="#{request.contextPath}/professor/dados.jsf"
+					styleClass="dropdown-item">Meus dados pessoais
+					</h:outputLink>
 
-				</ul></li>
-		
-		</ul>
-	</div>
-</h:panelGroup>
+			</div></li>
+	</ul>
+	<h:panelGroup class="form-inline my-2 my-lg-0 form_sair">
+
+		<h:commandLink value="Sair" styleClass="botao" title="Sair do sistema"
+			action="#{authenticationContext.logout}" />
+
+	</h:panelGroup>
+</div>
+</nav>
 </html>

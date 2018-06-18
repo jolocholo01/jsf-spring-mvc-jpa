@@ -7,95 +7,104 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:form id="form_dados_pessoais" enctype="multipart/form-data">
-	<h:panelGroup>
-		<div class="dados_pessoais">
 
-			<div class="imagem_usuario" style="margin-top: 20px;">
+<div class="fh">
+	<div class="rp bqq agk border-radius">
 
-				<h:panelGroup id="idFoto">
-					<p:graphicImage  cache="false"
-						value="#{buscarFotoBean.foto.fotoMontada}"
-						styleClass="foto-dados-usuario profile-img-tag"
-						rendered="#{buscarFotoBean.foto.fotografia !=null}" />
-					<p:graphicImage  cache="false"
-						value="#{buscarFotoBean.retornarFoto}"
-						rendered="#{buscarFotoBean.foto.fotografia ==null}"
-						style="float:right; margin-top: 5px; margin-right:8px;"
-						styleClass="profile-img-tag" />
-				</h:panelGroup>
-				
-					<h:panelGroup>
+		<div class="rq awx fundo">
+			<h:form>
+
+				<h3 class="rr gestao" style="text-align: center;">
+					<h:outputText styleClass="distrito"
+						value="#{authenticationContext.funcionarioEscolaLogada.escola.descricao}" />
+				</h3>
+
+				<div class="imagem_usuario">
+
+					<h:panelGroup id="idFoto">
+						<p:graphicImage cache="false"
+							value="#{buscarFotoBean.foto.fotoMontada}"
+							rendered="#{buscarFotoBean.foto.fotografia !=null}"
+							styleClass="foto-do-usuario profile-img-tag" />
+						<p:graphicImage cache="false"
+							value="#{buscarFotoBean.retornarFoto}"
+							rendered="#{buscarFotoBean.foto.fotografia ==null}"
+							styleClass="foto-do-usuario profile-img-tag" />
+					</h:panelGroup>
+
+
+					<div class="link">
+
+
 
 						<h:outputLink value="#{request.contextPath}/professor/perfil.jsf"
 							styleClass="actualizar-dados link-alterar-foto">Alterar Foto e Perfil
 						</h:outputLink>
 
+						<br />
+						<h:outputLink value="#{request.contextPath}/professor/dados.jsf"
+							styleClass="actualizar-dados">Actualizar meus dados
+					</h:outputLink>
 
-					</h:panelGroup>
-					<h:outputLink value="#{request.contextPath}/professor/dados.jsf"
-						styleClass="actualizar-dados" style="  margin-top: 11px;">Actualizar meus dados
-				</h:outputLink>
+
+					</div>
+
+				</div>
 
 
-			</div>
-			<h:panelGrid style="margin-left: 20px; margin-top: 20px; ">
+				<ul class="bqs">
+					<h6 style="text-align: center;">
+						<br />
+						<h:outputText value="PROF. #{buscarFotoBean.usuario.nome} "
+							style="font-weight: bold;"
+							rendered="#{buscarFotoBean.usuario.sexo==true}" />
+						<h:outputText value="PROFª. #{buscarFotoBean.usuario.nome} "
+							style="font-weight: bold;"
+							rendered="#{buscarFotoBean.usuario.sexo==false}" />
 
-				<h:outputText value="PROF. #{buscarFotoBean.usuario.nome} "
-					style="font-weight: bold;"
-					rendered="#{buscarFotoBean.usuario.sexo==true}" />
-				<h:outputText value="PROFª. #{buscarFotoBean.usuario.nome} "
-					style="font-weight: bold;"
-					rendered="#{buscarFotoBean.usuario.sexo==false}" />
-			</h:panelGrid>
-			<div class="dados" style="margin-top: 1px; padding-bottom: 12px;">
-				<p style="border-bottom: none; text-align: center;">Dados
-					Pessoais</p>
+					</h6>
+					<h:form styleClass="form-horizontal">
+						<div class="dados" style="margin-top: 1px; padding-bottom: 12px;">
+							<p style="border-bottom: none; text-align: center;">Dados
+								Pessoais</p>
 
-				<h:panelGrid columns="2">
-					<h:outputLabel value="Nome: " styleClass="texto_label" />
+							<h:panelGrid columns="2">
+								<h:outputLabel value="Nome: " styleClass="text_label" />
 
-					<h:outputText value="#{buscarFotoBean.usuario.nome}"
-						style="margin-left: 10px;" />
-					<h:outputText value="Gênero: " styleClass="texto_label" />
-					<h:outputText
-						value="#{buscarFotoBean.usuario.sexo?'MASCULINO':'FEMENINO'}"
-						style="margin-left: 10px; " />
-						<h:outputLabel value="Função:" styleClass="texto_label" />
-					<h:panelGroup>
-						<h:outputText value="#{buscarFotoBean.usuario.funcao}" style="margin-left: 10px;"
-						 rendered="#{buscarFotoBean.usuario.funcao !=null}" />
-						 <h:outputText value="NÃO DEFINIDA" style="margin-left: 10px;"
-							rendered="#{buscarFotoBean.usuario.funcao ==null}" />
-					</h:panelGroup>
-					<h:outputLabel value="Categoria:" styleClass="texto_label" />
-					<h:panelGroup>
-						<h:outputText value="PROFESSOR" style="margin-left: 10px;" />
-					</h:panelGroup>
-					<h:outputLabel value="Estado Civil:" styleClass="texto_label" />
+								<h:outputText value="#{buscarFotoBean.usuario.nome}"
+									style="margin-left: 10px;" />
+								<h:outputText value="Gênero: " styleClass="text_label" />
+								<h:outputText
+									value="#{buscarFotoBean.usuario.sexo?'MASCULINO':'FEMININO'}"
+									style="margin-left: 10px; " />
+								<h:outputLabel value="Cargo:" styleClass="text_label" />
+								<h:panelGroup>
+									<h:outputText value="PROFESSOR" style="margin-left: 10px;" />
+								</h:panelGroup>
+								<h:outputLabel value="Estado Civil:" styleClass="text_label" />
 
-					<h:panelGroup>
-						<h:outputText value="#{buscarFotoBean.usuario.estadoCivil}"
-							style="margin-left: 10px;" />
-						<h:outputText value="NÃO DEFINIDO" style="margin-left: 0px;"
-							rendered="#{buscarFotoBean.usuario.estadoCivil ==null}" />
-					</h:panelGroup>
-					<h:outputLabel value="E – mail:" styleClass="texto_label" />
-					<h:panelGroup>
-						<h:outputText value="#{buscarFotoBean.usuario.email}"
-							style="margin-left: 10px;"
-							rendered="#{buscarFotoBean.usuario.ocultarEmail ==false and buscarFotoBean.usuario.email != null and buscarFotoBean.usuario.email !=''}" />
-						<h:outputText value="NÃO CADASTRADO" style="margin-left: 10px;"
-							rendered="#{buscarFotoBean.usuario.email == null or buscarFotoBean.usuario.email ==''}" />
-						<h:outputText value="INDISPONÍVEL" style="margin-left: 10px;"
-							rendered="#{ buscarFotoBean.usuario.ocultarEmail ==true and (buscarFotoBean.usuario.email !=null and buscarFotoBean.usuario.email !='')}" />
+								<h:panelGroup>
+									<h:outputText value="#{buscarFotoBean.usuario.estadoCivil}"
+										style="margin-left: 10px;" />
+									<h:outputText value="NÃO DEFINIDO" style="margin-left: 0px;"
+										rendered="#{buscarFotoBean.usuario.estadoCivil ==null}" />
+								</h:panelGroup>
+								<h:outputLabel value="E – mail:" styleClass="text_label" />
+								<h:panelGroup>
+									<h:outputText value="#{buscarFotoBean.usuario.email}"
+										style="margin-left: 10px;"
+										rendered="#{buscarFotoBean.usuario.ocultarEmail ==false}" />
+									<h:outputText value="INDISPONÍVEL"
+										rendered="#{buscarFotoBean.usuario.email ==null or buscarFotoBean.usuario.email =='' or buscarFotoBean.usuario.ocultarEmail ==true}" />
+								</h:panelGroup>
+							</h:panelGrid>
+						</div>
 
-					</h:panelGroup>
-				</h:panelGrid>
-			</div>
+					</h:form>
+				</ul>
+			</h:form>
 		</div>
+	</div>
 
-	</h:panelGroup>
-</h:form>
-
+</div>
 </html>

@@ -6,100 +6,140 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-<h:form id="form_dados_pessoais">
-	<div class="dados_pessoais">
-		<h3 style="margin-left: 100px;">Gestão da Escola</h3>
-		<div class="imagem_usuario" style="margin-top: 20px;">
 
-			<h:panelGroup id="idFoto">
-				<p:graphicImage   cache="false"
-					value="#{buscarFotoBean.foto.fotoMontada}"
-					styleClass="foto-dados-usuario profile-img-tag"
-					rendered="#{buscarFotoBean.foto.fotografia !=null}" />
-				<p:graphicImage   cache="false" styleClass="foto-dados-usuario profile-img-tag"
-					value="#{buscarFotoBean.retornarFoto}"
-					rendered="#{buscarFotoBean.foto.fotografia ==null}"
-					style="float:right; margin-top: 5px; margin-right:8px;" />
-			</h:panelGroup>
-				<h:panelGroup>
 
-					<h:outputLink value="#{request.contextPath}/director/perfil.jsf"
-						styleClass="actualizar-dados link-alterar-foto">Alterar Foto e Perfil
+<div class="fh">
+	<div class="rp bqq agk border-radius">
+
+		<div class="rq awx fundo">
+			<h:form>
+
+				<h3 class="rr gestao" style="text-align: center;">Gestão da
+					Escola</h3>
+				<div style="text-align: center;">
+					<h:outputText value="Nome do usuário:" style="font-weight: bold;" />
+					<br />
+
+					<h:outputText value="#{buscarFotoBean.usuario.nome} "
+						style="font-weight: bold;" />
+				</div>
+				<div class="imagem_usuario">
+
+					<h:panelGroup id="idFoto">
+						<p:graphicImage cache="false"
+							value="#{buscarFotoBean.foto.fotoMontada}"
+							rendered="#{buscarFotoBean.foto.fotografia !=null}"
+							styleClass="foto-do-usuario profile-img-tag" />
+						<p:graphicImage cache="false"
+							value="#{buscarFotoBean.retornarFoto}"
+							rendered="#{buscarFotoBean.foto.fotografia ==null}"
+							styleClass="foto-do-usuario profile-img-tag" />
+					</h:panelGroup>
+
+
+					<div class="link">
+
+
+
+						<h:outputLink value="#{request.contextPath}/director/perfil.jsf"
+							styleClass="actualizar-dados link-alterar-foto">Alterar Foto e Perfil
 						</h:outputLink>
 
-
-				</h:panelGroup>
-				<h:outputLink value="#{request.contextPath}/director/dados.jsf"
-					styleClass="actualizar-dados" style="  margin-top: 11px;">Actualizar meus dados
-				</h:outputLink>
-
-
-		</div>
-		<h:panelGrid style="margin-left: 20px; margin-top: 20px;">
-
-		</h:panelGrid>
-		<div class="dados" style="margin-top: 1px;">
-
-			<p style="border-bottom: none; text-align: center;">DADOS DA
-				ESCOLA</p>
-
-			<div class="d">
-
-				<h:panelGrid columns="2"
-					styleClass="table table-sem-border sem padding">
-
-					<h:outputLabel value="Total de Alunos: " />
-					<h:outputText value="#{escolaBean.totalAlunosDaEscola}"
-						styleClass="margin-left30" style="margin-top: 10px;" />
-
-					<h:outputLabel value="Total de Professores: " />
-					<h:outputText value="#{escolaBean.totalProfessoresDaEscola}"
-						styleClass="margin-left30" />
+						<br />
+						<h:outputLink value="#{request.contextPath}/director/dados.jsf"
+							styleClass="actualizar-dados">Actualizar meus dados
+					</h:outputLink>
 
 
-					<h:outputLabel value="Total de Turmas: " />
-					<h:outputText value="#{escolaBean.totalTurmaDaEscola}"
-						styleClass="margin-left30" />
+					</div>
+
+				</div>
 
 
-					<h:outputLabel value="Alunos alocados nas turmas:"
-						style="margin-top: 4px;" />
-					<h:outputText
-						value="#{escolaBean.totalAlunosAlocadoEmTurmasDaEscola}"
-						styleClass="margin-left30" />
-				</h:panelGrid>
-			</div>
+				<ul class="bqs">
+					<h4 style="text-align: center;">
+						<h:outputText styleClass="distrito"
+							value="#{authenticationContext.funcionarioEscolaLogada.escola.descricao}" />
+					</h4>
+					<h:form styleClass="form-horizontal">
+						<div class="dados" style="margin-top: 1px; padding-bottom: 12px;">
+							<p style="border-bottom: none; text-align: center;">Dados da
+								Escola</p>
 
-			<p style="border-bottom: none; margin-left: 9px;">
-				Calendário escolar em vigor:
-				<h:outputText value="#{authenticationContext.calendarioEscolar.ano}" />
-			</p>
-			<div class="d">
-				<h:dataTable value="#{calendarioBean.trimestres}" var="trimestre"
-					style="margin: 10px;height: 76px;" columnClasses="linhaTabela">
-					<h:column>
-						<h:outputLabel value="#{trimestre.descricao} :"
-							styleClass="descricao" />
 
-						<h:outputText value="#{trimestre.dataInicio}"
-							style="marin-left:20px;" styleClass="dataInicio">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</h:outputText>
+							<div class="dados-escola">
 
-						<h:outputText value="a" styleClass="a" />
+								<div class="form-group row bottom0 left_1">
+									<h:outputLabel styleClass=" col-sm-8" value="Total de Alunos:" />
+									<div class="col-sm-3 texto-right">
+										<h:outputText value="#{escolaBean.totalAlunosDaEscola==null?'0':escolaBean.totalAlunosDaEscola}"
+											styleClass="text_label" />
+									</div>
+								</div>
+								<div class="form-group row bottom0 left_1">
+									<h:outputLabel styleClass=" col-sm-8"
+										value="Total de Professores:" />
+									<div class="col-sm-3 texto-right">
+										<h:outputText value="#{escolaBean.totalProfessoresDaEscola==null?'0':escolaBean.totalProfessoresDaEscola}"
+											styleClass="text_label" />
+									</div>
+								</div>
 
-						<h:outputText value="#{trimestre.dataFinal}"
-							styleClass="dataFinal">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</h:column>
-				</h:dataTable>
-			</div>
-			<h:panelGroup rendered="#{not empty escolaBean.pieModel}">
-				<p:chart type="pie" model="#{escolaBean.pieModel}"
-					style="width:98%x;height:40%; margin-top:12px;" />
-			</h:panelGroup>
+								<div class="form-group row bottom0 left_1">
+									<h:outputLabel styleClass=" col-sm-8" value="Total de Turmas: " />
+									<div class="col-sm-3 texto-right">
+										<h:outputText value="#{escolaBean.totalTurmaDaEscola==null?'0':escolaBean.totalTurmaDaEscola}"
+											styleClass="text_label" />
+									</div>
+								</div>
+
+								<div class="form-group row bottom0 left_1">
+									<h:outputLabel styleClass=" col-sm-8"
+										value="Alunos alocados nas turmas:" />
+									<div class="col-sm-3 texto-right">
+										<h:outputText
+											value="#{escolaBean.totalAlunosAlocadoEmTurmasDaEscola==null?'0':escolaBean.totalAlunosAlocadoEmTurmasDaEscola}"
+											styleClass="text_label" />
+									</div>
+								</div>
+
+							</div>
+							<h:panelGroup
+								rendered="#{not empty authenticationContext.calendarioEscolar.ano}">
+								<p style="border-bottom: none; text-align: center;">
+									Calendário escolar em vigor:
+									<h:outputText
+										value="#{authenticationContext.calendarioEscolar.ano}" />
+								</p>
+								<div class="dados-escola">
+									<h:dataTable value="#{calendarioBean.trimestres}"
+										var="trimestre" styleClass="table tabale-sem-border-padding"
+										columnClasses="linhaTabela left_1">
+										<h:column>
+											<h:outputLabel value="#{trimestre.descricao} :"
+												styleClass="descricao " style="padding-left: 2%;" />
+
+											<h:outputText value="#{trimestre.dataInicio}"
+												style="marin-left:20px;" styleClass="dataInicio">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+
+											<h:outputText value="a" styleClass="a" />
+
+											<h:outputText value="#{trimestre.dataFinal}"
+												styleClass="dataFinal dataInicio">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</h:column>
+									</h:dataTable>
+								</div>
+							</h:panelGroup>
+						</div>
+					</h:form>
+				</ul>
+			</h:form>
 		</div>
 	</div>
-</h:form>
+
+</div>
 </html>

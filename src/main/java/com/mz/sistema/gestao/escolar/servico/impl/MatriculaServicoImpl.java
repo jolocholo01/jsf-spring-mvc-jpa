@@ -130,6 +130,13 @@ public class MatriculaServicoImpl implements MatriculaServico {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<Matricula> obterEstatistcaMatriculasPorEscolaPorAno(Long idEscolaOrigem, Integer ano) {
+		return em.createQuery("FROM Matricula m  WHERE m.escolaOrigem.id=:idEscolaOrigem AND m.ano=:ANO")
+				.setParameter("idEscolaOrigem", idEscolaOrigem).setParameter("ANO", ano).getResultList();
+
+	}
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<Matricula> obterMatriculasPorEscolaPorAno(Long idEscola, Integer ano) {
 		return em.createQuery("FROM Matricula m  WHERE m.escola.id=:idEscola AND m.ano=:ANO")
 				.setParameter("idEscola", idEscola).setParameter("ANO", ano).getResultList();
@@ -271,16 +278,15 @@ public class MatriculaServicoImpl implements MatriculaServico {
 	}
 
 	@Override
-	public List<Matricula> obterMatriculadoPorSexo(Long idEscola, Integer ano, Boolean sexo) {
-		@SuppressWarnings("unchecked")
-		List<Matricula> matriculas = em
-				.createQuery("FROM Matricula m  WHERE m.escola.id=:IDEscola AND m.ano=:Ano AND m.aluno.sexo=:Sexo")
-				.setParameter("IDEscola", idEscola).setParameter("Ano", ano).setParameter("Sexo", sexo).getResultList();
+	public Long obterMatriculadoPorSexo(Long idEscola, Integer ano, boolean sexo) {
+		
+		Long count = (Long) em
+				.createQuery("SELECT COUNT(m.aluno.id) FROM Matricula m  WHERE m.escola.id=:IDEscola AND m.ano=:Ano AND m.aluno.sexo=:Sexo")
+				.setParameter("IDEscola", idEscola).setParameter("Ano", ano).setParameter("Sexo", sexo)
+				.getSingleResult();
 
-		if (!matriculas.isEmpty()) {
-			return matriculas;
-		}
-		return null;
+		return count;
+
 	}
 
 	@Override
@@ -475,6 +481,16 @@ public class MatriculaServicoImpl implements MatriculaServico {
 		}
 		return null;
 
+	}
+
+	@Override
+	public Long obterTotalAlunosMatriculasPorEscolaPorAno(Long idEscola, Integer ano) {
+		Long count = (Long) em
+				.createQuery("SELECT COUNT(m.id) FROM Matricula m  WHERE m.escola.id=:IDEscola AND m.ano=:Ano")
+				.setParameter("IDEscola", idEscola).setParameter("Ano", ano)
+				.getSingleResult();
+
+		return count;
 	}
 
 }

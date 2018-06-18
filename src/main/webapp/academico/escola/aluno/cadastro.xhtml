@@ -10,71 +10,67 @@
 
 <h:form id="form" styleClass="form-horizontal ">
 
-	<h:panelGroup rendered="#{alunoBean.matriculaAlunoBoolean==false}">
-		<!--Panel-->
-
-		<div
-			class="panel panel-defaul ui-panel ui-widget ui-widget-content ui-corner-all">
-			<div
-				class="panel-heading ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
-
-				<h:panelGroup class="panel-title ui-panel-title">
-
-					<h:outputText value="Pesquisa de Aluno" style="font-weight: 700;"
-						rendered="#{alunoBean.cadastroAlunoBoolean==false}" />
 
 
-					<h:panelGroup rendered="#{alunoBean.cadastroAlunoBoolean==true}">
-						<h:outputText value="Novo Aluno"
-							rendered="#{alunoBean.novoAlunoBoolean ==true}" />
-						<h:outputText value="Atualizar dados de Aluno"
-							rendered="#{alunoBean.novoAlunoBoolean != true}" />
-					</h:panelGroup>
-					<h:panelGroup styleClass="form-span">
-						<h:commandLink
-							style="color: blue; float: right; font-weight: 500;"
-							value="Novo Aluno" actionListener="#{alunoBean.novoAluno}"
-							immediate="true"
-							rendered="#{alunoBean.cadastroAlunoBoolean==false}" />
-						<h:commandLink
-							style="color: blue; float: right; font-weight: 500;"
-							value="Voltar para Pesquisa"
-							actionListener="#{alunoBean.voltarParaPequisa}" immediate="true"
-							rendered="#{alunoBean.cadastroAlunoBoolean!=false}" />
-					</h:panelGroup>
-				</h:panelGroup>
-			</div>
-			<div class="panel-body">
+	<div class="card">
+		<h3 class="peg-titulo card-header primary-color white-text">
+			<h:outputText value="Pesquisa de Aluno" style="font-weight: 700;"
+				rendered="#{alunoBean.cadastroAlunoBoolean==false}" />
+
+
+			<h:panelGroup rendered="#{alunoBean.cadastroAlunoBoolean==true}">
+				<h:outputText value="Novo Aluno"
+					rendered="#{alunoBean.novoAlunoBoolean ==true}" />
+				<h:outputText value="Atualizar dados de Aluno"
+					rendered="#{alunoBean.novoAlunoBoolean != true}" />
+			</h:panelGroup>
+			<h:panelGroup styleClass="form-span">
+				<h:commandLink style="color: blue; float: right; font-weight: 500;"
+					value="Novo Aluno" actionListener="#{alunoBean.novoAluno}"
+					immediate="true"
+					rendered="#{alunoBean.cadastroAlunoBoolean==false}" />
+				<h:commandLink style="color: blue; float: right; font-weight: 500;"
+					value="Voltar para Pesquisa"
+					actionListener="#{alunoBean.voltarParaPequisa}" immediate="true"
+					rendered="#{alunoBean.cadastroAlunoBoolean!=false}" />
+			</h:panelGroup>
+		</h3>
+
+		<p:messages closable="true"
+			style=" margin-left: 5px;margin-right:5px;" />
+
+		<div class="card-body">
+
+			<h:panelGroup rendered="#{alunoBean.matriculaAlunoBoolean==false}">
+				<!--Panel-->
+
 
 				<!-- Pesquisa de Aluno -->
 				<h:panelGroup rendered="#{alunoBean.cadastroAlunoBoolean ==false}">
 					<p:messages closable="true" id="mensagem" />
 					<div class="form-group">
-						<div class="col-sm-5" style="padding-left: 0;">
+						<div class="col-sm-6" style="padding-left: 0;">
 							<div class="input-group">
 								<h:inputText styleClass="form-control"
-									value="#{alunoBean.pesquisa}" style="margin-left: 16px;"
-									required="true"
+									value="#{alunoBean.pesquisa}" required="true"
 									requiredMessage="O campo pesquisa é obrigatório">
 									<f:passThroughAttribute name="placeholder"
-										value="Qual aluno que você está procurar?" />
-									<f:passThroughAttribute name="autofocus" value="true" />
-									<p:ajax event="keyup" listener="#{alunoBean.buscar}"
-										update="tabela"></p:ajax>
+										value="Qual aluno que você está a procura?" />
+
 								</h:inputText>
 								<span class="input-group-btn"> <h:commandButton
-										styleClass="btn btn-primary"
-										style="margin-left: 14px;   padding-right: 8px; "
-										value="Buscar" actionListener="#{alunoBean.buscar}" />
+										styleClass="btn btn-primary" value="Buscar"
+										actionListener="#{alunoBean.buscar}" />
 								</span>
 							</div>
 
 						</div>
 					</div>
 					<h:dataTable value="#{alunoBean.alunos}" var="aluno" id="tabela"
-						styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
+						styleClass="table table-bordered tabelaProfessor  tabela-funcionario left"
 						headerClass="cab-tabela" footerClass="fo-tabela"
-						style="margin-top: 20px;" rowClasses="linha2, linha1">
+						style="margin-top: 20px;" rowClasses="linha2, linha1"
+						columnClasses=",,,,center">
 
 						<h:column>
 							<f:facet name="header">
@@ -111,12 +107,10 @@
 								<h:outputText value="Telefone" />
 							</f:facet>
 							<h:outputText value="#{aluno.telefone}"
-								style="float: left;padding-left: 7px;"
 								rendered="#{aluno.telefone !=null}" />
 
-							<h:outputText value="Não definido"
-								style="float: left;padding-left: 7px;"
-								rendered="#{aluno.telefone ==null}" />
+							<h:outputText value="---"
+								rendered="#{aluno.telefone ==null or aluno.telefone ==''}" />
 						</h:column>
 						<h:column>
 							<h:commandLink styleClass="tooltip-left"
@@ -128,15 +122,14 @@
 							<h:commandLink
 								actionListener="#{alunoBean.selecionarAluno(aluno)}"
 								immediate="true" title="Matricular/renovar este aluno?"
-								styleClass="tooltip-left" style="margin-left:10px;">
+								styleClass="tooltip-left" style="margin:10px;">
 								<p:graphicImage
 									url="#{buscarFotoBean.retornarImagesMatriculaAluno}"
 									height="20" width="20" />
 							</h:commandLink>
 
 							<h:commandLink title="Excluir este aluno?" immediate="true"
-								styleClass="btn-link btn-xs tooltip-left"
-								style="margin-left:10px;">
+								styleClass="tooltip-left" style="    text-decoration: none;">
 								<span class="glyphicon glyphicon-remove"></span>
 								<p:ajax event="click" update="form:id-panelGroup-confirma-modal"
 									listener="#{alunoBean.prepararExclusao(aluno)}" />
@@ -155,13 +148,11 @@
 				<!-- Cadastro e edicao -->
 				<h:panelGroup rendered="#{alunoBean.cadastroAlunoBoolean ==true}">
 
-
-					<p:messages closable="true" />
 					<h:panelGroup
 						rendered="#{alunoBean.proximaPrimeiraFaseBoolean==true}">
 						<div class="form-group row">
-							<h:outputLabel value="Nome Completo : *"
-								styleClass="col-sm-2 control-label texto-label" />
+							<h:outputLabel value="Nome Completo:*"
+								styleClass="col-sm-2 control-label texto-label texto-right" />
 							<div class="col-sm-8">
 								<h:inputText value="#{alunoBean.aluno.nome}"
 									styleClass="form-control" />
@@ -169,12 +160,13 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<h:outputLabel value="Data de Nascimento : *"
-								styleClass="col-sm-2 control-label texto-label" />
-							<div class="col-sm-2">
+							<h:outputLabel value="Data de Nascimento :*"
+								styleClass="col-sm-2 control-label texto-label texto-right" />
+							<div class="col-sm-3">
 								<h:inputText styleClass="form-control"
 									value="#{alunoBean.aluno.dataNascimento}">
-									<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"  />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
@@ -185,8 +177,8 @@
 										value="bottom" />
 								</h:inputText>
 							</div>
-							<h:outputLabel value="Sexo: *"
-								styleClass="col-sm-1 control-label texto-label" />
+							<h:outputLabel value="Sexo:*"
+								styleClass="col-sm-1 control-label texto-label texto-right" />
 							<div class="col-sm-3">
 								<h:selectOneMenu styleClass="form-control"
 									value="#{alunoBean.aluno.sexo}">
@@ -201,7 +193,8 @@
 
 
 						<div class="form-group row">
-							<h:outputLabel styleClass="col-sm-2 control-label texto-label"
+							<h:outputLabel
+								styleClass="col-sm-2 control-label texto-label texto-right"
 								value="Nacionalidade: *" />
 							<div class="col-sm-3">
 								<h:selectOneMenu styleClass="form-control input-select"
@@ -218,11 +211,13 @@
 							</div>
 							<h:panelGroup id="idPais">
 
-								<h:outputLabel styleClass="col-sm-1 control-label texto-label"
+								<h:outputLabel
+									styleClass="col-sm control-label texto-label texto-right"
 									value="País :* "
 									rendered="#{alunoBean.aluno.nascionalidade =='Estrangeira'}" />
 
-								<h:outputLabel styleClass="col-sm-2 control-label texto-label"
+								<h:outputLabel
+									styleClass="col-sm control-label texto-label texto-right"
 									value="Província : *"
 									rendered="#{alunoBean.aluno.nascionalidade !='Estrangeira'}" />
 							</h:panelGroup>
@@ -261,7 +256,8 @@
 							<h:panelGroup
 								rendered="#{alunoBean.aluno.nascionalidade !='Estrangeira'}">
 								<div class="form-group row">
-									<h:outputLabel styleClass="col-sm-2 control-label texto-label"
+									<h:outputLabel
+										styleClass="col-sm-2 control-label texto-label texto-right"
 										value="Distrito : *" />
 									<div class="col-sm-4">
 										<h:panelGroup id="combo-distrito">
@@ -277,7 +273,8 @@
 											</h:selectOneMenu>
 										</h:panelGroup>
 									</div>
-									<h:outputLabel styleClass="col-sm-2 control-label texto-label"
+									<h:outputLabel
+										styleClass="col-sm-2 control-label texto-label texto-right"
 										value="Local de Nasci : " />
 									<div class="col-sm-4">
 										<h:inputText value="#{alunoBean.aluno.localNascimento}"
@@ -289,7 +286,8 @@
 
 
 							<div class="form-group row">
-								<h:outputLabel styleClass="col-sm-2 control-label texto-label"
+								<h:outputLabel
+									styleClass="col-sm-2 control-label texto-label texto-right"
 									value="Nome do Pai: " />
 								<div class="col-sm-7">
 									<h:inputText value="#{alunoBean.aluno.pai}"
@@ -299,7 +297,8 @@
 
 							</div>
 							<div class="form-group row">
-								<h:outputLabel styleClass="col-sm-2 control-label texto-label"
+								<h:outputLabel
+									styleClass="col-sm-2 control-label texto-label texto-right"
 									value="Nome da Mãe: " />
 								<div class="col-sm-7">
 									<h:inputText value="#{alunoBean.aluno.mae}"
@@ -316,8 +315,8 @@
 						rendered="#{alunoBean.proximaSegundaFaseBoolean==true}">
 						<div class="form-group row">
 							<h:outputLabel value="Usuário :"
-								styleClass="col-sm-2 control-label texto-label" />
-							<div class="col-sm-4">
+								styleClass="col-sm-2 control-label texto-label texto-right" />
+							<div class="col-sm-2">
 								<h:inputText value="#{alunoBean.aluno.login}"
 									styleClass="form-control" disabled="true" />
 
@@ -325,7 +324,7 @@
 						</div>
 						<div class="form-group row">
 							<h:outputLabel value="Morada : *"
-								styleClass="col-sm-2 control-label texto-label" />
+								styleClass="col-sm-2 control-label texto-label texto-right" />
 							<div class="col-sm-5">
 
 								<h:inputText value="#{alunoBean.aluno.bairro}"
@@ -334,27 +333,25 @@
 
 							</div>
 							<h:outputLabel value="Telefone : "
-								styleClass="col-sm-1 control-label texto-label" />
-							<div class="col-sm-2">
+								styleClass="col-sm-2 control-label texto-label texto-right" />
+							<div class="col-sm-3">
 								<h:inputText value="#{alunoBean.aluno.telefone}"
-									styleClass="form-control"
-									onkeypress="return formata_mascara(this, event)">
-									<f:passThroughAttribute name="placeholder"
-										value="+258 xxx xxx xxx"></f:passThroughAttribute>
+									styleClass="form-control">
+
 								</h:inputText>
 							</div>
 						</div>
 						<div class="form-group row">
 							<h:outputLabel value="Av./Rua :"
-								styleClass="col-sm-2 control-label texto-label" />
+								styleClass="col-sm-2 control-label texto-label texto-right" />
 							<div class="col-sm-4">
 								<h:inputText value="#{alunoBean.aluno.avenida}"
 									styleClass="form-control" />
 
 
 							</div>
-							<h:outputLabel value="Nº de Documento: *"
-								styleClass="col-sm-2 control-label texto-label" />
+							<h:outputLabel value="Nº de documento: *"
+								styleClass="col-sm-2 control-label texto-label texto-right" />
 							<div class="col-sm-3">
 								<h:inputText value="#{alunoBean.aluno.numeroDocumento}"
 									styleClass="form-control" required="true"
@@ -365,7 +362,7 @@
 
 						<div class="form-group row">
 							<h:outputLabel value="Local de Emissão : "
-								styleClass="col-sm-2 control-label texto-label" />
+								styleClass="col-sm-2 control-label texto-label texto-right" />
 							<div class="col-sm-3">
 
 								<h:inputText value="#{alunoBean.aluno.localEmissao}"
@@ -373,7 +370,7 @@
 								</h:inputText>
 							</div>
 							<h:outputLabel value="E - mail : "
-								styleClass="col-sm-1 control-label texto-label" />
+								styleClass="col-sm-2 control-label texto-label texto-right" />
 							<div class="col-sm-5">
 
 								<h:inputText value="#{alunoBean.aluno.email}"
@@ -389,7 +386,7 @@
 
 						<div class="form-group row">
 							<h:outputLabel value="Nome do Encarregado:*"
-								styleClass="col-sm-2 control-label texto-label" />
+								styleClass="col-sm-2 control-label texto-label texto-right" />
 							<div class="col-sm-4">
 								<h:inputText value="#{alunoBean.aluno.nomeEncaregado}"
 									styleClass="form-control">
@@ -397,7 +394,7 @@
 
 							</div>
 							<h:outputLabel value="Profissão:"
-								styleClass="col-sm-1 control-label texto-label" />
+								styleClass="col-sm-2 control-label texto-label texto-right" />
 							<div class="col-sm-4">
 								<h:inputText value="#{alunoBean.aluno.profissao}"
 									styleClass="form-control">
@@ -410,13 +407,24 @@
 					<h:panelGroup
 						rendered="#{alunoBean.proximaTerceiraFaseBoolean==true}">
 						<div class="form-group row">
+							<h:outputLabel value="Nome Completo:*"
+								styleClass="col-sm-2 control-label texto-label texto-right" />
+							<div class="col-sm-8">
+								<h:outputText value="#{alunoBean.aluno.nome}"
+									styleClass="control-label texto-label" />
+
+							</div>
+						</div>
+
+						<div class="form-group row">
 							<h:outputLabel value="Data de Cadstro :"
-								styleClass="col-sm-2 control-label texto-label" />
+								styleClass="col-sm-2 control-label texto-label texto-right" />
 							<div class="col-sm-2">
 								<h:inputText rows="4" cols="4"
 									value="#{alunoBean.aluno.dataCadastro}"
 									styleClass="form-control">
-									<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"  />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
@@ -430,7 +438,7 @@
 						</div>
 						<div class="form-group row">
 							<h:outputLabel value="Descrição :"
-								styleClass="col-sm-2 control-label texto-label" />
+								styleClass="col-sm-2 control-label texto-label texto-right" />
 							<div class="col-sm-8">
 								<h:inputTextarea rows="4" cols="4"
 									value="#{alunoBean.aluno.observacao}" styleClass="form-control" />
@@ -442,52 +450,55 @@
 
 					</h:panelGroup>
 				</h:panelGroup>
-			</div>
-			<div class="panel-footer" style="text-align: center">
 
-				<h:panelGroup rendered="#{alunoBean.cadastroAlunoBoolean ==true}">
-					<h:panelGroup
-						rendered="#{alunoBean.proximaPrimeiraFaseBoolean==true}">
-						<h:commandButton value=" &#x2716; Fechar"
-							actionListener="#{alunoBean.voltarParaPequisa}" immediate="true"
-							styleClass=" prev acao btn btn-success" />
-						<h:commandButton value="Avançar &#10152;"
-							actionListener="#{alunoBean.primeiraFase}"
-							styleClass=" btn btn-primary next acao" style="margin-left:10px" />
+				<div class="panel-footer" style="text-align: center">
+
+					<h:panelGroup rendered="#{alunoBean.cadastroAlunoBoolean ==true}">
+						<h:panelGroup
+							rendered="#{alunoBean.proximaPrimeiraFaseBoolean==true}">
+							<h:commandButton value=" &#x2716; Fechar"
+								actionListener="#{alunoBean.voltarParaPequisa}" immediate="true"
+								styleClass=" prev acao btn btn-success" />
+							<h:commandButton value="Avançar &#10152;"
+								actionListener="#{alunoBean.primeiraFase}"
+								styleClass=" btn btn-primary next acao" style="margin-left:10px" />
+						</h:panelGroup>
+						<h:panelGroup
+							rendered="#{alunoBean.proximaSegundaFaseBoolean==true}">
+							<h:commandButton value="&#x21e6; Voltar"
+								actionListener="#{alunoBean.voltarPrimeiraFase}"
+								immediate="true" styleClass=" prev acao btn btn-success" />
+							<h:commandButton value=" &#x2716; Fechar"
+								style="margin-left:10px" immediate="true"
+								actionListener="#{alunoBean.voltarParaPequisa}"
+								styleClass=" prev acao btn btn-success" />
+							<h:commandButton value="Avançar &#10152;"
+								actionListener="#{alunoBean.segundaFase}"
+								styleClass=" btn btn-primary next acao" style="margin-left:10px" />
+						</h:panelGroup>
+						<h:panelGroup
+							rendered="#{alunoBean.proximaTerceiraFaseBoolean==true}">
+							<h:commandButton value="&#x21e6; Voltar"
+								actionListener="#{alunoBean.primeiraFase}" immediate="true"
+								styleClass=" prev acao btn btn-success" />
+							<h:commandButton value=" &#x2716; Fechar"
+								style="margin-left:10px" immediate="true"
+								actionListener="#{alunoBean.voltarParaPequisa}"
+								styleClass=" prev acao btn btn-success" />
+							<h:commandButton value="&#x2714; Confirmar"
+								actionListener="#{alunoBean.salvar}"
+								styleClass=" btn btn-primary next acao" style="margin-left:10px" />
+						</h:panelGroup>
 					</h:panelGroup>
-					<h:panelGroup
-						rendered="#{alunoBean.proximaSegundaFaseBoolean==true}">
-						<h:commandButton value="&#x21e6; Voltar"
-							actionListener="#{alunoBean.voltarPrimeiraFase}" immediate="true"
-							styleClass=" prev acao btn btn-success" />
-						<h:commandButton value=" &#x2716; Fechar" style="margin-left:10px"
-							immediate="true" actionListener="#{alunoBean.voltarParaPequisa}"
-							styleClass=" prev acao btn btn-success" />
-						<h:commandButton value="Avançar &#10152;"
-							actionListener="#{alunoBean.segundaFase}"
-							styleClass=" btn btn-primary next acao" style="margin-left:10px" />
-					</h:panelGroup>
-					<h:panelGroup
-						rendered="#{alunoBean.proximaTerceiraFaseBoolean==true}">
-						<h:commandButton value="&#x21e6; Voltar"
-							actionListener="#{alunoBean.primeiraFase}" immediate="true"
-							styleClass=" prev acao btn btn-success" />
-						<h:commandButton value=" &#x2716; Fechar" style="margin-left:10px"
-							immediate="true" actionListener="#{alunoBean.voltarParaPequisa}"
-							styleClass=" prev acao btn btn-success" />
-						<h:commandButton value="&#x2714; Confirmar"
-							actionListener="#{alunoBean.salvar}"
-							styleClass=" btn btn-primary next acao" style="margin-left:10px" />
-					</h:panelGroup>
-				</h:panelGroup>
-			</div>
+				</div>
+
+			</h:panelGroup>
+			<h:panelGroup rendered="#{alunoBean.matriculaAlunoBoolean==true}">
+				<ui:include src="/academico/escola/aluno/alocar.xhtml" />
+			</h:panelGroup>
 		</div>
-	</h:panelGroup>
+	</div>
 
-
-	<h:panelGroup rendered="#{alunoBean.matriculaAlunoBoolean==true}">
-		<ui:include src="/academico/escola/aluno/alocar.xhtml" />
-	</h:panelGroup>
 	<!-- Modal -->
 
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -507,10 +518,14 @@
 				</div>
 				<div class="modal-body">
 					<h:panelGroup id="id-panelGroup-confirma-modal">
-						<h:outputText
-							value="Tem certeza que deseja excluir o aluno de nome" />
+						<h:outputText value="Tem certeza que deseja excluir  " />
+						<h:outputText value="&#160;o aluno "
+							rendered="#{alunoBean.alunoSelecionadoExclusao.sexo==true}" />
+						<h:outputText value="&#160;a aluna "
+							rendered="#{alunoBean.alunoSelecionadoExclusao.sexo==false}" />
+
 						<h:outputLabel
-							value="&nbsp;#{alunoBean.alunoSelecionadoExclusao.nome} &nbsp;"
+							value="&nbsp;#{alunoBean.alunoSelecionadoExclusao.nome}"
 							style="font-weight: 600;" />
 						<h:outputText value="?" />
 					</h:panelGroup>

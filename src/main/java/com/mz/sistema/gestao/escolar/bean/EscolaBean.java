@@ -30,6 +30,7 @@ import com.mz.sistema.gestao.escolar.servico.EscolaServico;
 import com.mz.sistema.gestao.escolar.servico.FuncionarioEscolaServico;
 import com.mz.sistema.gestao.escolar.servico.FuncionarioServico;
 import com.mz.sistema.gestao.escolar.servico.MatriculaServico;
+import com.mz.sistema.gestao.escolar.servico.TransferenciaServico;
 import com.mz.sistema.gestao.escolar.servico.TurnoServico;
 import com.mz.sistema.gestao.escolar.util.DataUtils;
 import com.mz.sistema.gestao.escolar.util.Mensagem;
@@ -79,7 +80,7 @@ public class EscolaBean {
 	private boolean editarEscolaBoolean = false;
 	private boolean activarEscolaBoolean = false;
 	private boolean vizualizarODirectorEscolaBoolean = false;
-
+	private Escola escolaSelecionadaExclusao;
 	private Integer qtdEscolasEncontradas = 0;
 
 	@Autowired
@@ -96,7 +97,9 @@ public class EscolaBean {
 
 	@Autowired
 	private MatriculaServico matriculaServico;
-	private Escola escolaSelecionadaExclusao;
+	@Autowired
+	private TransferenciaServico transferenciaServico;
+
 	@Autowired
 	private FuncionarioEscolaServico funcionarioEscolaServico;
 	@Autowired
@@ -138,8 +141,8 @@ public class EscolaBean {
 
 			escolaSelecionada.setClasses(new ArrayList<Classe>(classesDaEscola));
 			escolaSelecionada.setTurnos(new ArrayList<Turno>(turnosDaEscola));
-			FuncionarioEscola directoresDasEscolas = funcionarioEscolaServico.obterDirectorEscolaPorPermicao(RoleName.ROLE_DIRECTOR,
-					escolaSelecionada.getId());
+			FuncionarioEscola directoresDasEscolas = funcionarioEscolaServico
+					.obterDirectorEscolaPorPermicao(RoleName.ROLE_DIRECTOR, escolaSelecionada.getId());
 			this.directorDaEscolaLogada = directoresDasEscolas.getFuncionario();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -149,24 +152,34 @@ public class EscolaBean {
 
 	private void createPieModel(Escola escola, Integer ano) {
 		try {
-			List<Matricula> matriculasAlunos, matriculasAlunas;
-			matriculasAlunos = matriculaServico.obterMatriculadoPorSexo(escola.getId(), ano, true);
-			matriculasAlunas = matriculaServico.obterMatriculadoPorSexo(escola.getId(), ano, false);
+			// String situacao ="Transferido";
+			Long qtdAlunosMatriculados = matriculaServico.obterMatriculadoPorSexo(escola.getId(), ano, true);
+			Long qtdAlunasMatriculadas = matriculaServico.obterMatriculadoPorSexo(escola.getId(), ano, false);
+			Long qtdAlunosTransferidos = transferenciaServico.obterTransferidosPorIdEscolaPorAno(escola.getId(), ano,
+					true);
+			
+			System.out.println("Escola: "+escola.getId());
+			System.out.println("Trnsferidos: "+qtdAlunosTransferidos);
+			if (qtdAlunosMatriculados == null) {
+				qtdAlunosMatriculados = 0L;
+			}
+			if (qtdAlunosTransferidos == null) {
+				qtdAlunosTransferidos = 0L;
+			}
+			if (qtdAlunasMatriculadas == null) {
+				qtdAlunasMatriculadas = 0L;
+			}
 			pieModel = new PieChartModel();
-			if (matriculasAlunos != null)
-				pieModel.set("Alunos", matriculasAlunos.size());
-			if (matriculasAlunas != null)
-				pieModel.set("Alunas", matriculasAlunas.size());
-			// pieModel.set("teste", 6);
+			pieModel.set("Alunos", qtdAlunosMatriculados);
+			pieModel.set("Alunas", qtdAlunasMatriculadas);
+			pieModel.set("Transferidos", qtdAlunosTransferidos);
+			// pieModel.set("Anulação matrícula", 325);
 
 			pieModel.setTitle("Estatística de " + ano);
-			pieModel.setLegendPosition("e");
-			// pieModel3.setFill(false);
+			pieModel.setLegendPosition("w");
 			pieModel.setShowDataLabels(true);
-			pieModel.setDiameter(150);
-			if (matriculasAlunos == null || matriculasAlunas == null) {
-				pieModel = null;
-			}
+			pieModel.setDiameter(200);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -420,10 +433,10 @@ public class EscolaBean {
 			Calendario calendario = authenticacaoContext.getCalendarioEscolar();
 
 			if (calendario != null) {
-				List<Matricula> matriculas = matriculaServico.obterMatriculasPorEscolaPorAno(escola.getId(),
+				totalAlunosDaEscola = matriculaServico.obterTotalAlunosMatriculasPorEscolaPorAno(escola.getId(),
 						calendario.getAno());
-				if (!matriculas.isEmpty()) {
-					totalAlunosDaEscola = (long) matriculas.size();
+				if (totalAlunosDaEscola==null) {
+					totalAlunosDaEscola = 0l;
 				}
 			}
 

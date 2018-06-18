@@ -14,7 +14,7 @@ public interface MatriculaServico {
 	public List<Matricula> listarTodas();
 	public Long totalEstudanteMatriculadoClasse(Long idEscola, Long idClasse);
 	public List<Matricula> obtereMatriculadoPorEscola(Long idEscola);
-	public List<Matricula> obterMatriculasPorEscolaPorAno(Long idEscola, Integer ano);
+	public List<Matricula> obterEstatistcaMatriculasPorEscolaPorAno(Long idEscolaOrigem, Integer ano);
 	public List<Matricula> obterMatriculasPorEscolaPorAnoTemTurmaPergunta(Long idEscola, Integer ano, Boolean temTurma);
 	public Matricula obterMatriculaPorId(Integer idMatricula);
 	public List<Matricula> obterMatriculasDaClasseTrurnoAnoNome(Long idClasse, String curso, String nome);
@@ -26,7 +26,7 @@ public interface MatriculaServico {
 	public List<Matricula> obterMatriculasPorNomeDoAlunoAndPorAno(String consultarNomeAluno, Integer ano);
 	public List<Matricula> obterMATRICULASdeALUNOSporESCOLA(String nomeAlunoOUCodigo);
 	public List<Matricula> obterMatriculadoPorEscolaPorAnoPorTransferecia(Long idEscola, Integer ano, String label);
-	public List<Matricula> obterMatriculadoPorSexo(Long idEscola, Integer ano, Boolean sexo);
+	public Long obterMatriculadoPorSexo(Long idEscola, Integer ano, boolean sexo);
 	public List<Matricula> obterAlunosPorPesquisa(String pesquisa);
 	public List<Matricula> obterMatriculaPorAluno(String pesquisa, Integer ano);
 	public List<Matricula> obterMatriculasPorClassePorCurso(long idClasse, Long idEscola, String curso, Integer ano);
@@ -45,4 +45,6 @@ public interface MatriculaServico {
 	public List<Matricula> obterMatriculasPorClassePorCursoPorAreaPorTurma(long idClasse, Long idEscola, String curso, Integer ano,
 			String tipoArea, Boolean temTurma);
 	public Long obterNumeroUltimoAlunoNaTurma(Integer idTurma);
+	public List<Matricula> obterMatriculasPorEscolaPorAno(Long idEscola, Integer ano);
+	public Long obterTotalAlunosMatriculasPorEscolaPorAno(Long idEscola, Integer ano);
 	}

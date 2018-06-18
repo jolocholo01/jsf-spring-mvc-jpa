@@ -1,6 +1,8 @@
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
@@ -57,8 +59,16 @@ public class RecoperarSenhaBean implements Serializable {
 	}
 
 	public void salvar() {
+//		HttpURLConnection httpURLConnection = null;
+//		URL url = new URL("");
+//		httpURLConnection = url.openConnection();
+//		if (httpURLConnection.getResponseCode() == httpURLConnection.HTTP_OK) {
+//			// tem internate
+//		}
+		
 		informacaoBoleano = true;
-		try {recoperarSenha.setEmail(recoperarSenha.getEmail().toLowerCase().trim());
+		try {
+			recoperarSenha.setEmail(recoperarSenha.getEmail().toLowerCase().trim());
 			Usuario usuario = usuarioServico.obterUsuarioPorEmail(recoperarSenha.getEmail());
 			if (usuario == null) {
 				Mensagem.mensagemInfo(
@@ -66,12 +76,11 @@ public class RecoperarSenhaBean implements Serializable {
 				return;
 			}
 			if (usuario.getEnganoNoEnvioEmail() == null) {
-				
-			}else
-			if (usuario.getEnganoNoEnvioEmail() == true) {
+
+			} else if (usuario.getEnganoNoEnvioEmail() == true) {
 				Mensagem.mensagemInfo(
 						"Não é possivel enviar o email para este endereço porque não pertence a nenhuma conta de email "
-						+ "ou o usuário da conta pediu para que não recebesse emails via o nosso sistema! ");
+								+ "ou o usuário da conta pediu para que não recebesse emails via o nosso sistema! ");
 				return;
 			}
 			if (usuario.getRecoperarSenha() == null) {
@@ -93,14 +102,13 @@ public class RecoperarSenhaBean implements Serializable {
 			dataCalculo.add(Calendar.DAY_OF_WEEK, 1);
 
 			recoperarSenha.setDataExpiracao(dataCalculo.getTime());
-			String emailEmHash = GeradorCodigo
-					.criptografarEmailParaRecoperarEmail(recoperarSenha.getEmail());
+			String emailEmHash = GeradorCodigo.criptografarEmailParaRecoperarEmail(recoperarSenha.getEmail());
 			recoperarSenha.setCodigo(emailEmHash);
 			recoperarSenha.setUsuario(usuario);
 			recoperarSenha.setAtivo(true);
 			recoperarSenha.setParametro(UUID.randomUUID().toString());
 			envioEmailServico.enviarEmailUsuario(usuario, recoperarSenha, url);
-
+			// if(enviou==true){
 			recoperarSenhaServico.salvar(recoperarSenha);
 			System.out.println("Ulr de trocar senha : '" + url.replace("/senha.html", "/nova/senha.html") + "?key="
 					+ recoperarSenha.getCodigo() + "&token=" + recoperarSenha.getParametro() + "'");
@@ -108,10 +116,12 @@ public class RecoperarSenhaBean implements Serializable {
 			Mensagem.mensagemInfo("Um e-mail foi enviado para " + recoperarSenha.getEmail()
 					+ " com instruções para recoperar sua senha.");
 			Mensagem.mensagemInfo("Se não receber um e-mail em até 10 minuto, verifique a sua caxa de Lixo/Spam.");
+
 			emailEnviadoBoleano = true;
 			recoperarSenha = new RecoperarSenha();
 		} catch (Exception e) {
 			e.printStackTrace();
+			Mensagem.mensagemInfo("Não estamos a conseguir restabelecer a conexaco, por favor tente mais tarde. ");
 		}
 	}
 

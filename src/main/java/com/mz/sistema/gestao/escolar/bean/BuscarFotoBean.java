@@ -8,7 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
 import org.apache.commons.io.IOUtils;
@@ -142,7 +144,6 @@ public class BuscarFotoBean {
 
 			Mensagem.mensagemInfo("O seu perfil foi atualizado com sucesso");
 
-			
 			verificarFuncaoAtualizarBoolean = true;
 
 		} catch (Exception e) {
@@ -237,6 +238,32 @@ public class BuscarFotoBean {
 			Mensagem.mensagemErro("A senha digitada não confere.");
 		}
 
+	}
+
+	public String voltar() {
+		
+		
+		try {
+			FacesContext context = FacesContext.getCurrentInstance();
+
+			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+			/// academico/director-ditrital/index.xhtml
+			alterarSenhaUsuarioBoolean = false;
+			String url = request.getRequestURI() + "";
+			// URL:/sistema-escolar/academico/director/index.jsf
+			
+			System.out.println("URL:" + url);
+			String vals[] = url.split("/academico/");
+			String link = vals[1];
+			String nomeArquivo = link.split("/")[0];			
+			System.out.println("URL com uma pasta:" + "/academico/" + nomeArquivo);
+			System.out.println("URL desejado:" + "/academico/" + nomeArquivo + "/index");
+			
+			return "/academico/" + nomeArquivo + "/index?faces-redirect=true";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 	public void enviarFoto() {

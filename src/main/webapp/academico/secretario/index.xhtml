@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -9,14 +8,11 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/academico/principal/index.xhtml">
+<!-- nova aba  -->
+<!-- target="_blank" -->
+<ui:composition template="/academico/principal/templete.xhtml">
 	<ui:define name="titulo">Portal de Secretaria</ui:define>
-	<ui:define name="titulo_do_corpo">
-		<ui:include src="/academico/secretario/template/titulo_do_corpo.xhtml"></ui:include>
-	</ui:define>
-	<ui:define name="nome_usuario">
-		<ui:include src="/academico/secretario/template/nome_usuario.xhtml"></ui:include>
-	</ui:define>
+
 	<ui:define name="menu">
 		<ui:include src="/academico/secretario/template/menu.xhtml" />
 	</ui:define>
@@ -24,71 +20,74 @@
 		<ui:include src="/academico/secretario/template/dados_pessoas.xhtml" />
 	</ui:define>
 	<ui:define name="ambiente_comum">
-
-		<!-- <h:inputText >
-	<f:passThroughAttribute name="placeholder" value="Texto do placeholder"/>
-	</h:inputText> -->
-
-
 		<h:form>
 
-			<div class="calendario1">
+			<div class="table-responsive"
+				style="padding-left: 0px; overflow: hidden;">
 
-				<p style="border-bottom: none; margin: 0px 15px -3px;">
+				<div style="text-align: center;">
 					<h:outputText value="Calendário escolar em vigor:"
 						styleClass="letra-mascula" />
 					<h:outputText
 						value="#{authenticationContext.calendarioEscolar.ano}"
-						style="margin-left: 10px;" styleClass="letra-mascula" />
-				</p>
-				<div class="calendario-secretario">
-					<h:dataTable styleClass="table table-sem-border-tbody"
-						value="#{calendarioBean.trimestrePorCalendario}" var="trimestre"
-						columnClasses="linhaTabela">
-						<h:column>
-
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Tipo de trimestre" />
-							</f:facet>
-							<h:outputText value="#{trimestre.descricao} :"
-								style="text-transform: uppercase;" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Data inícial " />
-							</f:facet>
-							<h:outputLabel value="#{trimestre.dataInicio}"
-								styleClass="dataInicio texto-text-shadow">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</h:outputLabel>
-						</h:column>
-						<h:column>
-							<h:outputText value="&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;&nbsp;" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Data final" />
-							</f:facet>
-
-							<h:outputLabel value="#{trimestre.dataFinal}"
-								styleClass="texto-text-shadow">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</h:outputLabel>
-
-						</h:column>
-						<h:column>
-							<h:outputText value="&nbsp;&nbsp; são "
-								styleClass="texto-text-shadow" />
-							<h:outputLabel value="&nbsp;#{trimestre.semana}"
-								styleClass="texto-text-shadow" />
-							<h:outputText value=" &nbsp;semanas "
-								styleClass="texto-text-shadow" />
-						</h:column>
-					</h:dataTable>
+						style="margin-left: 10px;font-weight: bold;"
+						styleClass="letra-mascula" />
 				</div>
+				<h:dataTable value="#{calendarioBean.trimestrePorCalendario}"
+					var="trimestre"
+					styleClass="  table table-bordered table-bordered   tabela-funcionario tabelaProfessor left"
+					headerClass="cabecalhoTabelaAluno" rowClasses="linha1, linha2">
+					
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value=" #" />
+							</f:facet>
+							<h:outputText value="#{trimestre.id}" />
+						</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Tipo de trimestre" />
+						</f:facet>
+						<h:outputText value="#{trimestre.descricao}"
+							style="text-transform: uppercase;" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Data inícial " />
+						</f:facet>
+						<h:outputLabel value="#{trimestre.dataInicio}"
+							styleClass="dataInicio texto-text-shadow">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputLabel>
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Data final" />
+						</f:facet>
+
+						<h:outputLabel value="#{trimestre.dataFinal}"
+							styleClass="texto-text-shadow">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputLabel>
+
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="São" />
+						</f:facet>
+
+						<h:outputLabel value="&nbsp;#{trimestre.semana}"
+							styleClass="texto-text-shadow" />
+						<h:outputText value=" &nbsp;semanas "
+							styleClass="texto-text-shadow" />
+					</h:column>
+				</h:dataTable>
 			</div>
+			
+
+			​
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -29,6 +29,7 @@ import com.mz.sistema.gestao.escolar.modelo.Turno;
 import com.mz.sistema.gestao.escolar.servico.GeradorDeRelatoriosServico;
 import com.mz.sistema.gestao.escolar.servico.HorarioAulaServico;
 import com.mz.sistema.gestao.escolar.servico.HorarioServico;
+import com.mz.sistema.gestao.escolar.servico.RelatorioHorarioServico;
 import com.mz.sistema.gestao.escolar.servico.TurnoServico;
 
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -54,6 +55,9 @@ public class HorarioBean implements Serializable {
 	// private Map<Long, Answer[]> answers = new HashMap<Long, Answer[]>();
 	@Autowired
 	private GeradorDeRelatoriosServico geradorDeRelatoriosServico;
+
+	@Autowired
+	private RelatorioHorarioServico relatorioHorarioServico;
 
 	@Autowired
 	private HorarioServico horarioServico;
@@ -157,51 +161,7 @@ public class HorarioBean implements Serializable {
 	public void imprimirHorarioMinhaTurma() {
 		try {
 
-			String caminho = "/academico/relatorio/horario/aluno.jasper";
-			Map<String, Object> parametros = new HashMap<>();
-			parametros.put("distrito", turma.getEscola().getDistrital().getEndereco().getDistrito().getNome());
-			parametros.put("provincia",
-					turma.getEscola().getDistrital().getEndereco().getDistrito().getProvincia().toString());
-			parametros.put("escola", turma.getEscola().getDescricao());
-			List<Horario> horarios = horarioServico.obterHorarioPorIdTurma(turma.getId());
-
-			parametros.put("classe", turma.getClasse().getDescricao());
-
-			parametros.put("turma", turma.getDescricao() + "/" + horarios.get(0).getTurma().getTurno().getDescricao());
-			for (int i = 0; i < horarioAulas.size(); i++) {
-
-				for (int j = 0; j < horarios.size(); j++) {
-					if (turma.getId() == horarios.get(j).getTurma().getId()
-							&& horarios.get(j).getDiaSemana().getSigla().equals("SEG")
-							&& horarios.get(j).getHorarioAula().getId() == horarioAulas.get(i).getId()) {
-						parametros.put("segunda", horarios.get(j).getDisciplina().getDescricao());
-					}
-					if (turma.getId() == horarios.get(j).getTurma().getId()
-							&& horarios.get(j).getDiaSemana().getSigla().equals("TER")
-							&& horarios.get(j).getHorarioAula().getId() == horarioAulas.get(i).getId()) {
-						parametros.put("terca", horarios.get(j).getDisciplina().getDescricao());
-					}
-					if (turma.getId() == horarios.get(j).getTurma().getId()
-							&& horarios.get(j).getDiaSemana().getSigla().equals("QUA")
-							&& horarios.get(j).getHorarioAula().getId() == horarioAulas.get(i).getId()) {
-						parametros.put("quarta", horarios.get(j).getDisciplina().getDescricao());
-					}
-					if (turma.getId() == horarios.get(j).getTurma().getId()
-							&& horarios.get(j).getDiaSemana().getSigla().equals("QUI")
-							&& horarios.get(j).getHorarioAula().getId() == horarioAulas.get(i).getId()) {
-						parametros.put("quinta", horarios.get(j).getDisciplina().getDescricao());
-					}
-					if (turma.getId() == horarios.get(j).getTurma().getId()
-							&& horarios.get(j).getDiaSemana().getSigla().equals("SEX")
-							&& horarios.get(j).getHorarioAula().getId() == horarioAulas.get(i).getId()) {
-						parametros.put("sexta", horarios.get(j).getDisciplina().getDescricao());
-					}
-				}
-
-			}
-			geradorDeRelatoriosServico.geraPdfComConexaoDataSource(caminho, parametros, "Horario da minha turma.pdf",
-					new JRBeanCollectionDataSource(horarioAulas));
-			// JasperPrintManager.printReport(relatorio, true);
+			relatorioHorarioServico.desenharRelatorioAluno(turma);
 		} catch (Exception e) {
 
 			e.printStackTrace();

@@ -37,6 +37,14 @@ public class HorarioAulaBean {
 	@Autowired
 	private AuthenticationContext authenticationContext;
 
+	public void iniciarBean() {
+		horarioAulas = null;
+		this.horarioAula = new HorarioAula();
+		this.horarioAulaSelecionado = new HorarioAula();
+		this.horarioAulaSelecionadoPraraEditar = null;
+
+	}
+
 	public void salvar() {
 
 		HorarioAula horarioAulaExistente = horarioAulaServico.horarioAulaExistenteDaEscola(
@@ -132,7 +140,7 @@ public class HorarioAulaBean {
 			System.out.println("Chamou a funaco!");
 
 		} catch (Exception e) {
-			Mensagem.mensagemInfo("Horário de aula não foi excluido através da dependência.");
+			Mensagem.mensagemErro("Erro: Horário de aula não foi excluido através da dependência!");
 		}
 
 	}

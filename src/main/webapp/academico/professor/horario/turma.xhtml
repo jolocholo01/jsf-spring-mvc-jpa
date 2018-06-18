@@ -8,179 +8,180 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/academico/principal/index.xhtml">
-	<ui:define name="titulo">Minhas turmas	</ui:define>
+<ui:composition template="/academico/principal/templete.xhtml">
+	<ui:define name="titulo">
+		<h:outputText 
+			value="Minhas turmas" />
+	
+	</ui:define>
 	<ui:define name="cabacalho">
 		<link rel="stylesheet"
-			href="#{request.contextPath}/resources/css/horario.css" />
-		<style>
-.turmasProfessor {
-	background: rgb(158, 255, 255) none repeat scroll 0% 0%;
-}
-</style>
+			href="#{request.contextPath}/resources/css/nota.css" />
+
 	</ui:define>
-	<ui:define name="titulo_do_corpo">
-		<ui:include src="/academico/professor/template/titulo_do_corpo.xhtml"></ui:include>
+
+	<ui:define name="menu">
+		<ui:include src="/academico/professor/template/menu.xhtml" />
 	</ui:define>
-	<ui:define name="nome_usuario">
-		<ui:include src="/academico/professor/template/nome_usuario.xhtml"></ui:include>
+	<ui:define name="dados_pessoas">
+		<ui:include src="/academico/professor/template/dados_pessoas.xhtml" />
 	</ui:define>
 	<ui:define name="ambiente_comum">
-		<h:form id="form_menu">
-			<div class="menu menubar">
-				<ul class="btn1 btn-green">
-					<li style="width: 65px;"><h:outputLink
-							value="#{request.contextPath}/professor/index.jsf">
-							 Principal
-						</h:outputLink></li>
-					<h:outputText value=" > " style="font-size:21px;" />
-					<li style="width: 205px;"><h:outputLink value="#{request.contextPath}/professor/turma.jsf">
-							Gerenciar minhas turmas
-						</h:outputLink></li>
-				</ul>
-			</div>
-		</h:form>
-
-
-
-
 
 
 
 		<h:form id="form_ambiente_comum">
-			<h:panelGrid
-				style=" width:100%;  margin-bottom: 14px; font-size: 30px;color: rgb(142, 147, 233);text-align: center;margin-top: 52px;"
-				rendered="#{professorTurmaBean.turmasProfessor ==null}"
-				styleClass="horarioIndispnivel">
-				<h:outputText value="Turmas indisponível no sistema." />
-			</h:panelGrid>
+			<!--Panel-->
+			<div class="card">
+				<h3 class="peg-titulo card-header primary-color white-text">
+					<h:outputText value="Disciplinas ministrada por professor"
+						style="font-weight: 700;" />
+				</h3>
+				<p:messages closable="true" />
+
+				<div class="card-body">
+
+					<h:panelGrid
+						style=" width:100%;  margin-bottom: 14px; font-size: 30px;color: rgb(142, 147, 233);text-align: center;font-weight: bold;"
+						rendered="#{professorTurmaBean.turmasProfessor ==null}"
+						styleClass="horarioIndispnivel">
+						<h:outputText value="Turmas indisponível no sistema." />
+					</h:panelGrid>
 
 
-			<p:panel header="Disciplinas ministrada por professor"
-				style="margin: 20px 6px 20px;" styleClass="panel-professor-turma"
-				rendered="#{professorTurmaBean.turmasProfessor !=null}">
+					<h:panelGroup styleClass="panel-professor-turma"
+						rendered="#{professorTurmaBean.turmasProfessor !=null}">
 
-				<h:panelGrid columns="2" style="margin-top:10px; margin-left:15px;">
-					<h:outputLabel value="Nome do professor:" style="float: right;" />
-					<h:outputText value="#{authenticationContext.usuarioLogado.nome}"
-						style="margin-left:10px;" />
-					<h:outputLabel value="Trimestre:" />
-					<h:outputText value="#{notaBean.obterTrimestreAtivo.descricao}"
-						style="margin-left:10px; text-transform: uppercase;" />
-				</h:panelGrid>
 
-				<h:panelGrid styleClass="table table-sem-border"
-					style="margin-top:10px;">
+						<h:outputLabel value="Minhas Turmas" styleClass="margin-left" />
 
-					<h:dataTable border="0" cellpadding="1" cellspacing="1"
-						styleClass="tabelaProfessor table table-bordered "
-						value="#{professorTurmaBean.turmasProfessor}" var="professor"
-						style="border: 1px solid #D3CACA; background: #d8e3ef; padding-let:0;"
-						rowClasses="linha1, linha2"
-						columnClasses=",coluna1, coluna2, coluna3, coluna1,,,coluna5, coluna6"
-						headerClass="cabecalhoTabela1">
+						<h:dataTable border="0" cellpadding="1" cellspacing="1"
+							styleClass="tabelaProfessor table table-bordered "
+							value="#{professorTurmaBean.turmasProfessor}" var="professor"
+							style="border: 1px solid #D3CACA; background: #d8e3ef; padding-let:0;"
+							rowClasses="linha1, linha2"
+							columnClasses=",coluna1, coluna2, coluna3, coluna1,,,coluna5, coluna6"
+							headerClass="cabecalhoTabela1">
 
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#" styleClass="margin-left" />
-							</f:facet>
-							<h:outputText value=" #{professor.turma.id}"
-								styleClass="margin-left" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Turma" styleClass="margin-left" />
-							</f:facet>
-							<h:outputText value="#{professor.turma.descricao}"
-								style="padding-left:7px;" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Classe" styleClass="margin-left" />
-							</f:facet>
-							<h:outputText value="#{professor.turma.classe.descricao}"
-								style="	text-transform: uppercase;" styleClass="margin-left" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Disciplina" styleClass="margin-left" />
-							</f:facet>
-							<h:outputText value="#{professor.disciplina.descricao}"
-								styleClass="margin-left" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Sala" styleClass="margin-left" />
-							</f:facet>
-							<h:outputText value="Não informada"
-								rendered="#{professor.turma.sala.numero ==null}" />
-							<h:outputText value=" #{professor.turma.sala.numero}"
-								style="	text-transform: uppercase;padding-left:7px;"
-								rendered="#{professor.turma.sala.numero !=null and ( professor.elecionadaTurnoExtra=='Nao' or professor.elecionadaTurnoExtra==null)}" />
-								
-							<h:outputText value=" Sem Sala"
-								rendered="#{professor.elecionadaTurnoExtra=='Sim' and professor.sala.numero ==null}" />
-								
-							<h:outputText value="#{professor.sala.numero}"
-								rendered="#{professor.elecionadaTurnoExtra=='Sim' and professor.sala.numero !=null}" />
-						
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Turno" styleClass="margin-left" />
-							</f:facet>
-							<h:outputText value="Não informado"
-								rendered="#{professor.turma.turno.descricao ==null or professor.turma.turno.descricao ==''}" />
-							<h:outputText value=" #{professor.turma.turno.descricao}"
-								style="	text-transform: uppercase; "
-								rendered="#{professor.turma.turno.sigla !=null}" />
-							
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Horario"  />
-							</f:facet>
-							<h:outputText value="Não definido"
-								rendered="#{professor.horario ==null}" />
-							<h:outputText value=" #{professor.horario}"
-								style="	text-transform: uppercase; font-weight: 500;"
-								rendered="#{professor.horario !=null}" />
-						</h:column>
-					</h:dataTable>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#" styleClass="margin-left" />
+								</f:facet>
+								<h:outputText value=" #{professor.turma.id}"
+									styleClass="margin-left" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Turma" styleClass="margin-left" />
+								</f:facet>
+								<h:outputText value="#{professor.turma.descricao}"
+									style="padding-left:7px;" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Classe" styleClass="margin-left" />
+								</f:facet>
+								<h:outputText value="#{professor.turma.classe.descricao}"
+									style="	text-transform: uppercase;" styleClass="margin-left" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Disciplina" styleClass="margin-left" />
+								</f:facet>
+								<h:outputText value="#{professor.disciplina.descricao}"
+									styleClass="margin-left" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Sala" styleClass="margin-left" />
+								</f:facet>
+								<h:outputText value="Não informada"
+									rendered="#{professor.turma.sala.numero ==null}" />
+								<h:outputText value=" #{professor.turma.sala.numero}"
+									style="	text-transform: uppercase;padding-left:7px;"
+									rendered="#{professor.turma.sala.numero !=null and ( professor.elecionadaTurnoExtra=='Nao' or professor.elecionadaTurnoExtra==null)}" />
 
-				</h:panelGrid>
-			</p:panel>
-			<h:panelGroup rendered="#{professorTurmaBean.turmasProfessor !=null}">
-				<div style="margin-left:32px;">
-					<h:outputLabel value="Legenda do Horário" />
-					<br />
-					<h:outputText
-						value="Os primeiros números representam os dias da semana" />
-					<br />
-					<h:outputText
-						value="No meio está a letra que representa o turno (M - MANHÃ, T - TARDE, N - NOITE)" />
-					<br />
-					<h:outputText value="E no final está os horários" />
-					<br />
-					<br />
-					<h:outputLabel value="Exemplo:" />
-					<h:outputText value=" 4T12" />
-					<br />
-					<h:outputText value="O número 4 (" style="margin-left:65px;" />
-					<h:outputLabel value="4" />
-					<h:outputText value="T12) representa uma quarta - feira" />
-					<br />
-					<h:outputText value="A Letra T (4" style="margin-left:65px;" />
-					<h:outputLabel value="T" />
-					<h:outputText value="12) representa o turno da TARDE" />
-					<br />
-					<h:outputText value="Os números 1 e 2 (4T"
-						style="margin-left:65px;" />
-					<h:outputLabel value="12" />
-					<h:outputText value=") representam o primeiro e segundo tempo." />
+								<h:outputText value=" Sem Sala"
+									rendered="#{professor.elecionadaTurnoExtra=='Sim' and professor.sala.numero ==null}" />
+
+								<h:outputText value="#{professor.sala.numero}"
+									rendered="#{professor.elecionadaTurnoExtra=='Sim' and professor.sala.numero !=null}" />
+
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Turno" styleClass="margin-left" />
+								</f:facet>
+								<h:outputText value="Não informado"
+									rendered="#{professor.turma.turno.descricao ==null or professor.turma.turno.descricao ==''}" />
+								<h:outputText value=" #{professor.turma.turno.descricao}"
+									style="	text-transform: uppercase; "
+									rendered="#{professor.turma.turno.sigla !=null}" />
+
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Horario" />
+								</f:facet>
+								<h:outputText value="Não definido"
+									rendered="#{professor.horario ==null}" />
+								<h:outputText value=" #{professor.horario}"
+									style="	text-transform: uppercase; font-weight: 500;"
+									rendered="#{professor.horario !=null}" />
+							</h:column>
+						</h:dataTable>
+						<div class="row">
+							<div class="col-md-9">
+								<div>
+									<h:outputLabel value="Legenda do Horário:"
+										style="font-weight: 800;" />
+									<br />
+									<h:outputText
+										value="Os primeiros números representam os dias da semana;" />
+									<br />
+									<h:outputText
+										value="No meio está a letra que representa o turno (" />
+									<h:outputText value="M " style="font-weight: 800;" />
+									<h:outputText value="- MANHÃ, " />
+									<h:outputText value="T " style="font-weight: 800;" />
+									<h:outputText value="- TARDE, " />
+									<h:outputText value="N " style="font-weight: 800;" />
+									<h:outputText value="- NOITE); e" />
+
+									<br />
+									<h:outputText value="No final está os horários." />
+									<br /> <br />
+									<h:outputLabel value="Exemplo:" />
+									<h:outputText value=" 4T12" />
+									<br />
+									<h:outputText value="O número 4 (" style="margin-left:65px;" />
+									<h:outputLabel value="4" style="font-weight: 800;" />
+									<h:outputText value="T12) representa uma quarta - feira" />
+									<br />
+									<h:outputText value="A Letra T (4" style="margin-left:65px;" />
+									<h:outputLabel value="T" style="font-weight: 800;" />
+									<h:outputText value="12) representa o turno da TARDE" />
+									<br />
+									<h:outputText value="Os números 1 e 2 (4T"
+										style="margin-left:65px;" />
+									<h:outputLabel value="12" style="font-weight: 800;" />
+									<h:outputText value=") representam o primeiro e segundo tempo." />
+								</div>
+
+							</div>
+							<div class="col-md-3">
+								<h:commandLink title="Emitir disciplinas lecionadas pelo professor?"
+									styleClass="tooltip-left"  style="float: right;margin-right: 31%;"
+									actionListener="#{turmaBean.emitirDisciplinasLecionadasPeloProfessor}">
+									<p:graphicImage url="#{buscarFotoBean.retornarImagesPrint}"
+										  />
+								</h:commandLink>
+							</div>
+
+						</div>
+					</h:panelGroup>
 				</div>
-			</h:panelGroup>
-
+			</div>
 
 		</h:form>
 

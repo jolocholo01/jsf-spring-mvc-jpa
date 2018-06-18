@@ -8,38 +8,19 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/academico/principal/index.xhtml">
-	<ui:define name="titulo">Gerenciar Turmas</ui:define>
-	<!--  Configuracao de css-->
-	<ui:define name="cabacalho">
-		<link rel="stylesheet"
-			href="#{request.contextPath}/resources/css/horario_turma.css" />
-	</ui:define>
+<ui:composition template="/academico/principal/templete.xhtml">
+	<ui:define name="titulo">Gerenciar Turma</ui:define>
 
-	<ui:define name="titulo_do_corpo">
-		<ui:include src="/academico/adjunto/template/titulo_do_corpo.xhtml"></ui:include>
+	<ui:define name="menu">
+		<ui:include src="/academico/secretario/template/menu.xhtml" />
 	</ui:define>
-	<ui:define name="nome_usuario">
-		<ui:include src="/academico/adjunto/template/nome_usuario.xhtml"></ui:include>
+	<ui:define name="dados_pessoas">
+		<ui:include src="/academico/secretario/template/dados_pessoas.xhtml" />
 	</ui:define>
-
 	<ui:define name="ambiente_comum">
-		<h:form id="form_menu">
-			<div class="menu menubar">
-				<ul class="btn1 btn-green">
-					<li><h:outputLink
-							value="#{request.contextPath}/secretario/index.jsf">
-							 Principal
-						</h:outputLink></li>
-					<h:outputText value=" > " style="font-size:21px;" />
-					<li><h:outputLink
-							value="#{request.contextPath}/secretario/turma.jsf">Gerenciar Turmas
-								</h:outputLink></li>
-				</ul>
-			</div>
-		</h:form>
+		<ui:include src="/academico/escola/turma/cadastro.xhtml"></ui:include>
 
-<ui:include src="/academico/escola/turma/cadastro.xhtml"></ui:include>
 	</ui:define>
 </ui:composition>
 </html>
+

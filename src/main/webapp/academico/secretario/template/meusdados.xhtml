@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -7,137 +8,144 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/academico/principal/index.xhtml">
-	<ui:define name="titulo">Meus Dados Pessoais</ui:define>
-	<ui:define name="cabacalho">
-		<link rel="stylesheet"
-			href="#{request.contextPath}/resources/css/horario_aluno.css" />
 
-		<link rel="stylesheet"
-			href="#{request.contextPath}/resources/css/senha.css" />
+<ui:composition template="/academico/principal/templete.xhtml">
+	<ui:define name="titulo">
+	Meus dados Pessoais
+			</ui:define>
 
-		<link rel="stylesheet"
-			href="#{request.contextPath}/resources/css/horario_turma.css" />
-
+	<ui:define name="menu">
+		<ui:include src="/academico/secretario/template/menu.xhtml" />
+	</ui:define>
+	<ui:define name="dados_pessoas">
+		<ui:include
+			src="/academico/secretario/template/dados_pessoas.xhtml" />
 	</ui:define>
 
-	<ui:define name="titulo_do_corpo">
-		<ui:include src="/academico/secretario/template/titulo_do_corpo.xhtml"></ui:include>
-	</ui:define>
-	<ui:define name="nome_usuario">
-		<ui:include src="/academico/secretario/template/nome_usuario.xhtml"></ui:include>
-	</ui:define>
 	<ui:define name="ambiente_comum">
+		<h:form id="form_ambiente_comum" styleClass="form-atualizar"
+			enctype="multipart/form-data">
 
-		<h:form id="form_menu">
-			<div class="menu menubar">
-				<ul>
-					<li ><h:outputLink
-							value="#{request.contextPath}/secretario/index.jsf">
-							 Principal
-						</h:outputLink></li>
-					<h:panelGroup>
-						<h:outputText value=" > " style="font-size:21px;" />
-					</h:panelGroup>
-					<li><h:outputLink
-							value="#{request.contextPath}/secretario/dados.jsf">
-							  Alteração dos Meus Dados Pessoais
-						</h:outputLink></li>
-				</ul>
-			</div>
-		</h:form>
+			<!--Panel-->
+			<div class="card">
+				<h4 class="peg-titulo card-header primary-color white-text ">
 
-		<h:form style="padding-top:20px; padding-bottom:20px;">
+					<h:outputText value="Meus Dados" style="font-weight: 700;" />
 
-			<p:panel header="Alterar meus dados pessoais">
-
+				</h4>
 				<h:panelGroup
 					rendered="#{buscarFotoBean.alterarSenhaUsuarioBoolean ==false}">
-
 					<h:panelGrid styleClass="nao-ha-dado ui-widget-header margin">
 						<h:outputText
 							value="ATENÇÃO: Introduza a sua senha para prosseguir."
 							style="margin:10px;display: inline-block;" />
 					</h:panelGrid>
 
-
-					<p:messages style="margin:10px;" closable="true" />
-
-
-					<h:panelGrid columns="2"
-						styleClass="table tabela-sem-border-padding ">
-
-						<h:outputLabel value="Senha:*" styleClass="texto_label text-lebal" />
-						<h:inputSecret styleClass="form-control font-size16"
-							value="#{buscarFotoBean.autenticarSenha}" required="true"
-							requiredMessage="o campo senha é obrigatório."
-							style="margin-left: 10px;width: 311px;">
-							<f:passThroughAttribute name="placeholder"
-								value="Introduza a sua senha" />
-							<f:passThroughAttribute name="autofocus" value="true" />
-						</h:inputSecret>
-
-
-						<f:facet name="footer">
-							<h:commandButton value="Autenticar" style="margin: 2% 0 6% 23%;"
-								styleClass="btn btn-primary"
-								actionListener="#{buscarFotoBean.autenticar}" />
-						</f:facet>
-					</h:panelGrid>
 				</h:panelGroup>
-				<h:panelGroup
-					rendered="#{buscarFotoBean.alterarSenhaUsuarioBoolean !=false}">
-					<p:messages closable="true" style="width: 98%;margin: auto;" />
-
-					<h:panelGrid columns="2" style="width: 58%;"
-						styleClass="table table-sem-border1">
-
-						<h:outputLabel value="Usuário:"
-							styleClass="text-lebal padding-top" />
-						<h:inputText value="#{buscarFotoBean.usuario.login}"
-							styleClass="form-control" style="margin:0;" disabled="true" />
-
-						<h:outputLabel value="Nome do usuário:"
-							styleClass="text-lebal padding-top" />
-						<h:inputText value="#{buscarFotoBean.usuario.nome}"
-							styleClass="form-control" style="margin:0;width: 136%;"
-							disabled="true" />
+				<p:messages closable="true"
+					style=" margin-left: 5px;margin-right:5px;" />
+				<div class="card-body">
 
 
 
-						<h:outputLabel value="E – mail:"
-							styleClass="text-lebal padding-top" />
-						<h:inputText value="#{buscarFotoBean.usuario.email}"
-							styleClass="form-control" style="margin:0;width: 136%;"
-							disabled="#{buscarFotoBean.usuario.email != null and buscarFotoBean.usuario.email !=''}" />
+					<h:panelGroup
+						rendered="#{buscarFotoBean.alterarSenhaUsuarioBoolean ==false}">
+						<div class="form-group row">
+							<h:outputLabel  styleClass="tesx-right col-sm-2 col-form-label"
+								value="Senha:*" />
+							<div class="col-sm-6">
+								<h:inputSecret styleClass="form-control font-size16"
+									value="#{buscarFotoBean.autenticarSenha}" required="true"
+									requiredMessage="o campo senha é obrigatório"
+									>
+									<f:passThroughAttribute name="placeholder"
+										value="Introduza a sua senha" />
+									<f:passThroughAttribute name="autofocus" value="true" />
+								</h:inputSecret>
+							</div>
+						</div>
+						<h:commandButton value="Autenticar" style="margin: 2% 0 6% 23%;"
+							styleClass="btn btn-primary"
+							actionListener="#{buscarFotoBean.autenticar}" />
 
-						<h:outputLabel value="Telefone :"
-							styleClass="text-lebal padding-top" />
-						<h:inputText value="#{buscarFotoBean.usuario.telefone}"
-							styleClass="form-control" onkeypress="return formata_mascara(this, event)" style="margin:0;" />
+					</h:panelGroup>
+					<h:panelGroup
+						rendered="#{buscarFotoBean.alterarSenhaUsuarioBoolean !=false}">
 
+						<div class="form-group row">
+							<h:outputLabel styleClass="col-sm-2 col-form-label"
+								value="Usuário:" />
+							<div class="col-sm-6">
+								<h:inputText value="#{buscarFotoBean.usuario.login}"
+									styleClass="form-control" style="margin-left: -3%;"
+									disabled="true" />
+							</div>
+						</div>
 
-						<h:outputLabel value="Estado Civil:" styleClass="text-lebal" />
-						<h:selectOneMenu value="#{buscarFotoBean.usuario.estadoCivil}"
-							styleClass="form-control" style="margin:0;">
-							<f:selectItem itemLabel="SELECCIONE..." itemValue="#{null}" />
-							<f:selectItems value="#{buscarFotoBean.estadoCivils}"
-								var="estadoCivil" itemLabel="#{estadoCivil}"
-								itemValue="#{estadoCivil}" />
-						</h:selectOneMenu>
-					</h:panelGrid>
-					<div style="margin-left: 30%; margin-bottom: 20px;">
-						<h:commandButton action="#{buscarFotoBean.atualizar}"
-							value="Guardar" styleClass="btn btn-primary" />
+						<div class="form-group row">
+							<h:outputLabel styleClass="col-sm-2 col-form-label"
+								value="Nome Completo:" />
+							<div class="col-sm-8">
+								<h:inputText disabled="true" value="#{buscarFotoBean.usuario.nome}"
+									styleClass="form-control"  />
+							</div>
+						</div>
 
-						<h:commandButton
-							action="/academico/secretario/index?faces-redirect=true"
-							value="Cancelar" style="margin-left: 1%;"
-							styleClass="btn btn-success" />
-					</div>
-				</h:panelGroup>
-			</p:panel>
+						<div class="form-group row">
+							<h:outputLabel styleClass="col-sm-2 col-form-label"
+								value="E-mail:" />
+							<div class="col-sm-7">
+								<h:inputText value="#{buscarFotoBean.usuario.email}"
+									styleClass="form-control"
+									
+									validatorMessage="Email inválido. Por favor introduza um Email correcto!">
+									<f:passThroughAttribute name="placeholder"
+										value="exemplo@exemplos.com"></f:passThroughAttribute>
+									<f:validateRegex
+										pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+								</h:inputText>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<h:outputLabel styleClass="col-sm-2 col-form-label" value="Gênero:" />
+							<div class="col-sm-3">
+								<h:selectOneMenu styleClass="form-control"
+									
+									value="#{buscarFotoBean.usuario.sexo}">
+									<f:selectItem itemLabel="MASCULINO" itemValue="true" />
+									<f:selectItem itemLabel="FEMENINO" itemValue="false" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+						<div class="form-group row">
+							<h:outputLabel styleClass="col-sm-2 col-form-label"
+								value="Telefone : " />
+							<div class="col-sm-3">
+								<h:inputText value="#{buscarFotoBean.usuario.telefone}"
+									styleClass="form-control " 
+									onkeypress="return formata_mascara(this, event)" />
+							</div>
+						</div>
+
+						<div style="margin-left: 8%;">
+
+							<h:commandButton action="#{buscarFotoBean.atualizarDados}"
+								value="Guardar" styleClass="btn btn-primary" />
+
+							<h:commandButton
+								action="/academico/secretario/index?faces-redirect=true"
+								value="Cancelar" styleClass="btn btn-success"
+								style="margin-left: 6px;" />
+
+						</div>
+
+					</h:panelGroup>
+				</div>
+			</div>
+
 		</h:form>
+
 	</ui:define>
 </ui:composition>
 </html>

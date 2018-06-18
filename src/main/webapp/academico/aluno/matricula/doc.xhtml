@@ -8,95 +8,79 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/academico/principal/index.xhtml">
-	<ui:define name="titulo"> Gerenciar documentos	</ui:define>
-	<ui:define name="cabacalho">
 
-		<link rel="stylesheet"
-			href="#{request.contextPath}/resources/css/horario.css" />
+<ui:composition template="/academico/principal/templete.xhtml">
+	<ui:define name="titulo"> Gerenciar documentos</ui:define>
 
+
+	<ui:define name="menu">
+		<ui:include src="/academico/aluno/template/menu.xhtml" />
 	</ui:define>
-
-	<ui:define name="titulo_do_corpo">
-		<ui:include src="/academico/aluno/template/titulo_do_corpo.xhtml"></ui:include>
-	</ui:define>
-	<ui:define name="nome_usuario">
-		<ui:include src="/academico/aluno/template/nome_usuario.xhtml"></ui:include>
+	<ui:define name="dados_pessoas">
+		<ui:include src="/academico/aluno/template/dados_pessoas.xhtml" />
 	</ui:define>
 	<ui:define name="ambiente_comum">
 
-		<h:form id="form_menu">
-			<div class="menu menubar">
-				<ul>
-					<li style="width: 65px;"><h:outputLink
-							value="#{request.contextPath}/aluno/index.jsf">
-							 Principal
-						</h:outputLink></li>
-					<h:panelGroup>
-						<h:outputText value=" > " style="font-size:21px;" />
-					</h:panelGroup>
-					<li style="width: 185px;"><h:outputLink
-							value="#{request.contextPath}/aluno/doc.jsf">
-							  Gerenciar documentos
-						</h:outputLink></li>
-				</ul>
-			</div>
-		</h:form>
+		<h:form id="form_ambiente_comum">
 
-		<h:form style="padding-top:20px; padding-bottom:20px;">
+			<!--Panel-->
+			<div class="card">
+				<h3 class="peg-titulo card-header primary-color white-text">
+					<h:outputText value="Gerenciar documentos"
+						style="font-weight: 700;" />
+				</h3>
+				<p:messages closable="true" />
+
+				<div class="card-body">
 
 
-			<p:panel header="Gerenciar documentos">
+					<h:outputLabel value="Meus documentos de matrícula" />
+					<h:dataTable id="tabela-horarios"
+						styleClass="tabelaProfessor table table-bordered left "
+						value="#{matriculaBean.matriculas}" var="matricula"						
+						columnClasses="opcoes, , opcoes, opcoes, opcoes, opcoes"
+						 headerClass="cabacalho">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="ANO" />
+							</f:facet>
+							<h:outputText value="#{matricula.ano}" style="margin-left:10px;">
+							</h:outputText>
 
-				<br />
-				<br />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Escola</f:facet>
+							<h:outputText value="#{matricula.escola.descricao}">
+							</h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Classe</f:facet>
+							<h:outputText value="#{matricula.classe.descricao}">
+							</h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Curso</f:facet>
+							<h:outputText value="#{matricula.curso}">
+							</h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Turma</f:facet>
+							<h:outputText value="#{matricula.turma.descricao}">
+							</h:outputText>
+						</h:column>
+						<h:column>
 
-				<h:dataTable id="tabela-horarios"
-					styleClass="table tabela tabelaHorarioAluno "
-					value="#{matriculaBean.matriculas}" var="matricula"
-					style="width: 98%;margin:auto; margin-bottom: 1%;"
-					 columnClasses="opcoes, , opcoes, opcoes, opcoes, opcoes">
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="ANO" />
-						</f:facet>
-						<h:outputText value="#{matricula.ano}" style="margin-left:10px;">
-						</h:outputText>
-
-					</h:column>
-					<h:column>
-						<f:facet name="header">Escola</f:facet>
-						<h:outputText value="#{matricula.escola.descricao}">
-						</h:outputText>
-					</h:column>
-					<h:column>
-						<f:facet name="header">Classe</f:facet>
-						<h:outputText value="#{matricula.classe.descricao}">
-						</h:outputText>
-					</h:column>
-					<h:column>
-						<f:facet name="header">Curso</f:facet>
-						<h:outputText value="#{matricula.curso}">
-						</h:outputText>
-					</h:column>
-					<h:column>
-						<f:facet name="header">Turma</f:facet>
-						<h:outputText value="#{matricula.turma.descricao}">
-						</h:outputText>
-					</h:column>
-					<h:column >
-							
 							<h:commandLink
-							 actionListener="#{alunoBean.imprimirReciboInscricaoDoAluno(matricula)}"
+								actionListener="#{alunoBean.imprimirReciboInscricaoDoAluno(matricula)}"
 								title="Emitir recibo de inscrição?" styleClass="tooltip-left"
-								
 								style=" background-color: #FFF; ">
 								<p:graphicImage url="#{buscarFotoBean.retornarImagesPrinter}"
-												height="16" width="16"  />
+									height="16" width="16" />
 							</h:commandLink>
 						</h:column>
-				</h:dataTable>
-			</p:panel>
+					</h:dataTable>
+				</div>
+			</div>
 
 		</h:form>
 	</ui:define>

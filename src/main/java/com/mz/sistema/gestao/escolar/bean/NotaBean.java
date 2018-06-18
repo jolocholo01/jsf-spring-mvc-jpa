@@ -451,11 +451,25 @@ public class NotaBean {
 		}
 	}
 
-	public String lançarNotas() {
+	public String listarTurmaParaLancarNotas() {
 		this.selecionarturma = false;
 		this.verificarRelatorioTurmaSelecionada = false;
 		this.verificarTurmaSelecionada = true;
 		return "/academico/professor/nota/turma?faces-redirect=true";
+	}
+
+	public String lancarNotaDoAluno(ProfessorTurma professorTurma) {
+	
+		try {
+			selecionarturma =true;
+			this.professorTurma = professorTurma;
+			buscarCadernetaProfessor();
+			this.turmaSelecionadaParaCadastroDeNotas=this.professorTurma.getTurma();
+			trimestreSelecionado = trimestreServico.obterTrimestreAtivo();
+		} catch (Exception e) {
+
+		}
+		return "/academico/professor/nota/nota?faces-redirect=true";
 	}
 
 	public String relatorioNotas() {

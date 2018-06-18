@@ -82,8 +82,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			}
 
 			else if (permissoes.contains("ROLE_ALUNO")) {
-				authenticationContext.buscarMatriculaEscolaLogada();
-				authenticationContext.buscarDisciplinasLecionadosPorProfessoresDaTurma();
 				response.sendRedirect(request.getContextPath() + "/aluno/index.jsf");
 			} else if (permissoes.contains("ROLE_SECRETARIO")) {
 

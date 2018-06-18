@@ -11,5 +11,6 @@ public interface ProfessorTurmaServico {
 	public List<ProfessorTurma> obterProfessorTurmaPorTurma(Integer idTurma);
 	public List<ProfessorTurma> obterProfessorTurmaPorTurmaOrdenarPorIdDisciplina(Integer idTurma);
 	public ProfessorTurma obterProfessorTurmaPorIdTurmarPorIdDisciplina(Integer idTurma, Integer idDisciplina);
+	public List<ProfessorTurma> obterProfessorTurmaPorTurmaOrdernarPorNome(Integer idTurma);
 	
 }

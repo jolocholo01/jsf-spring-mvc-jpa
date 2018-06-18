@@ -23,6 +23,7 @@ import com.mz.sistema.gestao.escolar.modelo.Aluno;
 import com.mz.sistema.gestao.escolar.modelo.Calendario;
 import com.mz.sistema.gestao.escolar.modelo.Classe;
 import com.mz.sistema.gestao.escolar.modelo.Disciplina;
+import com.mz.sistema.gestao.escolar.modelo.Escola;
 import com.mz.sistema.gestao.escolar.modelo.Matricula;
 import com.mz.sistema.gestao.escolar.modelo.Matriz;
 import com.mz.sistema.gestao.escolar.modelo.Nota;
@@ -145,9 +146,15 @@ public class MatriculaBean {
 	}
 
 	public void salvar() {
-		matricula.setEscola(authenticationContext.getFuncionarioEscolaLogada().getEscola());
-		matriculaServico.salvar(matricula);
-		Mensagem.mensagemInfo("Estudante alterado com sucesso");
+		try {
+			Escola escola=authenticationContext.getFuncionarioEscolaLogada().getEscola();
+			matricula.setEscola(escola);
+			matricula.setEscola(escola);
+			matriculaServico.salvar(matricula);
+			Mensagem.mensagemInfo("Estudante alterado com sucesso");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	// matricular aluno por turma

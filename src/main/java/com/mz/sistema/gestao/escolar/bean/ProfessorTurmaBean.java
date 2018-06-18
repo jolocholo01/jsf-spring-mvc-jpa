@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,6 +63,7 @@ public class ProfessorTurmaBean {
 	private boolean buscarProfessorBoolean = false;
 	private boolean virificarDisciplinaProfessorBoolean = false;
 	private boolean elecionadaTurnoExtra = false;
+	private boolean cadastrouHorario = false;
 	private Turma turma;
 	private String pesquisa;
 	private String professor;
@@ -101,6 +104,7 @@ public class ProfessorTurmaBean {
 
 	public void iniciarBean() {
 		try {
+			notaBean.setSelecionarturma(false);
 			this.turmasProfessor = null;
 			notaBean.turmaSelecionadaParaCadastroDeNotas = null;
 			Calendario calendario = authenticationContext.getCalendarioEscolar();
@@ -157,7 +161,34 @@ public class ProfessorTurmaBean {
 		}
 
 	}
-// Metodo de salvar Horario, primeiro quando e chamado esse metodo se existir um horario va eliminar e depois salvar
+
+	public String voltarIndex() {
+		String link = null;
+		try {
+			FacesContext context = FacesContext.getCurrentInstance();
+
+			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+			/// academico/director-ditrital/index.xhtml
+
+			String urlSenha = request.getRequestURI() + "";
+			System.out.println("URL completo split:" + urlSenha.split("/academico/"));
+			// URL:/sistema-escolar/academico/director/index.jsf
+			String url = urlSenha.replace("/turma/professorTurma", "/index").replace("/sistema-escolar", "")
+					.replace(".jsf", "");
+
+			System.out.println("URL:" + url.split("/academico/"));
+			String vals[] = url.split("/academico/");
+			link = vals[1];
+			System.out.println("URL:" + "/academico/" + link);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/academico/" + link + "?faces-redirect=true";
+	}
+
+	// Metodo de salvar Horario, primeiro quando e chamado esse metodo se
+	// existir um horario va eliminar e depois salvar
 	public void salvar() {
 
 		try {
@@ -184,10 +215,9 @@ public class ProfessorTurmaBean {
 
 				if (horarioAula.isHorarioProfNestaTurmaSeg() == true) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("SEG");
-					
-				
-						horario = new Horario();
-					
+
+					horario = new Horario();
+
 					horario.setDiaSemana(diaSemana);
 					horario.setDisciplina(disciplinaClasse.getDisciplina());
 					horario.setTurma(turmaSelecionada);
@@ -201,9 +231,9 @@ public class ProfessorTurmaBean {
 				}
 				if (horarioAula.isHorarioProfNestaTurmaTerc() == true) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("TER");
-					
-						horario = new Horario();
-					
+
+					horario = new Horario();
+
 					horario.setDiaSemana(diaSemana);
 					horario.setDisciplina(disciplinaClasse.getDisciplina());
 					horario.setTurma(turmaSelecionada);
@@ -218,9 +248,9 @@ public class ProfessorTurmaBean {
 				}
 				if (horarioAula.isHorarioProfNestaTurmaQua() == true) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("QUA");
-					
-						horario = new Horario();
-					
+
+					horario = new Horario();
+
 					horario.setDiaSemana(diaSemana);
 					horario.setDisciplina(disciplinaClasse.getDisciplina());
 					horario.setTurma(turmaSelecionada);
@@ -234,9 +264,8 @@ public class ProfessorTurmaBean {
 				if (horarioAula.isHorarioProfNestaTurmaQui() == true) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("QUI");
 
-					
-						horario = new Horario();
-					
+					horario = new Horario();
+
 					horario.setDiaSemana(diaSemana);
 					horario.setDisciplina(disciplinaClasse.getDisciplina());
 					horario.setTurma(turmaSelecionada);
@@ -250,8 +279,7 @@ public class ProfessorTurmaBean {
 				}
 				if (horarioAula.isHorarioProfNestaTurmaSex() == true) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("SEX");
-						horario = new Horario();
-					
+					horario = new Horario();
 
 					horario.setDiaSemana(diaSemana);
 					horario.setDisciplina(disciplinaClasse.getDisciplina());
@@ -311,6 +339,7 @@ public class ProfessorTurmaBean {
 				professorTurma.setProfessor(funcionario);
 			professorTurmaServico.salvar(professorTurma);
 			Mensagem.mensagemInfo("AVISO: Horario de Professor foi cadastrado com sucesso!");
+			cadastrouHorario = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -550,6 +579,7 @@ public class ProfessorTurmaBean {
 	}
 
 	public void voltar() {
+
 		if (disciplinaTurmaSelecionada == false) {
 			this.turmaSelecionada = null;
 			this.matrizSelecionada = null;
@@ -557,6 +587,14 @@ public class ProfessorTurmaBean {
 		} else {
 			disciplinaTurmaSelecionada = false;
 		}
+		try {
+			if (cadastrouHorario == true)
+				horariosProfessor = horarioServico.obterHorarioPorIdTurno(this.turmaSelecionada.getTurno().getId(),
+						this.turmaSelecionada.getEscola().getId(), this.turmaSelecionada.getAno());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void proximoAlocacao() {
@@ -565,6 +603,7 @@ public class ProfessorTurmaBean {
 			funcionario = new Funcionario();
 			disciplinaTurmaSelecionada = true;
 			virificarDisciplinaProfessorBoolean = true;
+			cadastrouHorario = false;
 			if (elecionadaTurnoExtra == false)
 				horarioAulas = horarioAulaServico.obterHorarioAulaPorEscolaTurno(turmaSelecionada.getTurno().getId());
 			else if (elecionadaTurnoExtra == true) {
@@ -826,6 +865,14 @@ public class ProfessorTurmaBean {
 
 	public void setTurnoSelecionado(Turno turnoSelecionado) {
 		this.turnoSelecionado = turnoSelecionado;
+	}
+
+	public boolean isCadastrouHorario() {
+		return cadastrouHorario;
+	}
+
+	public void setCadastrouHorario(boolean cadastrouHorario) {
+		this.cadastrouHorario = cadastrouHorario;
 	}
 
 }

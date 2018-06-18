@@ -84,4 +84,16 @@ public class TransferenciaServicoImpl implements TransferenciaServico {
 		return null;
 	}
 
+	@Override
+	public Long obterTransferidosPorIdEscolaPorAno(Long idEscolaOrigem, Integer ano, boolean finalizada) {
+		Long  qtdTransferencias = (Long) em
+				.createQuery(
+						"SELECT COUNT(t.id) from Transferencia t  where t.escolaOrigem.id=:idEscolaOrigem AND t.matricula.ano=:ano  AND t.finalizada=:finalizada")
+				.setParameter("idEscolaOrigem", idEscolaOrigem)
+				.setParameter("ano", ano)
+				.setParameter("finalizada", finalizada).getSingleResult();
+		
+		return qtdTransferencias;
+	}
+
 }

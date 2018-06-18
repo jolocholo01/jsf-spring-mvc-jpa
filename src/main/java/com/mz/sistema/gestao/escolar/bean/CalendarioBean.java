@@ -100,9 +100,9 @@ public class CalendarioBean {
 			} else if (calendario != null) {
 				FuncionarioEscola funcionarioEscola = authenticationContext.getFuncionarioEscolaLogada();
 				if (funcionarioEscola != null) {
-					Escola escola = funcionarioEscola.getEscola();
-					if (escola != null) {
-						List<Matricula> matriculas = matriculaServico.obterMatriculasPorEscolaPorAno(escola.getId(),
+					Escola idEscolaOrigem = funcionarioEscola.getEscola();
+					if (idEscolaOrigem != null) {
+						List<Matricula> matriculas = matriculaServico.obterEstatistcaMatriculasPorEscolaPorAno(idEscolaOrigem.getId(),
 								calendario.getAno());
 						if (!matriculas.isEmpty())
 							for (Matricula matricula : matriculas) {

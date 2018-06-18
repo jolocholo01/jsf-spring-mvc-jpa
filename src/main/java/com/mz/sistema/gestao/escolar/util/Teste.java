@@ -1,8 +1,5 @@
 package com.mz.sistema.gestao.escolar.util;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,13 +7,19 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class Teste {
 
 	public static void main(String args[]) throws ParseException {
-		System.out.println(criptografarSenha("4"));
+		
+		String url="/sistema-escolar/academico/director/index.jsf";
+		String vals[] = url.split("/academico/");
+		String link=vals[1];
+		String vals2[] = link.split("/");
+		String primeiro=vals2[0];
+		
+		System.out.println("Link : "+primeiro);
+		
 		String nom1 = "Agostinho";
 		String nom2 = "Macoo";
 		List<String> nomes = new ArrayList<>();
@@ -27,7 +30,7 @@ public class Teste {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 		String dataFormatoBanco =sdf.format(new Date());
-		System.out.println(dataFormatoBanco);
+		System.out.println("Senha: "+criptografarSenha("rafael1993"));
 	}
 
 	public static boolean criptografarSenha(String password, String passwordEncode) {

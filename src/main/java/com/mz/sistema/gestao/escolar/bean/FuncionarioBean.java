@@ -142,6 +142,7 @@ public class FuncionarioBean {
 		funcionarioEncontrado = 0;
 		this.funcionarioSelecionado = null;
 		estadoCadastro = false;
+		adicionarFuncionarioEscolaBoolean = false;
 	}
 
 	public void impromirRecibo(Funcionario funcionario) {

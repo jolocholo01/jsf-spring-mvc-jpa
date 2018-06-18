@@ -60,10 +60,14 @@ public class EnvioEmailServicoImpl implements EnvioEmailServico {
 		try {
 			// Create a Properties object to contain connection configuration
 			// information.
-			//sigescmz@gmail.com sigescmz2016
-			//sigesmoz@gmail.com  sigesmoz2018 
-			String email="sigesmoz@gmail.com";
-			String password="sigesmoz2018";
+
+			// Recente
+			// String email="sigesmoz@gmail.com";
+			// String password="sigesmoz2018";
+			// Email antigo
+			String email = "sigescmz@gmail.com";
+			String password = "sigescmz2016";
+
 			Properties props = System.getProperties();
 			props.put("mail.transport.protocol", "smtp");
 			props.put("mail.smtp.port", 587);
@@ -107,7 +111,6 @@ public class EnvioEmailServicoImpl implements EnvioEmailServico {
 
 			System.out.println("E-mail enviado!");
 		} catch (Exception e) {
-			Mensagem.mensagemErro("Não conseguiu enviar o e - mail, tente  mais tarde. ");
 			e.printStackTrace();
 		}
 
@@ -130,13 +133,11 @@ public class EnvioEmailServicoImpl implements EnvioEmailServico {
 		texto = texto.replace("{link}", url.replace("http://", "").replace("https://", ""));
 		texto = texto.replace("{linkEnviado}", linkEnviado);
 		texto = texto.replace("{ano}", ano);
-		try {
+		
 			List<String> emails = new ArrayList<>();
 			emails.add(usuario.getEmail());
 			enviarEmail(assunto, texto, null, emails);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 	}
 
 }

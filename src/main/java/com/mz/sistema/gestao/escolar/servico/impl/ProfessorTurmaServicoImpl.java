@@ -62,6 +62,18 @@ public class ProfessorTurmaServicoImpl implements ProfessorTurmaServico {
 		}
 		return null;
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProfessorTurma> obterProfessorTurmaPorTurmaOrdernarPorNome(Integer idTurma) {
+		List<ProfessorTurma> professorTurmas = em
+				.createQuery(
+						"FROM ProfessorTurma pt join fetch pt.professor join fetch pt.disciplina join fetch pt.turma join fetch pt.turma.classe join fetch pt.turma.turno WHERE pt.turma.id=:idTurma ORDER By pt.professor.nome ")
+				.setParameter("idTurma", idTurma).getResultList();
+		if (!professorTurmas.isEmpty()) {
+			return professorTurmas;
+		}
+		return null;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

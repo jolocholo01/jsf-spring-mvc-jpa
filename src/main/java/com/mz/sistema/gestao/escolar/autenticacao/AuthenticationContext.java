@@ -310,13 +310,16 @@ public class AuthenticationContext {
 		return new Calendario();
 	}
 
-	public void logout() throws IOException {
-		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-		((HttpSession) context.getSession(false)).invalidate();
+	public void logout()  {
+		try {
+			ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+			((HttpSession) context.getSession(false)).invalidate();
 
-		context.redirect(
-				context.encodeResourceURL(((HttpServletRequest) context.getRequest()).getContextPath() + "/login.jsp"));
-
+			context.redirect(
+					context.encodeResourceURL(((HttpServletRequest) context.getRequest()).getContextPath() + "/login.jsp"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Matricula getMatriculaEscolaLogada() {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-05-22T06:51:11 -->
+<!-- 2018-06-08T09:31:38 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="funcionario" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b8374351-4b8b-48d2-aa4e-ce1b4a4a2cc1">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\programador\funcionario\relatorio\DataAdapter.xml"/>
@@ -511,7 +511,7 @@ FROM funcionario
 				<textFieldExpression><![CDATA[$F{email}.toString().trim().equals("")?"Nenhum e - mail cadastrado":$F{email}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="157" y="53" width="36" height="15" uuid="e0923233-c918-4599-b5af-9522b02fb6dc">
+				<reportElement x="157" y="53" width="53" height="15" uuid="e0923233-c918-4599-b5af-9522b02fb6dc">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -519,10 +519,10 @@ FROM funcionario
 				<textElement verticalAlignment="Middle">
 					<font fontName="Currie new" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Função:"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Categoria:"]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy">
-				<reportElement x="193" y="53" width="102" height="15" uuid="f9ab565e-a7bd-4633-8fc5-83176f15bf48">
+				<reportElement x="211" y="53" width="102" height="15" uuid="f9ab565e-a7bd-4633-8fc5-83176f15bf48">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="0">

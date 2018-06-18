@@ -7,139 +7,23 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/academico/principal/index.xhtml">
-	<ui:define name="titulo">Alteração da minha senha	</ui:define>
-	<ui:define name="cabacalho">
-		<link rel="stylesheet"
-			href="#{request.contextPath}/resources/css/horario_professor.css" />
 
-		<link rel="stylesheet"
-			href="#{request.contextPath}/resources/css/senha.css" />
-			<style>
-			.corpo {
-				min-height: 200px;
-			}
-			.corpo_para_fundo {
-				min-height: 557px;
-				}
-		</style>
-
+<ui:composition template="/academico/principal/templete.xhtml">
+	<ui:define name="titulo">
+		Alteração da minha senha
 	</ui:define>
 
-	<ui:define name="titulo_do_corpo">
-		<ui:include src="/academico/professor/template/titulo_do_corpo.xhtml"></ui:include>
+	<ui:define name="menu">
+		<ui:include src="/academico/professor/template/menu.xhtml" />
 	</ui:define>
-	<ui:define name="nome_usuario">
-		<ui:include src="/academico/professor/template/nome_usuario.xhtml"></ui:include>
+	<ui:define name="dados_pessoas">
+		<ui:include
+			src="/academico/professor/template/dados_pessoas.xhtml" />
 	</ui:define>
 	<ui:define name="ambiente_comum">
 
-		<h:form id="form_menu">
-			<div class="menu menubar">
-				<ul>
-					<li style="width: 65px;"><h:outputLink
-							value="#{request.contextPath}/professor/index.jsf">
-							 Principal
-						</h:outputLink></li>
-					<h:panelGroup>
-						<h:outputText value=" > " style="font-size:21px;" />
-					</h:panelGroup>
-					<li style="width: 215px;"><h:outputLink
-							value="#{request.contextPath}/professor/senha.jsf">
-							  Alteração da minha senha
-						</h:outputLink></li>
-				</ul>
-			</div>
-		</h:form>
-
-		<h:form style="padding-top:20px; padding-bottom:20px;">
-
-			<p:panel header="Alterar minha senha">
-
-				<h:panelGroup
-					rendered="#{buscarFotoBean.alterarSenhaUsuarioBoolean ==false}">
-
-					<h:panelGrid styleClass="nao-ha-dado ui-widget-header margin">
-						<h:outputText
-							value="ATENÇÃO: Introduza a sua senha para prosseguir."
-							style="margin:10px;display: inline-block;" />
-					</h:panelGrid>
-
-
-					<p:messages style="margin:10px;" closable="true"/>
-
-
-					<h:panelGrid columns="2"
-						styleClass="table tabela-sem-border-padding ">
-
-						<h:outputLabel value="Senha:*" styleClass="texto_label text-lebal" />
-						<h:inputSecret styleClass="form-control font-size16"
-							value="#{buscarFotoBean.autenticarSenha}" required="true"
-							requiredMessage="o campo senha é obrigatório."
-							style="margin-left: 10px;width: 311px;">
-							<f:passThroughAttribute name="placeholder"
-								value="Introduza a sua senha" />
-								<f:passThroughAttribute name="autofocus" value="true" />
-						</h:inputSecret>
-
-
-						<f:facet name="footer">
-							<h:commandButton value="Autenticar" style="margin: 2% 0 6% 23%;"
-								styleClass="btn btn-primary"
-								actionListener="#{buscarFotoBean.autenticar}" />
-						</f:facet>
-					</h:panelGrid>
-				</h:panelGroup>
-				<h:panelGroup
-					rendered="#{buscarFotoBean.alterarSenhaUsuarioBoolean !=false}">
-					<p:messages closable="true" style="width: 98%;margin: auto;" />
-
-					<h:panelGrid columns="2"
-						styleClass="table tabela-sem-border-padding tabela-senha">
-
-						<h:outputLabel value="Usuário: "
-							styleClass="texto_label text-lebal" />
-						<h:inputText disabled="true" styleClass="form-control font-size16"
-							value="#{buscarFotoBean.usuario.login}"
-							style="margin-left: 10px;width: 40%;" />
-
-						<h:outputLabel value="Nome do usuário: "
-							styleClass="texto_label text-lebal" />
-						<h:inputText disabled="true" styleClass="form-control font-size16"
-							value="#{buscarFotoBean.usuario.nome}"
-							style="margin-left: 10px;width: 80%;" />
-
-
-						<h:outputLabel value="Senha Nova :*"
-							styleClass="texto_label text-lebal" />
-						<h:inputSecret styleClass="form-control font-size16"
-							value="#{buscarFotoBean.usuario.novaSenha}"
-							style="margin-left: 10px;width: 311px;">
-							<f:passThroughAttribute name="placeholder" value="Senha Nova" />
-							<f:passThroughAttribute name="autofocus" value="true" />
-						</h:inputSecret>
-
-						<h:outputLabel value="Confirmar Senha Nova :*"
-							styleClass="texto_label text-lebal" />
-						<h:inputSecret styleClass="form-control font-size16"
-							value="#{buscarFotoBean.usuario.confirmaSenha}"
-							style="margin-left: 10px;width: 311px;">
-							<f:passThroughAttribute name="placeholder" value="Senha Nova" />
-						</h:inputSecret>
-						<f:facet name="footer">
-							<h:panelGrid columns="2" style="margin: 2% 0 6% 29%;">
-								<h:commandButton value="Guardar"
-									actionListener="#{buscarFotoBean.alterarSenha}"
-									styleClass="btn btn-primary" />
-								<h:commandButton value="Cancelar"
-									action="/academico/professor/index?faces-redirect=true"
-									styleClass="btn btn-success" style="margin-left:4%;" />
-							</h:panelGrid>
-						</f:facet>
-					</h:panelGrid>
-				</h:panelGroup>
-			</p:panel>
-		</h:form>
+		<ui:include
+			src="/academico/escola/restrito/senha.xhtml" />
 	</ui:define>
 </ui:composition>
 </html>

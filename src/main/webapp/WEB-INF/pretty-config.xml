@@ -60,11 +60,21 @@
 	</url-mapping>
 	<url-mapping>
 		<pattern value="/professor/nota.jsf" />
-		<view-id value="/academico/professor/nota/turma.jsf" />
+		<view-id value="/academico/professor/nota/nota.jsf" />
 		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
 		</action>
 	</url-mapping>
 
+<url-mapping>
+		<pattern value="/professor/selecao-turma.jsf" />
+		<view-id value="/academico/professor/nota/turma.jsf" />
+		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
+		</action>
+	</url-mapping>
+		<url-mapping>
+		<pattern value="/professor/turma.jsf" />
+		<view-id value="/academico/professor/horario/turma.jsf" />
+	</url-mapping>
 	<url-mapping>
 		<pattern value="/professor/horario.jsf" />
 		<view-id value="/academico/professor/horario/horario.jsf" />
@@ -74,9 +84,10 @@
 		</action>
 	</url-mapping>
 	<url-mapping>
-		<pattern value="/professor/turma.jsf" />
-		<view-id value="/academico/professor/horario/turma.jsf" />
+		<pattern value="/professor/selecao-turma.jsf" />
+		<view-id value="/academico/professor/nota/turma.jsf" />
 	</url-mapping>
+
 	<url-mapping id="cadastroProfessor">
 		<pattern value="/professor/cadastro.jsf" />
 		<view-id value="/academico/professor/cadastro.jsf" />
@@ -121,9 +132,9 @@
 	<url-mapping id="aluno">
 		<pattern value="/aluno/index.jsf" />
 		<view-id value="/academico/aluno/index.jsf" />
-		<action onPostback="false">authenticationContext.buscarMatriculaEscolaLogada
+		<action onPostback="false">#{authenticationContext.buscarMatriculaEscolaLogada}
 		</action>
-		<action onPostback="false">authenticationContext.buscarDisciplinasLecionadosPorProfessoresDaTurma
+		<action onPostback="false">#{authenticationContext.buscarDisciplinasLecionadosPorProfessoresDaTurma}
 		</action>
 	</url-mapping>
 	<url-mapping id="cadastroAluno">
@@ -153,7 +164,7 @@
 	</url-mapping>
 	<url-mapping>
 		<pattern value="/aluno/dados.jsf" />
-		<view-id value="/academico/aluno/template/meusDadosPessoais.jsf" />
+		<view-id value="/academico/aluno/template/meusdados.jsf" />
 		<action onPostback="false">#{buscarFotoBean.iniciarAtualizacaoDados}
 		</action>
 	</url-mapping>
@@ -169,12 +180,15 @@
 	<url-mapping>
 		<pattern value="/director/index.jsf" />
 		<view-id value="/academico/director/index.jsf" />
-		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
-		</action>
-		<action onPostback="false">#{escolaBean.iniciarBean}
-		</action>
+		<action onPostback="false">#{escolaBean.iniciarBean}</action>
 	</url-mapping>
 
+
+	<url-mapping>
+		<pattern value="/director/gerenciar-horario-aula.jsf" />
+		<view-id value="/academico/director/horario/horarioAula.jsf" />
+		<action onPostback="false">#{horarioAulaBean.iniciarBean}</action>
+	</url-mapping>
 	<url-mapping>
 		<pattern value="/director/matricula/renovar.jsf" />
 		<view-id value="/academico/director/matricula/renovacao.jsf" />
@@ -345,7 +359,7 @@
 		</action>
 	</url-mapping>
 	<url-mapping>
-		<pattern value="/director/gerenciar-matriz.jsf" />
+		<pattern value="/director/alterar-matriz.jsf" />
 		<view-id value="/academico/director/matriz/alterar.jsf" />
 		<action onPostback="false">#{matrizBean.iniciarBean}
 		</action>
@@ -356,7 +370,7 @@
 
 
 	<!--Configuracao de url de Director Adjunto Pedagógico da escola -->
-		<url-mapping>
+	<url-mapping>
 		<pattern value="/director-adjunto/alocar-alunos.jsf" />
 		<view-id value="/academico/adjunto/turma/alunosTurma.jsf" />
 		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
@@ -371,7 +385,7 @@
 		<action onPostback="false">#{matrizBean.iniciarBean}
 		</action>
 	</url-mapping>
-<url-mapping>
+	<url-mapping>
 		<pattern value="/director-adjunto/gerenciar-matriz.jsf" />
 		<view-id value="/academico/adjunto/matriz/alterar.jsf" />
 		<action onPostback="false">#{matrizBean.iniciarBean}

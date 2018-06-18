@@ -5,65 +5,70 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:panelGroup>
-	<div class="menu" style="margin-top: -10px;">
-		<ul>
-			<li><h:outputLink value="#">
-					<span> <h:graphicImage
-							url="#{buscarFotoBean.retornarImagesLivro}" class="ajustamento"
-							style="margin-top:2px;" /></span>Ensino</h:outputLink>
-				<ul class="row row_outline1">
-					<li style="width: 300px;" class="li li_top"><h:outputLink
-							value="#{request.contextPath}/aluno/horario.jsf"
-							styleClass="fundo">
-							<span class="espacamento"> Horário da minha turma</span>
-						</h:outputLink></li>
-					<li style="width: 300px;" class="li li_bottom"><h:outputLink
-							styleClass="fundo" value="#{request.contextPath}/aluno/nota.jsf">
-							<span class="espacamento"> Minhas notas de frequência</span>
-						</h:outputLink></li>
 
 
-				</ul></li>
+<nav
+	class="navbar navbar-expand-md navbar-dark bg-dark fixed-top menu-horizontal">
+<a class="navbar-brand" href="#{request.contextPath}/aluno/index.jsf">SIGE</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse"
+	data-target="#navbarsExampleDefault"
+	aria-controls="navbarsExampleDefault" aria-expanded="false"
+	aria-label="Toggle navigation">
+	<span class="navbar-toggler-icon"></span>
+</button>
 
-			<h:panelGroup styleClass="span_seta" />
+<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Ensino</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+				<h:outputLink value="#{request.contextPath}/aluno/horario.jsf"
+					styleClass="dropdown-item">
+						Horário da minha turma
+						</h:outputLink>
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/aluno/nota.jsf">
+							 Minhas notas de frequência
+						</h:outputLink>
 
-			<li><h:outputLink value="">
-					<span> <h:graphicImage
-							url="#{buscarFotoBean.retornarImagesMatricula}"
-							style="margin-top:3px; margin-left:2px; height: 25px; width:20px"
-							class="ajustamento" /></span> Matrículas</h:outputLink>
-				<ul class="row row_outline1">
+			</div></li>
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Matrículas</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
 
-					<li class="li li_top" style="width: 320px;"><h:outputLink
-							value="#" styleClass="fundo">
-							<span class="espacamento">Consultar pauta de frequência</span>
-						</h:outputLink></li>
-					<li class="li  li_bottom" style="width: 320px;"><h:outputLink
-							value="#{request.contextPath}/aluno/doc.jsf" styleClass="fundo">
-							<span class="espacamento">Documentos</span>
-						</h:outputLink></li>
-				</ul></li>
+				<h:outputLink value="#{request.contextPath}/aluno/doc.jsf"
+					styleClass="dropdown-item">
+							Documentos
+						</h:outputLink>
+						<ui:remove>
+				<h:outputLink value="#" styleClass="dropdown-item">
+							Consultar pauta de frequência
+						</h:outputLink></ui:remove>
+			</div></li>
 
-			<h:panelGroup class="span_seta" />
-			<li style="width: 160px;"><h:outputLink value="#">
-					<span> <h:graphicImage
-							url="#{buscarFotoBean.retornarImagesPassword}"
-							style="width: 25px;height: 27px;margin-top: 3px;"
-							class="ajustamento" /></span>Personalizações</h:outputLink>
-				<ul class="row row_outline1">
 
-					<li class="li" style="width: 210px;"><h:outputLink
-							value="#{request.contextPath}/aluno/senha.jsf" styleClass="fundo">
-							<span class="espacamento">Alterar senha</span>
-						</h:outputLink></li>
-					<li class="li li_bottom" style="width: 210px;"><h:outputLink
-							value="#{request.contextPath}/aluno/dados.jsf" styleClass="fundo">
-							<span class="espacamento">Meus Dados Pessoais</span>
-						</h:outputLink></li>
-				</ul></li>
 
-		</ul>
-	</div>
-</h:panelGroup>
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Personalizações</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+				<h:outputLink value="#{request.contextPath}/aluno/senha.jsf"
+					styleClass="dropdown-item">Alterar senha
+						</h:outputLink>
+				<h:outputLink value="#{request.contextPath}/aluno/dados.jsf"
+					styleClass="dropdown-item">Meus dados pessoais
+					</h:outputLink>
+
+			</div></li>
+	</ul>
+	<h:panelGroup class="form-inline my-2 my-lg-0 form_sair">
+
+		<h:commandLink value="Sair" styleClass="botao" title="Sair do sistema"
+			action="#{authenticationContext.logout}" />
+
+	</h:panelGroup>
+</div>
+</nav>
 </html>

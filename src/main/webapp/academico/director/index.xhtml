@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/academico/principal/index.xhtml">
+<ui:composition template="/academico/principal/templete.xhtml">
 	<ui:define name="titulo">Portal de Gestão Escolar</ui:define>
 	<ui:define name="titulo_do_corpo">
 		<ui:include src="/academico/director/template/titulo_do_corpo.xhtml"></ui:include>
@@ -17,9 +17,8 @@
 		<ui:include src="/academico/director/template/nome_usuario.xhtml"></ui:include>
 	</ui:define>
 	<ui:define name="menu">
-		<h:form>
-			<ui:include src="/academico/director/template/menu.xhtml" />
-		</h:form>
+		<ui:include src="/academico/director/template/menu.xhtml" />
+
 	</ui:define>
 	<ui:define name="dados_pessoas">
 		<ui:include src="/academico/director/template/dados_pessoas.xhtml" />
@@ -27,73 +26,103 @@
 	<ui:define name="ambiente_comum">
 
 		<h:form id="form">
+			<ui:remove>
+				<p:chart type="pie" model="#{chartView.pieModel1}"
+					style="width:400px;height:300px" />
+			</ui:remove>
 
-			<div class="calendario1">
+			<div class="row">
+				<div class="col-md-5 border "
+					style="margin-left: 2%; margin-right: 2%;">
+					<br />
+					<div class="x_panel tile fixed_height_320">
 
-				<h:panelGrid columns="2" style="    margin-left: 3%;">
+						<div class="x_content">
+							<div class="calendario1">
 
-					<h:outputText value="Acompanhamento de Matrículas:"
-						styleClass="control-label texto-label textfim letra-mascula" />
+								<div class="form-group row">
+									<h:outputLabel value="Acompanhamento de matrículas:"
+										styleClass="control-label texto-label col-sm-7 textfim letra-mascula" />
+									<div class="col-sm-4">
+										<h:selectOneMenu value="#{calendarioBean.calendario.ano}"
+											styleClass="form-control">
+											<f:selectItems value="#{calendarioBean.calendarios}"
+												var="calendario" itemLabel="#{calendario.ano}"
+												itemValue="#{calendario.ano}" />
+											<p:ajax event="change"
+												listener="#{calendarioBean.caregarAcompanharMatricula}"
+												update="form:tabale-acompanhamento"></p:ajax>
+										</h:selectOneMenu>
 
-					<h:selectOneMenu value="#{calendarioBean.calendario.ano}"
-						styleClass="form-control">
-						<f:selectItems value="#{calendarioBean.calendarios}"
-							var="calendario" itemLabel="#{calendario.ano}"
-							itemValue="#{calendario.ano}" />
-						<p:ajax event="change"
-							listener="#{calendarioBean.caregarAcompanharMatricula}"
-							update="form"></p:ajax>
-					</h:selectOneMenu>
+									</div>
+								</div>
+								<h:panelGroup id="tabale-acompanhamento">
+									<div class="calendario-secretario">
+
+										<table
+											class="table table-bordered table-bordered  table-sem-border-tbody tbody-center">
+											<thead style="background: #0dff3624;">
+												<tr>
+													<th>Tipo de Entrada</th>
+													<th class="coluna-acompanhamento-matricula">Quantidade
+														de alunos</th>
+													<th class="coluna-acompanhamento-matricula">Alunos
+														alocados na turma</th>
+												</tr>
+											</thead>
+											<tbody style="text-align: center;">
+												<h:panelGroup id="idAcompanhamento">
+													<h:panelGroup
+														rendered="#{calendarioBean.alunosNovos.acompanhamento ==1}">
+														<tr>
+															<td><h:outputText value="NOVOS ALUNOS" /></td>
 
 
-				</h:panelGrid>
-				<div class="calendario-secretario">
+															<td class="coluna-acompanhamento-matricula"><h:outputText
+																	value="#{calendarioBean.qtdAlunosNovos}" /></td>
 
-					<table class="table table-sem-border-tbody">
-						<thead>
-							<tr>
-								<th>Tipo de Entrada</th>
-								<th class="coluna-acompanhamento-matricula">Quantidade de alunos</th>
-								<th class="coluna-acompanhamento-matricula">Concluído</th>
-							</tr>
-						</thead>
-						<tbody>
-							<h:panelGroup id="idAcompanhamento">
-								<h:panelGroup
-									rendered="#{calendarioBean.alunosNovos.acompanhamento ==1}">
-									<tr>
-										<td><h:outputText
-												value="NOVOS ALUNOS" />
-										</td>
-										<td class="coluna-acompanhamento-matricula"><h:outputText
-												value="#{calendarioBean.qtdAlunosNovos}" /></td>
-										<td class="coluna-acompanhamento-matricula"><h:outputText
-												value="#{calendarioBean.qtdAlunosNovosMatriculados} " /></td>
-									</tr>
+															<td class="coluna-acompanhamento-matricula"><h:outputText
+																	value="#{calendarioBean.qtdAlunosNovosMatriculados} " /></td>
+														</tr>
+													</h:panelGroup>
+
+													<h:panelGroup
+														rendered="#{calendarioBean.alunosRenovados.acompanhamento==2}">
+														<tr>
+															<td><h:outputText value="RENOVAÇÃO DE MATRÍCULA" /></td>
+															<td class="coluna-acompanhamento-matricula"><h:outputText
+																	value="#{calendarioBean.qtdAlunosRenovados}" /></td>
+															<td class="coluna-acompanhamento-matricula"><h:outputText
+																	value="#{calendarioBean.qtdAlunosRenovadosEfetuado}" /></td>
+														</tr>
+													</h:panelGroup>
+													<tr>
+														<td><h:outputText value="TOTAL" /></td>
+														<td class="coluna-acompanhamento-matricula font-weight900"><h:outputText
+																value="#{calendarioBean.qtdAlunosEscola}" /></td>
+														<td class="coluna-acompanhamento-matricula font-weight900"><h:outputText
+																value="#{calendarioBean.qtdAlunosEscolaEfetuado}" /></td>
+													</tr>
+												</h:panelGroup>
+											</tbody>
+										</table>
+									</div>
 								</h:panelGroup>
+							</div>
+						</div>
+					</div>
+				</div>
 
-								<h:panelGroup
-									rendered="#{calendarioBean.alunosRenovados.acompanhamento==2}">
-									<tr>
-										<td><h:outputText
-												value="RENOVAÇÃO DE MATRÍCULA" />
-										</td>
-										<td class="coluna-acompanhamento-matricula"><h:outputText
-												value="#{calendarioBean.qtdAlunosRenovados}" /></td>
-										<td class="coluna-acompanhamento-matricula"><h:outputText
-												value="#{calendarioBean.qtdAlunosRenovadosEfetuado}" /></td>
-									</tr>
-								</h:panelGroup>
-								<tr>
-									<td></td>
-									<td class="coluna-acompanhamento-matricula font-weight900" ><h:outputText
-											value="#{calendarioBean.qtdAlunosEscola}" /></td>
-									<td class="coluna-acompanhamento-matricula font-weight900"><h:outputText
-											value="#{calendarioBean.qtdAlunosEscolaEfetuado}" /></td>
-								</tr>
-							</h:panelGroup>
-						</tbody>
-					</table>
+				<div class="col-md-6 border">
+					<br />
+					<div class="x_panel tile fixed_height_320">
+
+						<div class="x_content">
+
+							<p:chart type="pie" model="#{escolaBean.pieModel}"
+								style="width:100%;height:100%" />
+						</div>
+					</div>
 				</div>
 			</div>
 		</h:form>

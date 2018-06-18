@@ -38,6 +38,7 @@ public class Matricula implements Serializable {
 	private Classe classe;
 	private Turma turma;
 	private Escola escola;
+	private Escola escolaOrigem;
 	private boolean ativo = false;
 	private boolean repetente = false;
 	private boolean matriculaSelacionada = false;
@@ -309,6 +310,15 @@ public class Matricula implements Serializable {
 
 	public void setNotalterada(Boolean notalterada) {
 		this.notalterada = notalterada;
+	}
+	@ManyToOne
+	@JoinColumn(name="id_escola_origem")
+	public Escola getEscolaOrigem() {
+		return escolaOrigem;
+	}
+
+	public void setEscolaOrigem(Escola escolaOrigem) {
+		this.escolaOrigem = escolaOrigem;
 	}
 
 	

@@ -7,7 +7,6 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-
 <h:panelGroup id="form-alterar-vinculo">
 	<div id="usuario_ano">
 		<div class="nome-usuario">
@@ -15,7 +14,6 @@
 			<h:panelGroup>
 				<h:outputText value="#{authenticationContext.usuarioLogado.nome}"
 					style="font-weight: bold;margin-left: 2px; " />
-
 				<h:outputLink styleClass="alterar-vinculo"
 					rendered="#{authenticationContext.quantidadeCategorias!=1}">Alterar vínculo
 				 <p:ajax event="click" listener="#{authenticationContext.alterarVinculo}" update="form1:id-panelGroup-confirma-modal1" />

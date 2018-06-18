@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -12,36 +12,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <!--===============================================================================================-->
-<link rel="icon" type="image/png" href="resources/images/favicon.ico" />
+<link rel="icon" type="image/png" href="${path}/resources/images/favicon.ico" />
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="resources/bootstrap/css/bootstrap.min.css" />
+	href="${path}/resources/bootstrap/css/bootstrap.min.css" />
 
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="resources/css/login.css" />
+<link rel="stylesheet" type="text/css" href="${path}/resources/css/login.css" />
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="resources/bootstrap/fonts/font-awesome-4.7.0/css/font-awesome.min.css" />
+	href="${path}/resources/bootstrap/fonts/font-awesome-4.7.0/css/font-awesome.min.css" />
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="resources/vendor/animate/animate.css" />
+	href="${path}/resources/vendor/animate/animate.css" />
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="resources/vendor/css-hamburgers/hamburgers.min.css" />
+	href="${path}/resources/vendor/css-hamburgers/hamburgers.min.css" />
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="resources/vendor/animsition/css/animsition.min.css" />
+	href="${path}/resources/vendor/animsition/css/animsition.min.css" />
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="resources/vendor/select2/select2.min.css" />
+	href="${path}/resources/vendor/select2/select2.min.css" />
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="resources/vendor/daterangepicker/daterangepicker.css" />
+	href="${path}/resources/vendor/daterangepicker/daterangepicker.css" />
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
-	href="resources/bootstrap/css/util.css" />
+	href="${path}/resources/bootstrap/css/util.css" />
 <link rel="stylesheet" type="text/css"
-	href="resources/bootstrap/css/main.css" />
+	href="${path}/resources/bootstrap/css/main.css" />
 <!--===============================================================================================-->
 </head>
 
@@ -78,7 +78,7 @@
 					</div>
 
 					<div class="text-right p-t-13 p-b-23">
-						<a href="senha.jsf" class="txt2"> Esqueci senha </a>
+						<a href="${path}/senha.jsf" class="txt2"> Esqueci senha </a>
 					</div>
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
@@ -102,21 +102,21 @@
 
 
 	<!--===============================================================================================-->
-	<script src="resources/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="${path}/resources/vendor/jquery/jquery-3.2.1.min.js"></script>
 	<!--===============================================================================================-->
-	<script src="resources/vendor/animsition/js/animsition.min.js"></script>
+	<script src="${path}/resources/vendor/animsition/js/animsition.min.js"></script>
 	<!--===============================================================================================-->
-	<script src="resources/vendor/bootstrap/js/popper.js"></script>
-	<script src="resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="${path}/resources/vendor/bootstrap/js/popper.js"></script>
+	<script src="${path}/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<!--===============================================================================================-->
-	<script src="resources/vendor/select2/select2.min.js"></script>
+	<script src="${path}/resources/vendor/select2/select2.min.js"></script>
 	<!--===============================================================================================-->
-	<script src="resources/vendor/daterangepicker/moment.min.js"></script>
-	<script src="resources/vendor/daterangepicker/daterangepicker.js"></script>
+	<script src="${path}/resources/vendor/daterangepicker/moment.min.js"></script>
+	<script src="${path}/resources/vendor/daterangepicker/daterangepicker.js"></script>
 	<!--===============================================================================================-->
-	<script src="resources/vendor/countdowntime/countdowntime.js"></script>
+	<script src="${path}/resources/vendor/countdowntime/countdowntime.js"></script>
 	<!--===============================================================================================-->
-	<script src="resources/js/main.js"></script>
+	<script src="${path}/resources/js/main.js"></script>
 
 
 </body>

@@ -86,7 +86,7 @@
 
 							<h:dataTable value="#{funcionarioBean.funcionarios}"
 								var="funcionario" id="tabela-funcionario"
-								styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
+								styleClass="table table-bordered tabelaProfessor  tabela-funcionario left"
 								headerClass="cab-tabela" footerClass="fo-tabela"
 								style="margin-top: 20px;" rowClasses="linha2, linha1">
 
@@ -472,7 +472,7 @@
 								</div>
 								<div class="form-group row">
 									<h:outputLabel styleClass="col-sm-3 col-form-label"
-										value="Função: " />
+										value="Categoria: " />
 									<div class="col-sm-5">
 										<h:selectOneMenu value="#{funcionarioBean.funcionario.funcao}" styleClass="form-control">
 											<f:selectItem itemLabel="Selecione..." itemValue="#{null}" />

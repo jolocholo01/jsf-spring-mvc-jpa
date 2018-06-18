@@ -9,123 +9,23 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/academico/principal/index.xhtml">
+<ui:composition template="/academico/principal/templete.xhtml">
 	<ui:define name="titulo">
-	Meu Perfil 
+	Atualizar Meu Perfil 
 			</ui:define>
 
-
-	<ui:define name="cabacalho">
-		<link rel="stylesheet"
-			href="#{request.contextPath}/resources/css/nota.css" />
+	<ui:define name="menu">
+		<ui:include src="/academico/secretario/template/menu.xhtml" />
 	</ui:define>
-
-	<ui:define name="titulo_do_corpo">
-		<ui:include src="/academico/secretario/template/titulo_do_corpo.xhtml"></ui:include>
-	</ui:define>
-	<ui:define name="nome_usuario">
-		<ui:include src="/academico/secretario/template/nome_usuario.xhtml"></ui:include>
+	<ui:define name="dados_pessoas">
+		<ui:include
+			src="/academico/secretario/template/dados_pessoas.xhtml" />
 	</ui:define>
 
 	<ui:define name="ambiente_comum">
-		<h:form id="form_menu">
+		<ui:include
+			src="/academico/escola/restrito/perfil.xhtml" />
 
-			<div class="menu menubar">
-				<ul class="btn1 btn-green">
-					<li><h:outputLink
-							value="#{request.contextPath}/secretario/index.jsf">Principal
-				</h:outputLink></li>
-					<h:outputText value=" > " style="font-size:21px;" />
-					<li><h:outputLink
-							value="#{request.contextPath}/secretario/perfil.jsf">Actualizar Meu Perfil 
-				</h:outputLink></li>
-				</ul>
-			</div>
-		</h:form>
-		<h:form id="form_ambiente_comum" styleClass="form-atualizar"
-			enctype="multipart/form-data">
-
-			<p:panel header="Meu Perfil" styleClass="panel-atualizar-dados">
-				
-				<h:panelGrid styleClass="table table-sem-border-padding"
-					style="marin:0;">
-					<p:messages closable="true" />
-				</h:panelGrid>
-
-
-				<h:panelGrid styleClass="alterarFoto">
-					<h:panelGrid columns="2">
-						<h:outputLabel value="Alterar Foto:" />
-						<h:inputFile styleClass="profile-img"
-							value="#{buscarFotoBean.fotografia}">
-						</h:inputFile>
-					</h:panelGrid>
-
-					<h:panelGrid columns="2">
-						<h:outputLabel value="Ocultar E – mail na Área Pública?" />
-						<h:selectOneMenu value="#{buscarFotoBean.usuario.ocultarEmail}"
-							styleClass="form-control ocultar-email"
-							style="width:92px; margin-left:10px">
-							<f:selectItem itemLabel="Não" itemValue="#{false}" />
-							<f:selectItem itemLabel="Sim" itemValue="#{true}" />
-						</h:selectOneMenu>
-					</h:panelGrid>
-
-					<h:outputLabel value="E – mail:" />
-					<h:inputText value="#{buscarFotoBean.usuario.email}"
-						styleClass="form-control" style="width: 100%;"
-						disabled="#{buscarFotoBean.usuario.email !=''}" />
-
-				</h:panelGrid>
-				<h:panelGrid styleClass="foto-montada">
-					<h:panelGroup id="idFoto">
-						<p:graphicImage   cache="false"
-							value="#{buscarFotoBean.foto.fotoMontada}"
-							rendered="#{buscarFotoBean.foto.fotografia !=null}"
-							styleClass="foto-do-usuario profile-img-tag" />
-						<p:graphicImage  cache="false"
-							value="#{buscarFotoBean.retornarFoto}"
-							rendered="#{buscarFotoBean.foto.fotografia ==null}"
-							styleClass="foto-do-usuario profile-img-tag" />
-					</h:panelGroup>
-				</h:panelGrid>
-				<h:panelGrid style="margin:5px 0 10px 15px;"
-					styleClass="table table-sem-border-padding">
-
-
-					<h:outputLabel value="Estado Civil:" />
-					<h:selectOneMenu value="#{buscarFotoBean.usuario.estadoCivil}"
-						styleClass="form-control ocultar-email" style="max-width: 67%;">
-						<f:selectItem itemLabel="SELECCIONE..." itemValue="#{null}" />
-						<f:selectItems value="#{buscarFotoBean.estadoCivils}"
-							var="estadoCivil" itemLabel="#{estadoCivil}"
-							itemValue="#{estadoCivil}" />
-					</h:selectOneMenu>
-					<h:panelGroup>
-						<h:outputLabel value="Formação acadêmica/profissional:" />
-
-					</h:panelGroup>
-					<h:inputTextarea value="#{buscarFotoBean.funcionario.formacao}"
-						styleClass="form-control ocultar-email" rows="5"
-						style="max-width: 82%;" />
-				</h:panelGrid>
-				<div style="margin-left: 30%; margin-bottom: 20px;">
-					<h:commandButton action="#{buscarFotoBean.atualizar}"
-						value="Atualizar Perfil" styleClass="btn btn-primary" />
-					<h:commandButton immediate="true"
-						action="/academico/secretario/index?faces-redirect=true"
-						value="Cancelar" style="margin-left: 1%;"
-						styleClass="btn btn-success"
-						rendered="#{buscarFotoBean.verificarFuncaoAtualizarBoolean ==false}" />
-					<h:commandButton immediate="true"
-						action="/academico/secretario/index?faces-redirect=true"
-						value="Voltar" style="margin-left: 1%;"
-						styleClass="btn btn-success"
-						rendered="#{buscarFotoBean.verificarFuncaoAtualizarBoolean !=false}" />
-				</div>
-			</p:panel>
-		</h:form>
 	</ui:define>
-
 </ui:composition>
 </html>
