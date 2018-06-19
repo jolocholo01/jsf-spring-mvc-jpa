@@ -25,6 +25,9 @@ public class TurnoConverter implements Converter {
 		if (!propriedades[1].isEmpty()) {
 			turno.setCurso(propriedades[1]);
 		}
+		if (!propriedades[2].isEmpty()) {
+			turno.setSigla(propriedades[2]);
+		}
 
 		return turno;
 	}
@@ -43,8 +46,9 @@ public class TurnoConverter implements Converter {
 			id = turno.getId();
 		}
 		String curso = turno.getCurso() == null ? "" : turno.getCurso();
+		String sigla = turno.getSigla() == null ? "" : turno.getSigla();
 
-		return id + "#" + curso;
+		return id + "#" + curso +"#" + sigla;
 	}
 
 }
