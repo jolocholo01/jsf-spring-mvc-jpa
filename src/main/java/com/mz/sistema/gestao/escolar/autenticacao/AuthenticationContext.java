@@ -1,7 +1,6 @@
 // sistema escolar- autor Agostinho jolocholo
 package com.mz.sistema.gestao.escolar.autenticacao;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

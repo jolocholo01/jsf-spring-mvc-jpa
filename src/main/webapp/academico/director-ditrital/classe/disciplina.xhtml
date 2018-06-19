@@ -50,7 +50,7 @@
 					</h:panelGroup>
 
 					<h:panelGroup styleClass="form-span">
-						<h:commandLink value="Nova Alocação"
+						<h:commandLink value="Nova alocação"
 							actionListener="#{disciplinaClasseBean.novaAlocacao}"
 							immediate="true"
 							rendered="#{disciplinaClasseBean.cadastroDisciplinaClasseBoolean==false}" />
@@ -94,7 +94,7 @@
 
 						<h:dataTable value="#{disciplinaClasseBean.disciplinaClasses}"
 							var="disciplinaClasse" id="tabela-escola"
-							styleClass="table table-bordered tabelaProfessor tabela-hover  tabela-funcionario"
+							styleClass="table table-bordered tabelaProfessor tabela-hover  tabela-funcionario left"
 							headerClass="cab-tabela" footerClass="fo-tabela"
 							style="margin-top: 20px;" rowClasses="linha2, linha1">
 
@@ -126,7 +126,10 @@
 								<f:facet name="header">
 									<h:outputText value="Área" />
 								</f:facet>
-								<h:outputText value="#{disciplinaClasse.area.descricao}" />
+								<h:outputText value="#{disciplinaClasse.area.descricao}"
+									rendered="#{disciplinaClasse.area.descricao !=null}" />
+								<h:outputText value="Indisponivel"
+									rendered="#{disciplinaClasse.area.descricao ==null}" />
 							</h:column>
 
 							<h:column>
@@ -231,7 +234,7 @@
 						<div class="form-group row">
 							<h:outputLabel value="Área : "
 								styleClass="col-sm-3 control-label texto-label">
-								<h:panelGroup styleClass="asteristico">*</h:panelGroup>
+								
 							</h:outputLabel>
 							<div class="col-sm-6">
 								<h:panelGroup id="combo-area">
@@ -271,7 +274,8 @@
 									value="#{disciplinaClasseBean.disciplinaClasse.dataCadastro}"
 									required="true"
 									requiredMessage="O campo Data de Cadastro é obrigatório">
-									<f:convertDateTime pattern="dd/MM/yyyy" type="date"  timeZone="Africa/Harare"/>
+									<f:convertDateTime pattern="dd/MM/yyyy" type="date"
+										timeZone="Africa/Harare" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
@@ -330,8 +334,9 @@
 							style="text-align: center; margin-top: 2%;">
 							<h:outputLabel styleClass="col-sm-9 control-label texto-label">
 								<h:panelGroup styleClass="asteristico">*</h:panelGroup>
-								<h:outputLabel value="Campos de preenchimento obrigatório." style="margin-left:8px;"/>
-								
+								<h:outputLabel value="Campos de preenchimento obrigatório."
+									style="margin-left:8px;" />
+
 							</h:outputLabel>
 						</div>
 					</h:panelGroup>

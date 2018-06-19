@@ -24,14 +24,16 @@
 			aria-expanded="false">Escola</a>
 			<div class="dropdown-menu" aria-labelledby="dropdown01">
 				<h:commandLink action="#{escolaBean.cadastroEscola}"
-					styleClass="dropdown-item">Gerenciar Unidade Escolar</h:commandLink>
-				<h:commandLink action="#{areaCurricularBean.cadastroAreaCurricular}"
-					styleClass="dropdown-item">Área Curricular</h:commandLink>
+					styleClass="dropdown-item">Unidade escolar</h:commandLink>
+				<h:commandLink action="#{areaBean.cadastroArea}"
+					styleClass="dropdown-item">Área</h:commandLink>
 				<h:commandLink action="#{classeBean.cadastroClasse}"
 					styleClass="dropdown-item">Classe</h:commandLink>
+					<h:commandLink action="#{disciplinaBean.cadastroDisciplina}"
+					styleClass="dropdown-item">Disciplina</h:commandLink>
 				<h:commandLink
 					action="#{disciplinaClasseBean.cadastroDisciplinaClasseDirectorDistrital}"
-					styleClass="dropdown-item">Gerenciar Disciplinas na Classe</h:commandLink>
+					styleClass="dropdown-item">Disciplinas da Classe</h:commandLink>
 
 			</div></li>
 		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
@@ -39,7 +41,7 @@
 			aria-expanded="false">Calendário</a>
 			<div class="dropdown-menu" aria-labelledby="dropdown01">
 				<h:commandLink action="#{calendarioBean.cadastroCalendario}"
-					styleClass="dropdown-item">Gerenciar Calendário Escolar</h:commandLink>
+					styleClass="dropdown-item">Calendário Escolar</h:commandLink>
 			</div></li>
 		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
 			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"

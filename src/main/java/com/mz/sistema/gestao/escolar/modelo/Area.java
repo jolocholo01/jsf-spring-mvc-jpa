@@ -2,6 +2,7 @@
 package com.mz.sistema.gestao.escolar.modelo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ public class Area implements Serializable {
 	private String ciclo;
 	private boolean ativa;
 	private String observacao;
+	private Date dataCadastro;
 
 	public Area() {
 		
@@ -98,6 +100,14 @@ public class Area implements Serializable {
 
 	public void setCiclo(String ciclo) {
 		this.ciclo = ciclo;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 	
 }

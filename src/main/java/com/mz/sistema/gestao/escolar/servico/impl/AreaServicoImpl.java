@@ -55,9 +55,9 @@ public class AreaServicoImpl implements AreaServico {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Area> obterTodasAreasCicloPesquisa(String pesquisa, String ciclo) {
+	public List<Area> obterAreasPorPesquisa(String pesquisa) {
 		List<Area> areas = em.createQuery("FROM Area WHERE  descricao  like '%" + pesquisa.toUpperCase().trim()
-				+ "%' AND ciclo like '%" + ciclo + "%'").getResultList();
+				+ "%' Or ciclo like '%" +  pesquisa.toUpperCase().trim() + "%'").getResultList();
 		if (!areas.isEmpty()) {
 			return areas;
 		}

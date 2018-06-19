@@ -9,7 +9,7 @@ public interface AreaServico {
 	public void excluir(Area area);
 
 	public Area obterAreaExistente(String nomeArea, String ciclo);
-	public List<Area> obterTodasAreasCicloPesquisa(String pesquisa, String ciclo);
+	public List<Area> obterAreasPorPesquisa(String pesquisa);
 	public List<Area> obterAreasPorCiclo(String ciclo);
 	public List<Area> obterTodasAreasPorCiclo(String ciclo);
 	public List<Area> obterTodasAreas();

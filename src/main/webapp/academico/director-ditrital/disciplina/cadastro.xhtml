@@ -11,14 +11,15 @@
 
 <ui:composition template="/academico/principal/templete.xhtml">
 	<ui:define name="titulo">
-		<h:outputText value="Pesquisa de Área "
-			rendered="#{areaBean.cadastroAreaBoolean ==false}" />
+		<h:outputText value="Pesquisa de disciplina"
+			rendered="#{disciplinaBean.cadastroDisciplinaBoolean ==false}" />
 
-		<h:panelGroup rendered="#{areaBean.cadastroAreaBoolean ==true}">
-			<h:outputText value="Nova Área"
-				rendered="#{areaBean.novaAreaBoolean ==true}" />
-			<h:outputText value="Editar Área Curricular"
-				rendered="#{areaBean.editarAreaBoolean == true}" />
+		<h:panelGroup
+			rendered="#{disciplinaBean.cadastroDisciplinaBoolean ==true}">
+			<h:outputText value="Nova disciplina"
+				rendered="#{disciplinaBean.novaDisciplinaBoolean ==true}" />
+			<h:outputText value="Editar disciplina"
+				rendered="#{disciplinaBean.editarDisciplinaBoolean == true}" />
 		</h:panelGroup>
 	</ui:define>
 	<ui:define name="menu">
@@ -36,29 +37,35 @@
 			<div class="card">
 				<h4 class=" peg-titulo card-header primary-color white-text ">
 
-					<h:outputText value="Pesquisa de área" style="font-weight: 700;"
-						rendered="#{areaBean.cadastroAreaBoolean==false}" />
+					<h:outputText value="Pesquisa de disciplina"
+						style="font-weight: 700;"
+						rendered="#{disciplinaBean.cadastroDisciplinaBoolean==false}" />
 
-					<h:panelGroup rendered="#{areaBean.cadastroAreaBoolean ==true}">
-						<h:outputText value="Nova área" style="font-weight: 700;"
-							rendered="#{areaBean.novaAreaBoolean ==true}" />
-						<h:outputText value="Editar área" style="font-weight: 700;"
-							rendered="#{areaBean.editarAreaBoolean == true}" />
+					<h:panelGroup
+						rendered="#{disciplinaBean.cadastroDisciplinaBoolean ==true}">
+						<h:outputText value="Nova disciplina"
+							style="font-weight: 700;"
+							rendered="#{disciplinaBean.novaDisciplinaBoolean ==true}" />
+						<h:outputText value="Editar disciplina"
+							style="font-weight: 700;"
+							rendered="#{disciplinaBean.editarDisciplinaBoolean == true}" />
 					</h:panelGroup>
 
 					<h:panelGroup styleClass="form-span">
-						<h:commandLink value="Nova área"
-							actionListener="#{areaBean.novaArea}" immediate="true"
-							rendered="#{areaBean.cadastroAreaBoolean==false}" />
+						<h:commandLink value="Nova disciplina"
+							actionListener="#{disciplinaBean.novaDisciplina}"
+							immediate="true"
+							rendered="#{disciplinaBean.cadastroDisciplinaBoolean==false}" />
 						<h:commandLink value="Voltar para Pesquisa"
-							actionListener="#{areaBean.voltarParaPequisa}" immediate="true"
-							rendered="#{areaBean.cadastroAreaBoolean !=false}" />
+							actionListener="#{disciplinaBean.voltarParaPequisa}"
+							immediate="true"
+							rendered="#{disciplinaBean.cadastroDisciplinaBoolean !=false}" />
 					</h:panelGroup>
 				</h4>
 				<div class="card-body">
 					<p:messages id="mensagem" closable="true" />
 					<!-- Pesquisa de funcionario -->
-					<h:panelGroup rendered="#{areaBean.area==null}">
+					<h:panelGroup rendered="#{disciplinaBean.disciplina==null}">
 
 
 
@@ -66,22 +73,22 @@
 							<div class="col-sm-6" style="padding-left: 0;">
 								<div class="input-group">
 									<h:inputText styleClass="form-control"
-										value="#{areaBean.pesquisa}">
+										value="#{disciplinaBean.pesquisa}">
 										<f:passThroughAttribute name="placeholder"
-											value="Qual área que você está procurar?" />
-										
+											value="Qual disciplina que você está procurar?" />
+										<f:passThroughAttribute name="autofocus" value="true" />
 									</h:inputText>
 									<span class="input-group-btn"> <h:commandButton
 											styleClass="btn btn-primary" value="Buscar!"
-											actionListener="#{areaBean.buscarArea}" />
+											actionListener="#{disciplinaBean.buscarDisciplina}" />
 									</span>
 								</div>
 
 							</div>
 						</div>
 
-						<h:dataTable value="#{areaBean.areas}" var="area"
-							id="tabela-escola"
+						<h:dataTable value="#{disciplinaBean.disciplinas}"
+							var="disciplina" id="tabela-escola"
 							styleClass="table table-bordered tabelaProfessor tabela-hover  tabela-funcionario left"
 							headerClass="cab-tabela" footerClass="fo-tabela"
 							style="margin-top: 20px;" rowClasses="linha2, linha1">
@@ -90,38 +97,42 @@
 								<f:facet name="header">
 									<h:outputText value="#" />
 								</f:facet>
-								<h:outputText value=" #{area.id}" style="margin-left:5px;" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Descrição" />
-								</f:facet>
-								<h:outputText value="#{area.ciclo}" styleClass="tooltip-top">
-								</h:outputText>
-
+								<h:outputText value=" #{disciplina.id}" style="margin-left:5px;" />
 							</h:column>
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Descrição" />
 								</f:facet>
-								<h:outputText value="#{area.descricao}">
+								<h:outputText value="#{disciplina.descricao}"
+									title="CADASTRADO POR #{disciplina.funcCadastro.nome} DIRECTOR DO DISTRITO DE #{disciplina.funcCadastro.direcaoDistrital.endereco.distrito.nome}"
+									style=" margin-left:4px;" styleClass="tooltip-top"
+									rendered="#{disciplina.funcAlteracao.id ==null}">
 								</h:outputText>
-
+								<h:outputText value="#{disciplina.descricao}"
+									title="ATUALIZADA POR #{disciplina.funcAlteracao.nome} DIRECTOR DO DISTRITO DE #{disciplina.funcAlteracao.direcaoDistrital.endereco.distrito.nome}"
+									style=" margin-left:4px;" styleClass="tooltip-top"
+									rendered="#{disciplina.funcAlteracao.id !=null}">
+								</h:outputText>
 							</h:column>
 
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Sigla" />
+								</f:facet>
+								<h:outputText value="#{disciplina.sigla}"
+									style=" margin-left:4px;" />
+							</h:column>
 							<h:column headerClass="center">
 								<f:facet name="header">
 									<h:outputText value="Data de Cadastro" />
 								</f:facet>
-								<h:outputText value="#{area.dataCadastro}">
-									<f:convertDateTime pattern="dd/MM/yyyy" type="date"
-										timeZone="Africa/Harare" />
+								<h:outputText value="#{disciplina.dataCadastro}">
+									<f:convertDateTime pattern="dd/MM/yyyy" type="date" timeZone="Africa/Harare" />
 								</h:outputText>
 							</h:column>
 							<h:column>
 								<h:commandLink title="Editar" immediate="true"
-									action="#{areaBean.editar(area)}">
+									action="#{disciplinaBean.editar(disciplina)}">
 									<h:graphicImage url="#{buscarFotoBean.retornarImagesEditar}"
 										style=" width:21px; height: 20px; " />
 								</h:commandLink>
@@ -130,7 +141,7 @@
 									<p:graphicImage url="#{buscarFotoBean.retornarImagesExcluir}"
 										height="16" width="16" />
 									<p:ajax event="click"
-										listener="#{areaBean.prepararParExcluir(area)}"
+										listener="#{disciplinaBean.prepararParExcluir(disciplina)}"
 										update="form:id-panelGroup-confirma-modal" />
 									<f:passThroughAttribute name="data-toggle" value="modal" />
 									<f:passThroughAttribute name="data-target" value="#myModal" />
@@ -138,7 +149,7 @@
 							</h:column>
 							<f:facet name="footer">
 								<h:outputText
-									value=" #{areaBean.qtdAreasEncontradas} área(s) 
+									value=" #{disciplinaBean.qtdDisciplinasEncontradas} disciplina(s) 
 									encontrada(s)"></h:outputText>
 							</f:facet>
 						</h:dataTable>
@@ -146,44 +157,38 @@
 
 
 					<!-- Cadastro e edicao -->
-					<h:panelGroup rendered="#{areaBean.area !=null}">
+					<h:panelGroup rendered="#{disciplinaBean.disciplina !=null}">
 
-
-						<div class="form-group row">
-							<h:outputLabel value="Ciclo :"
-								styleClass="col-sm-3 control-label texto-label" />
-							<div class="col-sm-5">
-								<h:selectOneMenu value="#{areaBean.area.ciclo}"
-									styleClass="form-control" required="true"
-									requiredMessage="O campo ciclo é obrigatório"
-									style=" text-transform: uppercase;  ">
-									<f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
-									<f:selectItems value="#{areaBean.ciclos}" var="ciclo"
-										itemLabel="#{ciclo.label}" itemValue="#{ciclo.label}" />
-								</h:selectOneMenu>
-							</div>
-						</div>
 
 						<div class="form-group row">
 							<h:outputLabel value="Descrição :"
 								styleClass="col-sm-3 control-label texto-label" />
 							<div class="col-sm-8">
-								<h:inputText value="#{areaBean.area.descricao}"
-									styleClass="form-control" onblur="this.value = this.value.toUpperCase();" required="true"
-									requiredMessage="O campo descrição é obrigatório" />
+								<h:inputText value="#{disciplinaBean.disciplina.descricao}"
+									styleClass="form-control" required="true"
+									requiredMessage="O campo nome da unidade é obrigatório" />
 							</div>
 						</div>
 
 
 						<div class="form-group row">
+							<h:outputLabel value="Sigla :"
+								styleClass="col-sm-3 control-label texto-label" />
+							<div class="col-sm-2">
+								<h:inputText value="#{disciplinaBean.disciplina.sigla}"
+									styleClass="form-control" required="true"
+									requiredMessage="O campo sigla é obrigatório" />
+							</div>
+						</div>
+						<div class="form-group row">
 							<h:outputLabel value="Data de Cadastro :"
 								styleClass="col-sm-3 control-label texto-label" />
 							<div class="col-sm-3">
 								<h:inputText styleClass="form-control"
-									value="#{areaBean.area.dataCadastro}" required="true"
-									requiredMessage="O campo data de cadastro é obrigatório">
-									<f:convertDateTime pattern="dd/MM/yyyy" type="date"
-										timeZone="Africa/Harare" />
+									value="#{disciplinaBean.disciplina.dataCadastro}"
+									required="true"
+									requiredMessage="O campo Data de Cadastro é obrigatório">
+									<f:convertDateTime pattern="dd/MM/yyyy" type="date"  timeZone="Africa/Harare"/>
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
@@ -200,7 +205,8 @@
 							<h:outputLabel value="Activa :"
 								styleClass="col-sm-3 control-label texto-label" />
 							<div class="col-sm-3">
-								<h:selectBooleanCheckbox value="#{areaBean.area.ativa}" />
+								<h:selectBooleanCheckbox
+									value="#{disciplinaBean.disciplina.ativa}" />
 
 							</div>
 
@@ -209,15 +215,16 @@
 							<h:outputLabel styleClass="col-sm-3 col-form-label"
 								value="Observação : " />
 							<div class="col-sm-8">
-								<h:inputTextarea cols="3" value="#{areaBean.area.observacao}"
+								<h:inputTextarea cols="3"
+									value="#{disciplinaBean.disciplina.observacao}"
 									styleClass="form-control"
 									onkeydown="return quatidadeCarrateres(this, 255, event);">
 									<f:ajax event="keyup" render="contador"
-										listener="#{areaBean.obterQtdCarateres}" />
+										listener="#{disciplinaBean.obterQtdCarateres}" />
 								</h:inputTextarea>
 								<h:panelGroup id="contador">
 									<h:outputText style="margin-left: 10px; "
-										value="Máximo 255 caracteres, digitado #{areaBean.quantidadeCaracteres} caracteres." />
+										value="Máximo 255 caracteres, digitado #{disciplinaBean.quantidadeCaracteres} caracteres." />
 								</h:panelGroup>
 							</div>
 						</div>
@@ -226,11 +233,12 @@
 
 						<div class="form-inline">
 							<h:commandButton value="Voltar" immediate="true"
-								actionListener="#{areaBean.voltarParaPequisa}"
+								actionListener="#{disciplinaBean.voltarParaPequisa}"
 								styleClass="btn btn-success"
 								style="margin-left: 11%; margin-top:2%;" />
 
-							<h:commandButton value="Cadastrar" action="#{areaBean.salvar}"
+							<h:commandButton value="Cadastrar"
+								action="#{disciplinaBean.salvar}"
 								style="margin-left: 1%;margin-top:2%;"
 								styleClass="btn btn-primary" />
 
@@ -259,10 +267,10 @@
 						<div class="modal-body">
 							<h:panelGroup id="id-panelGroup-confirma-modal">
 								<h:outputText value="Tem certeza que deseja excluir a " />
-								<h:outputLabel value="&nbsp;área&nbsp;"
-									style="font-weight: 600;" />
+								<h:outputLabel value="&nbsp;disciplina&nbsp;" style="font-weight: 600;" />
 								<h:outputLabel value="&nbsp;de&nbsp;" />
-								<h:outputLabel value=" #{areaBean.areaExclusao.descricao}"
+								<h:outputLabel
+									value=" #{disciplinaBean.disciplinaExclusao.descricao}"
 									style="font-weight: 600;" />
 								<h:outputText value="?" />
 							</h:panelGroup>
@@ -276,7 +284,7 @@
 								styleClass="btn btn-primary" value="Excluir">
 								<f:passThroughAttribute name="data-dismiss" value="modal" />
 								<p:ajax event="click" update="form:tabela-escola form:mensagem"
-									listener="#{areaBean.excluir}" />
+									listener="#{disciplinaBean.excluir}" />
 							</h:commandButton>
 						</div>
 					</div>

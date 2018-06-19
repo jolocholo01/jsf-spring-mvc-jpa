@@ -72,17 +72,20 @@ public class DisciplinaClasseBean {
 			disciplinaClasse.setFuncCadastro(funcionario);
 			disciplinaClasseServico.salvar(disciplinaClasse);
 			Mensagem.mensagemInfo("Aviso: Disciplina alocada na classe com sucesso!");
+			disciplinaClasse = new DisciplinaClasse();
+			disciplinaClasse.setClasse(classeSelecionada.getClasse());
+			disciplinaClasse.setDataCadastro(new Date());
 
 		} else if (disciplinaClasse.getId() != null) {
 			disciplinaClasse.setFuncAlteraco(funcionario);
 			disciplinaClasseServico.salvar(disciplinaClasse);
+			pesquisaDeDisciplinaNaClasse();
+			voltarParaPequisaAlocacao();
 			Mensagem.mensagemInfo("Aviso: Disciplina atulizada na classe com sucesso!");
 
 		}
-		disciplinaClasse = new DisciplinaClasse();
-		disciplinaClasse.setClasse(classeSelecionada.getClasse());
-		disciplinaClasse.setDataCadastro(new Date());
-		pesquisaDeDisciplinaNaClasse();
+		
+		
 	}
 
 	// inicializacao do prytty config
@@ -101,11 +104,16 @@ public class DisciplinaClasseBean {
 	}
 
 	public void editar(DisciplinaClasse disciplinaClasse) {
-		this.disciplinaClasse = disciplinaClasse;
-		this.cadastroDisciplinaClasseBoolean = true;
-		this.novaDisciplinaClasseBoolean = false;
-		this.editarDisciplinaClasseBoolean = true;
-		obterQtdCarateres();
+		try {
+			this.disciplinaClasse = disciplinaClasse;
+			this.cadastroDisciplinaClasseBoolean = true;
+			this.novaDisciplinaClasseBoolean = false;
+			this.editarDisciplinaClasseBoolean = true;
+			obterQtdCarateres();
+			buscarAreas();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -174,6 +182,7 @@ public class DisciplinaClasseBean {
 		idClasse = 0;
 		return "/academico/director-ditrital/classe/disciplina?faces-redirect=true";
 	}
+
 	public String cadastroDisciplinaClasseDirector() {
 		this.cadastroDisciplinaClasseBoolean = false;
 		this.novaDisciplinaClasseBoolean = false;
@@ -187,9 +196,13 @@ public class DisciplinaClasseBean {
 
 	public void buscarAreas() {
 
-		areas = areaServico.obterAreasPorCiclo(disciplinaClasse.getClasse().getCiclo());
-		System.out.println("Ciclo:" + disciplinaClasse.getClasse().getCiclo());
-		System.out.println("id:" + disciplinaClasse.getClasse().getId());
+		try {
+			areas = areaServico.obterAreasPorCiclo(disciplinaClasse.getClasse().getCiclo());
+			System.out.println("Ciclo:" + disciplinaClasse.getClasse().getCiclo());
+			System.out.println("id:" + disciplinaClasse.getClasse().getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void obterQtdCarateres() {
