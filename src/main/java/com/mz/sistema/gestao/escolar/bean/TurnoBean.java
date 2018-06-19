@@ -63,6 +63,15 @@ public class TurnoBean {
 				Mensagem.mensagemErro("ERRO: Já existe um turno cadastrado no sistema!");
 				return;
 			}
+			if(turno.getDescricao().toString().equals(TipoTurno.MANHÃ.toString())){
+				turno.setSigla("M");
+			}
+			if(turno.getDescricao().toString().equals(TipoTurno.TARDE.toString())){
+				turno.setSigla("T");
+			}
+			if(turno.getDescricao().toString().equals(TipoTurno.NOITE.toString())){
+				turno.setSigla("N");
+			}
 
 			turnoServico.salvar(turno);
 			if (turno.getId() == null) {
