@@ -102,8 +102,8 @@
 									<h:outputText value="Descrição" />
 								</f:facet>
 								<h:outputText value="Calendário Escolar de #{calendario.ano}"
-									style=" margin-left:4px;" styleClass="tooltip-top btn-bottom"										
-										title="Cadastrado por #{calendario.funcionario.nome}, director distrital de
+									style=" margin-left:4px;" styleClass="tooltip-top btn-bottom"
+									title="Cadastrado por #{calendario.funcionario.nome}, director distrital de
 											 #{calendario.funcionario.direcaoDistrital.endereco.distrito.nome}. ">
 								</h:outputText>
 
@@ -114,12 +114,14 @@
 									<h:outputText value="Periodo Lectivo"></h:outputText>
 								</f:facet>
 								<h:outputText value="#{calendario.dataIncio}">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" type="date" />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
 								</h:outputText>
 								<h:outputText value=" - ">
 								</h:outputText>
 								<h:outputText value="#{calendario.dataFim}">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" type="date" />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
 								</h:outputText>
 								<br />
 							</h:column>
@@ -127,7 +129,7 @@
 								<f:facet name="header">
 									<h:outputText value="Vigente?" />
 								</f:facet>
-								<h:outputText value="#{calendario.ativo?'Sim':'Não'}">									
+								<h:outputText value="#{calendario.ativo?'Sim':'Não'}">
 								</h:outputText>
 
 							</h:column>
@@ -136,7 +138,8 @@
 									<h:outputText value="Data Cadastro" />
 								</f:facet>
 								<h:outputText value="#{calendario.dataCadastro}">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" type="date" />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
 								</h:outputText>
 
 							</h:column>
@@ -146,12 +149,12 @@
 								<h:commandLink title="Editar" immediate="true"
 									action="#{calendarioBean.editar(calendario)}">
 									<h:graphicImage url="#{buscarFotoBean.retornarImagesEditar}"
-										styleClass="icon-editar"  />
+										styleClass="icon-editar" />
 								</h:commandLink>
 								<h:commandLink immediate="true" title="Excluir!" id="id-excluir"
 									style="margin-left:10px;">
 									<p:graphicImage url="#{buscarFotoBean.retornarImagesExcluir}"
-										styleClass="icon-excluir"   />
+										styleClass="icon-excluir" />
 									<p:ajax event="click"
 										listener="#{calendarioBean.prepararParaExcluir(calendario)}"
 										update="form:id-panelGroup-confirma-modal" />
@@ -190,7 +193,9 @@
 							<div class="col-sm-1">
 								<h:selectBooleanCheckbox
 									value="#{calendarioBean.calendario.ativo}">
-									<p:ajax event="change" listener="#{calendarioBean.calendarioVigente}" update="idTrimestre idTrimestre1 " />
+									<p:ajax event="change"
+										listener="#{calendarioBean.calendarioVigente}"
+										update="idTrimestre idTrimestre1 " />
 								</h:selectBooleanCheckbox>
 
 							</div>
@@ -208,23 +213,29 @@
 										rendered="#{calendarioBean.calendario.ativo ==true}">
 										<h:selectBooleanCheckbox
 											value="#{calendarioBean.trimestre1.ativo}"
-											rendered="#{calendarioBean.calendario.ativo ==true}" >
-											<p:ajax event="change" listener="#{calendarioBean.trimestre1Vigente}" update="idTrimestre1 " />
-											</h:selectBooleanCheckbox>
+											rendered="#{calendarioBean.calendario.ativo ==true}">
+											<p:ajax event="change"
+												listener="#{calendarioBean.trimestre1Vigente}"
+												update="idTrimestre1 " />
+										</h:selectBooleanCheckbox>
 										<h:outputLabel value="&nbsp;1º&nbsp;&nbsp;&nbsp;&nbsp;"
 											styleClass="control-label" />
 
 										<h:selectBooleanCheckbox
-											value="#{calendarioBean.trimestre2.ativo}" >
-											<p:ajax event="change" listener="#{calendarioBean.trimestre2Vigente}" update="idTrimestre1 " />
-											</h:selectBooleanCheckbox>
+											value="#{calendarioBean.trimestre2.ativo}">
+											<p:ajax event="change"
+												listener="#{calendarioBean.trimestre2Vigente}"
+												update="idTrimestre1 " />
+										</h:selectBooleanCheckbox>
 										<h:outputLabel value="&nbsp;2º&nbsp;&nbsp;&nbsp;&nbsp;"
 											styleClass="control-label" />
 
 										<h:selectBooleanCheckbox
-											value="#{calendarioBean.trimestre3.ativo}" >
-											<p:ajax event="change" listener="#{calendarioBean.trimestre3Vigente}" update="idTrimestre1 " />
-											</h:selectBooleanCheckbox>
+											value="#{calendarioBean.trimestre3.ativo}">
+											<p:ajax event="change"
+												listener="#{calendarioBean.trimestre3Vigente}"
+												update="idTrimestre1 " />
+										</h:selectBooleanCheckbox>
 										<h:outputLabel value="&nbsp;3º&nbsp;"
 											styleClass="control-label" />
 									</h:panelGroup>
@@ -242,7 +253,8 @@
 								<h:inputText styleClass="form-control"
 									value="#{calendarioBean.trimestre1.dataInicio}" required="true"
 									requiredMessage="O campo Data de início do 1º trimestre é obrigatório">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" type="date" />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
@@ -259,7 +271,8 @@
 								<h:inputText styleClass="form-control"
 									value="#{calendarioBean.trimestre1.dataFinal}" required="true"
 									requiredMessage="O campo Data de final do 1º Trimestre é obrigatório">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" type="date" />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
@@ -287,7 +300,8 @@
 								<h:inputText styleClass="form-control"
 									value="#{calendarioBean.trimestre2.dataInicio}" required="true"
 									requiredMessage="O campo Data de início do 2º trimestre é obrigatório">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" type="date" />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
@@ -304,7 +318,8 @@
 								<h:inputText styleClass="form-control"
 									value="#{calendarioBean.trimestre2.dataFinal}" required="true"
 									requiredMessage="O campo Data de final do 2º Trimestre é obrigatório">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" type="date" />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
@@ -331,7 +346,8 @@
 								<h:inputText styleClass="form-control"
 									value="#{calendarioBean.trimestre3.dataInicio}" required="true"
 									requiredMessage="O campo Data de início do 3º trimestre é obrigatório">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" type="date" />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
@@ -348,7 +364,8 @@
 								<h:inputText styleClass="form-control"
 									value="#{calendarioBean.trimestre3.dataFinal}" required="true"
 									requiredMessage="O campo Data de final do 3º trimestre é obrigatório">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" type="date" />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
@@ -376,7 +393,8 @@
 								<h:inputText styleClass="form-control"
 									value="#{calendarioBean.calendario.dataIncio}" required="true"
 									requiredMessage="O campo data início é obrigatório">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" type="date" />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
@@ -393,7 +411,8 @@
 								<h:inputText styleClass="form-control"
 									value="#{calendarioBean.calendario.dataFim}" required="true"
 									requiredMessage="O campo data de término é obrigatório">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" type="date" />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
@@ -405,7 +424,7 @@
 								</h:inputText>
 							</div>
 						</div>
-						
+
 
 
 						<div class="form-inline">

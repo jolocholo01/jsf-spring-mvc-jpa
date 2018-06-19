@@ -2,29 +2,29 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-
 
 
 <ui:composition template="/academico/principal/templete.xhtml">
 	<ui:define name="titulo">
-		<h:outputText value="Pesquisa de Distrito"
-			rendered="#{distritoBean.cadastroDistritoBoolean ==false}" />
+		<h:outputText value="Pesquisa de dia da semana"
+			rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean ==false}" />
 
 		<h:panelGroup
-			rendered="#{distritoBean.cadastroDistritoBoolean ==true}">
-			<h:outputText value="Novo Distrito"
-				rendered="#{distritoBean.novoDistritoBoolean ==true}" />
-			<h:outputText value="Atualização de Distrito"
-				rendered="#{distritoBean.editarDistritoBoolean ==true}" />
+			rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean ==true}">
+			<h:outputText value="Novo dia de semana"
+				rendered="#{diaSemanaBean.novoDiaSemanaBoolean ==true}" />
+			<h:outputText value="Atualização de dia de semana"
+				rendered="#{diaSemanaBean.editarDiaSemanaBoolean ==true}" />
 
 
 		</h:panelGroup>
 	</ui:define>
-	<ui:define name="menu">
+
+		<ui:define name="menu">
 		<ui:include src="/academico/programador/template/menu.xhtml" />
 	</ui:define>
 	<ui:define name="dados_pessoas">
@@ -33,64 +33,62 @@
 
 
 	<ui:define name="ambiente_comum">
-		
 		<h:form id="form" styleClass="form-horizontal">
 			<!--Panel-->
+
 			<div class="card">
 				<h4 class="card-header primary-color white-text ">
+		
 
-					<h:outputText value="Pesquisa de Distrito"
-						style="font-weight: 700;"
-						rendered="#{distritoBean.cadastroDistritoBoolean ==false}" />
-					<h:outputText value="Novo Distrito" style="font-weight: 700;"
-						rendered="#{distritoBean.cadastroDistritoBoolean !=false}" />
+						<h:outputText value="Pesquisa de dia da Semana"
+							style="font-weight: 700;"
+							rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean ==false}" />
+						<h:outputText value="Novo dia da Semana" style="font-weight: 700;"
+							rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean !=false}" />
 
-					<h:panelGroup styleClass="form-span">
-						<h:commandLink value="Novo Distrito"
-							actionListener="#{distritoBean.novo}" immediate="true"
-							rendered="#{distritoBean.cadastroDistritoBoolean==false}" />
-						<h:commandLink value="Voltar para Pesquisa"
-							actionListener="#{distritoBean.voltar}" immediate="true"
-							rendered="#{distritoBean.cadastroDistritoBoolean !=false}" />
-					</h:panelGroup>
+						<h:panelGroup styleClass="form-span">
+							<h:commandLink styleClass="link" value="Novo dia da Semana"
+								style="color: blue; float: right; font-weight: 500;"
+								actionListener="#{diaSemanaBean.novo}" immediate="true"
+								rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean==false}" />
+							<h:commandLink styleClass="link" value="Voltar para Pesquisa"
+								style="color: blue; float: right; font-weight: 500;"
+								actionListener="#{diaSemanaBean.voltar}" immediate="true"
+								rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean !=false}" />
+						</h:panelGroup>
+				
 				</h4>
 				<div class="card-body">
 					<p:messages id="mensagem" closable="true" />
 					<!-- Pesquisa de funcionario -->
 					<h:panelGroup
-						rendered="#{distritoBean.cadastroDistritoBoolean ==false}">
+						rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean ==false}">
 
 
 
 						<div class="form-group">
-							<div class="col-sm-6" style="padding-left: 0;">
+							<div class="col-sm-6">
 								<div class="input-group">
 
 
-									<h:selectOneMenu
-										requiredMessage="O campo Província é obrigatório"
-										value="#{distritoBean.pesquisa}" styleClass="form-control">
-
+									<h:inputText styleClass="form-control"
+										value="#{diaSemanaBean.pesquisa}">
+										<f:passThroughAttribute name="placeholder"
+											value="Qual dia de semana que você está procurar?" />
 										<f:passThroughAttribute name="autofocus" value="true" />
-										<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
-
-										<f:selectItems value="#{distritoBean.provincias}"
-											var="provincia" itemLabel="#{provincia.label}"
-											itemValue="#{provincia.label}" />
-
-									</h:selectOneMenu>
+									</h:inputText>
 									<span class="input-group-btn"> <h:commandButton
 											styleClass="btn btn-primary" value="Buscar!"
-											actionListener="#{distritoBean.buscar}" />
+											actionListener="#{diaSemanaBean.buscar}" />
 									</span>
 								</div>
 
 							</div>
 						</div>
 
-						<h:dataTable value="#{distritoBean.distritos}" var="distrito"
+						<h:dataTable value="#{diaSemanaBean.diaSemanas}" var="diaSemana"
 							id="tabela-escola"
-							styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
+							styleClass="table table-bordered tabelaProfessor  tabela-funcionario left"
 							headerClass="cab-tabela" footerClass="fo-tabela"
 							style="margin-top: 20px;" rowClasses="linha2, linha1">
 
@@ -98,35 +96,36 @@
 								<f:facet name="header">
 									<h:outputText value="#" />
 								</f:facet>
-								<h:outputText value=" #{distrito.id}" />
+								<h:outputText value=" #{diaSemana.id}" />
 							</h:column>
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Descrição" />
 								</f:facet>
-								<h:outputText value="#{distrito.nome}" style=" margin-left:4px;" />
+								<h:outputText value="#{diaSemana.descricao}"
+									style=" margin-left:4px;" />
 							</h:column>
 							<h:column>
 								<f:facet name="header">
-									<h:outputText value="Província" />
+									<h:outputText value="Silga" />
 								</f:facet>
-								<h:outputText value="#{distrito.provincia}"
+								<h:outputText value="#{diaSemana.sigla}"
 									style=" margin-left:4px;" />
 							</h:column>
 
 							<h:column headerClass="center">
 								<f:facet name="header">
-									<h:outputText value="Data de cadastro" />
+									<h:outputText value="Ordem" />
 								</f:facet>
-								<h:outputText value="#{distrito.dataCadastro}"
+								<h:outputText value="#{diaSemana.ordem}"
 									style="float: left;padding-left: 7px;">
-									<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"/>
+									
 								</h:outputText>
 							</h:column>
 							<h:column>
 								<div class="form-group row" style="margin-bottom: 0;">
-									<h:commandLink title="Editar dados desse distrito?"
-										immediate="true" action="#{distritoBean.editar(distrito)}"
+									<h:commandLink title="Editar?" immediate="true"
+										action="#{diaSemanaBean.editar(diaSemana)}"
 										styleClass="tooltip-left"
 										style="margin-left:10px; color: black;">
 										<span class="glyphicon glyphicon-pencil"></span>
@@ -138,7 +137,7 @@
 										style="color: black; margin-left:10px;">
 										<span class="glyphicon glyphicon-remove"></span>
 										<p:ajax event="click"
-											listener="#{distritoBean.prepararParExcluir(distrito)}"
+											listener="#{diaSemanaBean.prepararParaExcluir(diaSemana)}"
 											update="form:id-panelGroup-confirma-modal" />
 										<f:passThroughAttribute name="data-toggle" value="modal" />
 										<f:passThroughAttribute name="data-target" value="#myModal" />
@@ -147,49 +146,57 @@
 							</h:column>
 							<f:facet name="footer">
 								<h:outputText
-									value=" #{distritoBean.qtdDistritosEncontrados} distrito(s) encontrado(s)"></h:outputText>
+									value=" #{diaSemanaBean.qtdDiaSemanasEncontrados} dias de semana encontrado(s)"></h:outputText>
 							</f:facet>
 						</h:dataTable>
 					</h:panelGroup>
 
 					<!-- Cadastro e edicao -->
 					<h:panelGroup
-						rendered="#{distritoBean.cadastroDistritoBoolean==true}">
+						rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean==true}">
 
 
 						<div class="form-group row">
-							<h:outputLabel value="Província :"
+							<h:outputLabel value="Descrição:"
 								styleClass="col-sm-3 control-label texto-label" />
 							<div class="col-sm-8">
 
-								<h:selectOneMenu
-									requiredMessage="O campo Província é obrigatório"
-									value="#{distritoBean.distrito.provincia}"
-									styleClass="form-control">
-
+								<h:selectOneMenu id="idDiaSemana"
+									requiredMessage="O campo dia da semana é obrigatório"
+									value="#{diaSemanaBean.diaSemana.descricao}" styleClass="form-control">
 
 									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
 
-									<f:selectItems value="#{distritoBean.provincias}"
-										var="provincia" itemLabel="#{provincia.label}"
-										itemValue="#{provincia.label}" />
-
+									<f:selectItems value="#{diaSemanaBean.dias}" var="dia"
+										itemLabel="#{dia.label}" itemValue="#{dia.label}"  />
+									<p:ajax event="change" update="idDiaSemana idDia idOrdem"></p:ajax>
 								</h:selectOneMenu>
 							</div>
 						</div>
 
 
 						<div class="form-group row">
-							<h:outputLabel value="Distrito :"
+							<h:outputLabel value="Sigla :"
 								styleClass="col-sm-3 control-label texto-label" />
 							<div class="col-sm-6">
-								<h:inputText value="#{distritoBean.distrito.nome}"
-									styleClass="form-control" required="true"
-									requiredMessage="O campo distrito é obrigatório">
-									<f:passThroughAttribute name="placeholder"
-										value="Preenche com o nome do distrito" />
-								</h:inputText>
+								<h:panelGroup id="idDia">
+									<h:inputText value="#{diaSemanaBean.diaSemana.sigla}"
+										styleClass="form-control" readonly="true">
+									</h:inputText>
+								</h:panelGroup>
 
+							</div>
+						</div>
+						
+						<div class="form-group row">
+							<h:outputLabel value="Ordem :"
+								styleClass="col-sm-3 control-label texto-label" />
+							<div class="col-sm-1">
+								<h:panelGroup id="idOrdem">
+									<h:inputText readonly="true" value="#{diaSemanaBean.diaSemana.ordem}"
+										styleClass="form-control">
+									</h:inputText>
+								</h:panelGroup>
 
 							</div>
 						</div>
@@ -200,8 +207,8 @@
 								styleClass="col-sm-3 control-label texto-label" />
 							<div class="col-sm-3">
 								<h:inputText styleClass="form-control"
-									value="#{distritoBean.distrito.dataCadastro}">
-									<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"/>
+									value="#{diaSemanaBean.diaSemana.dataCadastro}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
@@ -217,36 +224,36 @@
 						</div>
 
 						<div class="form-group row">
-							<h:outputLabel styleClass="col-sm-3 col-form-label"
+							<h:outputLabel styleClass="col-sm-3 control-label texto-label"
 								value="Observação : " />
 							<div class="col-sm-8">
 								<h:inputTextarea cols="3"
-									value="#{distritoBean.distrito.observacao}"
+									value="#{diaSemanaBean.diaSemana.observacao}"
 									styleClass="form-control" rows="4"
 									onkeydown="return quatidadeCarrateres(this, 255, event);">
 									<f:ajax event="keyup" render="contador"
-										listener="#{distritoBean.contarQuantidadeCarateres}" />
+										listener="#{diaSemanaBean.contarQuantidadeCarateres}" />
 								</h:inputTextarea>
 								<h:panelGroup id="contador">
 									<h:outputText style="margin-left: 10px; "
-										value="Máximo 255 caracteres, digitado #{distritoBean.quantidadeCaracteres} caracteres." />
+										value="Máximo 255 caracteres, digitado #{diaSemanaBean.quantidadeCaracteres} caracteres." />
 								</h:panelGroup>
 							</div>
 						</div>
 
 
-						<div class="form-inline">
+						<div class="form-inline" style="text-align:center">
 
 							<h:commandButton value="Cadastrar"
-								action="#{distritoBean.salvar}"
+								action="#{diaSemanaBean.salvar}"
 								style="margin-left: 11%;margin-top:2%;"
 								styleClass="btn btn-primary" />
 
 
 							<h:commandButton value="Voltar" immediate="true"
-								action="#{distritoBean.voltar}" styleClass="btn btn-success"
+								action="#{diaSemanaBean.voltar}" styleClass="btn btn-success"
 								style="margin-left: 1%; margin-top:2%;"
-								rendered="#{escolaBean.editarEscolaBoolean ==false and escolaBean.activarEscolaBoolean ==false}" />
+								/>
 						</div>
 
 
@@ -274,14 +281,14 @@
 						<div class="modal-body">
 							<h:panelGroup id="id-panelGroup-confirma-modal">
 								<h:outputText
-									value="Tem certeza que deseja excluir o disrito de  " />
-								<h:outputLabel value=" #{distritoBean.ditritoselecionado.nome}"
-									style="font-weight: 600;" />
-								<h:outputText value="&nbsp;da província de " />
+									value="Tem certeza que deseja excluir o dia da semana  " />
+								<h:outputText value="&nbsp;da&nbsp;"
+									rendered="#{diaSemanaBean.diaSemanaSelecionado.sigla =='SEG' or diaSemanaBean.diaSemanaSelecionado.sigla =='TER' or diaSemanaBean.diaSemanaSelecionado.sigla =='QUA' or diaSemanaBean.diaSemanaSelecionado.sigla =='QUI' or diaSemanaBean.diaSemanaSelecionado.sigla =='SEX'}" />
+								<h:outputText value="&nbsp;do&nbsp;"
+									rendered="#{diaSemanaBean.diaSemanaSelecionado.sigla =='SAB' or diaSemanaBean.diaSemanaSelecionado.sigla =='DOM'}" />
 								<h:outputLabel
-									value=" #{distritoBean.ditritoselecionado.provincia}"
+									value=" #{diaSemanaBean.diaSemanaSelecionado.descricao}"
 									style="font-weight: 600;" />
-
 								<h:outputText value="?" />
 							</h:panelGroup>
 
@@ -294,7 +301,7 @@
 							</h:commandButton>
 
 							<h:commandButton title="Excluir" styleClass="btn btn-primary"
-								value="Excluir" action="#{distritoBean.excluir}">
+								value="Excluir" action="#{diaSemanaBean.excluir}">
 							</h:commandButton>
 						</div>
 					</div>

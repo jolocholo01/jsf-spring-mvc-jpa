@@ -65,13 +65,13 @@
 		</action>
 	</url-mapping>
 
-<url-mapping>
+	<url-mapping>
 		<pattern value="/professor/selecao-turma.jsf" />
 		<view-id value="/academico/professor/nota/turma.jsf" />
 		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
 		</action>
 	</url-mapping>
-		<url-mapping>
+	<url-mapping>
 		<pattern value="/professor/turma.jsf" />
 		<view-id value="/academico/professor/horario/turma.jsf" />
 	</url-mapping>
@@ -853,6 +853,12 @@
 		<pattern value="/programador/unidade-distrital.jsf" />
 		<view-id value="/academico/programador/direccao_distrital/cadastro.jsf"></view-id>
 		<action onPostback="false">#{direccaoDistritalBean.iniciarBean}
+		</action>
+	</url-mapping>
+	<url-mapping>
+		<pattern value="/programador/dias-semana.jsf" />
+		<view-id value="/academico/programador/diaSemana/cadastro.jsf"></view-id>
+		<action onPostback="false">#{diaSemanaBean.iniciarBean}
 		</action>
 	</url-mapping>
 </pretty-config>

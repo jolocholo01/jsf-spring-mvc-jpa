@@ -67,7 +67,7 @@ public class DiaSemanaBean implements Serializable {
 		try {
 			DiaSemana diaSemanaExistente = diaSemanaServico.obterDiaSemanaExistente(diaSemana.getSigla());
 			if (diaSemanaExistente != null && diaSemanaExistente.getId() != diaSemana.getId()) {
-				Mensagem.mensagemErro("ERRO: Já existe um dia da semana cadastrado no sistema!");
+				Mensagem.mensagemErro("ERRO: Já existe este dia da semana cadastrado no sistema!");
 				return;
 			}
 			diaSemanaServico.salvar(diaSemana);
@@ -122,15 +122,19 @@ public class DiaSemanaBean implements Serializable {
 	}
 
 	public void editar(DiaSemana diaSemana) {
-		cadastroDiaSemanaBoolean = true;
-		novoDiaSemanaBoolean = false;
-		editarDiaSemanaBoolean = true;
-		this.diaSemana = diaSemana;
-		if (this.diaSemana.getDataCadastro() == null) {
-			this.diaSemana.setDataCadastro(new Date());
-		}
-		if (diaSemana.getObservacao() != null) {
-			quantidadeCaracteres = diaSemana.getObservacao().length();
+		try {
+			cadastroDiaSemanaBoolean = true;
+			novoDiaSemanaBoolean = false;
+			editarDiaSemanaBoolean = true;
+			this.diaSemana = diaSemana;
+			if (this.diaSemana.getDataCadastro() == null) {
+				this.diaSemana.setDataCadastro(new Date());
+			}
+			if (diaSemana.getObservacao() != null) {
+				quantidadeCaracteres = diaSemana.getObservacao().length();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -160,6 +164,31 @@ public class DiaSemanaBean implements Serializable {
 	}
 
 	public DiaSemana getDiaSemana() {
+		if (diaSemana == null) {
+		} else if (diaSemana.getDescricao() == null) {
+		} else if (diaSemana.getDescricao().toUpperCase().equals(Dia.DOM.getLabel().toString().toUpperCase())) {
+			diaSemana.setOrdem(1);
+			diaSemana.setSigla(Dia.DOM.toString());
+		} else if (diaSemana.getDescricao().toUpperCase().equals(Dia.SEG.getLabel().toString().toUpperCase())) {
+			diaSemana.setOrdem(2);
+			diaSemana.setSigla(Dia.SEG.toString());
+		}
+		else if (diaSemana.getDescricao().toUpperCase().equals( Dia.TER.getLabel().toString().toUpperCase())) {
+			diaSemana.setOrdem(3);
+			diaSemana.setSigla(Dia.TER.toString());
+		}else if (diaSemana.getDescricao().toUpperCase().equals( Dia.QUA.getLabel().toString().toUpperCase())) {
+			diaSemana.setOrdem(4);
+			diaSemana.setSigla(Dia.QUA.toString());
+		}else if (diaSemana.getDescricao().toUpperCase().equals( Dia.QUI.getLabel().toString().toUpperCase())) {
+			diaSemana.setOrdem(5);
+			diaSemana.setSigla(Dia.QUI.toString());
+		}else if (diaSemana.getDescricao().toUpperCase().equals( Dia.SEX.getLabel().toString().toUpperCase())) {
+			diaSemana.setOrdem(6);
+			diaSemana.setSigla(Dia.SEX.toString());
+		}else if (diaSemana.getDescricao().toUpperCase().equals( Dia.SAB.getLabel().toString().toUpperCase())) {
+			diaSemana.setOrdem(7);
+			diaSemana.setSigla(Dia.SAB.toString());
+		}
 		return diaSemana;
 	}
 

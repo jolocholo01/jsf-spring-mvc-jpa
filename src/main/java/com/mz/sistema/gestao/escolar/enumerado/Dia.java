@@ -2,11 +2,11 @@ package com.mz.sistema.gestao.escolar.enumerado;
 
 public enum Dia {
 		DOM("Domingo"),
-		SEG("Segunda-feira"),
-		TER("Terça-feira"),
-		QUA("Quarta-feira"),
-		QUI("Quinta-feira"),
-		SEX("Sexta-feira"),
+		SEG("Segunda"),
+		TER("Terça"),
+		QUA("Quarta"),
+		QUI("Quinta"),
+		SEX("Sexta"),
 		SAB("Sábado");
 	
 	private String label;
