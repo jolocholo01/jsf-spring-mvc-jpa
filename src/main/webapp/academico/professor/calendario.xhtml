@@ -7,112 +7,337 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-
-<ui:composition template="/academico/principal/index.xhtml">
-	<ui:define name="titulo">
-		Consulta de Calendário escolar
+<ui:composition template="/academico/principal/templete.xhtml">
+	<ui:define name="titulo">		
+			Portal de Professor		
 	</ui:define>
 
 
-
-
-	<ui:define name="titulo_do_corpo">
-		<ui:include src="/academico/professor/template/titulo_do_corpo.xhtml"></ui:include>
-	</ui:define>
-	<ui:define name="nome_usuario">
-		<ui:include src="/academico/professor/template/nome_usuario.xhtml"></ui:include>
+	<ui:define name="cabacalho">
+		<link rel="stylesheet"
+			href="#{request.contextPath}/resources/css/nota.css" />
 	</ui:define>
 
+
+	<ui:define name="menu">
+
+
+		<ui:include src="/academico/professor/template/menu.xhtml" />
+
+	</ui:define>
+	<ui:define name="dados_pessoas">
+
+
+		<ui:include src="/academico/professor/template/dados_pessoas.xhtml" />
+
+	</ui:define>
 	<ui:define name="ambiente_comum">
-		<h:form id="form_menu">
-
-			<div class="menu menubar">
-				<ul class="btn1 btn-green ui-widget-header">
-					<li style="width: 65px;"><h:outputLink
-							value="#{request.contextPath}/professor/index.jsf">
-							 Principal
-						</h:outputLink></li>
-					<h:outputText value=" > " style="font-size:21px;" />
-					<li style="width: 250px;"><h:commandLink
-							action="#{professorBean.consultarCalendadrioEscolar}">
-							 Consulta de Calendário escolar
-						</h:commandLink></li>
-				</ul>
-			</div>
-		</h:form>
 
 		<h:form id="form_ambiente_comum">
-			<p:panel header="Consulta de Calendário escolar"
-				style="margin: 20px 6px 0px;">
 
+			<!--Panel-->
+			<div class="card">
+				<h3 class="peg-titulo card-header primary-color white-text">
+
+					<h:outputText value="Consulta de Calendário escolar"
+						style="font-weight: 700;" />
+				</h3>
 				<p:messages closable="true" />
-				<h:panelGrid style="margin-left: 20px;margin-top: 27px;">
-					<h:outputLabel value="Ano Lectivo:" />
-					<h:inputText value="#{professorBean.ano}" styleClass="form-control"
-						style="  width: 139px;"
-						onkeypress="return aceitarApenaNumero(this , event );" />
-				</h:panelGrid>
 
-				<div class="form-box-botao">
-					<h:commandButton value="Pesquisar"
-						action="#{professorBean.buncarCalendarioEscolar}"
-						styleClass="btn btn-primary botao" />
+				<div class="card-body">
+
+
+					<h:panelGroup
+						rendered="#{calendarioBean.editarCalendarioBoolean==false}">
+						<div class="form-group">
+							<div class="col-sm-6" style="padding-left: 0;">
+								<div class="input-group">
+									<h:selectOneMenu styleClass="form-control"
+										value="#{calendarioBean.ano}">
+										<f:selectItems value="#{calendarioBean.calendarios}"
+											var="calendario" itemLabel="#{calendario.pesquisa}"
+											itemValue="#{calendario.pesquisa}"></f:selectItems>
+									</h:selectOneMenu>
+									<span class="input-group-btn"> <h:commandButton
+											styleClass="btn btn-primary" value="Buscar!"
+											action="#{calendarioBean.buncarCalendarioEscolar}" />
+									</span>
+								</div>
+
+							</div>
+						</div>
+
+
+						<h:dataTable value="#{calendarioBean.calendariosEscolar}"
+							var="calendario"
+							styleClass="table table-bordered tabelaProfessor tabela-hover  tabela-funcionario"
+							style=" margin-top: 2%;" headerClass="cabecalhoTabela1"
+							columnClasses=",left,center,center,center"
+							rowClasses="linha2, linha1">
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#"></h:outputText>
+								</f:facet>
+								<h:outputText value=" #{calendario.id}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Descrição do Calendário Escolar"></h:outputText>
+								</f:facet>
+								<h:outputText value=" Calendário Escolar de #{calendario.ano}"
+									style="padding-left: 1%;" />
+							</h:column>
+							<h:column headerClass="center">
+								<f:facet name="header">
+									<h:outputText value="Ano"></h:outputText>
+								</f:facet>
+								<h:outputText value=" #{calendario.ano}" />
+							</h:column>
+							<h:column headerClass="center">
+								<f:facet name="header">
+									<h:outputText value="Periodo Lectivo"></h:outputText>
+								</f:facet>
+								<h:outputText value="#{calendario.dataIncio}">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
+								</h:outputText>
+								<h:outputText value=" - ">
+								</h:outputText>
+								<h:outputText value="#{calendario.dataFim}">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
+								</h:outputText>
+							</h:column>
+							<h:column headerClass="center">
+								<f:facet name="header">
+									<h:outputText value="Acções" />
+								</f:facet>
+								<h:commandLink
+									actionListener="#{calendarioBean.editar(calendario)}">
+									<h:graphicImage url="#{buscarFotoBean.retornarImagesNext}"
+										style=" width:21px; height: 20px; " />
+								</h:commandLink>
+							</h:column>
+						</h:dataTable>
+					</h:panelGroup>
+					<h:panelGroup
+						rendered="#{calendarioBean.editarCalendarioBoolean==true}">
+
+
+						<div class=" row">
+							<h:outputLabel value="Ano lectivo:"
+								styleClass="col-sm-3 control-label texto-label tesx-right bolder flex-grow0" />
+							<div class="col-sm-2">
+								<h:outputText value="#{calendarioBean.calendario.ano}" />
+
+							</div>
+						</div>
+						<div class="form-group row">
+							<h:outputLabel value="Em vigor?:"
+								styleClass="col-sm-3 control-label texto-label tesx-right bolder flex-grow0" />
+
+							<div class="col-sm-1">
+								<h:selectBooleanCheckbox disabled="true"
+									value="#{calendarioBean.calendario.ativo}">
+									<p:ajax event="change"
+										listener="#{calendarioBean.calendarioVigente}"
+										update="idTrimestre idTrimestre1 " />
+								</h:selectBooleanCheckbox>
+
+							</div>
+
+
+							<h:panelGroup id="idTrimestre">
+								<h:outputLabel value="Trimestre vigente :"
+									styleClass="col-sm-12 control-label texto-label"
+									rendered="#{calendarioBean.calendario.ativo ==true}" />
+
+							</h:panelGroup>
+							<div class="col-sm-5">
+								<h:panelGroup id="idTrimestre1">
+									<h:panelGroup
+										rendered="#{calendarioBean.calendario.ativo ==true}">
+										<h:selectBooleanCheckbox disabled="true"
+											value="#{calendarioBean.trimestre1.ativo}"
+											rendered="#{calendarioBean.calendario.ativo ==true}">
+											<p:ajax event="change"
+												listener="#{calendarioBean.trimestre1Vigente}"
+												update="idTrimestre1 " />
+										</h:selectBooleanCheckbox>
+										<h:outputLabel value="&nbsp;1º&nbsp;&nbsp;&nbsp;&nbsp;"
+											styleClass="control-label" />
+
+										<h:selectBooleanCheckbox disabled="true"
+											value="#{calendarioBean.trimestre2.ativo}">
+											<p:ajax event="change"
+												listener="#{calendarioBean.trimestre2Vigente}"
+												update="idTrimestre1 " />
+										</h:selectBooleanCheckbox>
+										<h:outputLabel value="&nbsp;2º&nbsp;&nbsp;&nbsp;&nbsp;"
+											styleClass="control-label" />
+
+										<h:selectBooleanCheckbox disabled="true"
+											value="#{calendarioBean.trimestre3.ativo}">
+											<p:ajax event="change"
+												listener="#{calendarioBean.trimestre3Vigente}"
+												update="idTrimestre1 " />
+										</h:selectBooleanCheckbox>
+										<h:outputLabel value="&nbsp;3º&nbsp;"
+											styleClass="control-label" />
+									</h:panelGroup>
+								</h:panelGroup>
+							</div>
+						</div>
+
+
+
+						<div class="form-group row">
+							<h:outputLabel value="Periodo do 1º Trimestre:"
+								styleClass="col-sm-3 control-label texto-label tesx-right bolder flex-grow0" />
+							<div class="col-sm-2">
+								<h:outputText value="#{calendarioBean.trimestre1.dataInicio}">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
+									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+
+								</h:outputText>
+							</div>
+							<h:outputLabel value="a"
+								styleClass="col-sm control-label texto-label center bolder flex-grow0 " />
+
+							<div class="col-sm-2">
+								<h:outputText value="#{calendarioBean.trimestre1.dataFinal}">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
+									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+
+								</h:outputText>
+							</div>
+							<h:outputLabel value="-"
+								styleClass="col-sm control-label texto-label center bolder flex-grow0" />
+							<div class="col-sm-2">
+								<h:outputText
+									value="#{calendarioBean.trimestre1.semana} semana(s)">
+								</h:outputText>
+							</div>
+
+						</div>
+
+						<div class="form-group row">
+							<h:outputLabel value="Periodo do 2º Trimestre:"
+								styleClass="col-sm-3 control-label texto-label tesx-right bolder flex-grow0" />
+							<div class="col-sm-2">
+								<h:outputText value="#{calendarioBean.trimestre2.dataInicio}"
+									required="true"
+									requiredMessage="O campo Data de início do 2º trimestre é obrigatório">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
+									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+
+								</h:outputText>
+							</div>
+
+							<h:outputLabel value="a"
+								styleClass="col-sm control-label texto-label center bolder flex-grow0" />
+							<div class="col-sm-2">
+								<h:outputText value="#{calendarioBean.trimestre2.dataFinal}"
+									required="true"
+									requiredMessage="O campo Data de final do 2º Trimestre é obrigatório">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
+									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+
+
+								</h:outputText>
+							</div>
+							<h:outputLabel value="-"
+								styleClass="col-sm control-label texto-label center bolder flex-grow0" />
+							<div class="col-sm-2">
+								<h:outputText
+									value="#{calendarioBean.trimestre2.semana} semana(s)">
+								</h:outputText>
+							</div>
+
+						</div>
+						<div class="form-group row">
+							<h:outputLabel value="Periodo do 3º Trimestre:"
+								styleClass="col-sm-3 control-label texto-label tesx-right bolder flex-grow0" />
+							<div class="col-sm-2">
+								<h:outputText value="#{calendarioBean.trimestre3.dataInicio}"
+									required="true"
+									requiredMessage="O campo Data de início do 3º trimestre é obrigatório">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
+									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+
+								</h:outputText>
+							</div>
+
+							<h:outputLabel value="a"
+								styleClass="col-sm control-label texto-label center bolder flex-grow0" />
+							<div class="col-sm-2">
+								<h:outputText value="#{calendarioBean.trimestre3.dataFinal}"
+									required="true"
+									requiredMessage="O campo Data de final do 3º trimestre é obrigatório">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
+									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+
+								</h:outputText>
+							</div>
+							<h:outputLabel value="-"
+								styleClass="col-sm control-label texto-label center bolder flex-grow0" />
+							<div class="col-sm-2">
+								<h:outputText
+									value="#{calendarioBean.trimestre3.semana} semana(s)">
+								</h:outputText>
+							</div>
+
+						</div>
+
+						<div class="form-group row">
+							<h:outputLabel value="Data de Início: "
+								styleClass="col-sm-3 control-label texto-label tesx-right bolder flex-grow0" />
+							<div class="col-sm-2">
+								<h:outputText value="#{calendarioBean.trimestre3.dataInicio}"
+									required="true"
+									requiredMessage="O campo Data de início do 3º trimestre é obrigatório">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
+									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+
+								</h:outputText>
+							</div>
+
+							<h:outputLabel value="Data de Término:"
+								styleClass="col-sm-2 control-label texto-label tesx-right bolder flex-grow0" />
+							<div class="col-sm-2">
+								<h:outputText value="#{calendarioBean.calendario.dataFim}"
+									required="true"
+									requiredMessage="O campo data de término é obrigatório">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
+									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+
+								</h:outputText>
+							</div>
+
+						</div>
+
+
+
+
+						<div class="panel-footer" style="text-align: center;">
+							<div class="col-sm-8">
+
+								<h:commandButton value="&#x2716; Fechar"
+									styleClass=" btn btn-primary next acao"
+									action="#{calendarioBean.voltarParaPequisa}" />
+							</div>
+						</div>
+					</h:panelGroup>
 				</div>
-			</p:panel>
-			<h:panelGroup rendered="#{professorBean.calendarios !=null}">
-
-				<p:panel header="Resultado" style="margin: 20px 6px 0px;">
-
-					<h:dataTable value="#{professorBean.calendarios}" var="calendario"
-						styleClass="table table-bordered table-hover"
-						style="margin-top: 40px; margin-left: 20px; margin-right: 20px; max-width: 97%;"
-						headerClass="cabecalhoTabela1">
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#"></h:outputText>
-							</f:facet>
-							<h:outputText value=" #{calendario.id}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Descrição do Calendário Escolar"></h:outputText>
-							</f:facet>
-							<h:outputText value=" Calendário Escolar de #{calendario.ano}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Ano"></h:outputText>
-							</f:facet>
-							<h:outputText value=" #{calendario.ano}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Periodo Lectivo"></h:outputText>
-							</f:facet>
-							<h:outputText
-									value="#{calendario.dataIncio}" >
-										<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"  type="date" />
-								</h:outputText>
-								<h:outputText
-									value=" - " >										
-								</h:outputText>
-								<h:outputText
-									value="#{calendario.dataFim}" >
-										<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"  type="date" />
-								</h:outputText>
-						</h:column>
-						<h:column headerClass="textoCabecalho">
-							<f:facet name="header">
-								<h:outputText value="Visualisar" />
-							</f:facet>
-							<h:commandLink style="margin-left:50px;">
-								<h:graphicImage
-									url="#{buscarFotoBean.retornarImagesBook}" />
-							</h:commandLink>
-						</h:column>
-					</h:dataTable>
-				</p:panel>
-			</h:panelGroup>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -11,14 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class Teste {
 
 	public static void main(String args[]) throws ParseException {
-		
-		String url="/sistema-escolar/academico/director/index.jsf";
-		String vals[] = url.split("/academico/");
-		String link=vals[1];
-		String vals2[] = link.split("/");
-		String primeiro=vals2[0];
-		
-		System.out.println("Link : "+primeiro);
+	
 		
 		String nom1 = "Agostinho";
 		String nom2 = "Macoo";
@@ -27,9 +20,8 @@ public class Teste {
 		nomes.add(nom1);
 		StringBuilder builder = new StringBuilder();
 		builder.append(nomes);
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-		String dataFormatoBanco =sdf.format(new Date());
+		System.out.println("Nomes: "+builder.toString());
+		
 		System.out.println("Senha: "+criptografarSenha("rafael1993"));
 	}
 

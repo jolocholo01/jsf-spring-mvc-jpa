@@ -20,7 +20,7 @@
 		<ui:include src="/academico/aluno/template/dados_pessoas.xhtml" />
 	</ui:define>
 	<ui:define name="ambiente_comum">
-		<h:form>
+		<h:form id="form_ambiente_comum">
 
 			<div class="table-responsive"
 				style="padding-left: 0px; overflow: hidden;">
@@ -29,8 +29,8 @@
 						<h:outputText value="Lista das Disciplinas por Professor" />
 					</f:facet>
 				</h:panelGrid>
-				<h:dataTable value="#{authenticationContext.professorTurmas}"
-					var="alunoTurma"
+				<h:dataTable id="tabela"
+					value="#{authenticationContext.professorTurmas}" var="alunoTurma"
 					styleClass="  table table-bordered table-bordered   tabela-funcionario tabelaProfessor left"
 					headerClass="cabecalhoTabelaAluno" rowClasses="linha1, linha2">
 
@@ -41,17 +41,22 @@
 						<h:outputText value="#{alunoTurma.disciplina.id}"
 							style="margin-left:5px;" />
 					</h:column>
-					<h:column>
+					<h:column id="idDisciplina">
 						<f:facet name="header">
 							<h:outputText value="Disciplina" style="margin-left:5px;" />
 						</f:facet>
-						<h:outputText value="#{alunoTurma.disciplina.descricao}"
-							style="margin-left:5px;"
-							title="TENHO AULA NA #{alunoTurma.horario}">
+						
+							<h:commandLink value="#{alunoTurma.disciplina.descricao}"
+								style="margin-left:5px;" styleClass="tooltip-top"
+								title="TENHO AULA NA #{alunoTurma.horario}">
+								<p:ajax event="click"
+									listener="#{professorTurmaBean.selecionarDisciplinaParaVerHorario(alunoTurma)}"
+									update="form_ambiente_comum:id-panelGroup-confirma-modal" />
+								<f:passThroughAttribute name="data-toggle" value="modal" />
+								<f:passThroughAttribute name="data-target" value="#myModal" />
 
-							<f:passThroughAttribute name="data-toggle" value="tooltip" />
-							<f:passThroughAttribute name="data-placement" value="top" />
-						</h:outputText>
+							</h:commandLink>
+						
 					</h:column>
 					<h:column>
 						<f:facet name="header">
@@ -83,8 +88,104 @@
 
 				</h:dataTable>
 			</div>
-			
 
+			<!-- Modal -->
+
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" data-backdrop="static"
+				style="padding-top: 210px;">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<h:panelGroup id="id-panelGroup-confirma-modal">
+							<div class="modal-header">
+								<h4 class="modal-title" id="myModalLabel">
+									<h:outputLabel value="Horário de Disciplina de &#160;" style="text-transform: uppercase;"/>
+									<h:outputLabel
+										value="#{professorTurmaBean.professorTurmaSelecionada.disciplina.descricao}" />
+
+								</h4>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<h:panelGroup aria-hidden="true">&times;
+									<p:ajax event="click" update="form_ambiente_comum:tabela:idDisciplina" />
+									</h:panelGroup>
+								</button>
+							</div>
+							<div class="modal-body">
+
+								<h:dataTable
+									styleClass="tabelaProfessor table  table-bordered   tabela-funcionario"
+									value="#{professorTurmaBean.horariosDisciplina}" var="horario"
+									rowClasses="linha1, linha2"
+									style="border: 3px solid #d8e3ef; background: #d8e3ef; "
+									columnClasses="coluna4, coluna2, coluna3, coluna4, coluna5, coluna6, coluna6"
+									headerClass="cabecalhoTabela center">
+
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Dia da Senana" />
+										</f:facet>
+										<h:outputText value="#{horario.diaSemana.descricao}"
+											style="text-transform: uppercase;">
+										</h:outputText>
+
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Tempo" />
+										</f:facet>
+										<h:outputText value="#{horario.horarioAula.ordem}º">
+										</h:outputText>
+
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Horário" />
+										</f:facet>
+										<h:outputText value="#{horario.horarioAula.aulaInicial}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+										<h:outputText value="-" style="margin-left:5px;" />
+										<h:outputText value="#{horario.horarioAula.aulaFinal}"
+											style="margin-left:5px;">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Turma" />
+										</f:facet>
+										<h:outputText value="#{horario.turma.descricao}">
+										</h:outputText>
+
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Turno" />
+										</f:facet>
+										<h:outputText value="#{horario.horarioAula.turno.descricao}">
+										</h:outputText>
+
+									</h:column>
+
+
+								</h:dataTable>
+
+							</div>
+						</h:panelGroup>
+						<div class="modal-footer">
+
+							<h:commandButton styleClass="btn btn-primary"
+								value=" &#x2716; Fechar">
+								<f:passThroughAttribute name="data-dismiss" value="modal" />
+								<p:ajax event="click"
+									update="form_ambiente_comum:tabela:idDisciplina "/>
+							</h:commandButton>
+						</div>
+					</div>
+				</div>
+			</div>
 			​
 		</h:form>
 	</ui:define>

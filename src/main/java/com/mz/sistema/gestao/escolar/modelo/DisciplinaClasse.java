@@ -38,6 +38,8 @@ public class DisciplinaClasse implements Serializable {
 	private Date dataAlteracao;
 	private String formataDataCadastro;
 	private String formataDataAlteracao;
+	
+	private boolean disciplinaSeleconadaBoolean = false;
 
 	private String observacao;
 
@@ -197,6 +199,14 @@ public class DisciplinaClasse implements Serializable {
 
 	public void setObrigatoria(boolean obrigatoria) {
 		this.obrigatoria = obrigatoria;
+	}
+@Transient
+	public boolean isDisciplinaSeleconadaBoolean() {
+		return disciplinaSeleconadaBoolean;
+	}
+
+	public void setDisciplinaSeleconadaBoolean(boolean disciplinaSeleconadaBoolean) {
+		this.disciplinaSeleconadaBoolean = disciplinaSeleconadaBoolean;
 	}
 
 }

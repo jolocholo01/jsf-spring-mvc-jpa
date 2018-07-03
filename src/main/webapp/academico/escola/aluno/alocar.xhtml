@@ -9,161 +9,291 @@
 
 
 <h:panelGroup>
+	<h:panelGroup rendered="#{alunoBean.matriculaAvancarBoolean==false}">
+		<div class=" row">
+			<h:outputLabel value="Nome Completo:"
+				styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+			<div class="col-sm-8">
+				<h:outputText value="#{alunoBean.alunoSelecionado.nome}" />
 
-	<div class=" row">
-		<h:outputLabel value="Nome Completo:"
-			styleClass="col-sm-3 control-label texto-label texto-right" />
-		<div class="col-sm-8">
-			<h:outputText value="#{alunoBean.alunoSelecionado.nome}"
-				styleClass="control-label texto-label" />
-
-		</div>
-	</div>
-
-	<div class=" row">
-		<h:outputLabel value="Data de Nascimento : "
-			styleClass="col-sm-3 control-label texto-label texto-right" />
-		<div class="col-sm-5">
-			<h:outputText styleClass="control-label texto-label"
-				value="#{alunoBean.alunoSelecionado.dataNascimento}">
-				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" />
-
-			</h:outputText>
-		</div>
-	</div>
-	<div class="row">
-		<h:outputLabel value="Nome do Encarregado:"
-			styleClass="col-sm-3 control-label texto-label texto-right" />
-		<div class="col-sm-5">
-			<h:outputText value="#{alunoBean.alunoSelecionado.nomeEncaregado}" />
-
+			</div>
 		</div>
 
-	</div>
-	<div class="form-group row">
-		<h:outputLabel value="Ano lectivo:"
-			styleClass="col-sm-3 control-label texto-label texto-right" />
-		<div class="col-sm-2">
-			<h:inputText required="true"
-				requiredMessage="O campo ano lectivo é obrigatório"
-				value="#{alunoBean.matricula.ano}" styleClass="form-control">
-			</h:inputText>
+		<div class=" row">
+			<h:outputLabel value="Data de Nascimento : "
+				styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+			<div class="col-sm-5">
+				<h:outputText styleClass="bolder"
+					value="#{alunoBean.alunoSelecionado.dataNascimento}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" />
+
+				</h:outputText>
+			</div>
 		</div>
-		<h:outputLabel value="Valor de matrícula: "
-			styleClass="col-sm-2 control-label texto-label texto-right textfim" />
-		<div class="col-sm-2">
-			<h:inputText value="#{alunoBean.matricula.valor}"
-				styleClass="form-control"
-				disabled="#{alunoBean.confirmarsalvarMatricula == true}"
-				onkeypress="return aceitarApenaNumeroComVirgula(this , event );">
-				<f:convertNumber />
-			</h:inputText>
+		<div class="row">
+			<h:outputLabel value="Nome do Encarregado:"
+				styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+			<div class="col-sm-5">
+				<h:outputText value="#{alunoBean.alunoSelecionado.nomeEncaregado}"
+					style="text-transform: uppercase;" />
+
+			</div>
 
 		</div>
-	</div>
-	<div class="form-group row">
-		<h:outputLabel value="Curso: "
-			styleClass="col-sm-3 control-label texto-label texto-right" />
-		<div class="col-sm-3">
-			<h:selectOneMenu id="idCurso" value="#{alunoBean.matricula.curso}"
-				styleClass="form-control" required="true"
-				requiredMessage="O campo curso é obrigatório">
-				<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
-				<f:selectItems value="#{alunoBean.cursos}" var="curso"
-					itemLabel="#{curso}" itemValue="#{curso}" />
-				<p:ajax event="change"
-					listener="#{alunoBean.buscarMatrizesCurriculares}"
-					update="idCurso idArea" />
-			</h:selectOneMenu>
+		<div class="form-group row">
+			<h:outputLabel value="Ano lectivo:"
+				styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+			<div class="col-sm-2">
+				<h:inputText required="true"
+					requiredMessage="O campo ano lectivo é obrigatório"
+					value="#{alunoBean.matricula.ano}" styleClass="form-control">
+				</h:inputText>
+			</div>
+			<h:outputLabel value="Valor de matrícula: "
+				styleClass="tesx-right col-sm-2 col-form-label bolder bolder textfim" />
+			<div class="col-sm-2">
+				<h:inputText value="#{alunoBean.matricula.valor}"
+					styleClass="form-control"
+					onkeypress="return aceitarApenaNumeroComVirgula(this , event );">
+					<f:convertNumber />
+				</h:inputText>
+
+			</div>
 		</div>
-	</div>
-	<div class="form-group row">
-		<h:outputLabel value="Classe: "
-			styleClass="col-sm-3 control-label texto-label texto-right" />
-		<div class="col-sm-6">
-			<h:selectOneMenu value="#{alunoBean.matricula.classe}"
-				required="true" requiredMessage="O campo classe é obrigatório"
-				styleClass="form-control" converter="classeCicloConverter">
-				<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
-				<f:selectItems value="#{alunoBean.classes}" var="classe"
-					itemLabel="#{classe.ordem}. #{classe.tipoEnsino} > #{classe.ciclo} > #{classe.descricao}"
-					itemValue="#{classe}" />
-				<p:ajax event="change"
-					listener="#{alunoBean.buscarMatrizesCurriculares}" update="idArea" />
-			</h:selectOneMenu>
+		<div class="form-group row">
+			<h:outputLabel value="Curso: "
+				styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+			<div class="col-sm-3">
+				<h:selectOneMenu id="idCurso" value="#{alunoBean.matricula.curso}"
+					styleClass="form-control" required="true"
+					requiredMessage="O campo curso é obrigatório">
+					<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+					<f:selectItems value="#{alunoBean.cursos}" var="curso"
+						itemLabel="#{curso}" itemValue="#{curso}" />
+					<p:ajax event="change"
+						listener="#{alunoBean.buscarMatrizesCurriculares}"
+						update="idCurso idArea" />
+				</h:selectOneMenu>
+			</div>
 		</div>
-	</div>
-	<h:panelGroup id="idArea">
+		<div class="form-group row">
+			<h:outputLabel value="Classe: "
+				styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+			<div class="col-sm-6">
+				<h:selectOneMenu value="#{alunoBean.matricula.classe}"
+					required="true" requiredMessage="O campo classe é obrigatório"
+					styleClass="form-control" converter="classeCicloConverter">
+					<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+					<f:selectItems value="#{alunoBean.classes}" var="classe"
+						itemLabel="#{classe.ordem}. #{classe.tipoEnsino} > #{classe.ciclo} > #{classe.descricao}"
+						itemValue="#{classe}" />
+					<p:ajax event="change"
+						listener="#{alunoBean.buscarMatrizesCurriculares}" update="idArea" />
+				</h:selectOneMenu>
+			</div>
+		</div>
+		<h:panelGroup id="idArea">
+			<h:panelGroup
+				rendered="#{alunoBean.matricula.classe.ciclo=='2º CICLO'}">
+				<div class="form-group row">
+					<h:outputLabel value="Área Curricular: "
+						styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+					<div class="col-sm-9">
+						<h:selectOneMenu value="#{alunoBean.matricula.tipoArea}"
+							styleClass="form-control" required="true"
+							requiredMessage="O campo área curricular é obrigatório">
+							<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+							<f:selectItems value="#{alunoBean.matrizes}" var="matriz"
+								itemLabel="#{matriz.classe.descricao} #{matriz.tipoArea}"
+								itemValue="#{matriz.tipoArea}" />
+						</h:selectOneMenu>
+					</div>
+				</div>
+			</h:panelGroup>
+
+		</h:panelGroup>
+	</h:panelGroup>
+	<h:panelGroup rendered="#{alunoBean.matriculaAvancarBoolean==true}">
+
+		<div class=" row">
+			<h:outputLabel value="Nome Completo:"
+				styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+			<div class="col-sm-8">
+				<h:outputText value="#{alunoBean.alunoSelecionado.nome}"
+					styleClass="control-label texto-label bolder" />
+
+			</div>
+		</div>
+
+		<div class=" row">
+			<h:outputLabel value="Data de Nascimento : "
+				styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+			<div class="col-sm-5">
+				<h:outputText styleClass="bolder"
+					value="#{alunoBean.alunoSelecionado.dataNascimento}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" />
+
+				</h:outputText>
+			</div>
+		</div>
+		<div class="row">
+			<h:outputLabel value="Nome do Encarregado:"
+				styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+			<div class="col-sm-5">
+				<h:outputText value="#{alunoBean.alunoSelecionado.nomeEncaregado}"
+					style="    text-transform: uppercase;" />
+
+			</div>
+
+		</div>
+
+		<div class="row">
+			<h:outputLabel value="Ano lectivo:"
+				styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+			<div class="col-sm-2">
+				<h:outputText value="#{alunoBean.matricula.ano}" />
+
+			</div>
+			<h:outputLabel value="Valor de matrícula: "
+				styleClass="col-sm-2 control-label texto-label tesx-right bolder" />
+			<div class="col-sm-2">
+				<h:outputText value="#{alunoBean.matricula.valor} Mts" />
+
+			</div>
+
+		</div>
+		<div class="row">
+			<h:outputLabel value="Curso:"
+				styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+			<div class="col-sm-2">
+				<h:outputText value="#{alunoBean.matricula.curso}" />
+
+			</div>
+			<h:outputLabel value="Classe: "
+				styleClass="col-sm-2 control-label texto-label tesx-right bolder" />
+			<div class="col-sm-5">
+				<h:outputText
+					value="#{alunoBean.classe.ordem}. #{alunoBean.classe.tipoEnsino} > #{alunoBean.classe.ciclo} > #{alunoBean.classe.descricao}" />
+
+			</div>
+
+		</div>
+
 		<h:panelGroup
 			rendered="#{alunoBean.matricula.classe.ciclo=='2º CICLO'}">
 			<div class="form-group row">
 				<h:outputLabel value="Área Curricular: "
-					styleClass="col-sm-3 control-label texto-label texto-right" />
-				<div class="col-sm-5">
-					<h:selectOneMenu value="#{alunoBean.matricula.tipoArea}"
-						styleClass="form-control" required="true"
-						requiredMessage="O campo área curricular é obrigatório">
-						<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
-						<f:selectItems value="#{alunoBean.matrizes}" var="matriz"
-							itemLabel="#{matriz.classe.descricao} #{matriz.tipoArea}"
-							itemValue="#{matriz.tipoArea}" />
-						<p:ajax event="change"
-							listener="#{alunoBean.buscarMatrizesPorAreaCurricular}"
-							update="tabela-disciplinas" />
-					</h:selectOneMenu>
+					styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+				<div class="col-sm-9">
+
+					<h:outputText
+						value="#{alunoBean.classe.descricao} #{alunoBean.matricula.tipoArea}" />
 				</div>
 			</div>
 		</h:panelGroup>
-		<h:panelGroup id="tabela-disciplinas">
-			<p:dataTable value="#{alunoBean.matriz.disciplinaClasses}"
-				var="disciplinaDaClassse" lazy="true"
-				style="margin-top: 20px;"
-				styleClass="table table-bordered tabelaProfessor  tabela-funcionario left" disabledTextSelection="true"
-				rowKey="#{disciplinaDaClassse.disciplina.id}"
-				selection="#{matriculaBean.disciplinaSelecionadas}"
-				emptyMessage="Nenhuma disciplina cadastrada">
+		<h:panelGroup rendered="#{alunoBean.alocadoComSucessoBoolean==false}">
+			<h:dataTable id="idTabela"
+				value="#{alunoBean.matriz.disciplinaClasses}"
+				var="disciplinaDaClassse"
+				styleClass="table table-bordered tabelaProfessor  tabela-funcionario left table-selector"
+				columnClasses="center , , center, center">
 
-				<p:column style="width: 100px;">
+				<h:column style="width: 100px;" headerClass="center">
 					<f:facet name="header">
 						<h:outputText value="Codigo" />
 					</f:facet>
 					<h:outputText value="#{disciplinaDaClassse.disciplina.id}"
 						style="text-transform: uppercase;" />
-				</p:column>
-				<p:column>
+				</h:column>
+				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Disciplina" />
 					</f:facet>
 					<h:outputText value="#{disciplinaDaClassse.disciplina.descricao}">
 					</h:outputText>
-				</p:column>
-				<p:column>
+				</h:column>
+				<h:column headerClass="center">
 					<f:facet name="header">
 						<h:outputText value="C. H. Semanal " />
 					</f:facet>
 					<h:outputText value="#{disciplinaDaClassse.credito}">
 					</h:outputText>
-				</p:column>
-				<p:column selectionMode="multiple"
-					style="text-align:center; width:40px;">
-				</p:column>
-	<p:column selectionMode="multiple"
-					rendered="#{matriculaBean.turmaSelecionada.classe.descricao =='10ª CLASSE' or matriculaBean.turmaSelecionada.classe.descricao =='11ª CLASSE' or matriculaBean.turmaSelecionada.classe.descricao =='12ª CLASSE'}"
-					style="text-align:center; width:40px;">
-				</p:column>
-			</p:dataTable>
+				</h:column>
+
+				<h:column
+					rendered="#{alunoBean.classe.descricao =='10ª CLASSE' or alunoBean.classe.descricao =='11ª CLASSE' or alunoBean.classe.descricao =='12ª CLASSE'}"
+					headerClass="center">
+					<f:facet name="header">
+
+						<h:selectBooleanCheckbox value="#{alunoBean.marcarTodosBoolean}"
+							styleClass="checkPai">
+						</h:selectBooleanCheckbox>
+
+					</f:facet>
+
+					<h:selectBooleanCheckbox styleClass="check"
+						value="#{disciplinaDaClassse.disciplinaSeleconadaBoolean}">
+					</h:selectBooleanCheckbox>
+					<ui:remove>
+						<p:ajax event="click" listener="#{alunoBean.marcarTodos}"
+							update="form:idTabela" />
+
+						<p:ajax event="click"
+							listener="#{alunoBean.desmarcarOtop(disciplinaDaClassse)}"
+							update="form:idTabela" />
+					</ui:remove>
+				</h:column>
+
+			</h:dataTable>
 		</h:panelGroup>
+
+		<ui:remove>
+			<p:ajax event="click" listener="#{alunoBean.marcarTodos}"
+				update="form:idTabela" />
+			<p:ajax event="click"
+				listener="#{alunoBean.desmarcarOtop(disciplinaDaClassse)}"
+				update="form:idTabela" />
+		</ui:remove>
 	</h:panelGroup>
 
-
-	<div class="panel-footer" style="text-align: center; margin-top:2%;">
+	<div class="panel-footer" style="text-align: center; margin-top: 2%;">
 		<h:commandButton value=" &#x2716; Fechar"
 			actionListener="#{alunoBean.voltarParaPequisa}" immediate="true"
-			styleClass=" prev acao btn btn-success" />
-		<h:commandButton value="&#x2714; Confirmar"
-			actionListener="#{alunoBean.salvarMatricula}"
-			styleClass=" btn btn-primary next acao" style="margin-left:10px" />
+			styleClass=" prev acao btn btn-success " />
 
+		<h:commandButton value="&#x21e6; Voltar"
+			styleClass="prev acao btn btn-success"
+			action="#{alunoBean.voltaraVancarParaSelecionarDisciplina}"
+			rendered="#{alunoBean.matriculaAvancarBoolean==true}"
+			style="margin-left:10px" />
+
+
+		<h:commandButton value="Avançar &#10152;"
+			styleClass=" btn btn-primary next acao"
+			action="#{alunoBean.avancarParaSelecionarDisciplina}"
+			rendered="#{alunoBean.matriculaAvancarBoolean==false}"
+			style="margin-left:10px" />
+		<h:panelGroup rendered="#{alunoBean.alocadoComSucessoBoolean==false}">
+			<h:commandButton value="&#x2714; Confirmar"
+				rendered="#{alunoBean.matriculaAvancarBoolean==true}"
+				actionListener="#{alunoBean.salvarMatricula}"
+				styleClass=" btn btn-primary next acao" style="margin-left:10px" />
+		</h:panelGroup>
+		<h:panelGroup rendered="#{alunoBean.alocadoComSucessoBoolean==true}">
+			<h:commandLink
+				actionListener="#{alunoBean.imprimirReciboInscricaoDoAluno(alunoBean.matricula)}"
+				styleClass="btn btn-primary tooltip-top"
+				title="Emitir dados do aluno?" style="margin-left: 1%;">
+				<span class="glyphicon glyphicon-save"></span>
+						Baixar
+					</h:commandLink>
+		</h:panelGroup>
 	</div>
+
+
+
+
 </h:panelGroup>
+
+
 </html>

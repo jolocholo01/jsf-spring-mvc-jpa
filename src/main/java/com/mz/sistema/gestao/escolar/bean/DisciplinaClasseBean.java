@@ -90,6 +90,14 @@ public class DisciplinaClasseBean {
 
 	// inicializacao do prytty config
 	public void iniciarBean() {
+		this.cadastroDisciplinaClasseBoolean = false;
+		this.novaDisciplinaClasseBoolean = false;
+		this.setQtdDisciplinaClasseEncontradas(0);
+		this.editarDisciplinaClasseBoolean = false;
+		disciplinaClasse = null;
+		disciplinaClasses = new ArrayList<>();
+		idClasse = 0;
+		
 		disciplinasANDClasses();
 	}
 
@@ -170,28 +178,6 @@ public class DisciplinaClasseBean {
 			}
 		}
 
-	}
-
-	public String cadastroDisciplinaClasseDirectorDistrital() {
-		this.cadastroDisciplinaClasseBoolean = false;
-		this.novaDisciplinaClasseBoolean = false;
-		this.setQtdDisciplinaClasseEncontradas(0);
-		this.editarDisciplinaClasseBoolean = false;
-		disciplinaClasse = null;
-		disciplinaClasses = new ArrayList<>();
-		idClasse = 0;
-		return "/academico/director-ditrital/classe/disciplina?faces-redirect=true";
-	}
-
-	public String cadastroDisciplinaClasseDirector() {
-		this.cadastroDisciplinaClasseBoolean = false;
-		this.novaDisciplinaClasseBoolean = false;
-		this.setQtdDisciplinaClasseEncontradas(0);
-		this.editarDisciplinaClasseBoolean = false;
-		disciplinaClasse = null;
-		disciplinaClasses = new ArrayList<>();
-		idClasse = 0;
-		return "/academico/director/classe/disciplina?faces-redirect=true";
 	}
 
 	public void buscarAreas() {

@@ -98,7 +98,7 @@
 									rendered="#{notaBean.trimestreSelecionado.descricao=='1º Trimestre'}"
 									maxlength="5" id="nota-ac1"
 									onkeypress="return limitarNumeroDigitado(this , event ); "
-									styleClass="inputLancarNota inputNota"
+										onkeyup="this.value = this.value.replace('.', ',');"  styleClass="inputLancarNota inputNota" 
 									disabled="#{nota.matricula.turma.ativo==false}"
 									style="color: #{nota.ac1 >= 10 ? 'blue' : 'red'}">
 									<p:ajax event="blur"
@@ -181,7 +181,7 @@
 										listener="#{notaBean.salvar(nota)}" />
 									<f:convertNumber />
 								</h:inputText> <h:inputText value="#{nota.ac32}" id="nota-ac32" maxlength="5"
-									size="2"
+									size="2" 
 									rendered="#{notaBean.trimestreSelecionado.descricao=='2º Trimestre'}"
 									styleClass="inputLancarNota inputNota"
 									disabled="#{ nota.matricula.turma.ativo==false}"

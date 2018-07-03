@@ -4,7 +4,9 @@ package com.mz.sistema.gestao.escolar.bean;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Named;
 
@@ -21,10 +23,13 @@ import com.mz.sistema.gestao.escolar.modelo.Calendario;
 import com.mz.sistema.gestao.escolar.modelo.Classe;
 import com.mz.sistema.gestao.escolar.modelo.DisciplinaClasse;
 import com.mz.sistema.gestao.escolar.modelo.Escola;
+import com.mz.sistema.gestao.escolar.modelo.FuncionarioEscola;
 import com.mz.sistema.gestao.escolar.modelo.Matriz;
 import com.mz.sistema.gestao.escolar.servico.AreaServico;
+import com.mz.sistema.gestao.escolar.servico.CalendarioServico;
 import com.mz.sistema.gestao.escolar.servico.DisciplinaClasseServico;
 import com.mz.sistema.gestao.escolar.servico.EscolaServico;
+import com.mz.sistema.gestao.escolar.servico.GeradorDeRelatoriosServico;
 import com.mz.sistema.gestao.escolar.servico.MatrizServico;
 import com.mz.sistema.gestao.escolar.util.Mensagem;
 import com.mz.sistema.gestao.escolar.util.TipoLetra;
@@ -38,6 +43,7 @@ public class MatrizBean {
 	private Matriz matrizSelecionadaPraExclusao;
 	private Matriz alterarMatriz = new Matriz();
 	private List<Matriz> matrizes;
+	private List<Matriz> matrizesCurriculares;
 	private List<Classe> classes;
 	private List<Area> areas;
 	private List<TipoCurso> tipoCursos;
@@ -49,6 +55,7 @@ public class MatrizBean {
 	private List<DisciplinaClasse> disciplinaClassesAreaEdicao = new ArrayList<>();
 	private List<TipoArea> tipoAreas;
 	private Classe classeSelecionada;
+	private Classe classe;
 	private Escola escola;
 	private Calendario calendario;
 	private List<Ciclo> ciclos;
@@ -56,6 +63,8 @@ public class MatrizBean {
 	private boolean selecionarDisciplinaBoolean = false;
 	private boolean proximoBotaoParaEdicaoBoolean = false;
 	private boolean finalizarCadastroMatrizBoolean = false;
+
+	private Integer qtdMatrizesEncontradas;
 
 	@Autowired
 	private MatrizServico matrizServico;
@@ -68,8 +77,30 @@ public class MatrizBean {
 	private AreaServico areaServico;
 	@Autowired
 	private AuthenticationContext authenticationContext;
+	@Autowired
+	private GeradorDeRelatoriosServico geradorDeRelatoriosServico;
+
+	@Autowired
+	private CalendarioServico calendarioServico;
+
 	
-	public void iniciarBean(){
+	public void iniciarClasseBean() {
+		try {
+			this.matrizSelecionada = null;
+			matrizesCurriculares = new ArrayList<>();
+			classes = new ArrayList<>();
+			FuncionarioEscola funcionarioEscola = authenticationContext.getFuncionarioEscolaLogada();
+			escola = funcionarioEscola.getEscola();
+			classes = escolaServico.obterClassesPorIdEscola(escola.getId());
+			
+			classe = new Classe();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void iniciarBean() {
 		try {
 			this.matrizSelecionada = null;
 			matrizes = new ArrayList<>();
@@ -77,12 +108,41 @@ public class MatrizBean {
 			calendario = authenticationContext.getCalendarioEscolar();
 			ciclos = Arrays.asList(Ciclo.PRIMEIRO_CICLO, Ciclo.SEGUNDO_CICLO);
 			this.classeSelecionada = null;
-			
+
 			classes = escolaServico.obterClassesPorIdEscola(escola.getId());
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
+	}
+
+	public void busarMatrizes() {
+		try {
+			qtdMatrizesEncontradas = 0;
+			matrizesCurriculares = new ArrayList<>();
+			List<Matriz> matrizes = matrizServico.obterMatrizesPorIdClasse(escola.getId(), classe.getId());
+			int count = 0, count2 = 0;
+			for (Matriz matriz : matrizes) {
+				if (matriz.getCurso().equals("DIURNO")) {
+					count++;
+					if (count == 1) {
+						matrizesCurriculares.add(matriz);
+					}
+				} else {
+					count2++;
+					if (count2 == 1) {
+						matrizesCurriculares.add(matriz);
+					}
+				}
+
+			}
+			if (matrizesCurriculares != null) {
+				qtdMatrizesEncontradas = matrizesCurriculares.size();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void salvar() {
@@ -208,6 +268,29 @@ public class MatrizBean {
 		}
 
 	}
+	public void imprimirListaAlunosPorClassePorCurso(Matriz matriz) {
+		try {
+			calendario = calendarioServico.obterCalendarioVigente();
+			if(calendario==null){
+				Mensagem.mensagemErro("ERRO: Não exite calendário escolar em vigor!");
+				return;
+			}
+			String filename =  "ALUNOS DA "+matriz.getClasse().getDescricao()+" DO CURSO "+matriz.getCurso();
+			String caminho = "/academico/relatorio/aluno/listar_alunos_na_classe.jasper";
+			Map<String, Object> parametro = new HashMap<>();
+			
+
+			parametro.put("idEscola", matriz.getEscola().getId());
+			parametro.put("Ano", calendario.getAno());
+			parametro.put("idClasse", matriz.getClasse().getId());
+			parametro.put("Curso", matriz.getCurso());
+			geradorDeRelatoriosServico.geraPdf(caminho, parametro, filename);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	public void seguinte() {
 
@@ -264,41 +347,40 @@ public class MatrizBean {
 		disciplinaClassesArea = new ArrayList<>();
 		tipoCursos = Arrays.asList(TipoCurso.values());
 		proximoBotaoParaEdicaoBoolean = false;
-		finalizarCadastroMatrizBoolean= false;
+		finalizarCadastroMatrizBoolean = false;
 		try {
 			this.matrizSelecionada = matrizServico.obterMatrizPorIdELeftJoin(matriz.getId());
 			if (matriz.getClasse().getTipoEnsino().equals("ENSINO SECUNDÁRIO")) {
 
-			if (matriz.getClasse().getCiclo().equals("1º CICLO")) {
-				disciplinaClasses = disciplinaClasseServico
-						.obterDisciplinasPorClasse(matriz.getClasse().getId());
-			} else if (matriz.getClasse().getCiclo().equals("2º CICLO")) {
-				disciplinaClasses = disciplinaClasseServico
-						.obterDisciplinasPorClassePorArea(matriz.getClasse().getId(), tipoArea);
-			}
+				if (matriz.getClasse().getCiclo().equals("1º CICLO")) {
+					disciplinaClasses = disciplinaClasseServico.obterDisciplinasPorClasse(matriz.getClasse().getId());
+				} else if (matriz.getClasse().getCiclo().equals("2º CICLO")) {
+					disciplinaClasses = disciplinaClasseServico
+							.obterDisciplinasPorClassePorArea(matriz.getClasse().getId(), tipoArea);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
+
 	public void selecionarMatrizParaFinalizar(Matriz matriz) {
 		disciplinaClassesArea = new ArrayList<>();
 		tipoCursos = Arrays.asList(TipoCurso.values());
 		proximoBotaoParaEdicaoBoolean = false;
-		finalizarCadastroMatrizBoolean= true;
-		
+		finalizarCadastroMatrizBoolean = true;
+
 		try {
 			this.matrizSelecionada = matrizServico.obterMatrizPorIdELeftJoin(matriz.getId());
 			if (matriz.getClasse().getTipoEnsino().equals("ENSINO SECUNDÁRIO")) {
 
-			if (matriz.getClasse().getCiclo().equals("1º CICLO")) {
-				disciplinaClasses = disciplinaClasseServico
-						.obterDisciplinasPorClasse(matriz.getClasse().getId());
-			} else if (matriz.getClasse().getCiclo().equals("2º CICLO")) {
-				disciplinaClasses = disciplinaClasseServico
-						.obterDisciplinasPorClassePorArea(matriz.getClasse().getId(), tipoArea);
-			}
+				if (matriz.getClasse().getCiclo().equals("1º CICLO")) {
+					disciplinaClasses = disciplinaClasseServico.obterDisciplinasPorClasse(matriz.getClasse().getId());
+				} else if (matriz.getClasse().getCiclo().equals("2º CICLO")) {
+					disciplinaClasses = disciplinaClasseServico
+							.obterDisciplinasPorClassePorArea(matriz.getClasse().getId(), tipoArea);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -324,8 +406,9 @@ public class MatrizBean {
 			buscarMatrizesPorCiclo();
 			if (proximoBotaoParaEdicaoBoolean == true) {
 				proximoBotaoParaEdicaoBoolean = false;
-				this.matrizSelecionada = matrizServico.obterMatrizPorIdELeftJoinAtiva(this.matrizSelecionada.getClasse().getId(),
-						this.matrizSelecionada.getCiclo(), this.matrizSelecionada.getEscola().getId());
+				this.matrizSelecionada = matrizServico.obterMatrizPorIdELeftJoinAtiva(
+						this.matrizSelecionada.getClasse().getId(), this.matrizSelecionada.getCiclo(),
+						this.matrizSelecionada.getEscola().getId());
 				;
 				disciplinaClassesArea = new ArrayList<>();
 			} else if (proximoBotaoParaEdicaoBoolean != true) {
@@ -381,9 +464,6 @@ public class MatrizBean {
 		}
 		System.out.println("Chamou a funcao\n\n\n\n");
 	}
-
-	
-	
 
 	public void buscarMatrizesPorCiclo() {
 
@@ -572,6 +652,30 @@ public class MatrizBean {
 
 	public void setFinalizarCadastroMatrizBoolean(boolean finalizarCadastroMatrizBoolean) {
 		this.finalizarCadastroMatrizBoolean = finalizarCadastroMatrizBoolean;
+	}
+
+	public List<Matriz> getMatrizesCurriculares() {
+		return matrizesCurriculares;
+	}
+
+	public void setMatrizesCurriculares(List<Matriz> matrizesCurriculares) {
+		this.matrizesCurriculares = matrizesCurriculares;
+	}
+
+	public Classe getClasse() {
+		return classe;
+	}
+
+	public void setClasse(Classe classe) {
+		this.classe = classe;
+	}
+
+	public Integer getQtdMatrizesEncontradas() {
+		return qtdMatrizesEncontradas;
+	}
+
+	public void setQtdMatrizesEncontradas(Integer qtdMatrizesEncontradas) {
+		this.qtdMatrizesEncontradas = qtdMatrizesEncontradas;
 	}
 
 }

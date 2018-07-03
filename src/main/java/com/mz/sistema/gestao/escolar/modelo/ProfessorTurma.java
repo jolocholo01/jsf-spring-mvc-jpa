@@ -28,8 +28,7 @@ public class ProfessorTurma implements Serializable {
 	private Turma turma;
 	private Funcionario professor;
 	private Escola escola;
-	private Date inicioAlocacao;
-	private Date fimAlocacao;
+	private Date dataCadastro;
 	private Integer credito;
 	private boolean fechada = false;
 	private String horario;
@@ -68,24 +67,14 @@ public class ProfessorTurma implements Serializable {
 		this.professor = professor;
 	}
 
-	@Column(name = "inicio_alocacao")
-	@Temporal(TemporalType.DATE)
-	public Date getInicioAlocacao() {
-		return inicioAlocacao;
+	@Column(name = "data_cadastro")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getDataCadastro() {
+		return dataCadastro;
 	}
 
-	public void setInicioAlocacao(Date inicioAlocacao) {
-		this.inicioAlocacao = inicioAlocacao;
-	}
-
-	@Column(name = "fim_alocacao")
-	@Temporal(TemporalType.DATE)
-	public Date getFimAlocacao() {
-		return fimAlocacao;
-	}
-
-	public void setFimAlocacao(Date fimAlocacao) {
-		this.fimAlocacao = fimAlocacao;
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
 	public Integer getCredito() {

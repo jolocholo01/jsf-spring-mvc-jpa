@@ -8,6 +8,8 @@
 <h:head>
 	<meta name="viewport" content="width=device-width, user-scalable=no"></meta>
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1"></meta>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
 	<meta name="_csrf" content="${_csrf.token}" />
 	<!-- default header name is X-CSRF-TOKEN -->
 	<meta name="_csrf_header" content="${_csrf.headerName}" />
@@ -21,28 +23,28 @@
 		src="#{request.contextPath}/resources/js/bootstrap-datepicker.pt.min.js"></script>
 	<link
 		href="#{request.contextPath}/resources/bootstrap/css/glyphicons.css"
-		rel="stylesheet" type="text/css" />
+		rel="stylesheet" />
 	<link
 		href="#{request.contextPath}/resources/bootstrap-alpha/css/style.css"
-		rel="stylesheet" />
+		rel="stylesheet"/>
 
 
 	<link
 		href="#{request.contextPath}/resources/bootstrap-alpha/css/toolkit.css"
-		rel="stylesheet" />
+		rel="stylesheet"/>
 
 
 	<link
 		href="#{request.contextPath}/resources/bootstrap-alpha/css/bootstrap.min.css"
-		rel="stylesheet" />
+		rel="stylesheet"/>
 
 	<!-- Custom styles for this template -->
 	<link
 		href="#{request.contextPath}/resources/bootstrap-alpha/css/jumbotron.css"
-		rel="stylesheet" />
-	<link rel="stylesheet" type="text/css"
+		rel="stylesheet"/>
+	<link rel="stylesheet"
 		href="#{request.contextPath}/resources/css/bootstrap-datepicker.standalone.min.css" />
-	<link rel="stylesheet" type="text/css"
+	<link rel="stylesheet"
 		href="#{request.contextPath}/resources/css/icones.css" />
 
 
@@ -81,20 +83,20 @@ body {
 
 	</div>
 
-	<p:ajaxStatus onstart="1"/>
-	
+	<p:ajaxStatus  onstart="0.1" ></p:ajaxStatus>
+
+<!-- 	<script src="#{request.contextPath}/resources/js/jquery.min.js"></script> -->
 	<script type="text/javascript"
 		src="#{request.contextPath}/resources/bootstrap-alpha/js/popper.min.js"></script>
 
 	<script
 		src="#{request.contextPath}/resources/bootstrap-alpha/js/bootstrap.min.js"></script>
-	<script type="text/javascript"
-		src="#{request.contextPath}/resources/js/funcao.js"></script>
+
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script type="text/javascript"
 		src="#{request.contextPath}/resources/bootstrap-alpha/js/ie10-viewport-bug-workaround.js"></script>
-
-
+	<script type="text/javascript"
+		src="#{request.contextPath}/resources/js/funcao.js"></script>
 
 </body>
 </html>

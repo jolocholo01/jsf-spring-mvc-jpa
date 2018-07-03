@@ -23,7 +23,6 @@ import com.mz.sistema.gestao.escolar.modelo.Distrito;
 import com.mz.sistema.gestao.escolar.modelo.Escola;
 import com.mz.sistema.gestao.escolar.modelo.Funcionario;
 import com.mz.sistema.gestao.escolar.modelo.FuncionarioEscola;
-import com.mz.sistema.gestao.escolar.modelo.Matricula;
 import com.mz.sistema.gestao.escolar.modelo.Turno;
 import com.mz.sistema.gestao.escolar.servico.ClasseServico;
 import com.mz.sistema.gestao.escolar.servico.EscolaServico;
@@ -155,31 +154,45 @@ public class EscolaBean {
 			// String situacao ="Transferido";
 			Long qtdAlunosMatriculados = matriculaServico.obterMatriculadoPorSexo(escola.getId(), ano, true);
 			Long qtdAlunasMatriculadas = matriculaServico.obterMatriculadoPorSexo(escola.getId(), ano, false);
-			Long qtdAlunosTransferidos = transferenciaServico.obterTransferidosPorIdEscolaPorAno(escola.getId(), ano,
-					true);
-			
-			System.out.println("Escola: "+escola.getId());
-			System.out.println("Trnsferidos: "+qtdAlunosTransferidos);
+			Long qtdAlunosdosQueTransferiramNestaEscola = transferenciaServico
+					.obterAlunosdosQueTransferiramNestaEscola(escola.getId(), ano, true);
+			Long qtdAlunosdosQueForamTransferidosParaEstaEscola = transferenciaServico
+					.obterAlunosdosQueForamTransferidosParaEstaEscola(escola.getId(), ano, true);
+
+			System.out.println("Escola: " + escola.getId());
+			System.out.println("Sida dos Trnsferidos: " + qtdAlunosdosQueTransferiramNestaEscola);
 			if (qtdAlunosMatriculados == null) {
 				qtdAlunosMatriculados = 0L;
 			}
-			if (qtdAlunosTransferidos == null) {
-				qtdAlunosTransferidos = 0L;
+			if (qtdAlunosdosQueTransferiramNestaEscola == null) {
+				qtdAlunosdosQueTransferiramNestaEscola = 0L;
+			}
+			if (qtdAlunosdosQueForamTransferidosParaEstaEscola == null) {
+				qtdAlunosdosQueForamTransferidosParaEstaEscola = 0L;
 			}
 			if (qtdAlunasMatriculadas == null) {
 				qtdAlunasMatriculadas = 0L;
 			}
 			pieModel = new PieChartModel();
-			pieModel.set("Alunos", qtdAlunosMatriculados);
-			pieModel.set("Alunas", qtdAlunasMatriculadas);
-			pieModel.set("Transferidos", qtdAlunosTransferidos);
+			if (qtdAlunosMatriculados > 0)
+				pieModel.set("ALUNOS", qtdAlunosMatriculados);
+			if (qtdAlunasMatriculadas > 0)
+				pieModel.set("ALUNAS", qtdAlunasMatriculadas);
+			if (qtdAlunosdosQueTransferiramNestaEscola > 0)
+				pieModel.set("TRANSFERIDOS", qtdAlunosdosQueTransferiramNestaEscola);
+			if (qtdAlunosdosQueForamTransferidosParaEstaEscola > 0)
+				pieModel.set("VINDOS TRANSFERIDOS", qtdAlunosdosQueForamTransferidosParaEstaEscola);
+
 			// pieModel.set("Anulação matrícula", 325);
 
 			pieModel.setTitle("Estatística de " + ano);
 			pieModel.setLegendPosition("w");
 			pieModel.setShowDataLabels(true);
 			pieModel.setDiameter(200);
-
+			if (qtdAlunasMatriculadas == 0l && qtdAlunosdosQueTransferiramNestaEscola == 0L
+					&& qtdAlunosMatriculados == 0l && qtdAlunosdosQueForamTransferidosParaEstaEscola == 0L) {
+				pieModel = null;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -435,7 +448,7 @@ public class EscolaBean {
 			if (calendario != null) {
 				totalAlunosDaEscola = matriculaServico.obterTotalAlunosMatriculasPorEscolaPorAno(escola.getId(),
 						calendario.getAno());
-				if (totalAlunosDaEscola==null) {
+				if (totalAlunosDaEscola == null) {
 					totalAlunosDaEscola = 0l;
 				}
 			}
@@ -485,7 +498,7 @@ public class EscolaBean {
 			System.out.println("Chamou a funaco!");
 
 		} catch (Exception e) {
-			Mensagem.mensagemAlerta("Aviso: a escola não foi excluida através da dependência.");
+			Mensagem.mensagemErro("ERRO: Não é possivel excluir essa escola pois tem dependência!");
 		}
 
 	}

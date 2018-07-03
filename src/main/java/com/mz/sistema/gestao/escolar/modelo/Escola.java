@@ -21,14 +21,10 @@ import javax.persistence.TemporalType;
 @Entity
 public class Escola implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -124522888085635239L;
 	private Long id;
 	private String descricao;
 	private String codigo;
-
 	private String localidade;
 	private String bairro;
 	private String email;

@@ -29,6 +29,7 @@ import com.mz.sistema.gestao.escolar.modelo.Sala;
 import com.mz.sistema.gestao.escolar.modelo.Turma;
 import com.mz.sistema.gestao.escolar.modelo.Turno;
 import com.mz.sistema.gestao.escolar.modelo.Usuario;
+import com.mz.sistema.gestao.escolar.servico.CalendarioServico;
 import com.mz.sistema.gestao.escolar.servico.ClasseServico;
 import com.mz.sistema.gestao.escolar.servico.EscolaServico;
 import com.mz.sistema.gestao.escolar.servico.GeradorDeRelatoriosServico;
@@ -114,6 +115,9 @@ public class TurmaBean {
 	private MatrizServico matrizServico;
 	@Autowired
 	private GeradorDeRelatoriosServico geradorDeRelatoriosServico;
+	
+	@Autowired
+	private CalendarioServico calendarioServico;
 
 	public void iniciarBean() {
 		turma = new Turma();
@@ -169,9 +173,9 @@ public class TurmaBean {
 					turmaSelecionada.getTurno().getId(), turmaSelecionada.getSala().getId(),
 					turmaSelecionada.getEscola().getId());
 			if (turmaExistente != null && turmaExistente.getId() != turmaSelecionada.getId()) {
-				Mensagem.mensagemErro("ERRO: Não pode cadastrar essa turma neste período e nesta sala pois, a turma "
+				Mensagem.mensagemErro("ERRO: Não pode cadastrar essa turma nesta sala pois, a turma "
 						+ turmaExistente.getClasse().getSigla() + "ª" + turmaExistente.getDescricao()
-						+ " de período da " + turmaExistente.getTurno().getDescricao() + " de sala nº "
+						+ " de período da " + turmaExistente.getTurno().getDescricao().getLabel().toLowerCase() + " de sala nº "
 						+ turmaExistente.getSala().getNumero() + " é que está disponível.");
 				return;
 			}
@@ -185,11 +189,12 @@ public class TurmaBean {
 			if (turmaSelecionada.getRestanteVaga() == null) {
 				turmaSelecionada.setRestanteVaga(turmaSelecionada.getCapacidade());
 			}
+			turma=turmaSelecionada;
 			turmaServico.salvar(turmaSelecionada);
 
-			Mensagem.mensagemInfo("Turma cadastrada com sucesso!");
+			Mensagem.mensagemInfo("AVISO: Turma cadastrada com sucesso!");
 			turmaSelecionada = null;
-			listarTurmas();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -402,12 +407,13 @@ public class TurmaBean {
 			Usuario professor = authenticationContext.getUsuarioLogado();
 			FuncionarioEscola funcionarioEscola = authenticationContext.getFuncionarioEscolaLogada();
 			Escola escola = funcionarioEscola.getEscola();
-
+			Calendario calendario = calendarioServico.obterCalendarioVigente();
+			
 			Map<String, Object> parametro = new HashMap<>();
-
+			
 			parametro.put("idProfessor", professor.getId());
 			parametro.put("idEscola", escola.getId());
-
+			parametro.put("ano", calendario.getAno());
 			geradorDeRelatoriosServico.geraPdf(caminho, parametro, "Minhas turmas.pdf");
 		} catch (Exception e) {
 

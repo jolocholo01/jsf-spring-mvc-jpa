@@ -17,7 +17,7 @@
 	<ui:define name="menu">
 		<ui:include src="/academico/aluno/template/menu.xhtml" />
 	</ui:define>
-	
+
 	<ui:define name="ambiente_comum">
 
 		<h:form id="form_ambiente_comum">
@@ -25,51 +25,77 @@
 			<!--Panel-->
 			<div class="card">
 				<h3 class="peg-titulo card-header primary-color white-text">
-					<h:outputText value=" Minhas notas de frequência" style="font-weight: 700;" />
+					<h:outputText value=" Minhas notas de frequência"
+						style="font-weight: 700;" />
 				</h3>
 				<p:messages closable="true" />
 
 				<div class="card-body">
-					<h:panelGrid style="margin-top:10px; " />
 
-					<h:panelGrid columns="2" style="float:left;margin-left:10px;">
-						<h:outputLabel value="Ecola: " style="margin-top:5px;" />
-						<h:outputText
-							value="#{authenticationContext.matriculaEscolaLogada.escola.descricao}"
-							style="margin-left:10px;" />
-						<h:outputLabel value="Ano lectivo: " style="margin-top:5px;" />
-						<h:outputText
-							value="#{authenticationContext.matriculaEscolaLogada.ano}"
-							style="margin-left:10px;" />
-						<h:outputLabel value="Classe: " style="margin-top:5px;" />
-						<h:outputText
-							value="#{authenticationContext.matriculaEscolaLogada.classe.descricao}"
-							style="margin-left:10px;" />
-						<h:outputLabel value="Turma: " style="margin-top:5px;" />
-						<h:outputText
-							value="#{authenticationContext.matriculaEscolaLogada.turma.descricao} / #{authenticationContext.matriculaEscolaLogada.turma.turno.descricao}"
-							style="margin-left:10px;"
-							rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao !=null}" />
-						<h:outputText value="NÃO INFORMADA" style="margin-left: 10px;"
-							rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao ==null}" />
-						<h:outputLabel value="Trimestre: " style="margin-top:-50px;" />
+					<div class="form-group row">
+						<h:outputLabel value="Ecola: "
+							styleClass="col-sm-2 control-label texto-label  tesx-right  bolder" />
+						<div class="col-sm-3">
+							<h:outputText
+								value="#{authenticationContext.matriculaEscolaLogada.escola.descricao}"
+								style="text-transform: uppercase;" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<h:outputLabel value="Ano lectivo: "
+							styleClass="col-sm-2 control-label texto-label  tesx-right bolder" />
+						<div class="col-sm-2">
+							<h:outputText
+								value="#{authenticationContext.matriculaEscolaLogada.ano}"
+								style="text-transform: uppercase;" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<h:outputLabel value="Classe: "
+							styleClass="col-sm-2 control-label texto-label  tesx-right  bolder" />
+						<div class="col-sm-3">
+							<h:outputText
+								value="#{authenticationContext.matriculaEscolaLogada.classe.descricao}"
+								style="text-transform: uppercase;" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<h:outputLabel value="Turma: "
+							styleClass="col-sm-2 control-label texto-label  tesx-right bolder" />
+						<div class="col-sm-3">
+							<h:outputText
+								value="#{authenticationContext.matriculaEscolaLogada.turma.descricao} / #{authenticationContext.matriculaEscolaLogada.turma.turno.descricao}"
+								style="margin-left:10px;"
+								rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao !=null}" />
+							<h:outputText value="NÃO INFORMADA" style="margin-left: 10px;"
+								rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao ==null}" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<h:outputLabel value="Trimestre: "
+							styleClass="col-sm-2 control-label texto-label  tesx-right bolder" />
+						<div class="col-sm-3">
+							<h:selectOneMenu styleClass="form-control"
+								value="#{alunoBean.trimestreAtivo.descricao}"
+								style="margin-left:10px;text-transform: uppercase;">
 
+								<f:selectItems value="#{alunoBean.tipoTrimestres}"
+									var="tipoTrimestre" itemLabel="#{tipoTrimestre.label}"
+									itemValue="#{tipoTrimestre.label}" />
 
-						<h:selectOneMenu styleClass="form-control"
-							value="#{alunoBean.trimestreAtivo.descricao}"
-							style="margin-left:10px;text-transform: uppercase;">
+							</h:selectOneMenu>
+						</div>
+					</div>
+					<div class="form-group row" style="text-align: center;">
+						<div class="col-sm-4">
+							<h:commandButton value="Buscar" styleClass="btn btn-primary"
+						style="    margin-top: 3%;"
+						actionListener="#{alunoBean.buscarMinhasNotas}" />
 
-							<f:selectItems value="#{alunoBean.tipoTrimestres}"
-								var="tipoTrimestre" itemLabel="#{tipoTrimestre.label}"
-								itemValue="#{tipoTrimestre.label}" />
-						</h:selectOneMenu>
-						<h:inputHidden />
-						<h:commandButton value="Buscar"
-							styleClass="btn btn-primary"
-							actionListener="#{alunoBean.buscarMinhasNotas}" />
+						</div>
+					</div>
 
-					</h:panelGrid>
-					<br /> <br />
+			
 
 					<h:panelGrid id="tabela-notas"
 						styleClass="table tabela-lancar-nota-professor ">

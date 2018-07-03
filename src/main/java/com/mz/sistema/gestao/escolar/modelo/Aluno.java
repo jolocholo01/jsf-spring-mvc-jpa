@@ -50,6 +50,7 @@ public class Aluno extends Usuario {
 	private List<Matricula> matriculas;
 	private Escola escola;
 	private Pais pais;
+	private Funcionario funcionario;
 
 	// dados que nao sao guardado no banco
 	private String armazenaLogin;
@@ -308,6 +309,14 @@ public class Aluno extends Usuario {
 
 	public void setEscola(Escola escola) {
 		this.escola = escola;
+	}
+	@ManyToOne
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 	
 }

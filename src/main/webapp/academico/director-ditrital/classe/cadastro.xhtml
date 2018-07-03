@@ -114,7 +114,8 @@
 									<h:outputText value="Data Cadastro" />
 								</f:facet>
 								<h:outputText value="#{classe.dataCadastro}">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" type="date" />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
 								</h:outputText>
 
 							</h:column>
@@ -148,6 +149,23 @@
 									encontrada(s)"></h:outputText>
 							</f:facet>
 						</h:dataTable>
+
+						<div class="form-group row">
+							<h:outputLabel value="Legenda:" styleClass="col-sm-2"
+								style="font-weight: 500;" />
+							<div class="col-sm-3">
+								<h:graphicImage url="#{buscarFotoBean.retornarImagesEditar}"
+									styleClass="icon-editar" />
+								<h:outputLabel value="Atualizar dados"
+									styleClass="legenda-texto" />
+							</div>
+
+							<div class="col-sm-6">
+								<h:graphicImage url="#{buscarFotoBean.retornarImagesExcluir}"
+									styleClass="icon-editar" />
+								<h:outputLabel styleClass="legenda-texto" value="Excluir dados" />
+							</div>
+						</div>
 					</h:panelGroup>
 
 
@@ -219,7 +237,8 @@
 								<h:inputText styleClass="form-control"
 									value="#{classeBean.classe.dataCadastro}" required="true"
 									requiredMessage="O campo Data de Cadastro é obrigatório">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" type="date" />
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" type="date" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />

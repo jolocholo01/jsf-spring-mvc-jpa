@@ -362,7 +362,7 @@ public class MatriculaServicoImpl implements MatriculaServico {
 	@Override
 	public List<Matricula> obterMatriculaPorTurma(Integer idTurma) {
 		@SuppressWarnings("unchecked")
-		List<Matricula> matriculas = em.createQuery("FROM Matricula m  WHERE  m.turma.id=:idTurma ")
+		List<Matricula> matriculas = em.createQuery("FROM Matricula m  WHERE  m.turma.id=:idTurma order by m.numeroAlunoTurma")
 				.setParameter("idTurma", idTurma).getResultList();
 
 		if (!matriculas.isEmpty()) {
@@ -379,7 +379,7 @@ public class MatriculaServicoImpl implements MatriculaServico {
 		List<Matricula> alunos = em
 				.createQuery(
 						"from Matricula m where m.classe.id=:idClasse AND m.escola.id=:idEscola AND m.curso=:CURSO AND m.ano=:ANO AND m.tipoArea like '%"
-								+ tipoArea + "%'")
+								+ tipoArea + "%' order by m.numeroAlunoTurma")
 				.setParameter("idClasse", idClasse).setParameter("idEscola", idEscola).setParameter("CURSO", curso)
 				.setParameter("ANO", ano).getResultList();
 		if (!alunos.isEmpty()) {
@@ -429,9 +429,9 @@ public class MatriculaServicoImpl implements MatriculaServico {
 	}
 
 	@Override
-	public Long obterNumeroUltimoAlunoNaTurma(Integer idTurma) {
-		Long numeroRecibo = (Long) em
-				.createQuery("select max(cast(numeroAlunoTurma as long)) from Matricula WHERE turma.id=:idTurma")
+	public Integer obterNumeroUltimoAlunoNaTurma(Integer idTurma) {
+		Integer numeroRecibo = (Integer) em
+				.createQuery("select max(cast(numeroAlunoTurma as integer)) from Matricula WHERE turma.id=:idTurma")
 				.setParameter("idTurma", idTurma).getSingleResult();
 
 		return numeroRecibo;

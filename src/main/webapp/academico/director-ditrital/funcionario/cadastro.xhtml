@@ -70,10 +70,10 @@
 									<div class="input-group">
 										<h:inputText styleClass="form-control"
 											value="#{funcionarioBean.pesquisa}" required="true"
-											requiredMessage="Aviso: O campo procurar é Obrigatório">
+											requiredMessage="Aviso: O campo procurar funcionário é obrigatório!">
 											<f:passThroughAttribute name="placeholder"
 												value="Qual funcionário que você está procurar?" />
-											<f:passThroughAttribute name="autofocus" value="true" />
+
 										</h:inputText>
 										<span class="input-group-btn"> <h:commandButton
 												styleClass="btn btn-primary" value="Buscar!"
@@ -131,7 +131,8 @@
 										<h:outputText value="Data de Cadastro" />
 									</f:facet>
 									<h:outputText value="#{funcionario.dataCadastro}">
-										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare"/>
+										<f:convertDateTime pattern="dd/MM/yyyy"
+											timeZone="Africa/Harare" />
 									</h:outputText>
 								</h:column>
 								<h:column headerClass="thead">
@@ -143,18 +144,20 @@
 											styleClass="icon-editar" />
 									</h:commandLink>
 
-									<h:commandLink title="Alocar funcionário na Escola"
+									<h:commandLink title="Alocar funcionário na escola?"
 										actionListener="#{funcionarioBean.buscarDadosFuncionaroSelecionado(funcionario)}"
-										styleClass="tooltip-left" style="margin-right: 12px;">
-										<h:graphicImage url="#{buscarFotoBean.retornarImagesFun}"
-											styleClass="icon-alocar"></h:graphicImage>
+										styleClass="tooltip-left"
+										style="margin-right: 12px; color: #333; text-decoration: none;">
+
+										<h:graphicImage url="#{buscarFotoBean.retornarImagesEscola}"
+											styleClass="icon-editar" />
 									</h:commandLink>
 
-									<h:commandLink title="Emitir dados do Funcionário"
+									<h:commandLink title="Emitir dados deste funcionário?"
 										actionListener="#{funcionarioBean.impromirRecibo(funcionario)}"
 										styleClass="tooltip-left" style="margin-right: 12px;">
 										<h:graphicImage url="#{buscarFotoBean.retornarImagesEmitir}"
-											 styleClass="icon-emitir"></h:graphicImage>
+											styleClass="icon-emitir"></h:graphicImage>
 									</h:commandLink>
 
 									<h:commandLink title="Excluir este funcionário?"
@@ -173,9 +176,48 @@
 										value="#{funcionarioBean.funcionarioEncontrado} funcionário(s) encontrado(s)"></h:outputText>
 								</f:facet>
 							</h:dataTable>
+							<div class="form-group row">
+
+								<h:outputLabel value="Legenda:" styleClass="col-sm-2"
+									style="font-weight: 500;" />
+
+
+								<div class="col-sm-4">
+									<h:graphicImage url="#{buscarFotoBean.retornarImagesEditar}"
+										styleClass="icon-editar" />
+									<h:outputLabel value="Atualizar dados do funcionário"
+										styleClass="legenda-texto" />
+								</div>
+								<div class="col-sm-6">
+									<h:graphicImage url="#{buscarFotoBean.retornarImagesEscola}"
+										styleClass="icon-editar" />
+									<h:outputLabel styleClass="legenda-texto"
+										value="Alocar funcionário na escola" />
+
+								</div>
+							</div>
+							<div class="form-group row">
+								<h:outputLabel styleClass="col-sm-2" style="font-weight: 500;" />
+
+								<div class="col-sm-4">
+									<h:graphicImage url="#{buscarFotoBean.retornarImagesEmitir}"
+										styleClass="icon-editar" />
+									<h:outputLabel styleClass="legenda-texto"
+										value="Emitir dados do funcionário" />
+								</div>
+								<div class="col-sm-6">
+									<h:graphicImage url="#{buscarFotoBean.retornarImagesExcluir}"
+										styleClass="icon-editar" />
+									<h:outputLabel styleClass="legenda-texto"
+										value="Excluir funcionário" />
+								</div>
+							</div>
 						</h:panelGroup>
 
-
+						<ui:remove>
+							<h:graphicImage url="#{buscarFotoBean.retornarImagesFun}"
+								styleClass="icon-alocar"></h:graphicImage>
+						</ui:remove>
 
 
 						<!-- Cadastro de Funcionário -->
@@ -326,7 +368,7 @@
 										<h:inputText
 											value="#{funcionarioBean.funcionario.dataNascimento}"
 											class="form-control" required="true"
-											requiredMessage="O campo Data Nasci. é obrigatório" >
+											requiredMessage="O campo Data Nasci. é obrigatório">
 
 											<f:passThroughAttribute name="data-provide"
 												value="datepicker" />
@@ -341,7 +383,8 @@
 											<f:passThroughAttribute name="data-date-orientation"
 												value="bottom" />
 											<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
-											<f:convertDateTime pattern="dd/MM/yyyy" type="time" timeZone="Africa/Harare" />
+											<f:convertDateTime pattern="dd/MM/yyyy" type="time"
+												timeZone="Africa/Harare" />
 
 										</h:inputText>
 
@@ -382,7 +425,8 @@
 											<f:passThroughAttribute name="data-date-orientation"
 												value="top" />
 											<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
-											<f:convertDateTime pattern="dd/MM/yyyy" type="time" timeZone="Africa/Harare"/>
+											<f:convertDateTime pattern="dd/MM/yyyy" type="time"
+												timeZone="Africa/Harare" />
 
 										</h:inputText>
 
@@ -454,10 +498,10 @@
 											<f:passThroughAttribute name="placeholder"
 												value="exemplo@exemplos.com" />
 
-							<f:validateRegex
-								pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]">
+											<f:validateRegex
+												pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]">
 
-							</f:validateRegex>
+											</f:validateRegex>
 										</h:inputText>
 									</div>
 								</div>
@@ -474,11 +518,12 @@
 									<h:outputLabel styleClass="col-sm-3 col-form-label"
 										value="Categoria: " />
 									<div class="col-sm-5">
-										<h:selectOneMenu value="#{funcionarioBean.funcionario.funcao}" styleClass="form-control">
+										<h:selectOneMenu value="#{funcionarioBean.funcionario.funcao}"
+											styleClass="form-control">
 											<f:selectItem itemLabel="Selecione..." itemValue="#{null}" />
 											<f:selectItems value="#{funcionarioBean.tipoFuncoes}"
 												var="funcao" itemLabel="#{funcao.label}"
-												itemValue="#{funcao.label}"/>
+												itemValue="#{funcao.label}" />
 										</h:selectOneMenu>
 									</div>
 								</div>
@@ -509,7 +554,8 @@
 											<f:passThroughAttribute name="data-date-orientation"
 												value="bottom" />
 											<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
-											<f:convertDateTime pattern="dd/MM/yyyy" type="time" timeZone="Africa/Harare"/>
+											<f:convertDateTime pattern="dd/MM/yyyy" type="time"
+												timeZone="Africa/Harare" />
 
 										</h:inputText>
 
@@ -535,13 +581,13 @@
 
 
 								<div class="form-group" style="text-align: center;">
-								<h:commandButton value="Cancelar" styleClass="btn btn-danger"
-										action="#{funcionarioBean.voltarPesquisa}"
-										immediate="true" style="background-color: #423637;" />
-								
+									<h:commandButton value="Cancelar" styleClass="btn btn-danger"
+										action="#{funcionarioBean.voltarPesquisa}" immediate="true"
+										style="background-color: #423637;" />
+
 									<h:commandButton value="Voltar" immediate="true"
 										actionListener="#{funcionarioBean.voltarAvancar}"
-										styleClass="btn btn-success" style="margin-left:1%;"/>
+										styleClass="btn btn-success" style="margin-left:1%;" />
 									<h:commandButton value="Atualizar "
 										styleClass="btn btn-primary" style="margin-left:1%;"
 										actionListener="#{funcionarioBean.salvar}"

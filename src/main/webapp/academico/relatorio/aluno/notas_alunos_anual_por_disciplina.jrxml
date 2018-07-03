@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-05-03T02:11:57 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notas_anual" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="838" leftMargin="2" rightMargin="2" topMargin="10" bottomMargin="10" uuid="9a0dfb25-e72b-4f61-b070-8a9e40fbb38b">
+<!-- 2018-06-29T12:56:43 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notas_anual" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoPages" columnWidth="838" leftMargin="2" rightMargin="2" topMargin="10" bottomMargin="10" uuid="9a0dfb25-e72b-4f61-b070-8a9e40fbb38b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="668"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="318"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="disciplina" class="java.lang.String"/>
 	<parameter name="professor" class="java.lang.String"/>
 	<parameter name="idTurma" class="java.lang.Integer"/>
@@ -129,42 +137,59 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 	<field name="mediatrimestral2" class="java.lang.Integer"/>
 	<field name="mediatrimestral3" class="java.lang.Integer"/>
 	<field name="situacao2" class="java.lang.String"/>
+	<group name="Group1">
+		<groupFooter>
+			<band height="1">
+				<line>
+					<reportElement isPrintRepeatedValues="false" x="20" y="0" width="801" height="1" isPrintInFirstWholeBand="true" uuid="81c7e97d-c92b-47ec-a2ab-4f3aa73c77a6">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.3"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="118" splitType="Stretch">
+		<band height="139" splitType="Stretch">
 			<image hAlign="Center">
-				<reportElement x="20" y="0" width="801" height="39" uuid="c1b45cfd-64c3-4a08-997f-853deba26e63"/>
+				<reportElement x="20" y="13" width="801" height="27" uuid="c1b45cfd-64c3-4a08-997f-853deba26e63"/>
 				<imageExpression><![CDATA["emblema.png"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="20" y="51" width="802" height="13" uuid="40ab9651-c2be-4046-a20b-29fa1d370d6a"/>
+				<reportElement x="20" y="56" width="798" height="15" uuid="40ab9651-c2be-4046-a20b-29fa1d370d6a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Courier New" size="9" isBold="false"/>
+					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["PROVÇNCIA DE "+$F{provincia}.replace("MANICA", "Manica" ).replace("TETE", "Tete" ).replace("SOFALA", "Sofala" ).replace("GAZA", "Gaza" ).replace("INHAMBANE", "Inhambane" ).replace("ZAMBEZIA", "Zambezia").replace("NAMPULA", "Nampula").replace("NIASSA", "Niassa").replace("CABO_DELEGADO", "Cabo Delegado").replace( "MAPUTO", "Maputo" ).toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA["PROVÍNCIA DE "+$F{provincia}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="81" width="800" height="12" uuid="0e937600-18bc-4bfa-a91b-376c4357815b">
+				<reportElement x="20" y="88" width="800" height="15" uuid="0e937600-18bc-4bfa-a91b-376c4357815b">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.3"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Courier New" size="9" isBold="true"/>
+					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{escola}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="66" width="801" height="12" uuid="aed0f2cd-9f9d-4dc0-8e62-2dad3bdf0960">
+				<reportElement x="20" y="72" width="801" height="15" uuid="aed0f2cd-9f9d-4dc0-8e62-2dad3bdf0960">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Courier New" size="9" isBold="false"/>
+					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["GOVERNO DO DISTRITO DE " +$F{distrito}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="95" width="802" height="15" uuid="1681c783-487d-49b3-b429-f7d7db11a215">
+				<reportElement x="20" y="110" width="802" height="23" uuid="1681c783-487d-49b3-b429-f7d7db11a215">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -172,38 +197,23 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 					<pen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Courier New" size="9" isBold="true"/>
+					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["CADERNETA DE CONTROLO DE AVALIAÇÕES"]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="20" y="39" width="801" height="12" uuid="d926b71a-9642-42d1-9f07-9f23a534784a">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<box>
-					<bottomPen lineWidth="0.0"/>
-				</box>
+			<textField>
+				<reportElement x="20" y="42" width="800" height="15" uuid="6c1f1ac5-1583-4c66-8f78-2639a84643db"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Courier New" size="9" isBold="false"/>
+					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[REP�BLICA DE MO�AMBIQUE]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["REPÚBLICA DE MOÇAMBIQUE"]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="110" splitType="Stretch">
-			<staticText>
-				<reportElement x="27" y="20" width="80" height="15" uuid="1f1a293f-606d-482f-878e-9a891350a2b2">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<box topPadding="2" leftPadding="5"/>
-				<textElement>
-					<font fontName="Courier New" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Disciplina:]]></text>
-			</staticText>
+		<band height="127" splitType="Stretch">
 			<textField>
-				<reportElement x="100" y="20" width="184" height="15" uuid="57cb3ca8-b8de-486e-adba-a4f1b3afe702"/>
+				<reportElement x="100" y="32" width="184" height="15" uuid="57cb3ca8-b8de-486e-adba-a4f1b3afe702"/>
 				<box topPadding="0">
 					<bottomPen lineWidth="0.3"/>
 				</box>
@@ -212,38 +222,18 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{disciplina}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="27" y="38" width="80" height="15" uuid="db2d0c2d-620d-4c11-9dd8-ba5b4f62f3f3">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<box topPadding="2" leftPadding="5"/>
-				<textElement>
-					<font fontName="Courier New" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Ano Lectivo:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="27" y="2" width="70" height="15" uuid="6a7b7ef3-dd6c-40c6-a822-b427275e7d13">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<box topPadding="2" leftPadding="5"/>
-				<textElement>
-					<font fontName="Courier New" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Professor:]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="109" y="38" width="38" height="15" uuid="61161c8f-f78d-434e-8f7e-113d3de68c5c"/>
+				<reportElement x="109" y="53" width="38" height="15" uuid="61161c8f-f78d-434e-8f7e-113d3de68c5c"/>
 				<box topPadding="0">
 					<bottomPen lineWidth="0.3"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Courier New" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ano}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="141" y="39" width="54" height="15" uuid="659db788-afa7-4e53-9146-220144de458d">
+				<reportElement x="141" y="53" width="54" height="15" uuid="659db788-afa7-4e53-9146-220144de458d">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -253,7 +243,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[Classe:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="192" y="40" width="74" height="15" uuid="957d3fec-b34a-46a5-8fb7-c6251091b8f4"/>
+				<reportElement x="192" y="53" width="74" height="15" uuid="957d3fec-b34a-46a5-8fb7-c6251091b8f4"/>
 				<box topPadding="0">
 					<bottomPen lineWidth="0.3"/>
 				</box>
@@ -263,7 +253,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textFieldExpression><![CDATA[$F{classe}.toLowerCase()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="266" y="41" width="54" height="15" uuid="3fc4f163-ec13-4df0-8b8a-a33280eb6364">
+				<reportElement x="266" y="54" width="54" height="15" uuid="3fc4f163-ec13-4df0-8b8a-a33280eb6364">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -273,7 +263,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[Turma:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="312" y="42" width="86" height="15" uuid="df22a793-890f-486d-b1c5-229d0f122cc9"/>
+				<reportElement x="312" y="54" width="86" height="15" uuid="df22a793-890f-486d-b1c5-229d0f122cc9"/>
 				<box topPadding="0">
 					<bottomPen lineWidth="0.3"/>
 				</box>
@@ -284,7 +274,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 .replace( "TARDE", "Tarde" ).replace( "NOITE", "Noite" )]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="95" y="3" width="292" height="15" uuid="97f52ab0-dbb9-4645-8b6f-4607a5ab5c39"/>
+				<reportElement x="95" y="15" width="292" height="15" uuid="97f52ab0-dbb9-4645-8b6f-4607a5ab5c39"/>
 				<box topPadding="0">
 					<bottomPen lineWidth="0.3"/>
 				</box>
@@ -294,7 +284,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textFieldExpression><![CDATA[$P{professor}==null?"Sem Professor":$P{professor}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="48" y="64" width="169" height="15" uuid="6c32f99d-5081-412b-8cdd-8ea654621e20">
+				<reportElement x="48" y="76" width="169" height="15" uuid="6c32f99d-5081-412b-8cdd-8ea654621e20">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -304,7 +294,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[ = Avaliação Continua]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="302" y="63" width="210" height="15" uuid="8ce4c226-4de7-4745-b3e7-0202d0c87586">
+				<reportElement x="302" y="75" width="210" height="15" uuid="8ce4c226-4de7-4745-b3e7-0202d0c87586">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -314,7 +304,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[= Média de Avaliação Continua]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="296" y="78" width="229" height="15" uuid="cafb9b4c-3425-452d-a1dd-db94d7ec3a81">
+				<reportElement x="296" y="90" width="229" height="15" uuid="cafb9b4c-3425-452d-a1dd-db94d7ec3a81">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -324,7 +314,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[ = Média de Avaliação Sistemática]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="48" y="79" width="202" height="15" uuid="cd3a4456-1188-49a6-a810-8e37feef06f5">
+				<reportElement x="48" y="91" width="202" height="15" uuid="cd3a4456-1188-49a6-a810-8e37feef06f5">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -334,7 +324,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[ = Avaliação Sistematica ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="296" y="94" width="229" height="15" uuid="e09b77bc-e724-4f25-a46e-b8f961dbdeb6">
+				<reportElement x="296" y="106" width="229" height="15" uuid="e09b77bc-e724-4f25-a46e-b8f961dbdeb6">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -344,7 +334,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[ = Média Trimestral]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="28" y="64" width="19" height="15" uuid="094f90c1-37e8-40a6-a102-245d391e7888">
+				<reportElement x="28" y="75" width="19" height="15" uuid="094f90c1-37e8-40a6-a102-245d391e7888">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -354,7 +344,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[AC]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="28" y="79" width="19" height="15" uuid="f07bccca-6b67-4480-8399-f9481febe92a">
+				<reportElement x="28" y="91" width="19" height="15" uuid="f07bccca-6b67-4480-8399-f9481febe92a">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -364,7 +354,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[AS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="281" y="63" width="29" height="15" uuid="e6ef1415-a04a-4e0f-a225-cae48744f1ec">
+				<reportElement x="281" y="75" width="29" height="15" uuid="e6ef1415-a04a-4e0f-a225-cae48744f1ec">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -374,7 +364,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[MAC]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="281" y="79" width="29" height="15" uuid="4869edc4-1c81-410c-a181-552a51c33bf5">
+				<reportElement x="281" y="91" width="29" height="15" uuid="4869edc4-1c81-410c-a181-552a51c33bf5">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -384,7 +374,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[MAS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="281" y="94" width="32" height="15" uuid="78ce1113-1cb3-4b87-a125-ec8b8053ec0e">
+				<reportElement x="281" y="106" width="32" height="15" uuid="78ce1113-1cb3-4b87-a125-ec8b8053ec0e">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -394,7 +384,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[MT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="48" y="95" width="219" height="15" uuid="b2c4056c-fbd6-417d-b5f7-6c32cd8ab7d0">
+				<reportElement x="48" y="107" width="219" height="15" uuid="b2c4056c-fbd6-417d-b5f7-6c32cd8ab7d0">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -404,7 +394,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[ = Avaliação Periódica Trimestral]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="28" y="95" width="29" height="15" uuid="751b3587-bdce-4552-b180-18e6793245ec">
+				<reportElement x="28" y="107" width="29" height="15" uuid="751b3587-bdce-4552-b180-18e6793245ec">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -414,7 +404,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[APT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="566" y="64" width="29" height="15" uuid="d9f44717-e070-4dea-ab87-c01eaff9491f">
+				<reportElement x="566" y="76" width="29" height="15" uuid="d9f44717-e070-4dea-ab87-c01eaff9491f">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -424,7 +414,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[MFD]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="592" y="64" width="210" height="15" uuid="1e0f7e27-bc1e-45a3-a134-da6f1965d28b">
+				<reportElement x="592" y="76" width="210" height="15" uuid="1e0f7e27-bc1e-45a3-a134-da6f1965d28b">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -434,40 +424,40 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[= Média Frequência Por Disciplina]]></text>
 			</staticText>
 			<line>
-				<reportElement x="20" y="0" width="1" height="109" uuid="da9aa8a5-db57-4608-90ad-1f3d5ea44da1"/>
+				<reportElement x="20" y="12" width="1" height="109" uuid="da9aa8a5-db57-4608-90ad-1f3d5ea44da1"/>
 				<graphicElement>
 					<pen lineWidth="0.3"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="20" y="0" width="802" height="1" uuid="68f840f4-8e37-44ee-b80b-b76fb9c82e9a"/>
+				<reportElement x="20" y="12" width="802" height="1" uuid="68f840f4-8e37-44ee-b80b-b76fb9c82e9a"/>
 				<graphicElement>
 					<pen lineWidth="0.3"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="20" y="109" width="802" height="1" uuid="5984b2d9-122f-4367-ab10-f6fbcc9dfb40"/>
+				<reportElement x="20" y="121" width="802" height="1" uuid="5984b2d9-122f-4367-ab10-f6fbcc9dfb40"/>
 				<graphicElement>
 					<pen lineWidth="0.3"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="821" y="0" width="1" height="109" uuid="ddc691f6-8951-4665-a0aa-bb0fc649f853"/>
+				<reportElement x="821" y="12" width="1" height="109" uuid="ddc691f6-8951-4665-a0aa-bb0fc649f853"/>
 				<graphicElement>
 					<pen lineWidth="0.3"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="525" y="10" width="95" height="12" uuid="e43f1cdd-cbcc-478f-b259-4bc659541d88">
+				<reportElement x="513" y="22" width="95" height="12" uuid="e43f1cdd-cbcc-478f-b259-4bc659541d88">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement>
 					<font fontName="Courier New" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Impresso no dia]]></text>
+				<text><![CDATA[Emitido no dia]]></text>
 			</staticText>
 			<textField pattern="dd-MM-yyyy">
-				<reportElement x="604" y="10" width="61" height="12" uuid="f4fb35f7-4e00-430d-acf7-7397cad8e7ae">
+				<reportElement x="592" y="22" width="61" height="12" uuid="f4fb35f7-4e00-430d-acf7-7397cad8e7ae">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -476,16 +466,16 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="665" y="10" width="24" height="12" uuid="c5237737-0773-4dc0-adb9-fed23f44d3e1">
+				<reportElement x="653" y="22" width="42" height="12" uuid="c5237737-0773-4dc0-adb9-fed23f44d3e1">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="Courier New" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ as]]></text>
+				<text><![CDATA[pelas]]></text>
 			</staticText>
 			<textField pattern="HH:mm">
-				<reportElement x="689" y="10" width="100" height="12" uuid="c11c890b-6b01-41af-ac05-119dd6298b2b">
+				<reportElement x="692" y="22" width="100" height="12" uuid="c11c890b-6b01-41af-ac05-119dd6298b2b">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement>
@@ -494,7 +484,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="396" y="42" width="54" height="15" uuid="4f2a81a2-6cef-45a2-9a84-ad216cd25883">
+				<reportElement x="396" y="54" width="54" height="15" uuid="4f2a81a2-6cef-45a2-9a84-ad216cd25883">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -504,7 +494,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[Curso:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="442" y="42" width="74" height="15" uuid="904e7266-3973-4d05-9f30-f33b86b183f7"/>
+				<reportElement x="442" y="54" width="74" height="15" uuid="904e7266-3973-4d05-9f30-f33b86b183f7"/>
 				<box topPadding="0">
 					<bottomPen lineWidth="0.3"/>
 				</box>
@@ -512,6 +502,36 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 					<font fontName="Courier New" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="27" y="15" width="68" height="15" uuid="442e6176-0aa1-4210-b88b-3fbae75cab21"/>
+				<box topPadding="0">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Professor:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="27" y="31" width="73" height="15" uuid="20452e8f-2cfb-416a-b5c6-977bcf32f79c"/>
+				<box topPadding="0">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Disciplina:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="28" y="53" width="92" height="15" uuid="8b09d389-e8a3-4d58-ab46-28f21f11553a"/>
+				<box topPadding="0">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ano Lectivo:"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -1021,7 +1041,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<box topPadding="0" leftPadding="0">
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="0.5"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
 					<font fontName="Courier New" isBold="true"/>
@@ -1091,7 +1111,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="Courier New" size="6"/>
+					<font fontName="Courier New" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT} < 10 ?"0"+ $V{REPORT_COUNT} :$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
@@ -1102,7 +1122,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 					<bottomPen lineWidth="0.3"/>
 				</box>
 				<textElement>
-					<font fontName="Courier New" size="6"/>
+					<font fontName="Courier New" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{aluno}]]></textFieldExpression>
 			</textField>
@@ -1116,12 +1136,12 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Courier New" size="7"/>
+					<font fontName="Courier New" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sexo}?"M":"F"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,##0.###-">
-				<reportElement x="233" y="0" width="21" height="15" forecolor="#000000" uuid="841a07c6-80d7-471c-b583-0f1050ea9146"/>
+				<reportElement x="233" y="0" width="21" height="15" forecolor="#000000" backcolor="#055CFC" uuid="841a07c6-80d7-471c-b583-0f1050ea9146"/>
 				<box topPadding="0">
 					<leftPen lineWidth="0.3"/>
 					<bottomPen lineWidth="0.3"/>
@@ -1216,7 +1236,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textFieldExpression><![CDATA[$F{avaliacaofinal}== null ? "" :$F{avaliacaofinal}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,##0.###-">
-				<reportElement x="401" y="0" width="21" height="15" forecolor="#000000" uuid="0288290d-cde3-4a75-bc9b-91f2f820cdac">
+				<reportElement x="401" y="0" width="21" height="15" backcolor="#FFFFFF" uuid="0288290d-cde3-4a75-bc9b-91f2f820cdac">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box topPadding="0">
@@ -1442,7 +1462,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<box topPadding="0">
 					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.5"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Courier New" size="6"/>
@@ -1452,96 +1472,43 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="62" splitType="Stretch">
-			<staticText>
-				<reportElement x="20" y="9" width="231" height="20" uuid="c2b5fb6f-9cd2-4ecf-8b7d-9e2bfef06443"/>
-				<box topPadding="3"/>
-				<textElement textAlignment="Center">
-					<font fontName="Currie new" size="9"/>
-				</textElement>
-				<text><![CDATA[O Professor(a)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="279" y="6" width="260" height="20" uuid="c7ac9abb-0e2c-47f1-905f-7bc52b69f3d2"/>
-				<box topPadding="3"/>
-				<textElement textAlignment="Center">
-					<font fontName="Currie new" size="9"/>
-				</textElement>
-				<text><![CDATA[O Director Adjunto da Escola]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="580" y="7" width="240" height="20" uuid="0121d221-94bf-4705-8bf9-27002ef203f6"/>
-				<box topPadding="3"/>
-				<textElement textAlignment="Center">
-					<font fontName="Currie new" size="9"/>
-				</textElement>
-				<text><![CDATA[O Director da Escola]]></text>
-			</staticText>
-			<line>
-				<reportElement x="20" y="37" width="231" height="1" uuid="b9c6f62a-712c-4990-bcfd-0af32837ad21"/>
-				<graphicElement>
-					<pen lineWidth="0.3"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="280" y="37" width="259" height="1" uuid="efc639cd-b801-459b-b225-bfa89163b72c"/>
-				<graphicElement>
-					<pen lineWidth="0.3"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="580" y="37" width="239" height="1" uuid="dbbb2b3a-2fa8-44bc-b933-8ab47de94a2c"/>
-				<graphicElement>
-					<pen lineWidth="0.3"/>
-				</graphicElement>
-			</line>
-			<staticText>
-				<reportElement x="20" y="45" width="236" height="15" uuid="e4661859-c934-41a3-b2a2-63a1f683fbb5">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<box topPadding="3"/>
-				<textElement textAlignment="Center">
-					<font fontName="Currie new" size="9"/>
-				</textElement>
-				<text><![CDATA[______/_____/________]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="285" y="47" width="251" height="15" uuid="35e309df-5470-4041-a2dc-fbb9f264603d">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<box topPadding="3"/>
-				<textElement textAlignment="Center">
-					<font fontName="Currie new" size="9"/>
-				</textElement>
-				<text><![CDATA[______/_____/________]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="583" y="45" width="237" height="15" uuid="15c367c8-db85-41cf-b875-16483bd1b2b3"/>
-				<box topPadding="3"/>
-				<textElement textAlignment="Center">
-					<font fontName="Currie new" size="9"/>
-				</textElement>
-				<text><![CDATA[______/_____/________]]></text>
-			</staticText>
-		</band>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="23" splitType="Stretch">
+		<band height="38" splitType="Stretch">
 			<textField>
-				<reportElement x="20" y="2" width="801" height="21" uuid="48148db2-8e0c-467c-8c32-55c12acf227c"/>
+				<reportElement x="200" y="13" width="400" height="21" uuid="48148db2-8e0c-467c-8c32-55c12acf227c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
 				<box topPadding="6">
-					<topPen lineWidth="0.0"/>
+					<topPen lineWidth="0.3"/>
 					<bottomPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Courier New"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Pag. " + $V{PAGE_NUMBER}+" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="301" y="14" width="100" height="20" uuid="748d1d5a-3a55-407f-9209-dfdb7fe9661c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pag. " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="401" y="14" width="100" height="20" uuid="316bca33-e3af-4d32-8b7d-fd61d3333a39"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="47" splitType="Stretch">
+		<band height="160" splitType="Stretch">
 			<staticText>
 				<reportElement x="89" y="21" width="42" height="15" uuid="574c89ef-704b-46e1-85ce-34fce13c1b54">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -1687,6 +1654,76 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 					<font fontName="Courier New"/>
 				</textElement>
 				<text><![CDATA[3]]></text>
+			</staticText>
+			<line>
+				<reportElement x="20" y="105" width="231" height="1" uuid="b9c6f62a-712c-4990-bcfd-0af32837ad21"/>
+				<graphicElement>
+					<pen lineWidth="0.3"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="580" y="75" width="240" height="20" uuid="0121d221-94bf-4705-8bf9-27002ef203f6"/>
+				<box topPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Currie new" size="9"/>
+				</textElement>
+				<text><![CDATA[O Director da Escola]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="113" width="230" height="15" uuid="e4661859-c934-41a3-b2a2-63a1f683fbb5">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Currie new" size="9"/>
+				</textElement>
+				<text><![CDATA[______/_____/________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="115" width="260" height="15" uuid="35e309df-5470-4041-a2dc-fbb9f264603d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Currie new" size="9"/>
+				</textElement>
+				<text><![CDATA[______/_____/________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="580" y="113" width="240" height="15" uuid="15c367c8-db85-41cf-b875-16483bd1b2b3"/>
+				<box topPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Currie new" size="9"/>
+				</textElement>
+				<text><![CDATA[______/_____/________]]></text>
+			</staticText>
+			<line>
+				<reportElement x="280" y="105" width="259" height="1" uuid="efc639cd-b801-459b-b225-bfa89163b72c"/>
+				<graphicElement>
+					<pen lineWidth="0.3"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="580" y="105" width="239" height="1" uuid="dbbb2b3a-2fa8-44bc-b933-8ab47de94a2c"/>
+				<graphicElement>
+					<pen lineWidth="0.3"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="20" y="77" width="231" height="20" uuid="c2b5fb6f-9cd2-4ecf-8b7d-9e2bfef06443"/>
+				<box topPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Currie new" size="9"/>
+				</textElement>
+				<text><![CDATA[O Professor(a)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="74" width="268" height="20" uuid="c7ac9abb-0e2c-47f1-905f-7bc52b69f3d2"/>
+				<box topPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Currie new" size="9"/>
+				</textElement>
+				<text><![CDATA[O Director Adjunto da Escola]]></text>
 			</staticText>
 		</band>
 	</summary>

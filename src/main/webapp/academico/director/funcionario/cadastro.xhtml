@@ -174,7 +174,7 @@
 									<h:outputLabel value="Nome Completo:*"
 										styleClass="col-sm-2 control-label texto-label texto-right" />
 									<div class="col-sm-8">
-										<h:inputText value="#{funcionarioEscolaBean.funcionario.nome}"
+										<h:inputText 	onblur="this.value = this.value.toUpperCase();" value="#{funcionarioEscolaBean.funcionario.nome}"
 											styleClass="form-control" />
 
 									</div>

@@ -7,9 +7,11 @@ import com.mz.sistema.gestao.escolar.modelo.Trimestre;
 public interface TrimestreServico {
 	public void salvar(Trimestre trimestre);
 	public void excluir(Trimestre trimestre);
-	public List<Trimestre> obterTrimestrePorIdCalendario(Long idCalendario);
+	public List<Trimestre> obterTrimestresPorCalendarioVigente();
 	public Trimestre obterTrimestreAtivo();
 	public void virificarTrimestreDeHoje();
 	public List<Trimestre> obterTodosTrimestresPorAno(Integer ano);
+	public List<Trimestre> obterTrimestrePorIdCalendario(long idCalendario);
+	public Trimestre obterTrimestrePorId(long idTrimestre);
 
 }

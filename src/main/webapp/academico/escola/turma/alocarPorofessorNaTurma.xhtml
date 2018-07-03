@@ -167,38 +167,38 @@
 
 					<div class="form-group row" style="margin-bottom: 0;">
 						<h:outputLabel value="Período lectivo: "
-							styleClass="col-sm-4 control-label textfim" />
+							styleClass="col-sm-4 control-label textfim bolder" />
 
 						<h:outputText value="#{professorTurmaBean.turma.ano}"
-							styleClass="col-sm-2 form-control-static text_label" />
+							styleClass="col-sm-2 form-control-static " />
 
 					</div>
 
 					<div class="form-group row">
 						<h:outputLabel value="Classe: "
-							styleClass="col-sm-4 control-label textfim" />
+							styleClass="col-sm-4 control-label textfim bolder" />
 						<h:outputText
 							value="#{professorTurmaBean.turmaSelecionada.classe.descricao}"
-							styleClass="col-sm-8 form-control-static text_label" />
+							styleClass="col-sm-8 form-control-static " />
 
 					</div>
 					<h:panelGroup
 						rendered="#{professorTurmaBean.turmaSelecionada.area !=null}">
 						<div class="form-group row">
 							<h:outputLabel value="Área Curricular: "
-								styleClass="col-sm-4 control-label textfim" />
+								styleClass="col-sm-4 control-label textfim bolder" />
 							<h:outputText
 								value="#{professorTurmaBean.turmaSelecionada.classe.descricao} #{professorTurmaBean.turmaSelecionada.area}"
-								styleClass="col-sm-10 form-control-static text_label" />
+								styleClass="col-sm-7 form-control-static " />
 
 						</div>
 					</h:panelGroup>
 					<div class="form-group row">
 						<h:outputLabel value="Turma: "
-							styleClass="col-sm-4 control-label textfim" />
+							styleClass="col-sm-4 control-label textfim bolder" />
 						<h:outputText
 							value="#{professorTurmaBean.turmaSelecionada.descricao} / #{professorTurmaBean.turmaSelecionada.turno.descricao}"
-							styleClass="col-sm-8 form-control-static text_label" />
+							styleClass="col-sm-8 form-control-static " />
 
 					</div>
 					<div class="form-group row">
@@ -224,7 +224,7 @@
 						rendered="#{professorTurmaBean.turmaSelecionada.curso=='DIURNO'}">
 						<div class="form-group row">
 							<h:outputLabel value="É Lecionada no turno extra?:"
-								styleClass="col-sm-4 control-label textfim" />
+								styleClass="col-sm-4 control-label textfim bolder" />
 							<div class="col-sm-1">
 								<h:selectBooleanCheckbox
 									value="#{professorTurmaBean.elecionadaTurnoExtra}"
@@ -250,292 +250,359 @@
 				</h:panelGroup>
 				<h:panelGroup
 					rendered="#{professorTurmaBean.disciplinaTurmaSelecionada !=false}">
-<h:panelGroup
-					rendered="#{professorTurmaBean.buscarProfessorBoolean == false}">
-					<div class="form-group row">
-						<h:outputLabel value="Turma: "
-							styleClass="col-sm-2 control-label textfim" />
-						<h:outputText
-							value="#{professorTurmaBean.turmaSelecionada.classe.sigla}ª / #{professorTurmaBean.turmaSelecionada.descricao} / #{professorTurmaBean.turmaSelecionada.turno.descricao}"
-							styleClass="col-sm-8 form-control-static" />
+					<h:panelGroup
+						rendered="#{professorTurmaBean.buscarProfessorBoolean == false}">
 
-					</div>
-					<div class="form-group row">
-						<h:outputLabel value="Disciplina: "
-							styleClass="col-sm-2 control-label textfim " />
-						<h:outputText
-							value="#{professorTurmaBean.disciplinaClasse.disciplina.descricao}"
-							styleClass="col-sm-8 form-control-static" />
+						<h:panelGroup
+							rendered="#{professorTurmaBean.alocadoComSucessoBoolean == false}">
 
-					</div>
-					<div class="form-group row">
-						<h:outputLabel value="Carga Horária: "
-							styleClass="col-sm-2 control-label textfim" />
-						<h:outputText
-							value="#{professorTurmaBean.disciplinaClasse.credito} Aula(s) / Semana"
-							styleClass="col-sm-8 form-control-static" />
+							<div class="form-group row">
+								<h:outputLabel value="Turma: "
+									styleClass="col-sm-2 control-label textfim" />
+								<h:outputText
+									value="#{professorTurmaBean.turmaSelecionada.classe.sigla}ª / #{professorTurmaBean.turmaSelecionada.descricao} / #{professorTurmaBean.turmaSelecionada.turno.descricao}"
+									styleClass="col-sm-8 form-control-static" />
 
-					</div>
-					<div class="form-group row">
-						<h:outputLabel value="Professor:"
-							styleClass="col-sm-2 control-label texto-label textfim" />
-						<div class="col-sm-6" style="padding-right: 2px;">
+							</div>
+							<div class="form-group row">
+								<h:outputLabel value="Disciplina: "
+									styleClass="col-sm-2 control-label textfim " />
+								<h:outputText
+									value="#{professorTurmaBean.disciplinaClasse.disciplina.descricao}"
+									styleClass="col-sm-8 form-control-static" />
 
-							<h:inputText value="#{professorTurmaBean.professor}"
-								styleClass="form-control campoFuncionario" required="true"
-								requiredMessage="O campo professor é obrigatório "
-								readonly="true" />
+							</div>
+							<div class="form-group row">
+								<h:outputLabel value="Carga horária: "
+									styleClass="col-sm-2 control-label textfim" />
+								<h:outputText
+									value="#{professorTurmaBean.disciplinaClasse.credito} Aula(s) / Semana"
+									styleClass="col-sm-8 form-control-static" />
 
-						</div>
-						<h:commandLink
-							actionListener="#{professorTurmaBean.procurarProfessor}"
-							immediate="true" title="Procurar o professor?">
-							<f:passThroughAttribute name="data-toggle" value="tooltip" />
-							<f:passThroughAttribute name="data-placement" value="left" />
-							<p:graphicImage url="#{buscarFotoBean.retornarImagesSeach}"
-								style="margin-top: 1.3%;width: 20px;" />
-						</h:commandLink>
-					</div>
-					<div class="form-group row">
-						<h:outputLabel value="Horário Turma:"
-							styleClass="col-sm-2 control-label texto-label textfim" />
-						<div class="col-sm-10">
+							</div>
+							<div class="form-group row">
+								<h:outputLabel value="Professor:"
+									styleClass="col-sm-2 control-label texto-label textfim" />
+								<div class="col-sm-6" style="padding-right: 2px;">
+
+									<h:inputText value="#{professorTurmaBean.professor}"
+										styleClass="form-control campoFuncionario" required="true"
+										requiredMessage="O campo professor é obrigatório!"
+										readonly="true" />
+
+								</div>
+								<h:commandLink
+									actionListener="#{professorTurmaBean.procurarProfessor}"
+									immediate="true" title="Procurar o professor?">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="left" />
+									<p:graphicImage url="#{buscarFotoBean.retornarImagesSearch}"
+										style="margin-top: 1.3%;width: 20px;" />
+								</h:commandLink>
+							</div>
+							<div class="form-group row">
+								<h:outputLabel value="Horário Turma:"
+									styleClass="col-sm-2 control-label texto-label textfim" />
+								<div class="col-sm-10">
 
 
-							<h:dataTable value="#{professorTurmaBean.horarioAulas}"
-								var="horarioAula" style="margin-left: 10px;"
-								columnClasses="coluna0, coluna1, coluna1, coluna1, coluna1, coluna1"
-								styleClass="tabela-horario">
-								<h:column headerClass="thead-horario">
-									<f:facet name="header">
-										<h:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Horários" />
-									</f:facet>
-									<h:outputText value="#{horarioAula.aulaInicial}">
-										<f:convertDateTime pattern="HH:mm" timeZone="Africa/Harare" />
+									<h:dataTable value="#{professorTurmaBean.horarioAulas}"
+										var="horarioAula" style="margin-left: 10px;"
+										columnClasses="coluna0, coluna1, coluna1, coluna1, coluna1, coluna1"
+										styleClass="tabela-horario">
+										<h:column headerClass="thead-horario">
+											<f:facet name="header">
+												<h:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Horários" />
+											</f:facet>
+											<h:outputText value="#{horarioAula.aulaInicial}">
+												<f:convertDateTime pattern="HH:mm" timeZone="Africa/Harare" />
+											</h:outputText>
+											<h:outputText value=" - " style="  margin: 3px 3px 3px 4px;" />
+											<h:outputText value="#{horarioAula.aulaFinal}">
+												<f:convertDateTime pattern="HH:mm" timeZone="Africa/Harare" />
+											</h:outputText>
+										</h:column>
+										<h:column headerClass="horarios1">
+											<f:facet name="header">
+												<h:outputText value="Seg" />
+											</f:facet>
+											<h:panelGroup
+												styleClass="#{horarioAula.horariosOutrosProfNestaTurmaSeg?'horario-outro-professor':horarioAula.horarioProfOutraTurmaSeg?'horario-professor-outra-turma':''}">
+												<h:selectBooleanCheckbox id="seg"
+													value="#{horarioAula.horarioProfNestaTurmaSeg}"
+													disabled="#{horarioAula.horarioProfOutraTurmaSeg==true or horarioAula.horariosOutrosProfNestaTurmaSeg==true}" />
+												<h:outputLabel for="seg" />
+											</h:panelGroup>
+										</h:column>
+
+										<h:column headerClass="horarios1">
+											<f:facet name="header">
+												<h:outputText value="Ter" />
+											</f:facet>
+											<h:panelGroup
+												styleClass="#{horarioAula.horariosOutrosProfNestaTurmaTerc?'horario-outro-professor':horarioAula.horarioProfOutraTurmaTerc?'horario-professor-outra-turma':''}">
+												<h:selectBooleanCheckbox id="ter"
+													value="#{horarioAula.horarioProfNestaTurmaTerc}"
+													disabled="#{horarioAula.horarioProfOutraTurmaTerc==true or horarioAula.horariosOutrosProfNestaTurmaTerc==true}" />
+												<h:outputLabel for="ter" />
+											</h:panelGroup>
+										</h:column>
+										<h:column headerClass="horarios1">
+											<f:facet name="header">
+												<h:outputText value="Qua" />
+											</f:facet>
+
+											<h:panelGroup
+												styleClass="#{horarioAula.horariosOutrosProfNestaTurmaQua?'horario-outro-professor':horarioAula.horarioProfOutraTurmaQua?'horario-professor-outra-turma':''}">
+												<h:selectBooleanCheckbox id="qua"
+													value="#{horarioAula.horarioProfNestaTurmaQua}"
+													disabled="#{horarioAula.horarioProfOutraTurmaQua==true or horarioAula.horariosOutrosProfNestaTurmaQua==true}" />
+												<h:outputLabel for="qua" />
+											</h:panelGroup>
+
+										</h:column>
+										<h:column headerClass="horarios1">
+											<f:facet name="header">
+												<h:outputText value="Qui" />
+											</f:facet>
+
+											<h:panelGroup
+												styleClass="#{horarioAula.horariosOutrosProfNestaTurmaQui?'horario-outro-professor':horarioAula.horarioProfOutraTurmaQui?'horario-professor-outra-turma':''}">
+												<h:selectBooleanCheckbox id="qui"
+													value="#{horarioAula.horarioProfNestaTurmaQui}"
+													disabled="#{horarioAula.horarioProfOutraTurmaQui==true or horarioAula.horariosOutrosProfNestaTurmaQui==true}" />
+												<h:outputLabel for="qui" />
+											</h:panelGroup>
+
+										</h:column>
+										<h:column headerClass="horarios1">
+											<f:facet name="header">
+												<h:outputText value="Sex" />
+											</f:facet>
+
+											<h:panelGroup
+												styleClass="#{horarioAula.horariosOutrosProfNestaTurmaSex?'horario-outro-professor':horarioAula.horarioProfOutraTurmaSex?'horario-professor-outra-turma':''}">
+												<h:selectBooleanCheckbox id="sex"
+													value="#{horarioAula.horarioProfNestaTurmaSex}"
+													disabled="#{horarioAula.horarioProfOutraTurmaSex==true or horarioAula.horariosOutrosProfNestaTurmaSex==true}" />
+												<h:outputLabel for="sex" />
+											</h:panelGroup>
+
+
+										</h:column>
+									</h:dataTable>
+								</div>
+							</div>
+							<div class="form-group row">
+								<h:outputText value="Legenda:"
+									styleClass="col-sm-2 control-label texto-label textfim" />
+
+
+							</div>
+							<div class="form-group row">
+								<h:outputText value=""
+									styleClass="col-sm-2 control-label texto-label textfim" />
+
+								<div class="col-sm-8">
+
+
+									<h:selectBooleanCheckbox styleClass="control-checkbox"
+										value="true" disabled="true" />
+									<h:outputText
+										value="Horario(s) ocupado(s) pelo professor escolhido, nesta turma" />
+
+								</div>
+
+							</div>
+							<div class="form-group row">
+								<h:outputText value=""
+									styleClass="col-sm-2 control-label texto-label textfim" />
+
+								<div class="col-sm-8">
+									<h:panelGroup styleClass="horario-professor-outra-turma">
+
+										<h:selectBooleanCheckbox styleClass="control-checkbox"
+											value="false" disabled="true" id="horario-outra-turma" />
+
+										<h:outputLabel style="margin-right: 3px;    margin-top: 5px;"
+											for="horario-outra-turma" />
+									</h:panelGroup>
+
+									<h:outputText
+										value="Horario(s) ocupado(s) pelo professor escolhido, em outra turma" />
+
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<h:outputText value=""
+									styleClass="col-sm-2 control-label texto-label textfim" />
+								<div class="col-sm-8">
+									<h:panelGroup styleClass="horario-outro-professor">
+										<h:outputLabel value="&nbsp;" />
+										<h:selectBooleanCheckbox styleClass="control-checkbox"
+											value="false" disabled="true" id="horario-outro-professor" />
+										<h:outputLabel style="margin-right: 3px;    margin-top: 5px;"
+											for="horario-outro-professor" />
+									</h:panelGroup>
+									<h:outputText style="margin-top:-1%;"
+										value="Horario(s) ocupado(s) por outro(s) professores(as) nesta turma" />
+
+								</div>
+							</div>
+							<br />
+
+						</h:panelGroup>
+						<h:panelGroup
+							rendered="#{professorTurmaBean.alocadoComSucessoBoolean != false}">
+
+							<div class=" row">
+								<h:outputLabel value="Usuário:"
+									styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+								<div class="col-sm-8">
+									<h:outputText value="#{professorTurmaBean.funcionario.login}" />
+								</div>
+							</div>
+							<div class=" row">
+								<h:outputLabel value="Professor:"
+									styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+								<div class="col-sm-8">
+									<h:outputText value="#{professorTurmaBean.funcionario.nome}" />
+								</div>
+							</div>
+
+							<div class=" row">
+								<h:outputLabel value="Data Cadastro:"
+									styleClass="col-sm-3 control-label texto-label tesx-right bolder" />
+								<div class="col-sm-8">
+									<h:outputText
+										value="#{professorTurmaBean.funcionario.dataCadastro}">
+
+										<f:convertDateTime pattern="dd/MM/yyyy" />
 									</h:outputText>
-									<h:outputText value=" - " style="  margin: 3px 3px 3px 4px;" />
-									<h:outputText value="#{horarioAula.aulaFinal}">
-										<f:convertDateTime pattern="HH:mm" timeZone="Africa/Harare" />
-									</h:outputText>
-								</h:column>
-								<h:column headerClass="horarios1">
-									<f:facet name="header">
-										<h:outputText value="Seg" />
-									</f:facet>
-									<h:panelGroup
-										styleClass="#{horarioAula.horariosOutrosProfNestaTurmaSeg?'horario-outro-professor':horarioAula.horarioProfOutraTurmaSeg?'horario-professor-outra-turma':''}">
-										<h:selectBooleanCheckbox id="seg"
-											value="#{horarioAula.horarioProfNestaTurmaSeg}"
-											disabled="#{horarioAula.horarioProfOutraTurmaSeg==true or horarioAula.horariosOutrosProfNestaTurmaSeg==true}" />
-										<h:outputLabel for="seg" />
-									</h:panelGroup>
-								</h:column>
+								</div>
+							</div>
+							<br />
+							<br />
+						</h:panelGroup>
 
-								<h:column headerClass="horarios1">
-									<f:facet name="header">
-										<h:outputText value="Ter" />
-									</f:facet>
-									<h:panelGroup
-										styleClass="#{horarioAula.horariosOutrosProfNestaTurmaTerc?'horario-outro-professor':horarioAula.horarioProfOutraTurmaTerc?'horario-professor-outra-turma':''}">
-										<h:selectBooleanCheckbox id="ter"
-											value="#{horarioAula.horarioProfNestaTurmaTerc}"
-											disabled="#{horarioAula.horarioProfOutraTurmaTerc==true or horarioAula.horariosOutrosProfNestaTurmaTerc==true}" />
-										<h:outputLabel for="ter" />
-									</h:panelGroup>
-								</h:column>
-								<h:column headerClass="horarios1">
-									<f:facet name="header">
-										<h:outputText value="Qua" />
-									</f:facet>
+						<div class="form-group row" style="text-align: center">
+							<div class="col-sm-8">
+								<h:commandButton value="Cancelar" immediate="true"
+									action="#{professorTurmaBean.voltarIndex}"
+									styleClass="btn btn-danger " />
 
-									<h:panelGroup
-										styleClass="#{horarioAula.horariosOutrosProfNestaTurmaQua?'horario-outro-professor':horarioAula.horarioProfOutraTurmaQua?'horario-professor-outra-turma':''}">
-										<h:selectBooleanCheckbox id="qua"
-											value="#{horarioAula.horarioProfNestaTurmaQua}"
-											disabled="#{horarioAula.horarioProfOutraTurmaQua==true or horarioAula.horariosOutrosProfNestaTurmaQua==true}" />
-										<h:outputLabel for="qua" />
-									</h:panelGroup>
+								<h:commandButton value=" &#x2716; Fechar"
+									style="margin-left:2%;"
+									actionListener="#{professorTurmaBean.voltarSelecaoTurma}"
+									immediate="true" styleClass=" prev acao btn btn-default " />
 
-								</h:column>
-								<h:column headerClass="horarios1">
-									<f:facet name="header">
-										<h:outputText value="Qui" />
-									</f:facet>
+								<h:commandButton value="Voltar" style="margin-left:2%;"
+									immediate="true" actionListener="#{professorTurmaBean.voltar}"
+									styleClass="btn btn-success " />
 
-									<h:panelGroup
-										styleClass="#{horarioAula.horariosOutrosProfNestaTurmaQui?'horario-outro-professor':horarioAula.horarioProfOutraTurmaQui?'horario-professor-outra-turma':''}">
-										<h:selectBooleanCheckbox id="qui"
-											value="#{horarioAula.horarioProfNestaTurmaQui}"
-											disabled="#{horarioAula.horarioProfOutraTurmaQui==true or horarioAula.horariosOutrosProfNestaTurmaQui==true}" />
-										<h:outputLabel for="qui" />
-									</h:panelGroup>
+								<h:commandButton value="Cadastrar"
+									rendered="#{professorTurmaBean.alocadoComSucessoBoolean == false}"
+									style="margin-left:2%;"
+									actionListener="#{professorTurmaBean.salvar}"
+									styleClass="btn btn-primary " />
 
-								</h:column>
-								<h:column headerClass="horarios1">
-									<f:facet name="header">
-										<h:outputText value="Sex" />
-									</f:facet>
-
-									<h:panelGroup
-										styleClass="#{horarioAula.horariosOutrosProfNestaTurmaSex?'horario-outro-professor':horarioAula.horarioProfOutraTurmaSex?'horario-professor-outra-turma':''}">
-										<h:selectBooleanCheckbox id="sex"
-											value="#{horarioAula.horarioProfNestaTurmaSex}"
-											disabled="#{horarioAula.horarioProfOutraTurmaSex==true or horarioAula.horariosOutrosProfNestaTurmaSex==true}" />
-										<h:outputLabel for="sex" />
-									</h:panelGroup>
-
-
-								</h:column>
-							</h:dataTable>
-						</div>
-					</div>
-					<div class="form-group row">
-						<h:outputText value="Legenda:"
-							styleClass="col-sm-2 control-label texto-label textfim" />
-
-
-					</div>
-					<div class="form-group row">
-						<h:outputText value=""
-							styleClass="col-sm-2 control-label texto-label textfim" />
-
-						<div class="col-sm-8">
-
-
-							<h:selectBooleanCheckbox styleClass="control-checkbox"
-								value="true" disabled="true" />
-							<h:outputText
-								value="Horario(s) ocupado(s) pelo professor escolhido, nesta turma" />
-
+								<h:panelGroup
+									rendered="#{professorTurmaBean.alocadoComSucessoBoolean != false}">
+									<h:commandLink
+										actionListener="#{professorTurmaBean.emitirDisciplinasLecionadasPeloProfessor}"
+										styleClass="btn btn-primary tooltip-top"
+										title="Emitir horário deste professor?"
+										style="margin-left: 1%;">
+										<span class="glyphicon glyphicon-save"></span>
+						Baixar
+					</h:commandLink>
+								</h:panelGroup>
+							</div>
 						</div>
 
-					</div>
-					<div class="form-group row">
-						<h:outputText value=""
-							styleClass="col-sm-2 control-label texto-label textfim" />
+					</h:panelGroup>
+					<!-- A procura de professor -->
+					<h:panelGroup
+						rendered="#{professorTurmaBean.buscarProfessorBoolean != false}">
+						<div class="form-group row">
+							<h:outputLabel value="Professor:"
+								styleClass="col-sm-2 control-label texto-label textfim" />
+							<div class="col-sm-6" style="padding-right: 2px;">
 
-						<div class="col-sm-8">
-							<h:panelGroup styleClass="horario-professor-outra-turma">
+								<h:inputText value="#{professorTurmaBean.pesquisa}"
+									styleClass="form-control" required="true"
+									requiredMessage="O campo professor é obrigatório!">
+									<f:passThroughAttribute name="placeholder"
+												value="Qual professor que você está procurar?" />
+								</h:inputText>
 
-								<h:selectBooleanCheckbox styleClass="control-checkbox"
-									value="false" disabled="true" id="horario-outra-turma" />
-
-								<h:outputLabel style="margin-right: 3px;    margin-top: 5px;"
-									for="horario-outra-turma" />
-							</h:panelGroup>
-
-							<h:outputText
-								value="Horario(s) ocupado(s) pelo professor escolhido, em outra turma" />
-
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<h:outputText value=""
-							styleClass="col-sm-2 control-label texto-label textfim" />
-						<div class="col-sm-8">
-							<h:panelGroup styleClass="horario-outro-professor">
-								<h:outputLabel value="&nbsp;" />
-								<h:selectBooleanCheckbox styleClass="control-checkbox"
-									value="false" disabled="true" id="horario-outro-professor" />
-								<h:outputLabel style="margin-right: 3px;    margin-top: 5px;"
-									for="horario-outro-professor" />
-							</h:panelGroup>
-							<h:outputText style="margin-top:-1%;"
-								value="Horario(s) ocupado(s) por outro(s) professores(as) nesta turma" />
+							</div>
 
 						</div>
-					</div>
-					<br />
-					<div class="form-group row" style="text-align: center">
-						<div class="col-sm-8">
-							<h:commandButton value="Cadastrar Alocação"
-								actionListener="#{professorTurmaBean.salvar}"
-								styleClass="btn btn-primary " />
-							<h:commandButton value="Voltar" style="margin-left:2%;"
-								immediate="true" actionListener="#{professorTurmaBean.voltar}"
-								styleClass="btn btn-success " />
-							<h:commandButton value="Cancelar" style="margin-left:2%;"
-								immediate="true"
-								action="#{professorTurmaBean.voltarIndex}"
-								styleClass="btn btn-danger " />
+						<div class="form-group row" style="text-align: center">
+							<div class="col-sm-6">
+								<h:commandButton value="&#8666; Voltar " immediate="true"
+									actionListener="#{professorTurmaBean.voltarProcuraProfessor}"
+									styleClass="btn btn-success " />
+								<h:commandButton value="Buscar" style="margin-left:2%;"
+									actionListener="#{professorTurmaBean.buscarProfessor}"
+									styleClass="btn btn-primary " />
 
+							</div>
 						</div>
-					</div>
+						<h:dataTable id="tabela"
+							value="#{professorTurmaBean.funcionarios}" var="funcionario"
+							styleClass="table table-bordered tabelaProfessor  tabela-funcionario left"
+							style="margin: 16px 14px 20px; max-width: 97%;"
+							headerClass="theader" columnClasses="center,,">
+							<h:column width="370" headerClass="center">
+								<f:facet name="header">
+									<h:outputText value="Usuário" />
+								</f:facet>
+								<h:commandLink value="#{funcionario.login}"
+									title="Selecionar este professor?" immediate="true"
+									rendered="#{funcionario.sexo==true}"
+									style="color: blue;font-weight: 600;"
+									action="#{professorTurmaBean.selecionarFuncionario(funcionario)}">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="left" />
+								</h:commandLink>
+								<h:commandLink value="#{funcionario.login}" immediate="true"
+									title="Selecionar esta professora?"
+									rendered="#{funcionario.sexo==false}"
+									style="color: blue;font-weight: 600;"
+									action="#{professorTurmaBean.selecionarFuncionario(funcionario)}">
+									<f:passThroughAttribute name="data-toggle" value="tooltip" />
+									<f:passThroughAttribute name="data-placement" value="left" />
+								</h:commandLink>
+							</h:column>
+							<h:column width="370">
+								<f:facet name="header">
+									<h:outputText value="Nome completo" />
+								</f:facet>
+								<h:outputText value="#{funcionario.nome}"
+									style="text-transform: uppercase; " />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Morada" />
+								</f:facet>
+								<h:outputText value="#{funcionario.morada}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Telefone" />
+								</f:facet>
+								<h:outputText value="#{funcionario.telefone}" />
+							</h:column>
 
-				</h:panelGroup>
-				<!-- A procura de professor -->
-				<h:panelGroup
-					rendered="#{professorTurmaBean.buscarProfessorBoolean != false}">
-					<div class="form-group row">
-						<h:outputLabel value="Professor:"
-							styleClass="col-sm-2 control-label texto-label textfim" />
-						<div class="col-sm-6" style="padding-right: 2px;">
-
-							<h:inputText value="#{professorTurmaBean.pesquisa}"
-								styleClass="form-control" onkeyup="">
-								<p:ajax event="keyup"
-									listener="#{professorTurmaBean.buscarProfessor}"
-									update="tabela"></p:ajax>
-							</h:inputText>
-
-						</div>
-
-					</div>
-					<div class="form-group row" style="text-align: center">
-						<div class="col-sm-6">
-							<h:commandButton value="&#8666; Voltar " immediate="true"
-								actionListener="#{professorTurmaBean.voltarProcuraProfessor}"
-								styleClass="btn btn-success " />
-							<h:commandButton value="Buscar" style="margin-left:2%;"
-								immediate="true"
-								actionListener="#{professorTurmaBean.buscarProfessor}"
-								styleClass="btn btn-primary " />
-
-						</div>
-					</div>
-					<h:dataTable id="tabela" value="#{professorTurmaBean.funcionarios}"
-						var="funcionario"
-						styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
-						style="margin: 16px 14px 20px; max-width: 97%;"
-						headerClass="theader">
-						<h:column width="370">
-							<f:facet name="header">
-								<h:outputText value="Login" />
-							</f:facet>
-							<h:commandLink value="#{funcionario.login}"
-								style="color: blue;font-weight: 600;"
-								action="#{professorTurmaBean.selecionarFuncionario(funcionario)}">
-							</h:commandLink>
-						</h:column>
-						<h:column width="370">
-							<f:facet name="header">
-								<h:outputText value="Nome completo" />
-							</f:facet>
-							<h:outputText value="#{funcionario.nome}"
-								style="text-transform: uppercase; " />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Morada" />
-							</f:facet>
-							<h:outputText value="#{funcionario.morada}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Telefone" />
-							</f:facet>
-							<h:outputText value="#{funcionario.telefone}" />
-						</h:column>
-
-					</h:dataTable>
-				</h:panelGroup>
+						</h:dataTable>
+					</h:panelGroup>
 				</h:panelGroup>
 
-				
+
 			</h:panelGroup>
-
-
 		</div>
 	</div>
 

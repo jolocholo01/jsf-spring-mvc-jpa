@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-06-18T06:28:21 -->
+<!-- 2018-06-23T07:18:15 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="minhas_turmas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="95879359-b505-44c9-ab23-ef9bdda7c849">
-	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="dXN1YXJpbyAsNjQyLDQ1OSxkNzM2ZmYwZS03MjFhLTRjYTItYWZmMy1kY2UwMmMyZDBiOTA7dHVy&#xA;bWEgLDE0OSwxMDg3LDgxMmZlZDI2LWM3NDAtNDMyMC05MzRjLTY5NDFkZDBjOGUzYTtjbGFzc2Ug&#xA;LDExNjgsODgxLDRhNTVkNDZjLTNlMjQtNGY3ZC04YzdjLWQyYTBlZmIxMzAxYjtwcm9mZXNzb3Jf&#xA;dHVybWEgLDI4Miw5MTMsZTI2YjFiNTEtNzdkMi00YzgwLWFiNWUtZjBjNTA4NWZiMGM3O2Rpc2Np&#xA;cGxpbmEgLDQ1OSw1NDksNjIyNjI3NDQtNTZiOC00YmQ2LWI2ODUtMDM5MjJkN2Q5Nzk5O2Rpc3Ry&#xA;aXRvICwxNSwxMjE5LGRmYTk4OWRmLTM4NWItNDY1YS05MDBlLWUyYzc0YjRhM2MxNjt0dXJubyAs&#xA;MTM5OSwxMjY3LDBlNTg1YTdhLWViOGQtNDdlNy1hMjZmLTA3Mjg4YTg3MmY5OTtmdW5jaW9uYXJp&#xA;byAsNDU5LDE1LGU0Mzk4NDZkLWIxZjItNGNhMi04NGQ5LTU5YmY1ODgxOGM0MztkaXN0cml0YWwg&#xA;LDgyMCw5MjgsNTdhZjdjMjktNjg5Mi00YjczLTkzNTEtMDg0NjlhM2FmOGFkO2VzY29sYSAsNDU5&#xA;LDg3NSwyNWIzNDM3NS1kM2M2LTQ5ZTAtODI2OS1lMTBiYzhjYTVkMTU7c2FsYSAsOTk3LDk0OCw0&#xA;NDBjNjJiZC04MTMxLTQwYzctYThiNy1kNGQ1YzQ3YTZkZWE7"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="342"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="651"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
@@ -19,6 +19,7 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="idEscola" class="java.lang.Long"/>
 	<parameter name="idProfessor" class="java.lang.Long"/>
+	<parameter name="ano" class="java.lang.Integer"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT funcionario.numero,
 	usuario.nome,
@@ -57,6 +58,7 @@ WHERE
 	 distrital.distrito_id = distrito.id 
 	 AND funcionario.id = $P{idProfessor} 
 	 AND escola.id = $P{idEscola} 
+	 AND turma.ano = $P{ano} 
 ORDER BY turma.descricao ASC]]>
 	</queryString>
 	<field name="numero" class="java.lang.String"/>
@@ -90,7 +92,7 @@ ORDER BY turma.descricao ASC]]>
 				<textElement textAlignment="Center">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["LISTA DE DISCIPLINAS LECIONADAS PELO PROFESSOR"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["RELATÓRIO DE HORÁRIO DAS MINHAS TURMAS"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="99" width="555" height="15" uuid="31743546-48dc-4b51-8623-d788f1805399">

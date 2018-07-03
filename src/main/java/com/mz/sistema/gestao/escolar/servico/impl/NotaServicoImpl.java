@@ -17,7 +17,6 @@ public class NotaServicoImpl implements NotaServico {
 
 	@PersistenceContext
 	private EntityManager em;
-	
 
 	@Override
 	public void salvar(Nota nota) {
@@ -85,15 +84,14 @@ public class NotaServicoImpl implements NotaServico {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Nota> obterNotaPorIdAluno(Long idAluno,long idClasse, Integer ano ) {
-		
+	public List<Nota> obterNotaPorIdAluno(Long idAluno, long idClasse, Integer ano) {
+
 		List<Nota> notas = em
 				.createQuery(
 						"FROM Nota WHERE matricula.aluno.id=:idAluno AND matricula.classe.id=:idClasse AND matricula.ano=:ANO"
 								+ " ORDER BY disciplina.descricao")
-				.setParameter("idAluno", idAluno)
-				.setParameter("idClasse", idClasse)
-				.setParameter("ANO", ano).getResultList();
+				.setParameter("idAluno", idAluno).setParameter("idClasse", idClasse).setParameter("ANO", ano)
+				.getResultList();
 		if (!notas.isEmpty()) {
 			return notas;
 		}
@@ -101,13 +99,12 @@ public class NotaServicoImpl implements NotaServico {
 	}
 
 	@Override
-	public Double obterMediaTrimestralOuAnulDoAluno(Long idAluno,long idClasse, String tipoMediatrimestre) {
+	public Double obterMediaTrimestralOuAnulDoAluno(Long idAluno, long idClasse, String tipoMediatrimestre) {
 
 		Double media = (Double) em
-				.createQuery(
-						"SELECT AVG("+tipoMediatrimestre+") As MediaTrimestral FROM Nota WHERE matricula.aluno.id=:idAluno AND matricula.classe.id=:idClasse AND matricula.ativo=true")
-				.setParameter("idAluno", idAluno)
-				.setParameter("idClasse", idClasse).getSingleResult();
+				.createQuery("SELECT AVG(" + tipoMediatrimestre
+						+ ") As MediaTrimestral FROM Nota WHERE matricula.aluno.id=:idAluno AND matricula.classe.id=:idClasse AND matricula.ativo=true")
+				.setParameter("idAluno", idAluno).setParameter("idClasse", idClasse).getSingleResult();
 
 		return media;
 
@@ -174,6 +171,18 @@ public class NotaServicoImpl implements NotaServico {
 				.setParameter("idMatricula", idMatricula).getResultList();
 		if (!notas.isEmpty()) {
 			return notas;
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Nota obterNotasPorIdMatriculaPorDisciplina(Integer idMatricula, Integer idDisciplina) {
+
+		List<Nota> notas = em.createQuery("FROM Nota WHERE disciplina.id=:idDisciplina AND matricula.id=:idMatricula")
+				.setParameter("idDisciplina", idDisciplina).setParameter("idMatricula", idMatricula).getResultList();
+		if (!notas.isEmpty()) {
+			return notas.get(0);
 		}
 		return null;
 	}

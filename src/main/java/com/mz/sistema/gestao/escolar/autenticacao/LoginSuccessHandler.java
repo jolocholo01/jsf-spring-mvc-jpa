@@ -93,7 +93,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 				response.sendRedirect(request.getContextPath() + "/director-adjunto/index.jsf");
 			} else if (permissoes.contains("ROLE_DIRECTOR")) {
-				calendarioBean.iniciarBean();
 				response.sendRedirect(request.getContextPath() + "/director/index.jsf");
 			} else if (permissoes.contains("ROLE_DIRECTOR_DISTRITO")) {
 				response.sendRedirect(request.getContextPath() + "/director-ditrital/index.jsf");

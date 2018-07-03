@@ -13,7 +13,7 @@
 	<div class="card">
 		<h3 class="peg-titulo card-header primary-color white-text ">
 
-			Alteração de Matriz Curricular</h3>
+			Finalizar matriz curricular</h3>
 
 		<p:messages closable="true"
 			style=" margin-left: 5px;margin-right:5px;" />
@@ -73,7 +73,7 @@
 						value="#{matrizBean.matrizes}" var="matriz"
 						rowClasses="linha12 , linha11"
 						rendered="#{matrizBean.matrizes !=null}"
-						columnClasses="coluna1, coluna2, coluna2, coluna2">
+						columnClasses="coluna1, coluna2, coluna2, coluna2 center, center">
 
 						<h:column>
 							<f:facet name="header">
@@ -104,6 +104,13 @@
 								<h:outputText value="Curso" />
 							</f:facet>
 							<h:outputText value="#{matriz.curso}"
+								style="	text-transform: uppercase; margin-left:4px;" />
+						</h:column>
+						<h:column headerClass="center">
+							<f:facet name="header">
+								<h:outputText value="Finalizada?" />
+							</f:facet>
+							<h:outputText value="#{matriz.ativa?'Sim':'Não'}"
 								style="	text-transform: uppercase; margin-left:4px;" />
 						</h:column>
 

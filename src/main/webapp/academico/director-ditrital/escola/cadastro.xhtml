@@ -157,6 +157,36 @@
 									value=" #{escolaBean.qtdEscolasEncontradas} escola(s) encontrada(s)"></h:outputText>
 							</f:facet>
 						</h:dataTable>
+						<div class="form-group row">
+
+								<h:outputLabel value="Legenda:" styleClass="col-sm-2"
+									style="font-weight: 500;" />
+
+
+								<div class="col-sm-4">
+									<span class="glyphicon glyphicon-pencil"></span>
+									<h:outputLabel value="Editar dados dessa Escola"
+										styleClass="legenda-texto" />
+								</div>
+								<div class="col-sm-4">
+									<h:panelGroup>
+										<span class="fa fa-database" style="    width: 7%;"></span>
+										<h:outputLabel styleClass="legenda-texto"
+											value="Gerenciar dados da Escola" />
+									</h:panelGroup>
+								</div>
+							</div>
+							<div class="form-group row">
+								<h:outputLabel  styleClass="col-sm-2"
+									style="font-weight: 500;" />
+
+								<div class="col-sm-4">
+									<span class="glyphicon glyphicon-remove"></span>
+									<h:outputLabel styleClass="legenda-texto"
+										value="Excluir Escola" />
+								</div>
+								
+							</div>
 					</h:panelGroup>
 
 					<!-- Cadastro e edicao -->
@@ -167,8 +197,8 @@
 
 
 							<div class="form-group row">
-								<h:outputLabel value="Nome da  Unidade Escolar :"
-									styleClass="col-sm-3 control-label texto-label" />
+								<h:outputLabel value="Nome da  Escola :"
+									styleClass="col-sm-3 control-label texto-label textfim" />
 								<div class="col-sm-8">
 									<h:inputText value="#{escolaBean.escola.descricao}"
 										styleClass="form-control" required="true"
@@ -179,7 +209,7 @@
 
 							<div class="form-group row">
 								<h:outputLabel value="Localidade :"
-									styleClass="col-sm-3 control-label texto-label" />
+									styleClass="col-sm-3 control-label textfim texto-label" />
 								<div class="col-sm-6">
 									<h:inputText value="#{escolaBean.escola.localidade}"
 										styleClass="form-control" required="true"
@@ -188,7 +218,7 @@
 							</div>
 							<div class="form-group row">
 								<h:outputLabel value="Bairro :"
-									styleClass="col-sm-3 control-label texto-label" />
+									styleClass="col-sm-3 control-label textfim texto-label" />
 								<div class="col-sm-5">
 									<h:inputText value="#{escolaBean.escola.bairro}"
 										styleClass="form-control" required="true"
@@ -197,7 +227,7 @@
 							</div>
 							<div class="form-group row">
 								<h:outputLabel value="Av./Rua :"
-									styleClass="col-sm-3 control-label texto-label" />
+									styleClass="col-sm-3 control-label texto-label textfim" />
 								<div class="col-sm-8">
 									<h:inputText value="#{escolaBean.escola.avenidaRua}"
 										styleClass="form-control" required="true"
@@ -207,7 +237,7 @@
 
 							<div class="form-group row">
 								<h:outputLabel value="Código :"
-									styleClass="col-sm-3 control-label texto-label" />
+									styleClass="col-sm-3 control-label texto-label textfim" />
 								<div class="col-sm-4">
 									<h:inputText value="#{escolaBean.escola.codigo}"
 										styleClass="form-control" required="true"
@@ -217,7 +247,7 @@
 
 							<div class="form-group row">
 								<h:outputLabel value="Activa :"
-									styleClass="col-sm-3 control-label texto-label" />
+									styleClass="col-sm-3 control-label textfim texto-label" />
 								<div class="col-sm-4">
 									<h:selectOneMenu styleClass="form-control"
 										value="#{escolaBean.escola.ativa}" required="true"
@@ -231,7 +261,7 @@
 							<div class="form-group row">
 
 								<h:outputLabel value="Data de Cadastro :"
-									styleClass="col-sm-3 control-label texto-label" />
+									styleClass="col-sm-3 control-label texto-label textfim" />
 								<div class="col-sm-3">
 									<h:inputText styleClass="form-control"
 										value="#{escolaBean.escola.dataCadastro}">
@@ -259,7 +289,7 @@
 							</div>
 
 							<div class="form-group row">
-								<h:outputLabel styleClass="col-sm-3 col-form-label"
+								<h:outputLabel styleClass="col-sm-3 col-form-label textfim"
 									value="Observação : " />
 								<div class="col-sm-8">
 									<h:inputTextarea cols="3"

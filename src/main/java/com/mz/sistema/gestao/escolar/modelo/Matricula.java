@@ -28,8 +28,8 @@ public class Matricula implements Serializable {
 	private Integer ano;
 	private Integer acompanhamento;
 	private String numero;
-	private Double valor;
-	private String numeroAlunoTurma;
+	private Double valor = 0D;
+	private Integer numeroAlunoTurma;
 	private String numeroRecibo;
 	private Date dataMatricula;
 	private Date horaMatricula = new Date();
@@ -42,7 +42,7 @@ public class Matricula implements Serializable {
 	private boolean ativo = false;
 	private boolean repetente = false;
 	private boolean matriculaSelacionada = false;
-	private Boolean notalterada=false;
+	private Boolean notalterada = false;
 	private Date dataDesativacao;
 	private Date dataAtualizacao;
 	private String observacao;
@@ -280,11 +280,11 @@ public class Matricula implements Serializable {
 		this.solicitouTranferencia = solicitouTranferencia;
 	}
 
-	public String getNumeroAlunoTurma() {
+	public Integer getNumeroAlunoTurma() {
 		return numeroAlunoTurma;
 	}
 
-	public void setNumeroAlunoTurma(String numeroAlunoTurma) {
+	public void setNumeroAlunoTurma(Integer numeroAlunoTurma) {
 		this.numeroAlunoTurma = numeroAlunoTurma;
 	}
 
@@ -295,6 +295,7 @@ public class Matricula implements Serializable {
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDataAtualizacao() {
 		return dataAtualizacao;
@@ -311,8 +312,9 @@ public class Matricula implements Serializable {
 	public void setNotalterada(Boolean notalterada) {
 		this.notalterada = notalterada;
 	}
+
 	@ManyToOne
-	@JoinColumn(name="id_escola_origem")
+	@JoinColumn(name = "id_escola_origem")
 	public Escola getEscolaOrigem() {
 		return escolaOrigem;
 	}
@@ -320,7 +322,5 @@ public class Matricula implements Serializable {
 	public void setEscolaOrigem(Escola escolaOrigem) {
 		this.escolaOrigem = escolaOrigem;
 	}
-
-	
 
 }

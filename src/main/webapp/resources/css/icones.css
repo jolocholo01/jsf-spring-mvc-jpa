@@ -1,3 +1,31 @@
+.flex-grow0{
+	flex-grow: 0 !important;
+}
+
+.asterstico{
+	color: #f07a06;
+	font-size: large;
+}
+
+.legenda-texto{
+	    padding-left: 2%;
+}
+
+td.left{
+	text-align: left !important;
+}
+
+.hover tbody tr:HOVER{ background: #f3fbb1 -webkit-gradient(linear,left top,left bottom,from(rgba(255, 255, 255, 0.25)),to(rgba(253, 255, 253, 0)));
+}.colorir{
+background: #ffffff -webkit-gradient(linear,left top,left bottom,from(rgba(177, 147, 147, 0.25)),to(rgba(197, 186, 186, 0)));
+}
+tr.active {
+      background: #fff1f1 -webkit-gradient(linear,left top,left bottom,from(rgba(177, 147, 147, 0.25)),to(rgba(197, 186, 186, 0)))
+      
+}
+.bolder{
+	font-weight: 600;
+}
 .link{
 text-decoration: none;
 }

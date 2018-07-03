@@ -17,16 +17,25 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import com.mz.sistema.gestao.escolar.autenticacao.AuthenticationContext;
 import com.mz.sistema.gestao.escolar.enumerado.TipoCurso;
+import com.mz.sistema.gestao.escolar.modelo.Calendario;
 import com.mz.sistema.gestao.escolar.modelo.DisciplinaClasse;
+import com.mz.sistema.gestao.escolar.modelo.Escola;
+import com.mz.sistema.gestao.escolar.modelo.Funcionario;
+import com.mz.sistema.gestao.escolar.modelo.FuncionarioEscola;
 import com.mz.sistema.gestao.escolar.modelo.Matricula;
+import com.mz.sistema.gestao.escolar.modelo.Matriz;
 import com.mz.sistema.gestao.escolar.modelo.Nota;
 import com.mz.sistema.gestao.escolar.modelo.ProfessorTurma;
 import com.mz.sistema.gestao.escolar.modelo.Trimestre;
 import com.mz.sistema.gestao.escolar.modelo.Turma;
+import com.mz.sistema.gestao.escolar.servico.DisciplinaClasseServico;
 import com.mz.sistema.gestao.escolar.servico.GeradorDeRelatoriosServico;
 import com.mz.sistema.gestao.escolar.servico.MatriculaServico;
+import com.mz.sistema.gestao.escolar.servico.MatrizServico;
 import com.mz.sistema.gestao.escolar.servico.NotaServico;
+import com.mz.sistema.gestao.escolar.servico.ProfessorTurmaServico;
 import com.mz.sistema.gestao.escolar.servico.TrimestreServico;
+import com.mz.sistema.gestao.escolar.servico.TurmaServico;
 import com.mz.sistema.gestao.escolar.util.TipoLetra;
 
 @Controller
@@ -41,9 +50,10 @@ public class NotaBean {
 	private List<Nota> notas = new ArrayList<>();
 	private List<Trimestre> trimestres = new ArrayList<>();
 	private Trimestre trimestreSelecionado;
+	private List<Matriz> matrizes;
+	private Matriz matrizSelecionada;
 
 	private String tipoTrimestre;
-	public Turma turmaSelecionadaParaCadastroDeNotas = null;
 	private Double mediaAvaliacaoContinua;
 	private Double mediaAvaliacaoSomativa;
 	private Integer mediaTrimestral;
@@ -51,11 +61,21 @@ public class NotaBean {
 	private boolean mediaAvaliacaoS = false;
 	private boolean mediaDoTrimestre = false;
 	private boolean selecionarturma = false;
-	private boolean verificarTurmaSelecionada = false;
-	private boolean verificarRelatorioTurmaSelecionada = false;
 
 	// Teste
 	private List<Matricula> matriculas = new ArrayList<>();
+	private Turma turmaSelecionada;
+	private Turma turma;
+	private List<Turma> turmas;
+	private DisciplinaClasse disciplinaClasse;
+	private boolean disciplinaTurmaSelecionada = false;
+	private List<TipoCurso> cursos = Arrays.asList(TipoCurso.values());
+
+	@Autowired
+	private DisciplinaClasseServico disciplinaClasseServico;
+
+	@Autowired
+	private ProfessorTurmaServico professorTurmaServico;
 
 	@Autowired
 	private NotaServico notaServico;
@@ -64,19 +84,14 @@ public class NotaBean {
 
 	@Autowired
 	private MatriculaServico matriculaServico;
-	// @Autowired
-	// private GeradorDeRelatoriosServico imprimirServico;
-
+	@Autowired
+	private TurmaServico turmaServico;
+	@Autowired
+	private MatrizServico matrizServico;
 	@Autowired
 	private AuthenticationContext authenticationContext;
 	@Autowired
 	private GeradorDeRelatoriosServico geradorDeRelatoriosServico;
-	private Turma turmaSelecionada;
-	private Turma turma;
-	private List<Turma> turmas;
-	private DisciplinaClasse disciplinaClasse;
-	private boolean disciplinaTurmaSelecionada=false;
-	private List<TipoCurso> cursos = Arrays.asList(TipoCurso.values());
 
 	public void iniciarBean() {
 		this.turmaSelecionada = null;
@@ -93,6 +108,67 @@ public class NotaBean {
 		}
 	}
 
+	public void iniciarLancarNotaNumaTurma() {
+		turma = new Turma();
+		this.turmaSelecionada = null;
+		turmas = new ArrayList<>();
+		disciplinaClasse = new DisciplinaClasse();
+		disciplinaTurmaSelecionada = false;
+
+		try {
+			// FuncionarioEscola funcionarioEscola =
+			// authenticationContext.getFuncionarioEscolaLogada();
+			// Escola escola = funcionarioEscola.getEscola();
+			Calendario calendario = authenticationContext.getCalendarioEscolar();
+			turma.setAno(calendario.getAno());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// funcao que busca as turmas de uma classse por turno
+	public void buscarTurmas() {
+
+		setTurmas(new ArrayList<>());
+
+		try {
+			Escola escola = authenticationContext.getFuncionarioEscolaLogada().getEscola();
+
+			if (turma.getClasse().getCiclo().equals("2º CICLO")) {
+				setTurmas(turmaServico.obterTurmasPorClasseAreaCurso(turma.getClasse().getId(), turma.getArea(),
+						turma.getCurso(), turma.getAno(), escola.getId()));
+			} else if (turma.getClasse().getCiclo().equals("1º CICLO")) {
+				setTurmas(turmaServico.obterTurmasPorClasseCurso(turma.getClasse().getId(), turma.getCurso(),
+						turma.getAno(), escola.getId()));
+			}
+
+		} catch (Exception e) {
+
+		}
+
+	}
+
+	public void buscarMatrizesCurriculares() {
+		matrizes = new ArrayList<>();
+		try {
+			FuncionarioEscola funcionarioEscola = authenticationContext.getFuncionarioEscolaLogada();
+			Escola escola = funcionarioEscola.getEscola();
+
+			if (turma.getCurso() != null && turma.getClasse().getId() != 0 && escola.getId() != null) {
+				if (turma.getClasse().getCiclo().equals("2º CICLO")) {
+					matrizes = matrizServico.obterMatrizPorClasseCursoAtivo(turma.getClasse().getId(), turma.getCurso(),
+							escola.getId());
+
+				}
+			}
+
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void salvar(Nota nota) {
 		try {
 			double mediaAnual;
@@ -100,7 +176,7 @@ public class NotaBean {
 			this.nota = null;
 			if (nota == null) {
 			} else if (nota != null) {
-				Trimestre trimestre = trimestreServico.obterTrimestreAtivo();
+				Trimestre trimestre = this.trimestreSelecionado;
 				if (trimestre != null) {
 					if (trimestre.getDescricao() != null) {
 						if (trimestre.getDescricao().equals("1º Trimestre")) {
@@ -155,14 +231,13 @@ public class NotaBean {
 		Double mediaAs = null;
 		Double mediaTr = null;
 
-		DecimalFormat formatador = new DecimalFormat("0.00");
 
 		/* 1º Trimestre */
 		if (nota.getAc1() == null) {
 			nota.setMediaAc(null);
 		} else if (nota.getAc1() != null) {
 			mediaAc = nota.getAc1();
-			nota.setMediaAc(Double.valueOf(formatador.format(mediaAc).replace(",", ".")));
+			nota.setMediaAc(mediaAc);
 		}
 		if (nota.getAc2() == null) {
 		} else if (nota.getAc2() != null) {
@@ -171,7 +246,7 @@ public class NotaBean {
 			}
 			mediaAc = (nota.getAc1() + nota.getAc2());
 			mediaAc = mediaAc / 2;
-			nota.setMediaAc(Double.valueOf(formatador.format(mediaAc).replace(",", ".")));
+			nota.setMediaAc(mediaAc);
 		}
 		if (nota.getAc3() == null) {
 
@@ -184,7 +259,7 @@ public class NotaBean {
 			}
 			mediaAc = (nota.getAc1() + nota.getAc2() + nota.getAc3());
 			mediaAc = mediaAc / 3;
-			nota.setMediaAc(Double.valueOf(formatador.format(mediaAc).replace(",", ".")));
+			nota.setMediaAc(mediaAc);
 		}
 
 		if (nota.getAs1() == null) {
@@ -195,7 +270,7 @@ public class NotaBean {
 			}
 			mediaAs = (nota.getMediaAc() + nota.getAs1());
 			mediaAs = mediaAs / 2;
-			nota.setMediaAs(Double.valueOf(formatador.format(mediaAs).replace(",", ".")));
+			nota.setMediaAs(mediaAs);
 		}
 		if (nota.getAs2() == null) {
 		} else if (nota.getAs2() != null) {
@@ -207,7 +282,7 @@ public class NotaBean {
 			}
 			mediaAs = (nota.getMediaAc() + nota.getAs1() + nota.getAs2());
 			mediaAs = mediaAs / 3;
-			nota.setMediaAs(Double.valueOf(formatador.format(mediaAs).replace(",", ".")));
+			nota.setMediaAs(mediaAs);
 		}
 		if (nota.getAvaliacaoFinal() == null) {
 			nota.setMediaTrimestral(0);
@@ -255,13 +330,12 @@ public class NotaBean {
 		Double mediaAc2 = null;
 		Double mediaAs2 = null;
 		Double mediaTr2 = null;
-		DecimalFormat formatador = new DecimalFormat("0.00");
 		/* 1º Trimestre */
 		if (nota.getAc12() == null) {
 			nota.setMediaAc2(null);
 		} else if (nota.getAc12() != null) {
 			mediaAc2 = nota.getAc12();
-			nota.setMediaAc2(Double.valueOf(formatador.format(mediaAc2).replace(",", ".")));
+			nota.setMediaAc2(mediaAc2);
 		}
 		if (nota.getAc22() == null) {
 		} else if (nota.getAc22() != null) {
@@ -270,7 +344,7 @@ public class NotaBean {
 			}
 			mediaAc2 = (nota.getAc12() + nota.getAc22());
 			mediaAc2 = mediaAc2 / 2;
-			nota.setMediaAc2(Double.valueOf(formatador.format(mediaAc2).replace(",", ".")));
+			nota.setMediaAc2(mediaAc2);
 		}
 		if (nota.getAc32() == null) {
 
@@ -283,7 +357,7 @@ public class NotaBean {
 			}
 			mediaAc2 = (nota.getAc12() + nota.getAc22() + nota.getAc32());
 			mediaAc2 = mediaAc2 / 3;
-			nota.setMediaAc2(Double.valueOf(formatador.format(mediaAc2).replace(",", ".")));
+			nota.setMediaAc2(mediaAc2);
 		}
 
 		if (nota.getAs12() == null) {
@@ -294,7 +368,7 @@ public class NotaBean {
 			}
 			mediaAs2 = (nota.getMediaAc2() + nota.getAs12());
 			mediaAs2 = mediaAs2 / 2;
-			nota.setMediaAs2(Double.valueOf(formatador.format(mediaAs2).replace(",", ".")));
+			nota.setMediaAs2(mediaAs2);
 		}
 		if (nota.getAs22() == null) {
 		}
@@ -307,7 +381,7 @@ public class NotaBean {
 			}
 			mediaAs2 = (nota.getMediaAc2() + nota.getAs12() + nota.getAs22());
 			mediaAs2 = mediaAs2 / 3;
-			nota.setMediaAs2(Double.valueOf(formatador.format(mediaAs2).replace(",", ".")));
+			nota.setMediaAs2(mediaAs2);
 		}
 		if (nota.getAvaliacaoFinal2() == null) {
 			nota.setMediaTrimestral2(0);
@@ -357,13 +431,12 @@ public class NotaBean {
 		Double mediaAc3 = null;
 		Double mediaAs3 = null;
 		Double mediaTr3 = null;
-		DecimalFormat formatador = new DecimalFormat("0.00");
-		/* 1º Trimestre */
+		/* 3º Trimestre */
 		if (nota.getAc13() == null) {
 			nota.setMediaAc3(null);
 		} else if (nota.getAc13() != null) {
 			mediaAc3 = nota.getAc13();
-			nota.setMediaAc3(Double.valueOf(formatador.format(mediaAc3).replace(",", ".")));
+			nota.setMediaAc3(mediaAc3);
 		}
 		if (nota.getAc23() == null) {
 		} else if (nota.getAc23() != null) {
@@ -372,7 +445,7 @@ public class NotaBean {
 			}
 			mediaAc3 = (nota.getAc13() + nota.getAc23());
 			mediaAc3 = mediaAc3 / 2;
-			nota.setMediaAc3(Double.valueOf(formatador.format(mediaAc3).replace(",", ".")));
+			nota.setMediaAc3(mediaAc3);
 		}
 		if (nota.getAc33() == null) {
 
@@ -385,7 +458,7 @@ public class NotaBean {
 			}
 			mediaAc3 = (nota.getAc13() + nota.getAc23() + nota.getAc33());
 			mediaAc3 = mediaAc3 / 3;
-			nota.setMediaAc3(Double.valueOf(formatador.format(mediaAc3).replace(",", ".")));
+			nota.setMediaAc3(mediaAc3);
 		}
 
 		if (nota.getAs13() == null) {
@@ -396,7 +469,7 @@ public class NotaBean {
 			}
 			mediaAs3 = (nota.getMediaAc3() + nota.getAs13());
 			mediaAs3 = mediaAs3 / 2;
-			nota.setMediaAs3(Double.valueOf(formatador.format(mediaAs3).replace(",", ".")));
+			nota.setMediaAs3(mediaAs3);
 		}
 		if (nota.getAs23() == null) {
 		} else if (nota.getAs23() != null) {
@@ -408,7 +481,7 @@ public class NotaBean {
 			}
 			mediaAs3 = (nota.getMediaAc3() + nota.getAs13() + nota.getAs23());
 			mediaAs3 = mediaAs3 / 3;
-			nota.setMediaAs3(Double.valueOf(formatador.format(mediaAs3).replace(",", ".")));
+			nota.setMediaAs3(mediaAs3);
 		}
 		if (nota.getAvaliacaoFinal3() == null) {
 			nota.setMediaTrimestral3(0);
@@ -451,20 +524,46 @@ public class NotaBean {
 		}
 	}
 
+	// funcao para al
+	public void proximoPasso() {
+		try {
+			disciplinaTurmaSelecionada = true;
+			selecionarturma = true;
+
+		disciplinaClasse = disciplinaClasseServico.obterDisciplinasClassePorId(disciplinaClasse.getId());
+
+			this.notas = notaServico.obterNotasPorIdTurmaEDisciplinaDoProfessor(
+					disciplinaClasse.getDisciplina().getId(), turmaSelecionada.getId());
+			this.professorTurma = professorTurmaServico.obterProfessorTurmaPorIdTurmarPorIdDisciplina(
+					turmaSelecionada.getId(), disciplinaClasse.getDisciplina().getId());
+			if (this.professorTurma == null) {
+				this.professorTurma = new ProfessorTurma();
+				this.professorTurma.setTurma(turmaSelecionada);
+				this.professorTurma.setDisciplina(disciplinaClasse.getDisciplina());
+			}
+
+			this.mediaAvaliacaoContinua = null;
+			this.mediaAvaliacaoSomativa = null;
+			this.mediaTrimestral = null;
+
+			trimestreSelecionado = trimestreServico.obterTrimestrePorId(trimestreSelecionado.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public String listarTurmaParaLancarNotas() {
 		this.selecionarturma = false;
-		this.verificarRelatorioTurmaSelecionada = false;
-		this.verificarTurmaSelecionada = true;
+
 		return "/academico/professor/nota/turma?faces-redirect=true";
 	}
 
 	public String lancarNotaDoAluno(ProfessorTurma professorTurma) {
-	
+
 		try {
-			selecionarturma =true;
+			selecionarturma = true;
 			this.professorTurma = professorTurma;
 			buscarCadernetaProfessor();
-			this.turmaSelecionadaParaCadastroDeNotas=this.professorTurma.getTurma();
 			trimestreSelecionado = trimestreServico.obterTrimestreAtivo();
 		} catch (Exception e) {
 
@@ -474,15 +573,11 @@ public class NotaBean {
 
 	public String relatorioNotas() {
 		this.selecionarturma = false;
-		this.verificarTurmaSelecionada = true;
-		this.verificarRelatorioTurmaSelecionada = true;
 		return "/academico/professor/nota/relatorio?faces-redirect=true";
 	}
 
 	public String voltarLançarNotas() {
 		this.selecionarturma = true;
-		this.verificarTurmaSelecionada = false;
-		this.verificarRelatorioTurmaSelecionada = false;
 		return "/academico/professor/index?faces-redirect=true";
 	}
 
@@ -500,19 +595,10 @@ public class NotaBean {
 
 	public void buscarCadernetaProfessor() {
 		try {
-			if (this.verificarRelatorioTurmaSelecionada == false) {
-				this.notas = notaServico.obterNotasPorIdTurmaEDisciplinaDoProfessor(
-						this.professorTurma.getDisciplina().getId(), this.professorTurma.getTurma().getId());
-			} else if (this.verificarRelatorioTurmaSelecionada != false) {
-				Long idCalendario = authenticationContext.getCalendarioEscolar().getId();
-				trimestres = trimestreServico.obterTrimestrePorIdCalendario(idCalendario);
-				this.notas = new ArrayList<>();
-			}
-			if (this.verificarTurmaSelecionada == true) {
-				this.selecionarturma = true;
-			} else if (this.verificarTurmaSelecionada == false) {
-				this.turmaSelecionadaParaCadastroDeNotas = new Turma();
-			}
+
+			this.notas = notaServico.obterNotasPorIdTurmaEDisciplinaDoProfessor(
+					this.professorTurma.getDisciplina().getId(), this.professorTurma.getTurma().getId());
+
 			this.mediaAvaliacaoContinua = null;
 			this.mediaAvaliacaoSomativa = null;
 			this.mediaTrimestral = null;
@@ -528,11 +614,25 @@ public class NotaBean {
 
 	}
 
-	public void voltarLancarNotas() {
-		this.professorTurma = null;
-		this.notas = null;
-		this.turmaSelecionadaParaCadastroDeNotas = null;
+	public void selecionarTurma(Turma turma) {
+		this.turmaSelecionada = turma;
+		disciplinaTurmaSelecionada = false;
+		try {
+			if (turma.getCurso() != null && turma.getClasse().getId() != 0 && turma.getEscola().getId() != null) {
+				if (turma.getClasse().getCiclo().equals("2º CICLO")) {
+					matrizSelecionada = matrizServico.obterMatrizPorSegundoCiclo(turma.getClasse().getId(),
+							turma.getCurso(), turma.getArea(), turma.getEscola().getId());
+				} else if (turma.getClasse().getCiclo().equals("1º CICLO")) {
+					matrizSelecionada = matrizServico.obterMatrizPorPrimeiroCiclo(turma.getClasse().getId(),
+							turma.getCurso(), turma.getEscola().getId());
 
+				}
+			}
+			trimestreSelecionado = trimestreServico.obterTrimestreAtivo();
+			trimestres = trimestreServico.obterTrimestresPorCalendarioVigente();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Trimestre getObterTrimestreAtivo() {
@@ -548,7 +648,7 @@ public class NotaBean {
 
 		try {
 			String caminho = "/academico/relatorio/aluno/notas_alunos_anual_por_disciplina.jasper";
-			String nomeProfessor = null, nomeDiciplina = null;
+			String nomeProfessor = "Sem Professor", nomeDiciplina = null;
 			Map<String, Object> parametro = new HashMap<>();
 			if (professorTurma.getProfessor() != null) {
 				if (professorTurma.getProfessor().getNome() != null)
@@ -605,8 +705,21 @@ public class NotaBean {
 	// return notaServico.obterNotaPorIdAluno();
 	// }
 
-	public String voltar() {
-		return "/academico/aluno/index?faces-redirect=true";
+	public void voltar() {
+		if (disciplinaTurmaSelecionada == false) {
+			this.turmaSelecionada = null;
+			this.matrizSelecionada = null;
+		} else {
+			disciplinaTurmaSelecionada = false;
+		}
+
+	}
+
+	public void voltarSelecaoTurma() {
+		disciplinaTurmaSelecionada = false;
+		this.turmaSelecionada = null;
+		this.matrizSelecionada = null;
+
 	}
 
 	public void setNota(Nota nota) {
@@ -656,14 +769,6 @@ public class NotaBean {
 		this.notaSelecionada = notaSelecionada;
 	}
 
-	public Turma getTurmaSelecionadaParaCadastroDeNotas() {
-		return turmaSelecionadaParaCadastroDeNotas;
-	}
-
-	public void setTurmaSelecionadaParaCadastroDeNotas(Turma turmaSelecionadaParaCadastroDeNotas) {
-		this.turmaSelecionadaParaCadastroDeNotas = turmaSelecionadaParaCadastroDeNotas;
-	}
-
 	public Double getMediaAvaliacaoContinua() {
 		return mediaAvaliacaoContinua;
 	}
@@ -710,22 +815,6 @@ public class NotaBean {
 
 	public void setMediaDoTrimestre(boolean mediaDoTrimestre) {
 		this.mediaDoTrimestre = mediaDoTrimestre;
-	}
-
-	public boolean isVerificarTurmaSelecionada() {
-		return verificarTurmaSelecionada;
-	}
-
-	public void setVerificarTurmaSelecionada(boolean verificarTurmaSelecionada) {
-		this.verificarTurmaSelecionada = verificarTurmaSelecionada;
-	}
-
-	public boolean isVerificarRelatorioTurmaSelecionada() {
-		return verificarRelatorioTurmaSelecionada;
-	}
-
-	public void setVerificarRelatorioTurmaSelecionada(boolean verificarRelatorioTurmaSelecionada) {
-		this.verificarRelatorioTurmaSelecionada = verificarRelatorioTurmaSelecionada;
 	}
 
 	public List<Trimestre> getTrimestres() {
@@ -810,6 +899,22 @@ public class NotaBean {
 
 	public void setCursos(List<TipoCurso> cursos) {
 		this.cursos = cursos;
+	}
+
+	public List<Matriz> getMatrizes() {
+		return matrizes;
+	}
+
+	public void setMatrizes(List<Matriz> matrizes) {
+		this.matrizes = matrizes;
+	}
+
+	public Matriz getMatrizSelecionada() {
+		return matrizSelecionada;
+	}
+
+	public void setMatrizSelecionada(Matriz matrizSelecionada) {
+		this.matrizSelecionada = matrizSelecionada;
 	}
 
 }

@@ -12,7 +12,6 @@ public interface ClasseServico {
 	public Classe obterClassePorId(Long idClasse);
 	public Classe classeExisente(String descricao);
 	public List<Classe> obterClassesPorCiclo(String ciclo);
-	public Classe obterClassePorId(long idClasse);
 	public List<Classe> obterClassePorDescricao(String descicao);
 	public List<Classe> obterClassesPorEscola();
 

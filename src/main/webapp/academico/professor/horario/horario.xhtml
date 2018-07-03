@@ -34,41 +34,35 @@
 					<h:outputText value="Pesquisar meus horários"
 						style="font-weight: 700;" />
 				</h3>
-				<p:messages closable="true"
-					/>
+				<p:messages closable="true" />
 
 				<div class="card-body">
 
-					<div class="form-group row">
+					<div class="form-group">
+						<div class="col-sm-6" style="padding-left: 0;">
+							<div class="input-group">
 
-						<h:outputLabel value="Turno : "
-							styleClass="col-sm-2 control-label texto-label textfim" />
-						<div class="col-sm-5">
-							<h:selectOneMenu value="#{horarioBean.horarioAula.turno}"
-								styleClass="form-control" converter="turnoConverter">
-								<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
-								<f:selectItems value="#{horarioBean.turnos}" var="turno"
-									itemLabel="#{turno.descricao}" itemValue="#{turno}" />
+								<h:selectOneMenu value="#{horarioBean.horarioAula.turno}"
+									styleClass="form-control" converter="turnoConverter">
+									<f:selectItem itemLabel="SELECIONE O TURNO..."
+										itemValue="#{null}" />
+									<f:selectItems value="#{horarioBean.turnos}" var="turno"
+										itemLabel="#{turno.descricao}" itemValue="#{turno}" />
 
-							</h:selectOneMenu>
+								</h:selectOneMenu>
+								<span class="input-group-btn"> <h:commandButton
+										styleClass="btn btn-primary" value="Buscar!"
+										action="#{horarioBean.buscarHorario}" />
+								</span>
+							</div>
+
 						</div>
 					</div>
 
-					<div class="form-group ">
-						<h:outputLabel value=" "
-							styleClass="col-sm-2 control-label texto-label textfim" />
 
-						<div class="col-sm-3 textfim">
-							<h:commandButton value="Buscar"
-								action="#{horarioBean.buscarHorario}"
-								styleClass="btn btn-primary " />
-						</div>
-					</div>
-					<br /> 
-					<h:dataTable
-						styleClass="table  table-bordered tabelaProfessor tabela-hover  tabelaHorarioAluno tabela-horarios"
-						value="#{horarioBean.horarioAulas}" var="horarioAula"
-						style="width: 100%;">
+					<h:dataTable value="#{horarioBean.horarioAulas}" var="horarioAula"
+						styleClass="table table-bordered tabelaProfessor tabela-hover  tabela-funcionario  tabelaHorarioAluno tabela-horarios"
+						rowClasses="linha2, linha1">
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="Horário" />

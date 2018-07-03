@@ -6,191 +6,139 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<div class="menu" style="margin-top: -10px;">
-	<h:form>
-		<ul>
-			<li style="width: 120px;"><h:outputLink value="#">
-					<span> <h:graphicImage
-							url="#{buscarFotoBean.retornarImagesRelatorio}"
-							class="ajustamento" style="margin-top:2px;" /></span> Escola</h:outputLink>
-				<ul class="row row_outline1">
-					<li style="width: 300px;" class="li li_top"><h:outputLink
-							value="#{request.contextPath}/director-adjunto/identificacao.jsf"
-							styleClass="fundo">
-							<span class="espacamento">Identificação da Escola</span>
-						</h:outputLink></li>
-					<li style="width: 300px;" class="li "><h:outputLink
-							value="#{request.contextPath}/director-adjunto/sala.jsf"
-							styleClass="fundo">
-							<span class="espacamento">Sala </span>
+<nav
+	class="navbar navbar-expand-md navbar-dark bg-dark fixed-top menu-horizontal">
+<a class="navbar-brand" href="#{request.contextPath}/director-adjunto/index.jsf">SIGE</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse"
+	data-target="#navbarsExampleDefault"
+	aria-controls="navbarsExampleDefault" aria-expanded="false"
+	aria-label="Toggle navigation">
+	<span class="navbar-toggler-icon"></span>
+</button>
 
-						</h:outputLink></li>
-						<li style="width: 300px;" class="li "><h:outputLink value="#"
-						styleClass="fundo">
-						<span class="espacamento">Matriz Curricular</span>
-						<span class="seta_para_direita">&#9654;</span>
+<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Escola</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+				<h:outputLink
+					value="#{request.contextPath}/director-adjunto/identificacao.jsf"
+					styleClass="dropdown-item">
+						Identificação da Escola
 					</h:outputLink>
-					<ul class="row_outline1" style="left: 301px;">
-						<li style="width: 310px;" class="li_left li_top"><h:outputLink
-								value="#{request.contextPath}/director-adjunto/cadastrar-matriz.jsf"
-								styleClass="fundo">
-								<span class="espacamento">Cadastro de Matriz Curricular</span>
-								</h:outputLink> </li>
-						<li style="width: 310px;" class="li_left li_bottom"><h:outputLink
-								value="#{request.contextPath}/director-adjunto/gerenciar-matriz.jsf"
-								styleClass="fundo">
-								<span class="espacamento">Gerenciar Matriz Curricular</span>
-							</h:outputLink></li>
-
-					</ul></li>
-				
-					<li style="width: 300px;" class="li"><h:outputLink value="#"
-							styleClass="fundo">
-							<span class="espacamento"> Aluno</span>
-							<span class="seta_para_direita">&#9654;</span>
-						</h:outputLink>
-						<ul class="row_outline1" style="left: 301px;">
-							<li style="width: 300px;" class="li li_top"><h:outputLink
-									value="#{request.contextPath}/director-adjunto/aluno.jsf"
-									styleClass="fundo">
-									<span class="espacamento"> Cadastro de aluno </span>
-								</h:outputLink></li>
-
-							<li style="width: 300px;" class="li li_bottom"><h:outputLink
-									value="#{request.contextPath}/director-adjunto/aluno/consultar.jsf"
-									styleClass="fundo">
-									<span class="espacamento"> Consulta de aluno </span>
-								</h:outputLink></li>
-						</ul></li>
-
-
-					
-					<li style="width: 300px;" class="li "><h:outputLink value="#"
-							styleClass="fundo">
-							<span class="espacamento">Horários</span>
-							<span class="seta_para_direita">&#9654;</span>
-						</h:outputLink>
-						<ul class="row_outline1" style="left: 301px;">
-							<li style="width: 350px;" class="li_left li_top li_bottom"><h:commandLink
-									action="#{horarioAulaBean.cadastroHorarioAula}"
-									styleClass="fundo">
-									<span class="espacamento">Gerenciar Horários de Aula </span>
-								</h:commandLink></li>
-
-							
-						</ul></li>
-					<li style="width: 300px;" class="li "><h:outputLink value="#"
-							styleClass="fundo">
-							<span class="espacamento">Classe </span>
-							<span class="seta_para_direita">&#9654;</span>
-						</h:outputLink>
-						<ul class="row_outline1" style="left: 301px;">
-
-							<li style="width: 350px;" class="li li_top"><h:outputLink
-									value="#{request.contextPath}/academico/adjunto/classe/disciplina.jsf"
-									styleClass="fundo">
-									<span class="espacamento">Distribuição das disciplinas
-										por classe</span>
-								</h:outputLink></li>
-							<li style="width: 350px;" class="li li_bottom"><h:outputLink
-									value="#{request.contextPath}/disciplina/manutencao.jsf"
-									styleClass="fundo">
-									<span class="espacamento">Manutenção das disciplinas da
-										classe</span>
-								</h:outputLink></li>
-
-						</ul></li>
-					<li style="width: 300px;" class="li"><h:outputLink value=""
-							styleClass="fundo">
-							<span class="espacamento"> Transferência</span>
-							<span class="seta_para_direita">&#9654;</span>
-						</h:outputLink>
-						<ul class="row_outline1" style="left: 301px;">
-							<li style="width: 300px;" class="li li_top li_left"><h:outputLink
-									value="#{request.contextPath}/director-adjunto/transferencia.jsf"
-									styleClass="fundo">
-									<span class="espacamento"> Quadro de transferência</span>
-								</h:outputLink></li>
-
-							<li style="width: 300px;" class="li li_bottom"><h:outputLink
-									value="#{request.contextPath}/director-adjunto/transferencia/pedido.jsf"
-									styleClass="fundo">
-									<span class="espacamento"> Receber transferência</span>
-								</h:outputLink></li>
-
-						</ul></li>
-
-				</ul></li>
-
-
-			<span class="span_seta" />
-			
-			<li style="width: 110px;"><h:outputLink value="#">
-					<span> <h:graphicImage
-							url="#{buscarFotoBean.retornarImagesPassword}"
-							style="width: 25px;height: 27px;margin-top: 3px;"
-							class="ajustamento" /></span>Turma</h:outputLink>
-				<ul class="row row_outline1">
-
-					<li class="li" style="width: 266px;"><h:outputLink
-							value="#{request.contextPath}/director-adjunto/turma.jsf"
-							styleClass="fundo">
-							<span class="espacamento">Gerenciar Turmas</span>
-						</h:outputLink></li>
-					<li class="li " style="width: 266px;"><h:outputLink
-							value="#{request.contextPath}/director-adjunto/alocar-professor.jsf"
-							styleClass="fundo">
-							<span class="espacamento">Alocar Professor em Turma</span>
-						</h:outputLink></li>
-						<li style="width: 266px;" class="li"><h:outputLink
-						value="#{request.contextPath}/director-adjunto/alocar-alunos.jsf"
-						styleClass="fundo">
-						<span class="espacamento"> Alocar alunos em Turma</span>
-
-					</h:outputLink></li>
-				<li style="width: 266px;" class="li li_bottom"><h:outputLink
-						value="#" styleClass="fundo">
-						<span class="espacamento"> Avaliação da Turma</span>
-						<span class="seta_para_direita">&#9654;</span>
+				<h:outputLink value="#{request.contextPath}/director-adjunto/sala.jsf"
+					styleClass="dropdown-item">
+						Gerir sala 
 					</h:outputLink>
-					<ul class="row_outline1" style="left: 267px;">
-
-						<li style="width: 342px;" class="li li_top"><h:outputLink
-								value="#" styleClass="fundo">
-								<span class="espacamento">Lançar notas numa turma</span>
-							</h:outputLink></li>
-						<li style="width: 342px;" class="li li_left li_bottom"><h:outputLink
-								value="#" styleClass="fundo">
-								<span class="espacamento">Encerar a Turma</span>
-							</h:outputLink></li>
-						
+				<h:outputLink value="#{request.contextPath}/director-adjunto/disciplina-da-classe.jsf"
+					styleClass="dropdown-item">
+						Gerir disciplinas da Classe
+					</h:outputLink>
 
 
+			</div></li>
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Matriz</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
 
-					</ul></li>
-				</ul></li>
-				<span class="span_seta" />
-			
-			<li style="width: 160px;"><h:outputLink value="#">
-					<span> <h:graphicImage
-							url="#{buscarFotoBean.retornarImagesPassword}"
-							style="width: 25px;height: 27px;margin-top: 3px;"
-							class="ajustamento" /></span>Personalizações</h:outputLink>
-				<ul class="row row_outline1">
+				<h:outputLink
+					value="#{request.contextPath}/director-adjunto/cadastrar-matriz.jsf"
+					styleClass="dropdown-item">
+								Cadastro de matriz curricular
+								</h:outputLink>
+				<h:outputLink
+					value="#{request.contextPath}/director-adjunto/gerenciar-matriz.jsf"
+					styleClass="dropdown-item">
+								Finalizar matriz curricular
+							</h:outputLink>
 
-					<li class="li" style="width: 210px;"><h:outputLink
-							value="#{request.contextPath}/director-adjunto/senha.jsf"
-							styleClass="fundo">
-							<span class="espacamento">Alterar senha</span>
-						</h:outputLink></li>
-					<li class="li li_bottom" style="width: 210px;"><h:outputLink
-							value="#{request.contextPath}/director-adjunto/dados.jsf"
-							styleClass="fundo">
-							<span class="espacamento">Meus Dados Pessoais</span>
-						</h:outputLink></li>
-				</ul></li>
+			</div></li>
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Horário</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+				<h:commandLink  action="#{horarioAulaBean.cadastroHorarioAula}"
+					value="Gerir Horário de Aula"
+					styleClass="dropdown-item">
+					 
+				</h:commandLink>
+				<ui:remove>
+					<h:outputLink styleClass="dropdown-item"
+						value="#{request.contextPath}/director/horario.jsf">
+					Gerir Horários das Turmas
+				</h:outputLink>
+				</ui:remove>
 
-		</ul>
-	</h:form>
+			</div></li>
+
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Turma</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/director-adjunto/turma.jsf">
+								Gerir turma
+						</h:outputLink>
+
+
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/director-adjunto/enturmar.jsf"> Alocar alunos na turma
+							</h:outputLink>
+
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/director-adjunto/enturmado.jsf">
+								 Alunos alocados na turma
+						</h:outputLink>
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/director/alocar-professor.jsf">
+						Alocar professor na turma
+							</h:outputLink>
+				<h:outputLink styleClass="dropdown-item" value="#">
+						Lançar notas numa turma
+							</h:outputLink>
+
+			</div></li>
+
+
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Aluno</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/director-adjunto/aluno.jsf">
+								Gerir aluno
+						</h:outputLink>
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/director-adjunto/imprimir.jsf">
+								Imprimir lista de alunos
+						</h:outputLink>
+
+			</div></li>
+
+
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Personalizações</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+				<h:outputLink value="#{request.contextPath}/director-adjunto/senha.jsf"
+					styleClass="dropdown-item">Alterar senha
+						</h:outputLink>
+				<h:outputLink value="#{request.contextPath}/director-adjunto/dados.jsf"
+					styleClass="dropdown-item">Meus dados pessoais
+					</h:outputLink>
+
+			</div></li>
+	</ul>
+	<h:panelGroup class="form-inline my-2 my-lg-0 form_sair">
+
+		<h:commandLink value="Sair" styleClass="botao" title="Sair do sistema"
+			action="#{authenticationContext.logout}" />
+
+	</h:panelGroup>
 </div>
+</nav>
 </html>

@@ -155,12 +155,12 @@ public class TransferenciaBean {
 			Integer inscritos = turma.getInscrito() + 1;
 			turma.setInscrito(inscritos);
 			turmaServico.salvar(turma);
-			Long numeroUltimoAlunoNaTurma = matriculaServico.obterNumeroUltimoAlunoNaTurma(turma.getId());
+			Integer numeroUltimoAlunoNaTurma = matriculaServico.obterNumeroUltimoAlunoNaTurma(turma.getId());
 			if (numeroUltimoAlunoNaTurma == null) {
-				numeroUltimoAlunoNaTurma = 0L;
+				numeroUltimoAlunoNaTurma = 0;
 			}
 			numeroUltimoAlunoNaTurma++;
-			transferenciaSelacionada.getMatricula().setNumeroAlunoTurma(String.valueOf(numeroUltimoAlunoNaTurma));
+			transferenciaSelacionada.getMatricula().setNumeroAlunoTurma(numeroUltimoAlunoNaTurma);
 			transferenciaSelacionada.getMatricula().setTurmaDestino(transferenciaSelacionada.getMatricula().getTurma());
 			transferenciaSelacionada.getMatricula().setTurma(turma);
 			transferenciaSelacionada.getMatricula().setSituacao(EstadoTransferencia.TRANSFERIDO.getLabel());

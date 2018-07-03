@@ -25,5 +25,6 @@ public interface MatrizServico {
 	Matriz obterMatrizPorPrimeiroCiclo(long idClasse, String curso, Long idEscola);
 	public List<Matriz> obterMatriz2Ciclo(long idClasse, String curso, String tipoArea, Long idEscola);
 	public Matriz obterMatriz2CicloPorIdELeftJoinAtiva(long idClasse, String curso, String tipoArea, Long idEscola);
+	public List<Matriz> obterMatrizesPorIdClasse(Long idEscola, long idClasse);
 	
 }

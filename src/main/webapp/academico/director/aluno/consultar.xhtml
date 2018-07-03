@@ -18,10 +18,10 @@
 
 
 	<ui:define name="titulo_do_corpo">
-		<ui:include src="/academico/director/template/titulo_do_corpo.xhtml"></ui:include>
+		<ui:include src="/academico/secretario/template/titulo_do_corpo.xhtml"></ui:include>
 	</ui:define>
 	<ui:define name="nome_usuario">
-		<ui:include src="/academico/director/template/nome_usuario.xhtml"></ui:include>
+		<ui:include src="/academico/secretario/template/nome_usuario.xhtml"></ui:include>
 	</ui:define>
 
 	<ui:define name="ambiente_comum">
@@ -34,22 +34,22 @@
 			<div class="menu menubar">
 				<ul>
 					<li><h:commandLink
-							action="/academico/director/index?faces-redirect=true">
+							action="/academico/secretario/index?faces-redirect=true">
 							 Principal
 						</h:commandLink></li>
 					<h:panelGroup>
 						<h:outputText value=" > " style="font-size:21px;" />
 					</h:panelGroup>
 					<li><h:outputLink
-							value="#{request.contextPath}/director/aluno/consultar.jsf">
+							value="#{request.contextPath}/secretario/aluno/consultar.jsf">
 							 Consulta de aluno
 						</h:outputLink></li>
 				</ul>
 			</div>
 		</h:form>
+		<ui:include src="/academico/escola/aluno/consultar.xhtml"></ui:include>
 
 
-	<ui:include src="/academico/escola/aluno/consultar.xhtml"></ui:include>
 	</ui:define>
 </ui:composition>
 </html>

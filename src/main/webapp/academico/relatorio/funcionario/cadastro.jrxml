@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-05-30T16:39:12 -->
+<!-- 2018-06-29T12:13:30 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="funcionario" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b8374351-4b8b-48d2-aa4e-ce1b4a4a2cc1">
-	<property name="com.jaspersoft.studio.data.sql.tables" value="ZXNjb2xhICw0NzgsMTM0LDUxYzBkNjI1LTBhM2YtNGNmZS1iNTE3LTc3MDAxZDZlY2YxMTtwZXJt&#xA;aXNzYW8gLDk4OSw5ODYsMzY4YzAzMzYtMmVmZS00MGE3LWJkOWYtZGVhM2VkMzJjYTNiO2Rpc3Ry&#xA;aXRvICw0OCw5ODYsZDliMGQ2MDEtNjgwYi00YzRmLWExODMtYzhiZDdiMGE5YmQ0O3VzdWFyaW9f&#xA;cGVybWlzc2FvICwxNjMsOTk5LDI0MmE3OTZiLTJlYjEtNGRmZi04ODg0LTM5ZDc1OGZhZjhjMDt1&#xA;c3VhcmlvICw2NjEsNDA3LDY3NzdjYWNkLTM2NTktNDZmNS1iNjg1LTE5ZTgyMjhiZDFhNjtkaXN0&#xA;cml0YWwgLDgxMiw3NzUsMzYzMjVjMTgtNWVlMC00NzU4LTkyOWMtNDYxNmQ3MjI0MDA5O2Z1bmNp&#xA;b25hcmlvICw0NzgsNTY1LDE4Y2I5ZTVkLTJhNzEtNDhlYi1iMjViLThlNTAxMDhiOTVlODtmdW5j&#xA;aW9uYXJpb19lc2NvbGEgLDMxNyw2ODIsZWM2ZjQ2MGUtOGEzZi00ODIyLTgzOTUtMzIxNWMxNDY4&#xA;MDkxOw=="/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\funcionario\DataAdapter.xml"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="935"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="51"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="749"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="251"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="344"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="649"/>
 	<style name="Style1"/>
@@ -19,7 +19,9 @@
 	<parameter name="link" class="java.lang.String"/>
 	<parameter name="provinciaFuncionario" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT usuario.email,
+		<![CDATA[SELECT funcionario.cargahoraria,
+	funcionario_escola.descricao AS permissao,
+	usuario.email,
 	usuario.datanascimento,
 	usuario.estadocivil,
 	usuario.mae,
@@ -36,7 +38,6 @@
 	usuario.sexo,
 	funcionario.morada,
 	funcionario.local_nascimento,
-	permissao.nome AS permissao,
 	escola.descricao AS escola,
 	escola.localidade,
 	funcionario.horacadastro,
@@ -60,6 +61,8 @@ WHERE
 	 AND distrital.distrito_id = distrito.id 
 	 AND funcionario_escola.id_permissao = permissao.id]]>
 	</queryString>
+	<field name="cargahoraria" class="java.lang.Double"/>
+	<field name="permissao" class="java.lang.String"/>
 	<field name="email" class="java.lang.String"/>
 	<field name="datanascimento" class="java.sql.Date"/>
 	<field name="estadocivil" class="java.lang.String"/>
@@ -77,7 +80,6 @@ WHERE
 	<field name="sexo" class="java.lang.Boolean"/>
 	<field name="morada" class="java.lang.String"/>
 	<field name="local_nascimento" class="java.lang.String"/>
-	<field name="permissao" class="java.lang.String"/>
 	<field name="escola" class="java.lang.String"/>
 	<field name="localidade" class="java.lang.String"/>
 	<field name="horacadastro" class="java.sql.Time"/>
@@ -287,7 +289,7 @@ WHERE
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="200" splitType="Stretch">
+		<band height="202" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="-35" width="145" height="16" uuid="2fa654ae-1343-42a3-9bb6-909f2adeb8b7">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -464,7 +466,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{morada}==null?"Não definida":$F{morada}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="151" width="555" height="20" uuid="2f884a88-1bac-40da-a71f-1a1dca0c58ad">
+				<reportElement x="0" y="153" width="555" height="20" uuid="2f884a88-1bac-40da-a71f-1a1dca0c58ad">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
@@ -476,7 +478,7 @@ WHERE
 				<text><![CDATA[CARGOS DE FUNCIONÁRIO NA ESCOLA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="184" width="26" height="16" uuid="9ace9ff7-39e1-494a-b0b7-ab1d526dab61">
+				<reportElement x="0" y="186" width="26" height="16" uuid="9ace9ff7-39e1-494a-b0b7-ab1d526dab61">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
@@ -488,7 +490,7 @@ WHERE
 				<text><![CDATA[Ord.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="250" y="184" width="140" height="16" uuid="76b35347-5a9c-4743-a7d1-433499dccb16">
+				<reportElement x="226" y="186" width="132" height="16" uuid="76b35347-5a9c-4743-a7d1-433499dccb16">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
@@ -500,19 +502,19 @@ WHERE
 				<text><![CDATA[Localidade ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="26" y="184" width="224" height="16" uuid="eadbc495-cc05-4dfd-9226-90249f7681b0">
+				<reportElement x="26" y="186" width="200" height="16" uuid="eadbc495-cc05-4dfd-9226-90249f7681b0">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
-				<box>
+				<box leftPadding="6">
 					<pen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Currie new" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Escola]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="390" y="184" width="123" height="16" uuid="70bc4427-31c3-45bf-a360-fc40f3ac9c61">
+				<reportElement x="358" y="186" width="123" height="16" uuid="70bc4427-31c3-45bf-a360-fc40f3ac9c61">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
@@ -521,7 +523,7 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Currie new" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Cargo]]></text>
+				<text><![CDATA[Descrição]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="2" y="94" width="74" height="15" uuid="428f675a-3afe-41f4-9bd8-b3b716acdda9">
@@ -546,7 +548,7 @@ WHERE
 				<text><![CDATA[Estado Civil:]]></text>
 			</staticText>
 			<textField pattern="yyyy" hyperlinkTarget="Parent">
-				<reportElement x="83" y="117" width="232" height="15" uuid="ccad4ad9-179f-4bc8-95b8-12f9fd598d8c">
+				<reportElement x="83" y="117" width="74" height="15" uuid="ccad4ad9-179f-4bc8-95b8-12f9fd598d8c">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="0">
@@ -570,7 +572,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{email}.toString().trim().equals("")?"Nenhum e - mail cadastrado":$F{email}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="513" y="184" width="42" height="16" uuid="da398b9d-fedc-4ad7-9078-ad1591f46b2c">
+				<reportElement x="481" y="186" width="74" height="16" uuid="da398b9d-fedc-4ad7-9078-ad1591f46b2c">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
@@ -579,7 +581,7 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Currie new" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Activo]]></text>
+				<text><![CDATA[Efectivo?]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="161" y="72" width="62" height="16" uuid="e0923233-c918-4599-b5af-9522b02fb6dc">
@@ -613,8 +615,30 @@ WHERE
 					<font fontName="Currie new" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{local_nascimento}==null?"":$F{local_nascimento}+" - "
-+$P{provinciaFuncionario}
-]]></textFieldExpression>
++$P{provinciaFuncionario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="161" y="117" width="59" height="15" uuid="3ae02534-8cb8-4eeb-81a1-d68c8d24fc8a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Currie new" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Trabalho:]]></text>
+			</staticText>
+			<textField pattern="yyyy" hyperlinkTarget="Parent">
+				<reportElement x="221" y="117" width="232" height="15" uuid="5274fe12-2883-4d74-857a-5079a6402122">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="0">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Currie new" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cargahoraria}==null?"":$F{cargahoraria}+"h"]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
@@ -634,7 +658,7 @@ WHERE
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT} < 10 ?"0"+ $V{REPORT_COUNT} :$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="250" y="0" width="140" height="15" uuid="65e65f7b-2405-4d0f-83fa-c1df9692e758"/>
+				<reportElement x="226" y="0" width="132" height="15" uuid="65e65f7b-2405-4d0f-83fa-c1df9692e758"/>
 				<box topPadding="2" leftPadding="0">
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
@@ -647,7 +671,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{localidade}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="26" y="0" width="224" height="15" uuid="5f5707de-4233-428c-9293-97aa57adde09">
+				<reportElement x="26" y="0" width="200" height="15" uuid="5f5707de-4233-428c-9293-97aa57adde09">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -661,7 +685,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{escola}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="390" y="0" width="123" height="15" uuid="aad14f62-2158-4393-9bf8-17c098336fbb">
+				<reportElement x="358" y="0" width="123" height="15" uuid="aad14f62-2158-4393-9bf8-17c098336fbb">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -671,10 +695,10 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Currie new" size="8" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{permissao}.replace( "DIRECTOR DA ESCOLA", "Director da Escola" ).replace("SECRETÁRIO","Secretário").replace( "PROFESSOR", "Professor").replace( "DIRECTOR ADJUNTO DA ESCOLA", "Director adjunto da Escola" )]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{permissao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="513" y="0" width="42" height="15" uuid="682e8fd7-6957-4f72-ae8d-fc1b2ff2ce2e">
+				<reportElement x="481" y="0" width="74" height="15" uuid="682e8fd7-6957-4f72-ae8d-fc1b2ff2ce2e">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -689,7 +713,32 @@ WHERE
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="116" splitType="Stretch"/>
+		<band height="65" splitType="Stretch">
+			<staticText>
+				<reportElement x="176" y="50" width="251" height="15" uuid="c15ae804-1306-46bf-be5d-45ebf38b5d12">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Currie new" size="9"/>
+				</textElement>
+				<text><![CDATA[______/_____/________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="9" width="260" height="20" uuid="0a433459-7511-48d8-8ecb-22cb5f206bd7"/>
+				<box topPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Currie new" size="9"/>
+				</textElement>
+				<text><![CDATA[Auto]]></text>
+			</staticText>
+			<line>
+				<reportElement x="171" y="40" width="259" height="1" uuid="3d88feed-c0f2-4610-8d0e-714084701421"/>
+				<graphicElement>
+					<pen lineWidth="0.3"/>
+				</graphicElement>
+			</line>
+		</band>
 	</columnFooter>
 	<pageFooter>
 		<band height="60" splitType="Stretch">

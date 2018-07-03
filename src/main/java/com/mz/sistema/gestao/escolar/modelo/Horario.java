@@ -70,7 +70,7 @@ public class Horario implements Serializable {
 		this.turma = turma;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	public HorarioAula getHorarioAula() {
 		return horarioAula;
 	}

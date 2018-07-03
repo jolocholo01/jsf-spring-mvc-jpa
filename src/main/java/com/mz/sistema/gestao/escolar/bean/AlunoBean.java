@@ -43,6 +43,7 @@ import com.mz.sistema.gestao.escolar.modelo.Trimestre;
 import com.mz.sistema.gestao.escolar.modelo.Turma;
 import com.mz.sistema.gestao.escolar.modelo.Usuario;
 import com.mz.sistema.gestao.escolar.servico.AlunoServico;
+import com.mz.sistema.gestao.escolar.servico.ClasseServico;
 import com.mz.sistema.gestao.escolar.servico.DisciplinaClasseServico;
 import com.mz.sistema.gestao.escolar.servico.DistritoServico;
 import com.mz.sistema.gestao.escolar.servico.EscolaServico;
@@ -54,6 +55,7 @@ import com.mz.sistema.gestao.escolar.servico.PaisServico;
 import com.mz.sistema.gestao.escolar.servico.PermissaoServico;
 import com.mz.sistema.gestao.escolar.servico.RecoperarSenhaServico;
 import com.mz.sistema.gestao.escolar.servico.TransferenciaServico;
+import com.mz.sistema.gestao.escolar.servico.TrimestreServico;
 import com.mz.sistema.gestao.escolar.servico.TurmaServico;
 import com.mz.sistema.gestao.escolar.servico.UsuarioServico;
 import com.mz.sistema.gestao.escolar.util.DataUtils;
@@ -68,6 +70,9 @@ import com.mz.sistema.gestao.escolar.util.ValorExtenso;
 @Controller
 public class AlunoBean {
 	private Aluno aluno = new Aluno();
+	private Aluno alunoSelecionado;
+	private Aluno alunoSelecionadoExclusao;
+
 	private Transferencia transferencia = new Transferencia();
 	private List<Aluno> alunos = new ArrayList<>();
 	private List<Matricula> matriculas = new ArrayList<>();
@@ -79,7 +84,7 @@ public class AlunoBean {
 	private Integer mediaAlunoTrimetral;
 	private String mediaAlunoTrimetralPorExtenso;
 	private List<Provincia> provincias = Arrays.asList(Provincia.values());
-	private Escola escola = new Escola();;
+	private Escola escola = new Escola();
 	private Escola escolaSelecionada = new Escola();
 	private Trimestre trimestreAtivo;
 	private Matricula matricula;
@@ -104,7 +109,10 @@ public class AlunoBean {
 	private boolean novoAlunoSelecionadoBoolean = false;
 	private boolean confirmarsalvarMatricula = false;
 	private boolean matriculaSelecionadaParaAlocacaoTurmaBoolean = false;
+	private boolean matriculaAvancarBoolean = false;
 	private boolean editarMatricula = false;
+	private boolean marcarTodosBoolean = false;
+	private boolean alocadoComSucessoBoolean = false;
 
 	private Integer qtdAlunosEncontrados;
 
@@ -150,18 +158,23 @@ public class AlunoBean {
 	private MatrizServico matrizServico;
 	@Autowired
 	private TransferenciaServico transferenciaServico;
+	
+	@Autowired
+	private TrimestreServico trimestreServico;
 	@Autowired
 	private PermissaoServico permissaoServico;
 	@Autowired
 	private TurmaServico turmaServico;
 	@Autowired
 	private PaisServico paisServico;
-	private Aluno alunoSelecionado;
-	private Aluno alunoSelecionadoExclusao;
+
 	@Autowired
 	private RecoperarSenhaServico recoperarSenhaServico;
 	@Autowired
 	private DisciplinaClasseServico disciplinaClasseServico;
+
+	@Autowired
+	private ClasseServico classeServico;
 
 	@Autowired
 	private GeradorDeRelatoriosServico geradorDeRelatoriosServico;
@@ -183,6 +196,11 @@ public class AlunoBean {
 		proximaTerceiraFaseBoolean = false;
 		matriculaAlunoBoolean = false;
 		trimestreAtivo = new Trimestre();
+		try {
+			trimestreAtivo= trimestreServico.obterTrimestreAtivo();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -223,7 +241,7 @@ public class AlunoBean {
 		renovarMatriculaBoolean = false;
 		escolherSegundoCriterioBoolean = true;
 		escolherTerceiroCriterioBoolean = true;
-		this.turmas=new ArrayList<>();
+		this.turmas = new ArrayList<>();
 	}
 
 	public void buscarAluno() {
@@ -274,13 +292,19 @@ public class AlunoBean {
 			FuncionarioEscola funcionarioEscola = authenticationContext.getFuncionarioEscolaLogada();
 			Escola escola = funcionarioEscola.getEscola();
 			aluno.setEscola(escola);
+			if (aluno.getId() == null) {
+				Funcionario funcionario = (Funcionario) authenticationContext.getUsuarioLogado();
+				aluno.setFuncionario(funcionario);
+			}
+			
 			alunoServico.salvar(aluno);
 			if (aluno.getId() == null) {
 				Mensagem.mensagemInfo("Aviso: Aluno cadastrado com sucesso!");
 			} else {
-				Mensagem.mensagemInfo("Aviso: Os dados de Aluno foram atualizados com sucesso!");
+				Mensagem.mensagemInfo("Aviso: Os dados de aluno foram atualizados com sucesso!");
 			}
 			pesquisa = aluno.getLogin();
+			buscar();
 			voltarParaPequisa();
 		} catch (Exception e) {
 
@@ -340,7 +364,12 @@ public class AlunoBean {
 					alunoSelecionado.getId());
 
 			if (matriculaExistente != null && matriculaExistente.getId() != matricula.getId()) {
-				Mensagem.mensagemErro("ERRO ao salvar aluno. já existe este aluno  matriculado neste ano!");
+				if (matriculaExistente.getClasse() != null) {
+					classe = matriculaExistente.getClasse();
+				}
+				matricula = matriculaExistente;
+				alocadoComSucessoBoolean = true;
+				Mensagem.mensagemAlerta("ATENÇÃO: O aluno já foi matriculado neste ano!");
 				return;
 			}
 
@@ -394,59 +423,84 @@ public class AlunoBean {
 			matricula.setDataMatricula(new Date());
 
 			///
-			matricula = matriculaServico.salvarRetornarMatricula(matricula);
+
 			if (matriz.getDisciplinaClasses().isEmpty()) {
 				Mensagem.mensagemErro(
 						"ERRO: Não pode matricular aluno nesta classe pois não existe componente curricular!");
 				return;
-			} else if (!matriz.getDisciplinaClasses().isEmpty()) {
-				Nota nota = new Nota();
-				NotaId notaId = null;
-				if (matricula.getClasse().getCiclo().equals("2º CICLO")
-						|| matricula.getClasse().getDescricao().equals("10ª CLASSE")) {
-					if (disciplinaSelecionadas.isEmpty()) {
-						Mensagem.mensagemErro("ERRO: selecione disciplina para matricular aluno!");
-						return;
-					}
-					for (DisciplinaClasse disciplinaClasse : disciplinaSelecionadas) {
-						DisciplinaClasse disciplina = disciplinaClasseServico
-								.obterDisciplinasClassePorId(disciplinaClasse.getId());
-						if (notaId == null) {
-							notaId = new NotaId();
-						}
-						if (!disciplina.getDisciplina().getDescricao().equals("REUNIÃO DE TURMA")) {
-							notaId.setId_disciplina(disciplina.getDisciplina().getId());
-							notaId.setId_matricula(matricula.getId());
-							nota.setId(notaId);
-							notaServico.salvar(nota);
-						}
+			}
+			Nota nota = new Nota();
+			NotaId notaId = null;
+			if (classe.getCiclo().equals("2º CICLO") || classe.getDescricao().equals("10ª CLASSE")) {
 
+				Integer count = 0;
+				for (DisciplinaClasse disciplinaClasse : matriz.getDisciplinaClasses()) {
+					if (!disciplinaClasse.isDisciplinaSeleconadaBoolean()) {
+						count++;
 					}
+				}
+				if (count == matriz.getDisciplinaClasses().size()) {
+					Mensagem.mensagemErro("ERRO: selecione disciplinas para matricular este aluno!");
+					return;
+				}
+				matricula = matriculaServico.salvarRetornarMatricula(matricula);
+				for (DisciplinaClasse disciplinaClasse : matriz.getDisciplinaClasses()) {
 
-				} else if (matricula.getClasse().getCiclo().equals("1º CICLO")
-						|| !matricula.getClasse().getDescricao().equals("10ª CLASSE")) {
-					for (DisciplinaClasse disciplinaClasse : matriz.getDisciplinaClasses()) {
-						if (notaId == null) {
-							notaId = new NotaId();
-						}
-						if (!disciplinaClasse.getDisciplina().getDescricao().equals("REUNIÃO DE TURMA")) {
+					if (notaId == null) {
+						notaId = new NotaId();
+					}
+					if (disciplinaClasse.isDisciplinaSeleconadaBoolean()) {
+						if (!disciplinaClasse.getDisciplina().getDescricao().toUpperCase().equals("REUNIÃO DE TURMA")) {
+							 nota = notaServico.obterNotasPorIdMatriculaPorDisciplina(matricula.getId(),
+									disciplinaClasse.getDisciplina().getId());
+							if(nota==null){
+								nota=new Nota();
+								
+							}
 							notaId.setId_disciplina(disciplinaClasse.getDisciplina().getId());
 							notaId.setId_matricula(matricula.getId());
 							nota.setId(notaId);
 							notaServico.salvar(nota);
+							
+						
 						}
 
 					}
 				}
 
+			} else if (classe.getCiclo().equals("1º CICLO") || !classe.getDescricao().equals("10ª CLASSE")) {
+				matricula = matriculaServico.salvarRetornarMatricula(matricula);
+				for (DisciplinaClasse disciplinaClasse : matriz.getDisciplinaClasses()) {
+					if (notaId == null) {
+						notaId = new NotaId();
+					}
+					if (!disciplinaClasse.getDisciplina().getDescricao().toUpperCase().equals("REUNIÃO DE TURMA")) {
+						 nota = notaServico.obterNotasPorIdMatriculaPorDisciplina(matricula.getId(),
+									disciplinaClasse.getDisciplina().getId());
+							if(nota==null){
+								nota=new Nota();
+								
+							}
+						notaId.setId_disciplina(disciplinaClasse.getDisciplina().getId());
+						notaId.setId_matricula(matricula.getId());
+						nota.setId(notaId);
+						notaServico.salvar(nota);
+					}
+
+				}
 			}
+
 			confirmarsalvarMatricula = true;
+
 			Mensagem.mensagemInfo("Aviso: Aluno matriculado com sucesso!");
+			// matricula =
+			// matriculaServico.obterMatriculaPorId(matricula.getId());
+			alocadoComSucessoBoolean = true;
 
 		} catch (
 
 		Exception e) {
-			Mensagem.mensagemErro("Aviso: Ocoreu erro inexperado ao matricular aluno.");
+			Mensagem.mensagemErro("ERRO: Ocorreu erro inexperado ao matricular este aluno!");
 			e.printStackTrace();
 
 		}
@@ -524,10 +578,7 @@ public class AlunoBean {
 	public void salvarAlocacaoTurma() {
 
 		try {
-			if (matricula.getTurma() == null) {
-				Mensagem.mensagemErro("O campos turma é obrigatório");
-				return;
-			}
+
 			Integer quantidadeMatriculado = 0;
 			if (matriculas != null) {
 				for (Matricula matricula : matriculas) {
@@ -540,7 +591,16 @@ public class AlunoBean {
 				}
 			}
 			if (quantidadeMatriculado == 0) {
-				Mensagem.mensagemErro("ERRO: selecione pelo meno um aluno para alocar nesta turma!");
+				Mensagem.mensagemAlerta("ATENÇÃO: selecione pelo meno um aluno para alocar na turma de destino!");
+				return;
+			}
+			if (turmas == null) {
+				Mensagem.mensagemAlerta(
+						"ATENÇÃO: Não foi alocado nenhum aluno pois não esxite nenhuma turma da classe!");
+				return;
+			}
+			if (matricula.getTurma() == null) {
+				Mensagem.mensagemErro("O campos turma é obrigatório");
 				return;
 			}
 			Turma turma = turmaServico.obterTurmaPorId(matricula.getTurma().getId());
@@ -554,13 +614,13 @@ public class AlunoBean {
 			Turma turmaPk = turmaServico.salvarRetornarTurma(turma);
 			this.matricula.setTurma(turmaPk);
 			buscarMatriculasAlocarNaTurma();
-			Mensagem.mensagemInfo("Aviso: Foram alocadaos " + quantidadeMatriculado + " alunos na turma");
+			Mensagem.mensagemInfo("Aviso: Fora(m) alocado(s) " + quantidadeMatriculado + " aluno(s) na turma");
 			List<Matricula> matriculas = matriculaServico.obterMatriculaPorTurmaAtivas(turmaPk.getId());
 			if (matriculas != null) {
 				Integer numeroAlunoNaTurma = 0;
 				for (Matricula matricula : matriculas) {
 					numeroAlunoNaTurma++;
-					matricula.setNumeroAlunoTurma(String.valueOf(numeroAlunoNaTurma));
+					matricula.setNumeroAlunoTurma(numeroAlunoNaTurma);
 					matriculaServico.salvar(matricula);
 
 				}
@@ -614,7 +674,8 @@ public class AlunoBean {
 
 				} else if (notas != null) {
 					matriculaSelecionadaExclusao.setNotas(new ArrayList<>(notas));
-					matriculaSelecionadaExclusao.getAluno().setNome(matriculaSelecionadaExclusao.getAluno().getNome().toUpperCase());
+					matriculaSelecionadaExclusao.getAluno()
+							.setNome(matriculaSelecionadaExclusao.getAluno().getNome().toUpperCase());
 					matriculaServico.excluir(matriculaSelecionadaExclusao);
 
 					Mensagem.mensagemInfo("Aviso: matrícula foi excluida com sucesso!");
@@ -1106,14 +1167,45 @@ public class AlunoBean {
 		cadastroAlunoBoolean = true;
 	}
 
+	public void avancarParaSelecionarDisciplina() {
+		matriculaAvancarBoolean = true;
+		alocadoComSucessoBoolean = false;
+		try {
+			matriz = new Matriz();
+			marcarTodosBoolean = false;
+			classe = new Classe();
+			classe = classeServico.obterClassePorId(matricula.getClasse().getId());
+			if (classe != null)
+				if (classe.getCiclo().equals("2º CICLO")) {
+					matriz = matrizServico.obterMatriz2CicloPorIdELeftJoinAtiva(classe.getId(), matricula.getCurso(),
+							matricula.getTipoArea(), escola.getId());
+				} else if (classe.getCiclo().equals("1º CICLO")) {
+					matriz = matrizServico.obterMatrizPorIdELeftJoinAtiva(classe.getId(), matricula.getCurso(),
+							escola.getId());
+
+				}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void voltaraVancarParaSelecionarDisciplina() {
+		matriculaAvancarBoolean = false;
+		alocadoComSucessoBoolean = false;
+
+	}
+
 	public void selecionarAluno(Aluno aluno) {
 		this.alunoSelecionado = aluno;
-
+		matriculaAvancarBoolean = false;
 		matriculaAlunoBoolean = true;
 		novoAlunoBoolean = false;
 		cadastroAlunoBoolean = true;
 		matricula = new Matricula();
 		matriz = new Matriz();
+		alocadoComSucessoBoolean = false;
 		try {
 			novoAlunoSelecionadoBoolean = false;
 			Matricula novaMatricula = matriculaServico.obterMatriculaPorIdAluno(aluno.getId());
@@ -1162,10 +1254,6 @@ public class AlunoBean {
 				if (matricula.getCurso() != null && matricula.getClasse().getId() != 0 && escola.getId() != null) {
 					if (matricula.getClasse().getCiclo().equals("2º CICLO")) {
 						matrizes = matrizServico.obterMatrizPorClasseCursoAtivo(matricula.getClasse().getId(),
-								matricula.getCurso(), escola.getId());
-
-					} else if (matricula.getClasse().getCiclo().equals("1º CICLO")) {
-						matriz = matrizServico.obterMatrizPorIdELeftJoinAtiva(matricula.getClasse().getId(),
 								matricula.getCurso(), escola.getId());
 
 					}
@@ -1250,7 +1338,7 @@ public class AlunoBean {
 		proximaSegundaFaseBoolean = false;
 		proximaTerceiraFaseBoolean = false;
 		matriculaAlunoBoolean = false;
-		buscar();
+		// buscar();
 
 	}
 
@@ -1350,6 +1438,36 @@ public class AlunoBean {
 
 	}
 
+	public String marcarTodos() {
+		if (marcarTodosBoolean == true) {
+			for (DisciplinaClasse disciplinaClasse : matriz.getDisciplinaClasses()) {
+				disciplinaClasse.setDisciplinaSeleconadaBoolean(true);
+			}
+		} else {
+			for (DisciplinaClasse disciplinaClasse : matriz.getDisciplinaClasses()) {
+				disciplinaClasse.setDisciplinaSeleconadaBoolean(false);
+			}
+		}
+		return null;
+	}
+
+	public String desmarcarOtop(DisciplinaClasse disciplinaClasse) {
+
+		if (disciplinaClasse.isDisciplinaSeleconadaBoolean() == false) {
+			marcarTodosBoolean = false;
+		} else {
+			int count = 0;
+			for (DisciplinaClasse disciplinaClasse1 : matriz.getDisciplinaClasses()) {
+				if (disciplinaClasse1.isDisciplinaSeleconadaBoolean()) {
+					count++;
+				}
+				if (count == matriz.getDisciplinaClasses().size())
+					marcarTodosBoolean = true;
+			}
+		}
+		return null;
+	}
+
 	public void voltar() {
 		editarMatricula = false;
 
@@ -1367,43 +1485,6 @@ public class AlunoBean {
 		this.alunos = alunos;
 	}
 
-	public void imprimirDadosAluno() {
-
-		try {
-			// http://localhost:8080/sistema-escolar/login
-			FacesContext context = FacesContext.getCurrentInstance();
-			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-
-			String ulrTrocaSenha = request.getRequestURL() + "";
-			String acessoAOSistema = ulrTrocaSenha.replace("academico/director-ditrital/funcionario/cadastro.jsf",
-					"login.jsp");
-
-			String caminho = "/academico/relatorio/aluno/dados_aluno.jasper";
-			Map<String, Object> parametro = new HashMap<>();
-			parametro.put("link", acessoAOSistema);
-			if (matricula.getAluno().isSenhaAlterada() == false) {
-				String senha = DataUtils.obterDataFormatoBanco(matricula.getAluno().getDataNascimento(),
-						FORMATA_SENHA_PADRAO);
-				parametro.put("password", senha);
-			}
-
-			parametro.put("idMatricula", matricula.getId());
-			ValorExtenso e = new ValorExtenso();
-			if (matricula.getValor() == null) {
-				parametro.put("valorMatriculaExtenso", null);
-			} else if (matricula.getValor() != null) {
-				String valorExtenso = e.write(BigDecimal.valueOf(matricula.getValor()));
-				parametro.put("valorMatriculaExtenso", valorExtenso.toLowerCase().replace("um mil ", "mil "));
-			}
-
-			geradorDeRelatoriosServico.geraPdf(caminho, parametro, "doc.pdf");
-			// JasperPrintManager.printReport(relatorio, true);
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-	}
-
 	public void imprimirReciboInscricaoDoAluno(Matricula matricula) {
 
 		try {
@@ -1411,13 +1492,16 @@ public class AlunoBean {
 			FacesContext context = FacesContext.getCurrentInstance();
 			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 
-			String ulrTrocaSenha = request.getRequestURL() + "";
-			String acessoAOSistema = ulrTrocaSenha.replace("academico/director-ditrital/funcionario/cadastro.jsf",
-					"login.jsp");
+			String url = request.getRequestURI() + "";
 
+			System.out.println("URL:" + url);
+			String vals[] = url.split("/academico/");
+			String link = vals[0];
+
+			link = link + "/login.jsp";
 			String caminho = "/academico/relatorio/aluno/dados_aluno.jasper";
 			Map<String, Object> parametro = new HashMap<>();
-			parametro.put("link", acessoAOSistema);
+			parametro.put("link", link);
 			if (matricula.getAluno().isSenhaAlterada() == false) {
 				String senha = DataUtils.obterDataFormatoBanco(matricula.getAluno().getDataNascimento(),
 						FORMATA_SENHA_PADRAO);
@@ -1834,6 +1918,30 @@ public class AlunoBean {
 
 	public void setEscolaSelecionada(Escola escolaSelecionada) {
 		this.escolaSelecionada = escolaSelecionada;
+	}
+
+	public boolean isMatriculaAvancarBoolean() {
+		return matriculaAvancarBoolean;
+	}
+
+	public void setMatriculaAvancarBoolean(boolean matriculaAvancarBoolean) {
+		this.matriculaAvancarBoolean = matriculaAvancarBoolean;
+	}
+
+	public boolean isMarcarTodosBoolean() {
+		return marcarTodosBoolean;
+	}
+
+	public void setMarcarTodosBoolean(boolean marcarTodosBoolean) {
+		this.marcarTodosBoolean = marcarTodosBoolean;
+	}
+
+	public boolean isAlocadoComSucessoBoolean() {
+		return alocadoComSucessoBoolean;
+	}
+
+	public void setAlocadoComSucessoBoolean(boolean alocadoComSucessoBoolean) {
+		this.alocadoComSucessoBoolean = alocadoComSucessoBoolean;
 	}
 
 }

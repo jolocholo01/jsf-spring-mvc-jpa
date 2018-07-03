@@ -1,5 +1,30 @@
+$('.check').ready(function() {
+	
+	if ($(" .table-selector  > tbody > tr input[type='checkbox']").is(':checked')) {
+		 $(this).parents('tr').addClass('active');
+	}
+});
 
-   function setTime() {
+$('.table-selector > tbody > tr').on('click', function(event) {
+
+	if ($(this).hasClass('active')) {
+		
+		if (event.target.type !== 'checkbox') {
+			$(':checkbox', this).trigger('click');
+		}
+		$(this).removeClass('active');
+
+
+	} else {
+		
+		if (event.target.type !== 'checkbox') {
+			$(':checkbox', this).trigger('click');
+		}
+		$(this).addClass('active');
+	}
+});
+
+ function setTime() {
       $('#idPedidoTransferencia');
    }
 
@@ -77,7 +102,7 @@ $(document).ready(function() {
 					
 				});
 			});
-	})
+	});
 
 // funcao que é chamado quando a informação do texto não está selecionado.
 function limitarNumeroDigitado(obj, e) {

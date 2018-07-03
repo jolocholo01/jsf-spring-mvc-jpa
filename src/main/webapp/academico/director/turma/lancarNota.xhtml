@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/academico/principal/templete.xhtml">
+	<ui:define name="titulo">Lançar notas numa turma</ui:define>
+	<ui:define name="cabacalho">
+		<link rel="stylesheet"
+			href="#{request.contextPath}/resources/css/nota.css" />
+
+	</ui:define>
+
+	<ui:define name="menu">
+		<ui:include src="/academico/director/template/menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="ambiente_comum">
+
+		<h:form id="form" styleClass="form-horizontal">
+
+			<p:poll autoStart="" interval="2"></p:poll>
+
+			<div class="card">
+				<h3 class="peg-titulo card-header primary-color white-text">
+					<h:outputText value="Lançar notas numa turma" />
+
+				</h3>
+
+				<p:messages closable="true"
+					style=" margin-left: 5px;margin-right:5px;" />
+
+				<div class="card-body">
+
+					<h:panelGroup rendered="#{notaBean.turmaSelecionada==null}">
+						<div class="form-group row">
+							<h:outputLabel value="Curso: "
+								styleClass="col-sm-2 control-label texto-label textfim" />
+							<div class="col-sm-3">
+								<h:selectOneMenu value="#{notaBean.turma.curso}"
+									styleClass="form-control" required="true"
+									requiredMessage="O campo curso é obrigatório">
+									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+									<f:selectItems value="#{alunoBean.cursos}" var="curso"
+										itemLabel="#{curso}" itemValue="#{curso}" />
+									<p:ajax event="change"
+										listener="#{notaBean.buscarMatrizesCurriculares}"
+										update="idArea" />
+
+								</h:selectOneMenu>
+
+							</div>
+							<h:outputLabel value="Período lectivo: "
+								styleClass="col-sm-2 control-label texto-label textfim" />
+							<div class="col-sm-2">
+								<h:inputText value="#{notaBean.turma.ano}" disabled="true"
+									styleClass="form-control"></h:inputText>
+
+							</div>
+						</div>
+						<div class="form-group row">
+							<h:outputLabel value="Classe:"
+								styleClass="col-sm-2 control-label texto-label textfim" />
+							<div class="col-sm-6">
+								<h:selectOneMenu value="#{notaBean.turma.classe}"
+									converter="classeCicloConverter" required="true"
+									requiredMessage="O campo classe é obrigatório"
+									styleClass="form-control" style="text-transform: uppercase;">
+									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+									<f:selectItems value="#{turmaBean.obterClasseDaEScola}"
+										var="classe" itemLabel="#{classe.descricao}"
+										itemValue="#{classe}" />
+									<p:ajax event="change"
+										listener="#{notaBean.buscarMatrizesCurriculares}"
+										update="idArea" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+						<h:panelGroup id="idArea">
+
+							<div class="form-group row">
+								<h:panelGroup
+									rendered="#{notaBean.turma.classe.ciclo=='2º CICLO'}">
+									<h:outputLabel value="Área Curricular: "
+										styleClass="col-sm-2 control-label texto-label textfim" />
+									<div class="col-sm-6">
+										<h:selectOneMenu value="#{notaBean.turma.area}"
+											styleClass="form-control" required="true"
+											requiredMessage="O campo área curricular é obrigatório">
+											<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+											<f:selectItems value="#{notaBean.matrizes}" var="matriz"
+												itemLabel="#{matriz.classe.descricao} #{matriz.tipoArea}"
+												itemValue="#{matriz.tipoArea}" />
+
+										</h:selectOneMenu>
+									</div>
+								</h:panelGroup>
+							</div>
+						</h:panelGroup>
+						<div class="form-group row" style="text-align: center;">
+							<div class="col-sm-6">
+								<h:commandButton value="Buscar"
+									action="#{notaBean.buscarTurmas}" styleClass="btn btn-primary " />
+							</div>
+						</div>
+
+						<h:panelGroup rendered="#{notaBean.turmas !=null}">
+
+							<h:dataTable value="#{notaBean.turmas}" var="turma"
+								styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
+								headerClass="theader"
+								columnClasses="texto-center,texto-center,texto-center,texto-center,texto-center,texto-center, opcoes">
+								<h:column width="370">
+									<f:facet name="header">
+										<h:outputText value="Ano" />
+									</f:facet>
+									<h:outputText value="#{turma.ano}" />
+								</h:column>
+								<h:column width="370">
+									<f:facet name="header">
+										<h:outputText value="Classe" />
+									</f:facet>
+									<h:outputText value="#{turma.classe.descricao}"
+										style="text-transform: uppercase; " />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Curso" />
+									</f:facet>
+									<h:outputText value="#{turma.turno.curso}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Turno" />
+									</f:facet>
+									<h:outputText value="#{turma.turno.descricao}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Turma" />
+									</f:facet>
+									<h:outputText value="#{turma.descricao}" />
+								</h:column>
+								<h:column headerClass="theader  opcoes texto-center">
+									<f:facet name="header">
+										<h:outputText value="Qtd. alunos" />
+									</f:facet>
+									<h:outputText value="#{turma.inscrito}" />
+								</h:column>
+								<h:column>
+									<h:commandLink action="#{notaBean.selecionarTurma(turma)}"
+										title="Selecionar esta turma?">
+										<h:graphicImage url="#{buscarFotoBean.retornarImagesCadastro}" />
+										<f:passThroughAttribute name="data-toggle" value="tooltip" />
+										<f:passThroughAttribute name="data-placement" value="left" />
+									</h:commandLink>
+								</h:column>
+							</h:dataTable>
+
+						</h:panelGroup>
+					</h:panelGroup>
+
+
+					<!-- turmas selecionado -->
+					<h:panelGroup rendered="#{notaBean.turmaSelecionada !=null}">
+						<h:panelGroup
+							rendered="#{notaBean.disciplinaTurmaSelecionada ==false}">
+
+							<div class="form-group row" style="margin-bottom: 0;">
+								<h:outputLabel value="Período lectivo: "
+									styleClass="col-sm-4 control-label textfim bolder" />
+
+								<h:outputText value="#{notaBean.turma.ano}"
+									styleClass="col-sm-2 form-control-static " />
+
+							</div>
+
+							<div class="form-group row">
+								<h:outputLabel value="Classe: "
+									styleClass="col-sm-4 control-label textfim bolder" />
+								<h:outputText
+									value="#{notaBean.turmaSelecionada.classe.descricao}"
+									styleClass="col-sm-8 form-control-static " />
+
+							</div>
+							<h:panelGroup rendered="#{notaBean.turmaSelecionada.area !=null}">
+								<div class="form-group row">
+									<h:outputLabel value="Área Curricular: "
+										styleClass="col-sm-4 control-label textfim bolder" />
+									<h:outputText
+										value="#{notaBean.turmaSelecionada.classe.descricao} #{notaBean.turmaSelecionada.area}"
+										styleClass="col-sm-7 form-control-static " />
+
+								</div>
+							</h:panelGroup>
+							<div class="form-group row">
+								<h:outputLabel value="Turma: "
+									styleClass="col-sm-4 control-label textfim bolder" />
+								<h:outputText
+									value="#{notaBean.turmaSelecionada.descricao} / #{notaBean.turmaSelecionada.turno.descricao}"
+									styleClass="col-sm-8 form-control-static " />
+
+							</div>
+							
+							<div class="form-group row">
+								<h:outputLabel value="Trimestre:"
+									styleClass="col-sm-4 control-label texto-label textfim bolder" />
+								<div class="col-sm-3">
+									<h:selectOneMenu value="#{notaBean.trimestreSelecionado}"
+										required="true" converter="trimestreConverter"
+										requiredMessage="O campo disciplina é obrigatório"
+										styleClass="form-control" style="text-transform: uppercase;">
+										<f:selectItems
+											value="#{notaBean.trimestres}"
+											var="trimestre"
+											itemLabel="#{trimestre.descricao}"
+											itemValue="#{trimestre}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+							<div class="form-group row">
+								<h:outputLabel value="Disciplina:"
+									styleClass="col-sm-4 control-label texto-label textfim bolder" />
+								<div class="col-sm-4">
+									<h:selectOneMenu value="#{notaBean.disciplinaClasse.id}"
+										required="true"
+										requiredMessage="O campo disciplina é obrigatório"
+										styleClass="form-control" style="text-transform: uppercase;">
+										<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+										<f:selectItems
+											value="#{notaBean.matrizSelecionada.disciplinaClasses}"
+											var="disciplinaClasse"
+											itemLabel="#{disciplinaClasse.disciplina.descricao}"
+											itemValue="#{disciplinaClasse.id}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+
+							<div class="form-group row" style="text-align: center;">
+								<div class="col-sm-9">
+									<h:commandButton value="&#8666; Voltar " immediate="true"
+										actionListener="#{notaBean.voltar}"
+										styleClass="btn btn-primary " />
+									<h:commandButton value="Proximo &#8667;"
+										actionListener="#{notaBean.proximoPasso}"
+										style="margin-left:2%;" styleClass="btn btn-primary " />
+								</div>
+							</div>
+
+						</h:panelGroup>
+
+						<h:panelGroup
+							rendered="#{notaBean.disciplinaTurmaSelecionada !=false}">
+							<ui:include src="/academico/escola/turma/lancarNota.xhtml" />
+
+							<div class="form-group row" style="text-align: center">
+								<div class="col-sm-10">
+									
+									<h:commandLink value=" &#x2716; Fechar a turma"
+										style="margin-left:2%;"
+										actionListener="#{notaBean.voltarSelecaoTurma}"
+										immediate="true" styleClass=" prev acao btn btn-primary " />
+
+									<h:commandLink value="Voltar" style="margin-left:2%;"
+										immediate="true" actionListener="#{notaBean.voltar}"
+										styleClass="btn btn-success " />
+
+									<h:commandLink rendered="#{not empty notaBean.notas}"
+										actionListener="#{notaBean.imprimirNotasDeAlunosPorDisciplinaETurmaETrimetres(notaBean.professorTurma)}"
+										styleClass="btn btn-primary tooltip-top"
+										title="Emitir nota de frequência?" style="margin-left: 1%;">
+										<span class="glyphicon glyphicon-save"></span>
+						Baixar
+					</h:commandLink>
+
+								</div>
+							</div>
+						</h:panelGroup>
+					</h:panelGroup>
+
+
+				</div>
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

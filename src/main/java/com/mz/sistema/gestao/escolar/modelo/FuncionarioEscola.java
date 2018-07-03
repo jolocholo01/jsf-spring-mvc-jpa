@@ -20,6 +20,7 @@ public class FuncionarioEscola {
 	private Funcionario funcionario;
 	private Escola escola;
 	private Permissao permissao;
+	private String descricao;
 	private Date dataCadastro;
 	private Date horaCadastro;
 	private boolean activo;
@@ -124,5 +125,15 @@ public class FuncionarioEscola {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	
 
 }

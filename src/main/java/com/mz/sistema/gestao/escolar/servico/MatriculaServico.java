@@ -44,7 +44,7 @@ public interface MatriculaServico {
 			Boolean temTurma);
 	public List<Matricula> obterMatriculasPorClassePorCursoPorAreaPorTurma(long idClasse, Long idEscola, String curso, Integer ano,
 			String tipoArea, Boolean temTurma);
-	public Long obterNumeroUltimoAlunoNaTurma(Integer idTurma);
+	public Integer obterNumeroUltimoAlunoNaTurma(Integer idTurma);
 	public List<Matricula> obterMatriculasPorEscolaPorAno(Long idEscola, Integer ano);
 	public Long obterTotalAlunosMatriculasPorEscolaPorAno(Long idEscola, Integer ano);
 	}

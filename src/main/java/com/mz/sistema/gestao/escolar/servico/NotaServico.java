@@ -20,6 +20,7 @@ public interface NotaServico {
 	public List<Nota> obterNotasPorIdTurmaPorDisciplinaDoProfessorPorTrimetres(Integer idDisciplina, Integer idTurma,
 			Long idTrimetre);
 	public List<Nota> obterNotasPorIdMatricula(Integer idMatricula);
+	public Nota obterNotasPorIdMatriculaPorDisciplina(Integer id, Integer id2);
 
 	
 

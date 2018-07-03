@@ -101,16 +101,6 @@ public class ClasseServicoImpl implements ClasseServico {
 				.setParameter("Ciclo", ciclo).getResultList();
 	}
 
-	@Override
-	public Classe obterClassePorId(long idClasse) {
-		@SuppressWarnings("unchecked")
-		List<Classe> classes = em.createQuery("From Classe where id=:idClasse").setParameter("idClasse", idClasse)
-				.getResultList();
-		if (!classes.isEmpty()) {
-			return classes.get(0);
-		}
-		return null;
-	}
 
 	@Override
 	public List<Classe> obterClassePorDescricao(String descricao_parametro) {

@@ -54,13 +54,17 @@ public class FuncionarioBean {
 	private List<Funcionario> funcionarios = new ArrayList<>();
 	private boolean virificarNomeFuncionarioBoolean = false;
 	private boolean virificarUsuarioFuncionarioBoolean = false;
+	
+	
 	private Integer funcionarioEncontrado = 0;
 	private Funcionario funcionarioExclusao;
 	private Funcionario funcionarioSelecionado;
 	private Funcionario funcionarioCadastro;
+	private Double cargaHoraria;
 
 	private boolean estadoCadastro = false;
 	private boolean programadorBoolean = false;
+	private boolean efectivoBoolean = false;
 	private boolean estadoAvancar = false;
 
 	private List<EstadoCivil> estadoCivils;
@@ -143,6 +147,7 @@ public class FuncionarioBean {
 		this.funcionarioSelecionado = null;
 		estadoCadastro = false;
 		adicionarFuncionarioEscolaBoolean = false;
+		cargaHoraria = 0D;
 	}
 
 	public void impromirRecibo(Funcionario funcionario) {
@@ -279,9 +284,9 @@ public class FuncionarioBean {
 			} else {
 				Mensagem.mensagemInfo("Aviso: Funcionário foi atualizado com sucesso!");
 			}
-			if (pesquisa == null) {
+		
 				pesquisa = funcionario.getLogin();
-			}
+
 			buscarFuncionarioPorNomePorUsuarioPorTelefone();
 			voltarPesquisa();
 		} catch (Exception e) {
@@ -431,6 +436,17 @@ public class FuncionarioBean {
 	private void buscarFuncionarioSelecionadoComListaEscolaCategoria() {
 		funcionarioEscolas = funcionarioEscolaServico
 				.obterFuncionarioEscolaPorIdFuncionario(this.funcionarioSelecionado.getId());
+		if (funcionarioEscolas != null)
+			for (FuncionarioEscola funcionarioEscola : funcionarioEscolas) {
+				String nomePermissao = TipoLetra.capitalizeString(funcionarioEscola.getPermissao().getNome())
+						.replace(" Dos ", " dos ").replace(" Das ", "das").replace(" De ", " de ")
+						.replace(" Da ", " da ").replace(" À ", " à ");
+				funcionarioEscola.getPermissao().setNome(nomePermissao);
+				if (funcionarioEscola.isActivo()) {
+					efectivoBoolean = true;
+				}
+
+			}
 		if (funcionarioEscolas == null) {
 			qtdCategoriaEscontrada = 0;
 		} else {
@@ -453,6 +469,9 @@ public class FuncionarioBean {
 
 		try {
 			removerUsuarioPermissao(funcionarioEscolaExclusao);
+			if (funcionarioEscolaExclusao.isActivo()) {
+				efectivoBoolean = false;
+			}
 			funcionarioEscolaServico.excluir(funcionarioEscolaExclusao);
 			buscarFuncionarioSelecionadoComListaEscolaCategoria();
 			Mensagem.mensagemInfo("Aviso: a categoria do funcionário foi removida com sucesso");
@@ -496,6 +515,15 @@ public class FuncionarioBean {
 			escolas = escolaServico.obterTodasEsolasPorDirecaoDistrital();
 			funcionarioEscola = new FuncionarioEscola();
 			funcionarioEscola.setDataCadastro(new Date());
+			efectivoBoolean = false;
+			if (funcionarioEscolas != null)
+				for (FuncionarioEscola funcionarioEscola : funcionarioEscolas) {
+					if (funcionarioEscola.isActivo()) {
+						efectivoBoolean = true;
+					}
+
+				}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -511,13 +539,33 @@ public class FuncionarioBean {
 				Mensagem.mensagemErro("ERRO: o funcionário já foi alocado nessa escola com essa categoria!");
 				return;
 			}
-
+			cargaHoraria = funcionarioSelecionado.getCargaHoraria();
 			funcionarioEscola.setFuncionario(funcionarioSelecionado);
 
 			Funcionario funcionario = funcionarioServico
 					.obterFuncionarioPorIdPorPermissoes(funcionarioSelecionado.getId());
 
 			funcionarioEscola.setHoraCadastro(new Date());
+
+			if (funcionarioEscola.isActivo()) {
+				funcionarioEscola.setDescricao(funcionarioEscola.getPermissao().getNome());
+			} else {
+				if (funcionarioEscola.getPermissao().getNome().equals(RoleName.ROLE_SECRETARIO.getLabel().toString())) {
+					funcionarioEscola.setDescricao("AUXILAR DA SECRETARIA");
+				} else if (funcionarioEscola.getPermissao().getNome()
+						.equals(RoleName.ROLE_DIRECTOR.getLabel().toString())) {
+					funcionarioEscola.setDescricao("AUXILAR DO DIRECTOR DA ESCOLA");
+				} else if (funcionarioEscola.getPermissao().getNome()
+						.equals(RoleName.ROLE_PROFESSOR.getLabel().toString())) {
+					funcionarioEscola.setDescricao("AUXILAR DO PROFESSOR");
+				}
+				else if (funcionarioEscola.getPermissao().getNome()
+						.equals(RoleName.ROLE_DIRECTOR_ADJUNTO.getLabel().toString())) {
+					funcionarioEscola.setDescricao("AUXILAR DO DIRECTOR ADJUNTO DA ESCOLA");
+				}
+
+			}
+
 			funcionarioEscola = funcionarioEscolaServico.salvar(funcionarioEscola);
 			if (funcionario == null) {
 				funcionarioSelecionado = funcionarioServico.obterFuncionarioPorId(funcionarioSelecionado.getId());
@@ -551,6 +599,7 @@ public class FuncionarioBean {
 				}
 
 			}
+			funcionarioSelecionado.setCargaHoraria(cargaHoraria);
 			funcionarioServico.salvar(funcionarioSelecionado);
 
 			Mensagem.mensagemInfo("Aviso: funcionário alocado com sucesso!");
@@ -566,6 +615,9 @@ public class FuncionarioBean {
 	public void editar(FuncionarioEscola funcionarioEscola) {
 		this.funcionarioEscola = funcionarioEscola;
 		try {
+			if (this.funcionarioEscola.isActivo()) {
+				efectivoBoolean = false;
+			}
 			permissoes = permissaoServico.listarPermissoesPorDistrito();
 			adicionarFuncionarioEscolaBoolean = true;
 			escolas = escolaServico.obterTodasEsolasPorDirecaoDistrital();
@@ -921,6 +973,22 @@ public class FuncionarioBean {
 
 	public void setServicosdistritais(List<Distrital> servicosdistritais) {
 		this.servicosdistritais = servicosdistritais;
+	}
+
+	public boolean isEfectivoBoolean() {
+		return efectivoBoolean;
+	}
+
+	public void setEfectivoBoolean(boolean efectivoBoolean) {
+		this.efectivoBoolean = efectivoBoolean;
+	}
+
+	public Double getCargaHoraria() {
+		return cargaHoraria;
+	}
+
+	public void setCargaHoraria(Double cargaHoraria) {
+		this.cargaHoraria = cargaHoraria;
 	}
 
 }

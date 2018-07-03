@@ -8,9 +8,8 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/academico/principal/index.xhtml">
-	<ui:define name="titulo">Portal de Director Adjunto Pedagógico</ui:define>
-			
+<ui:composition template="/academico/principal/templete.xhtml">
+	<ui:define name="titulo">Portal de adjunto Adjunto Pedagógico</ui:define>
 
 
 	<ui:define name="titulo_do_corpo">
@@ -21,95 +20,102 @@
 	</ui:define>
 	<ui:define name="menu">
 		<ui:include src="/academico/adjunto/template/menu.xhtml" />
+
 	</ui:define>
 	<ui:define name="dados_pessoas">
 		<ui:include src="/academico/adjunto/template/dados_pessoas.xhtml" />
 	</ui:define>
 	<ui:define name="ambiente_comum">
 
+		<h:form id="form">
+			<ui:remove>
+				<p:chart type="pie" model="#{chartView.pieModel1}"
+					style="width:400px;height:300px" />
+			</ui:remove>
 
-		<h:form >
-			<p:poll   interval="5" update="idPedidoTransferencia"  listener="#{transferenciaBean.pedidoscaregadoPorPoll}" />
-			<h:panelGroup id="idPedidoTransferencia">
-				<h:panelGroup
-					rendered="#{transferenciaBean.quantidadePedidoTransferencia != 0}">
-					<h:outputLabel value="PEDIDO DE TRANSFERÊNCIA"
-						style="padding-top: 4%; padding-left: 2%;" />
-					<div class="mensagem-chat">
-						<h:outputText value="Exite(m) " />
-						<h:outputText value="#{transferenciaBean.quantidadePedidoTransferenciaAlgarismo} " />
-						<h:outputLabel
-							value="(#{transferenciaBean.quantidadePedidoTransferencia})" />
-						<h:outputText
-							value=" pedido(s) de transferência de aluno(s) de uma determinada escola clique" />
-						<h:outputLink
-							value="#{request.contextPath}/director-adjunto/transferencia/pedido.jsf">
-					 aqui 
-					</h:outputLink>
-						<h:outputText value=" para ver o(s) pedido(s)." />
+			<div class="row">
+				<div class="col-md-12 border "
+					style="margin-left: 2%; margin-right: 2%;">
+					<br />
+					<div class="x_panel tile fixed_height_600">
+
+						<div class="x_content">
+							<div class="calendario1">
+
+								<div class="form-group row">
+									<h:outputLabel value="Acompanhamento de matrículas:"
+										styleClass="control-label texto-label col-sm-4 textfim letra-mascula" />
+									<div class="col-sm-2">
+										<h:selectOneMenu value="#{calendarioBean.calendario.ano}"
+											styleClass="form-control">
+											<f:selectItems value="#{calendarioBean.calendarios}"
+												var="calendario" itemLabel="#{calendario.ano}"
+												itemValue="#{calendario.ano}" />
+											<p:ajax event="change"
+												listener="#{calendarioBean.caregarAcompanharMatricula}"
+												update="form:tabale-acompanhamento"></p:ajax>
+										</h:selectOneMenu>
+
+									</div>
+								</div>
+								<h:panelGroup id="tabale-acompanhamento">
+									<div class="calendario-secretario">
+
+										<table
+											class="table table-bordered table-bordered  table-sem-border-tbody tbody-center">
+											<thead style="background: #0dff3624;">
+												<tr>
+													<th>Tipo de Entrada</th>
+													<th class="coluna-acompanhamento-matricula">Quantidade
+														de alunos</th>
+													<th class="coluna-acompanhamento-matricula">Alunos
+														alocados na turma</th>
+												</tr>
+											</thead>
+											<tbody style="text-align: center;">
+												<h:panelGroup id="idAcompanhamento">
+													<h:panelGroup
+														rendered="#{calendarioBean.alunosNovos.acompanhamento ==1}">
+														<tr>
+															<td style="text-align: left;"><h:outputText value="NOVOS ALUNOS" /></td>
+
+
+															<td class="coluna-acompanhamento-matricula"><h:outputText
+																	value="#{calendarioBean.qtdAlunosNovos}" /></td>
+
+															<td class="coluna-acompanhamento-matricula"><h:outputText
+																	value="#{calendarioBean.qtdAlunosNovosMatriculados} " /></td>
+														</tr>
+													</h:panelGroup>
+
+													<h:panelGroup
+														rendered="#{calendarioBean.alunosRenovados.acompanhamento==2}">
+														<tr>
+															<td style="text-align: left;"><h:outputText value="RENOVAÇÃO DE MATRÍCULA" /></td>
+															<td class="coluna-acompanhamento-matricula"><h:outputText
+																	value="#{calendarioBean.qtdAlunosRenovados}" /></td>
+															<td class="coluna-acompanhamento-matricula"><h:outputText
+																	value="#{calendarioBean.qtdAlunosRenovadosEfetuado}" /></td>
+														</tr>
+													</h:panelGroup>
+													<tr>
+														<td style="text-align: left;"><h:outputText value="TOTAL" /></td>
+														<td class="coluna-acompanhamento-matricula font-weight900"><h:outputText
+																value="#{calendarioBean.qtdAlunosEscola}" /></td>
+														<td class="coluna-acompanhamento-matricula font-weight900"><h:outputText
+																value="#{calendarioBean.qtdAlunosEscolaEfetuado}" /></td>
+													</tr>
+												</h:panelGroup>
+											</tbody>
+										</table>
+									</div>
+								</h:panelGroup>
+							</div>
+						</div>
 					</div>
-</h:panelGroup>
-				</h:panelGroup>
-
-			
-			<div class="calendario1">
-
-				<p style="border-bottom: none; margin: 0px 15px -3px;">
-					<h:outputText value="Calendário escolar em vigor:"
-						styleClass="letra-mascula" />
-					<h:outputText
-						value="#{authenticationContext.calendarioEscolar.ano}"
-						style="margin-left: 10px;" styleClass="letra-mascula" />
-				</p>
-				<div class="calendario-secretario">
-					<h:dataTable styleClass="table table-sem-border-tbody"
-						value="#{calendarioBean.trimestrePorCalendario}" var="trimestre"
-						columnClasses="linhaTabela">
-						<h:column>
-
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Tipo de trimestre" />
-							</f:facet>
-							<h:outputText value="#{trimestre.descricao} :"
-								style="text-transform: uppercase;" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Data inícial " />
-							</f:facet>
-							<h:outputLabel value="#{trimestre.dataInicio}"
-								styleClass="dataInicio texto-text-shadow">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</h:outputLabel>
-						</h:column>
-						<h:column>
-							<h:outputText value="&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;&nbsp;" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Data final" />
-							</f:facet>
-
-							<h:outputLabel value="#{trimestre.dataFinal}"
-								styleClass="texto-text-shadow">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</h:outputLabel>
-
-						</h:column>
-						<h:column>
-							<h:outputText value="&nbsp;&nbsp; são "
-								styleClass="texto-text-shadow" />
-							<h:outputLabel value="&nbsp;#{trimestre.semana}"
-								styleClass="texto-text-shadow" />
-							<h:outputText value=" &nbsp;semanas "
-								styleClass="texto-text-shadow" />
-						</h:column>
-					</h:dataTable>
 				</div>
-			</div>
 
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>

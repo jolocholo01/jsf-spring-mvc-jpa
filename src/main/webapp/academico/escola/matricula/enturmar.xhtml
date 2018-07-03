@@ -15,7 +15,7 @@
 			<h3 class="peg-titulo card-header primary-color white-text">
 
 
-				<h:outputText value="Lista de alunos na turma"
+				<h:outputText value="Alunos alocados na turma"
 					style="font-weight: 700;"
 					rendered="#{alunoBean.renovarMatriculaSelecionadaBoolean==false}" />
 				<h:outputText
@@ -106,7 +106,8 @@
 								<h:outputLabel value="Área Curricular: "
 									styleClass="col-sm-2 control-label texto-label textfim" />
 								<div class="col-sm-6">
-									<h:selectOneMenu  disabled="#{empty alunoBean.matrizes}" value="#{alunoBean.matricula.tipoArea}"
+									<h:selectOneMenu disabled="#{empty alunoBean.matrizes}"
+										value="#{alunoBean.matricula.tipoArea}"
 										styleClass="form-control" required="true"
 										requiredMessage="O campo área curricular é obrigatório">
 										<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
@@ -129,8 +130,9 @@
 							styleClass="col-sm-2 control-label texto-label textfim" />
 						<div class="col-sm-4">
 							<h:panelGroup id="idDisciplina">
-								<h:selectOneMenu disabled="#{empty alunoBean.turmas}" value="#{alunoBean.matricula.turma}"
-									styleClass="form-control" converter="turmaConverter">
+								<h:selectOneMenu disabled="#{empty alunoBean.turmas}"
+									value="#{alunoBean.matricula.turma}" styleClass="form-control"
+									converter="turmaConverter">
 									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
 									<f:selectItems value="#{alunoBean.turmas}" var="turma"
 										itemLabel=" #{turma.classe.sigla}ª - #{turma.descricao} - #{turma.turno.sigla}"
@@ -147,20 +149,24 @@
 							actionListener="#{alunoBean.buscarMatriculas}"
 							styleClass=" btn btn-primary " />
 						<h:commandButton value=" Cancelar" immediate="true"
-							action="#{buscarFotoBean.voltar}"
-							styleClass=" btn btn-success" style="margin-left:10px" />
+							action="#{buscarFotoBean.voltar}" styleClass=" btn btn-success"
+							style="margin-left:10px" />
 					</div>
 
 					<h:dataTable id="tabela" value="#{alunoBean.matriculas}"
 						styleClass="tabelaProfessor table table-bordered table-bordered   tabela-funcionario left"
 						var="matricula"
-						style="margin: auto;margin-top: 2%;max-width: 99%;margin-bottom: 2%;">
+						style="margin-top: 2%;" columnClasses=",,,,,,center">
 
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="# " />
 							</f:facet>
-							<h:outputText value="#{matricula.numeroAlunoTurma>=10?'':'0'}#{matricula.numeroAlunoTurma}" />
+							<h:outputText
+								value="#{matricula.numeroAlunoTurma>=10?'':'0'}#{matricula.numeroAlunoTurma}"
+								rendered="#{ not empty matricula.numeroAlunoTurma}" />
+							<h:outputText value="#{matricula.id}"
+								rendered="#{empty matricula.numeroAlunoTurma}" />
 						</h:column>
 
 
@@ -233,12 +239,13 @@
 										<span class="caret"></span>
 								</a>
 									<ul class="dropdown-menu " role="menu">
-									<ui:remove>
-										<li><h:commandLink
-												actionListener="#{alunoBean.editarAlunoTurma(matricula)}"
-												styleClass="tooltip-left link">
-												<span class="glyphicon glyphicon-pencil"></span> Editar
-												</h:commandLink></li></ui:remove>
+										<ui:remove>
+											<li><h:commandLink
+													actionListener="#{alunoBean.editarAlunoTurma(matricula)}"
+													styleClass="tooltip-left link">
+													<span class="glyphicon glyphicon-pencil"></span> Editar
+												</h:commandLink></li>
+										</ui:remove>
 										<ui:remove>
 											<li><h:commandLink
 													actionListener="#{alunoBean.selecionarMatricula(matricula)}"
@@ -657,9 +664,9 @@
 					</h:panelGroup>
 				</div>
 				<div class="modal-footer">
-					<h:commandButton  title="Cancelar"
-						class="btn btn-success" value="Cancelar">
-						
+					<h:commandButton title="Cancelar" class="btn btn-success"
+						value="Cancelar">
+
 					</h:commandButton>
 					<h:commandButton title="Excluir"
 						action="#{alunoBean.excluirEnturmacao}"

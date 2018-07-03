@@ -445,6 +445,9 @@ public class BuscarFotoBean {
 	public String getRetornarImagesTransferencia() {
 		return "/resources/images/if_transfer.png";
 	}
+	public String getRetornarImagesSearch() {
+		return "/resources/images/search.png";
+	}
 
 	public String getRetornarImagesPrinter() {
 		return "/resources/images/printer1.png";

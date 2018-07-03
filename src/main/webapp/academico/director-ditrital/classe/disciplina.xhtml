@@ -155,6 +155,23 @@
 									encontrada(s)"></h:outputText>
 							</f:facet>
 						</h:dataTable>
+						
+						<div class="form-group row">
+							<h:outputLabel value="Legenda:" styleClass="col-sm-2"
+								style="font-weight: 500;" />
+							<div class="col-sm-3">
+								<h:graphicImage url="#{buscarFotoBean.retornarImagesEditar}"
+									styleClass="icon-editar" />
+								<h:outputLabel value="Atualizar dados"
+									styleClass="legenda-texto" />
+							</div>
+
+							<div class="col-sm-6">
+								<h:graphicImage url="#{buscarFotoBean.retornarImagesExcluir}"
+									styleClass="icon-editar" />
+								<h:outputLabel styleClass="legenda-texto" value="Excluir dados" />
+							</div>
+						</div>
 					</h:panelGroup>
 
 

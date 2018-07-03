@@ -41,7 +41,9 @@ public class Funcionario extends Usuario {
 	private String formacao;
 	private String observacao;
 	private String funcao;
-
+	private Double cargaHoraria;
+	
+	
 	public String getFormacao() {
 		return formacao;
 	}
@@ -221,6 +223,14 @@ public class Funcionario extends Usuario {
 
 	public void setAvenida(String avenida) {
 		this.avenida = avenida;
+	}
+
+	public Double getCargaHoraria() {
+		return cargaHoraria;
+	}
+
+	public void setCargaHoraria(Double cargaHoraria) {
+		this.cargaHoraria = cargaHoraria;
 	}
 
 	

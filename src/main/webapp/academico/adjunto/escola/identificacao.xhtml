@@ -8,40 +8,33 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/academico/principal/index.xhtml">
-	<ui:define name="titulo">Identificação da Escola</ui:define>
-	<!--  Configuracao de css-->
-
-	<ui:define name="titulo_do_corpo">
-		<ui:include src="/academico/adjunto/template/titulo_do_corpo.xhtml"></ui:include>
-	</ui:define>
-	<ui:define name="nome_usuario">
-		<ui:include src="/academico/adjunto/template/nome_usuario.xhtml"></ui:include>
+<ui:composition template="/academico/principal/templete.xhtml">
+	<ui:define name="titulo">
+		Identificação da Escola
 	</ui:define>
 
+	<ui:define name="menu">
+		<ui:include src="/academico/adjunto/template/menu.xhtml" />
+	</ui:define>
+	<ui:define name="dados_pessoas">
+		<ui:include
+			src="/academico/adjunto/template/dados_pessoas.xhtml" />
+	</ui:define>
 	<ui:define name="ambiente_comum">
-		<h:form id="form_menu">
-			<div class="menu menubar">
-				<ul class="btn1 btn-green">
-					<li><h:outputLink
-							value="#{request.contextPath}/director-adjunto/index.jsf">
-							 Principal
-						</h:outputLink></li>
-					<h:outputText value=" > " style="font-size:21px;" />
-					<li><h:outputLink
-							value="#{request.contextPath}/director-adjunto/identificacao.jsf">Identificar Escola
-								</h:outputLink></li>
-				</ul>
-			</div>
-		</h:form>
-		<h:form>
-			<p:panel header="Identificação da Escola" style="margin-bottom: 6%;">
-				<p:messages closable="true"
-					style=" margin: auto; width: 99%; margin-top: 2%; " />
 
-				<h:panelGrid
-					styleClass="table table-sem-border-padding tabela-identificacao"
-					columns="2" style=" margin-top: 3px;">
+	
+<h:form id="formulario" styleClass="form-horizontal">
+			<!--Panel-->
+			<div class="card">
+				<h3 class="peg-titulo card-header primary-color white-text">Identificação da Escola</h3>
+				
+				<p:messages closable="true"
+					style=" margin-left: 5px;margin-right:5px;" />
+
+				<div class="card-body">
+
+<h:panelGrid styleClass="table table-sem-border-padding tabela-identificacao" columns="2"
+					style=" margin-top: 3px;">
 
 					<h:outputLabel value="Ano:" styleClass="text-lebal" />
 					<h:outputText
@@ -62,7 +55,7 @@
 					<h:selectManyCheckbox disabled="true"
 						value="#{escolaBean.escolaSelecionada.turnos}"
 						styleClass="selecao-tabela selecionarTurnosDaEscola"
-						style="margin-left: 10px;" converter="turnoConverter">
+						 converter="turnoConverter">
 						<f:selectItems value="#{escolaBean.turnos}" var="turno"
 							itemLabel="#{turno.descricao}" itemValue="#{turno}" />
 					</h:selectManyCheckbox>
@@ -73,7 +66,7 @@
 					<h:selectManyCheckbox disabled="true"
 						value="#{escolaBean.escolaSelecionada.classes}"
 						styleClass="selecao-tabela selecionarTurnosDaEscola1"
-						style="margin-left: 10px;" converter="classeConverter">
+						 converter="classeConverter">
 						<f:selectItems value="#{escolaBean.classes}" var="classe"
 							itemLabel="#{classe.descricao}" itemValue="#{classe}" />
 					</h:selectManyCheckbox>
@@ -100,10 +93,16 @@
 						value="#{escolaBean.escolaSelecionada.distrital.endereco.distrito.provincia}"
 						style="margin-left: 10px;text-transform: uppercase;" />
 
+
+					
+				
+
 				</h:panelGrid>
 
-
-			</p:panel>
+				</div>
+				
+			</div>
+			<!--/.Panel-->
 		</h:form>
 	</ui:define>
 </ui:composition>

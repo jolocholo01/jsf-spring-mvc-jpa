@@ -60,13 +60,13 @@ public class MatrizServicoImpl implements MatrizServico {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Matriz obterMatrizPorIdELeftJoinAtiva(long idClasse, String curso, Long idEscola) {
-		List<Matriz> matrizes =  em
+		List<Matriz> matrizes = em
 				.createQuery(
 						"FROM Matriz m left join fetch m.disciplinaClasses WHERE m.classe.id=:idClasse AND m.curso =:Curso AND  m.escola.id=:IdEscola AND m.ativa=true")
 				.setParameter("idClasse", idClasse).setParameter("Curso", curso).setParameter("IdEscola", idEscola)
 				.getResultList();
 
-		if(!matrizes.isEmpty()){
+		if (!matrizes.isEmpty()) {
 			return matrizes.get(0);
 		}
 		return null;
@@ -85,6 +85,7 @@ public class MatrizServicoImpl implements MatrizServico {
 		return null;
 
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Matriz disciplinaClasseExistente(long idClasse, String curso, Long idEscola) {
@@ -148,13 +149,11 @@ public class MatrizServicoImpl implements MatrizServico {
 	}
 
 	@Override
-	public List<Matriz> obterMatrizPorEscolaPorCiclo( String ciclo, Long idEscola) {
+	public List<Matriz> obterMatrizPorEscolaPorCiclo(String ciclo, Long idEscola) {
 		@SuppressWarnings("unchecked")
 		List<Matriz> matrizes = em
-				.createQuery(
-						"FROM Matriz WHERE  escola.id=:idEscola AND ciclo=:Ciclo ORDER BY classe.ordem")
-				.setParameter("idEscola", idEscola).setParameter("Ciclo", ciclo)
-				.getResultList();
+				.createQuery("FROM Matriz WHERE  escola.id=:idEscola AND ciclo=:Ciclo ORDER BY classe.ordem")
+				.setParameter("idEscola", idEscola).setParameter("Ciclo", ciclo).getResultList();
 		if (!matrizes.isEmpty()) {
 			return matrizes;
 		}
@@ -251,6 +250,24 @@ public class MatrizServicoImpl implements MatrizServico {
 			return matrizes.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public List<Matriz> obterMatrizesPorIdClasse(Long idEscola, long idClasse) {
+		@SuppressWarnings("unchecked")
+		// SELECT distinct m.curso, c.descricao, c.ativa
+		// FROM public.matriz m, classe c where m.classe_id=c.id and
+		// id_escola=1;
+
+		List<Matriz> matrizes = em
+				.createQuery(
+						"FROM Matriz  WHERE classe.id=:idClasse AND escola.id=:IdEscola  AND ativa=true")
+				.setParameter("idClasse", idClasse).setParameter("IdEscola", idEscola).getResultList();
+		if (!matrizes.isEmpty()) {
+			return matrizes;
+		}
+		return null;
+
 	}
 
 }

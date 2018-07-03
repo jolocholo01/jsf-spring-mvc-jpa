@@ -17,99 +17,101 @@
 		<ui:include src="/academico/director/template/menu.xhtml" />
 	</ui:define>
 	<ui:define name="dados_pessoas">
-		<ui:include
-			src="/academico/director/template/dados_pessoas.xhtml" />
+		<ui:include src="/academico/director/template/dados_pessoas.xhtml" />
 	</ui:define>
 	<ui:define name="ambiente_comum">
 
-	
-<h:form id="formulario" styleClass="form-horizontal">
+
+		<h:form id="formulario" styleClass="form-horizontal">
 			<!--Panel-->
 			<div class="card">
-				<h3 class="peg-titulo card-header primary-color white-text">Identificação da Escola</h3>
-				
+				<h3 class="peg-titulo card-header primary-color white-text">Identificação
+					da Escola</h3>
+
 				<p:messages closable="true"
 					style=" margin-left: 5px;margin-right:5px;" />
 
 				<div class="card-body">
 
-<h:panelGrid styleClass="table table-sem-border-padding tabela-identificacao" columns="2"
-					style=" margin-top: 3px;">
+					<h:panelGrid
+						styleClass="table table-sem-border-padding tabela-identificacao"
+						columns="2" style=" margin-top: 3px;">
 
-					<h:outputLabel value="Ano:" styleClass="text-lebal" />
-					<h:outputText
-						value="#{authenticationContext.calendarioEscolar.ano}"
-						style="margin-left: 10px;" />
-
-
-					<h:outputLabel value="Unidade Escolar:" styleClass="text-lebal" />
-					<h:outputText value="#{escolaBean.escolaSelecionada.descricao}"
-						style="margin-left: 10px;text-transform: uppercase;" />
-
-					<h:outputLabel value="Director(a):" styleClass="text-lebal" />
-					<h:outputText value="#{authenticationContext.usuarioLogado.nome}"
-						style="margin-left: 10px;" />
+						<h:outputLabel value="Ano:" styleClass="text-lebal" />
+						<h:outputText
+							value="#{authenticationContext.calendarioEscolar.ano}"
+							style="margin-left: 10px;" />
 
 
-					<h:outputLabel value="Turno:" styleClass="text-lebal" />
-					<h:selectManyCheckbox
-						value="#{escolaBean.escolaSelecionada.turnos}"
-						styleClass="selecao-tabela selecionarTurnosDaEscola"
-						style="margin-left: 10px;" converter="turnoConverter">
-						<f:selectItems value="#{escolaBean.turnos}" var="turno"
-							itemLabel="#{turno.descricao}" itemValue="#{turno}" />
-					</h:selectManyCheckbox>
+						<h:outputLabel value="Unidade Escolar:" styleClass="text-lebal" />
+						<h:outputText value="#{escolaBean.escolaSelecionada.descricao}"
+							style="margin-left: 10px;text-transform: uppercase;" />
+
+						<h:outputLabel value="Director(a):" styleClass="text-lebal" />
+						<h:outputText value="#{authenticationContext.usuarioLogado.nome}"
+							style="margin-left: 10px;" />
+
+
+						<h:outputLabel value="Turno:" styleClass="text-lebal" />
+						<h:selectManyCheckbox
+							value="#{escolaBean.escolaSelecionada.turnos}"
+							styleClass="selecao-tabela selecionarTurnosDaEscola"
+							converter="turnoConverter">
+							<f:selectItems value="#{escolaBean.turnos}" var="turno"
+								itemLabel="#{turno.descricao}" itemValue="#{turno}" />
+						</h:selectManyCheckbox>
 
 
 
-					<h:outputLabel value="Classe:" styleClass="text-lebal" />
-					<h:selectManyCheckbox
-						value="#{escolaBean.escolaSelecionada.classes}"
-						styleClass="selecao-tabela selecionarTurnosDaEscola1"
-						style="margin-left: 10px;" converter="classeConverter">
-						<f:selectItems value="#{escolaBean.classes}" var="classe"
-							itemLabel="#{classe.descricao}" itemValue="#{classe}" />
-					</h:selectManyCheckbox>
+						<h:outputLabel value="Classe:" styleClass="text-lebal" />
+						<h:selectManyCheckbox
+							value="#{escolaBean.escolaSelecionada.classes}"
+							styleClass="selecao-tabela selecionarTurnosDaEscola1"
+							converter="classeConverter">
+							<f:selectItems value="#{escolaBean.classes}" var="classe"
+								itemLabel="#{classe.descricao}" itemValue="#{classe}" />
+						</h:selectManyCheckbox>
 
-					<h:outputLabel value="Bairro: " styleClass="text-lebal" />
-					<h:outputText value="#{escolaBean.escolaSelecionada.bairro}"
-						rendered="#{escolaBean.escolaSelecionada.bairro !=null}"
-						style="margin-left: 10px;text-transform: uppercase;" />
-					<h:outputText value="INDISPONIVEL NO MOMENTO"
-						style="margin-left: 10px;"
-						rendered="#{escolaBean.escolaSelecionada.bairro ==null}" />
+						<h:outputLabel value="Bairro: " styleClass="text-lebal" />
+						<h:outputText value="#{escolaBean.escolaSelecionada.bairro}"
+							rendered="#{escolaBean.escolaSelecionada.bairro !=null}"
+							style="margin-left: 10px;text-transform: uppercase;" />
+						<h:outputText value="INDISPONIVEL NO MOMENTO"
+							style="margin-left: 10px;"
+							rendered="#{escolaBean.escolaSelecionada.bairro ==null}" />
 
-					<h:outputLabel value="Localidade:" styleClass="text-lebal" />
-					<h:outputText value="#{escolaBean.escolaSelecionada.localidade}"
-						style="margin-left: 10px;text-transform: uppercase;" />
-
-
-					<h:outputLabel value="Distrito:" styleClass="text-lebal" />
-					<h:outputText
-						value="#{escolaBean.escolaSelecionada.distrital.endereco.distrito.nome}"
-						style="margin-left: 10px;text-transform: uppercase;" />
-					<h:outputLabel value="Província:" styleClass="text-lebal" />
-					<h:outputText
-						value="#{escolaBean.escolaSelecionada.distrital.endereco.distrito.provincia}"
-						style="margin-left: 10px;text-transform: uppercase;" />
+						<h:outputLabel value="Localidade:" styleClass="text-lebal" />
+						<h:outputText value="#{escolaBean.escolaSelecionada.localidade}"
+							style="margin-left: 10px;text-transform: uppercase;" />
 
 
-					
-				
+						<h:outputLabel value="Distrito:" styleClass="text-lebal" />
+						<h:outputText
+							value="#{escolaBean.escolaSelecionada.distrital.endereco.distrito.nome}"
+							style="margin-left: 10px;text-transform: uppercase;" />
+						<h:outputLabel value="Província:" styleClass="text-lebal" />
+						<h:outputText
+							value="#{escolaBean.escolaSelecionada.distrital.endereco.distrito.provincia}"
+							style="margin-left: 10px;text-transform: uppercase;" />
 
-				</h:panelGrid>
+
+
+
+
+					</h:panelGrid>
 
 				</div>
 				<div class="card-footer">
-				
-						<h:commandButton value="Confirmar"
-							action="#{escolaBean.salvarEscolaSelecionada}"
-							styleClass="btn btn-primary" style="margin-left: 11%;" />
 
-						<h:commandButton value="Cancelar" immediate="true"
-							style="margin-left:10px;" action="/academico/director/index.jsf?faces-redirect=true"
-							styleClass=" btn btn-success" />
-						
+					<h:commandButton value="Confirmar"
+						action="#{escolaBean.salvarEscolaSelecionada}"
+						styleClass="btn btn-primary" style="margin-left: 11%;" />
+
+					<h:commandButton value="Cancelar" immediate="true"
+						style="margin-left:10px;"
+						action="/academico/director/index.jsf?faces-redirect=true"
+						styleClass=" btn btn-success" />
+
 				</div>
 			</div>
 			<!--/.Panel-->

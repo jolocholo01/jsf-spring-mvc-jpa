@@ -110,7 +110,7 @@ public class RecoperarSenhaBean implements Serializable {
 			envioEmailServico.enviarEmailUsuario(usuario, recoperarSenha, url);
 			// if(enviou==true){
 			recoperarSenhaServico.salvar(recoperarSenha);
-			System.out.println("Ulr de trocar senha : '" + url.replace("/senha.html", "/nova/senha.html") + "?key="
+			System.out.println("Url completo : '" + url.replace("/senha.html", "/nova/senha.html") + "?key="
 					+ recoperarSenha.getCodigo() + "&token=" + recoperarSenha.getParametro() + "'");
 			System.out.println("Id usuario:" + usuario.getId());
 			Mensagem.mensagemInfo("Um e-mail foi enviado para " + recoperarSenha.getEmail()

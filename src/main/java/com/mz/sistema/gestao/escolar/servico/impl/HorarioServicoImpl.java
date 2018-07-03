@@ -111,7 +111,7 @@ public class HorarioServicoImpl implements HorarioServico {
 	public List<Horario> obterHorarioPorIdTurmaPorIdDiciplina(Integer idTurma, Integer idDisciplina) {
 		@SuppressWarnings("unchecked")
 		List<Horario> horarios = em
-				.createQuery("From Horario h  where h.turma.id=:idTurma AND h.disciplina.id=:idDisciplina")
+				.createQuery("From Horario h  where h.turma.id=:idTurma AND h.disciplina.id=:idDisciplina ORDER BY h.diaSemana.ordem")
 				.setParameter("idTurma", idTurma).setParameter("idDisciplina", idDisciplina).getResultList();
 
 		if (!horarios.isEmpty()) {

@@ -29,6 +29,7 @@ import com.mz.sistema.gestao.escolar.util.Mensagem;
 public class CalendarioBean {
 	private Calendario calendario = new Calendario();
 	private List<Calendario> calendarios = new ArrayList<>();
+	private List<Calendario> calendariosEscolar = new ArrayList<>();
 	private Trimestre trimestre1 = new Trimestre();
 	private Trimestre trimestre2 = new Trimestre();
 	private Trimestre trimestre3 = new Trimestre();
@@ -63,26 +64,37 @@ public class CalendarioBean {
 	private MatriculaServico matriculaServico;
 
 	private Integer quantidadeCaracteres;
-
-	
+	private String ano;
 
 	// So esse metodao deve ser carregado por director da escola
-		public void iniciarBean() {
-			try {
-				calendario = calendarioServico.obterCalendarioVigente();
-				calendarios = calendarioServico.listarTodos();
-				if (calendario == null) {
-					calendario = new Calendario();
-					this.trimestres = null;
-				} else if (calendario != null) {
-					this.trimestres = trimestreServico.obterTrimestrePorIdCalendario(calendario.getId());
-				}
-				caregarAcompanharMatricula();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	public void iniciarBean() {
+		try {
+			calendario = calendarioServico.obterCalendarioVigente();
+			// this.ano = calendario.getAno() + "";
+			calendarios = calendarioServico.listarTodos();
+			// calendariosEscolar = new ArrayList<>();
+			this.trimestres = trimestreServico.obterTrimestresPorCalendarioVigente();
 
+			caregarAcompanharMatricula();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
+	}
+
+	// So esse metodao deve ser carregado por funcionario da escola
+	public void iniciarCalendarioEscolarBean() {
+		try {
+			calendario = calendarioServico.obterCalendarioVigente();
+			this.ano = calendario.getAno() + "";
+			calendarios = calendarioServico.listarTodos();
+			calendariosEscolar = new ArrayList<>();
+			this.editarCalendarioBoolean = false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	public void caregarAcompanharMatricula() {
 		alunosNovos = new Matricula();
@@ -95,6 +107,7 @@ public class CalendarioBean {
 		qtdAlunosNovosMatriculados = 0;
 		qtdAlunosRenovadosEfetuado = 0;
 		qtdAlunosEscolaEfetuado = 0;
+
 		try {
 			if (calendario == null) {
 			} else if (calendario != null) {
@@ -102,8 +115,8 @@ public class CalendarioBean {
 				if (funcionarioEscola != null) {
 					Escola idEscolaOrigem = funcionarioEscola.getEscola();
 					if (idEscolaOrigem != null) {
-						List<Matricula> matriculas = matriculaServico.obterEstatistcaMatriculasPorEscolaPorAno(idEscolaOrigem.getId(),
-								calendario.getAno());
+						List<Matricula> matriculas = matriculaServico
+								.obterEstatistcaMatriculasPorEscolaPorAno(idEscolaOrigem.getId(), calendario.getAno());
 						if (!matriculas.isEmpty())
 							for (Matricula matricula : matriculas) {
 								// if
@@ -121,7 +134,7 @@ public class CalendarioBean {
 									}
 								}
 
-								if (matricula.getAcompanhamento()==2) {
+								if (matricula.getAcompanhamento() == 2) {
 									alunosRenovados = matricula;
 									qtdAlunosRenovados++;
 									qtdAlunosEscola++;
@@ -144,7 +157,7 @@ public class CalendarioBean {
 	public void salvar() {
 
 		try {
-			Funcionario funcionario=(Funcionario) authenticationContext.getUsuarioLogado();
+			Funcionario funcionario = (Funcionario) authenticationContext.getUsuarioLogado();
 			Calendario IdCalendario = calendarioServico.obterCalendarioPorAno(calendario.getAno());
 			if (IdCalendario != null && IdCalendario.getId() != calendario.getId()) {
 				Mensagem.mensagemInfo("Já existe este calendário escolar cadastrado no sistema!");
@@ -205,10 +218,22 @@ public class CalendarioBean {
 		}
 	}
 
+	public void buncarCalendarioEscolar() {
+
+		try {
+			if (!ano.trim().equals("")) {
+				this.calendariosEscolar = calendarioServico.obterCalendarioPorPesquisa(ano);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void calendarioVigente() {
 		if (calendario.isAtivo() == true) {
 			if (trimestre1.isAtivo() == false && trimestre2.isAtivo() == false && trimestre3.isAtivo() == false) {
 				trimestre1.setAtivo(true);
+				getTrimestre1();
 			}
 		}
 	}
@@ -266,26 +291,32 @@ public class CalendarioBean {
 	}
 
 	public void voltarParaPequisa() {
+		if (calendario.getPesquisa() != null) {
+			ano = calendario.getPesquisa();
+		}
 		calendario = null;
 		this.cadastroCalendarioBoolean = false;
 		this.editarCalendarioBoolean = false;
 		if (novoCalendarioBoolean == true) {
 			novoCalendarioBoolean = false;
 		}
+		buncarCalendarioEscolar();
 		pequisaCalendario();
 
 	}
 
 	public void pequisaCalendario() {
-		calendarios = null;
+
 		qtdCalendariosEncontrados = 0;
 		try {
-			if (!pesquisa.trim().equals(""))
+			if (!pesquisa.trim().equals("")) {
+				calendarios = null;
 				calendarios = calendarioServico.obterCalendarioPorPesquisa(pesquisa);
-
-			if (calendarios != null) {
-				qtdCalendariosEncontrados = calendarios.size();
+				if (calendarios != null) {
+					qtdCalendariosEncontrados = calendarios.size();
+				}
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -343,7 +374,7 @@ public class CalendarioBean {
 		try {
 			if (this.calendarioSelecionadoExclusao.isAtivo()) {
 				Mensagem.mensagemAlerta(
-						"Aviso: O calendário escolar não foi excluido através de ser calendário vigente.");
+						"ATENÇÃO: O calendário escolar não foi excluido através de ser calendário vigente!");
 			} else {
 				trimestres = trimestreServico.obterTrimestrePorIdCalendario(this.calendarioSelecionadoExclusao.getId());
 				if (trimestres != null) {
@@ -352,12 +383,12 @@ public class CalendarioBean {
 					}
 				}
 				calendarioServico.excluir(calendarioSelecionadoExclusao);
-				Mensagem.mensagemInfo("Aviso: O calendário escolar foi excluido com sucesso!");
+				Mensagem.mensagemInfo("AVISO: O calendário escolar foi excluido com sucesso!");
 				pequisaCalendario();
 			}
 		} catch (Exception e) {
 			Mensagem.mensagemAlerta(
-					"ERRO: Não foi possível excluir esse registo pois exitem dependências a ele em outras tabelas!");
+					"ATENÇÃO: Não foi possível excluir esse registo pois exitem dependências a ele em outras tabelas!");
 		}
 
 	}
@@ -573,16 +604,32 @@ public class CalendarioBean {
 	@SuppressWarnings("deprecation")
 	public Integer getAnoEscolar() {
 		try {
-			
-			Date date=new Date();
-			anoEscolar=date.getYear();
+
+			Date date = new Date();
+			anoEscolar = date.getYear();
 		} catch (Exception e) {
-					}
+		}
 		return anoEscolar;
 	}
 
 	public void setAnoEscolar(Integer anoEscolar) {
 		this.anoEscolar = anoEscolar;
+	}
+
+	public String getAno() {
+		return ano;
+	}
+
+	public void setAno(String ano) {
+		this.ano = ano;
+	}
+
+	public List<Calendario> getCalendariosEscolar() {
+		return calendariosEscolar;
+	}
+
+	public void setCalendariosEscolar(List<Calendario> calendariosEscolar) {
+		this.calendariosEscolar = calendariosEscolar;
 	}
 
 }

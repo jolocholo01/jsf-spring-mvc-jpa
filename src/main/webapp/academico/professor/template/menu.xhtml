@@ -32,10 +32,11 @@
 					value="#{request.contextPath}/professor/turma.jsf">
 							Minhas Turmas
 					</h:outputLink>
-				<h:commandLink action="#{professorBean.consultarCalendadrioEscolar}"
-					styleClass="dropdown-item">
+					<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/professor/calendario.jsf">
 							Calendário Escolar
-						</h:commandLink>
+					</h:outputLink>
+				
 
 			</div></li>
 		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"

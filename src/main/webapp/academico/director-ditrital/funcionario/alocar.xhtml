@@ -68,6 +68,16 @@
 					actionListener="#{funcionarioBean.adicionarFuncionarioEscola}"
 					styleClass="btn btn-primary" style="margin-left: 1%;">
 				</h:commandButton>
+				<h:panelGroup
+					rendered="#{not empty funcionarioBean.funcionarioEscolas}">
+					<h:commandLink
+						actionListener="#{funcionarioBean.impromirRecibo(funcionarioBean.funcionarioSelecionado)}"
+						styleClass="btn btn-danger tooltip-top"
+						title="Emitir dados deste funcionário?" style="margin-left: 1%;">
+						<span class="glyphicon glyphicon-save"></span>
+						Baixar
+					</h:commandLink>
+				</h:panelGroup>
 
 			</div>
 
@@ -78,7 +88,8 @@
 				var="funcionarioEscola"
 				styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
 				headerClass="cab-tabela" footerClass="fo-tabela"
-				style="margin-top: 20px;" rowClasses="linha2, linha1">
+				style="margin-top: 20px;" columnClasses=",left"
+				rowClasses="linha2, linha1">
 
 				<h:column headerClass="thead">
 					<f:facet name="header">
@@ -92,23 +103,23 @@
 					</f:facet>
 					<h:outputText value="#{funcionarioEscola.escola.descricao}" />
 				</h:column>
-				<h:column headerClass="thead">
+				<h:column headerClass="center">
 					<f:facet name="header">
-						<h:outputText value="Cargo" />
+						<h:outputText value="Descrição" />
 					</f:facet>
-					<h:outputText value="#{funcionarioEscola.permissao.nome}" />
+					<h:outputText value="#{funcionarioEscola.descricao}" />
 				</h:column>
-				<h:column headerClass="thead">
+				<h:column headerClass="center">
 					<f:facet name="header">
-						<h:outputText value="Activo?" />
+						<h:outputText value="Efectivo?" />
 					</f:facet>
 					<h:outputText value="#{funcionarioEscola.activo?'Sim':'Não'}" />
 				</h:column>
 				<h:column headerClass="thead">
 					<h:commandLink
 						actionListener="#{funcionarioBean.editar(funcionarioEscola)}"
-						title="Atualizar esta categoria?"
-						styleClass="tooltip-left" style="margin-right: 12px;">
+						title="Atualizar esta categoria?" styleClass="tooltip-left"
+						style="margin-right: 12px;">
 						<h:graphicImage url="#{buscarFotoBean.retornarImagesEditar}"
 							height="16" width="16"></h:graphicImage>
 					</h:commandLink>
@@ -173,7 +184,7 @@
 			</div>
 
 			<div class="form-group row">
-				<h:outputLabel value="Cargo: "
+				<h:outputLabel value="Descrição: "
 					styleClass="col-sm-2 col-form-label" />
 				<div class="col-sm-5">
 
@@ -193,14 +204,31 @@
 			</div>
 			<div class="form-group row">
 				<h:outputLabel styleClass="col-sm-2 col-form-label"
-					value="Activo?: " />
+					value="Efectivo?: " />
 				<div class="col-sm-3">
 					<h:selectBooleanCheckbox
 						value="#{funcionarioBean.funcionarioEscola.activo}"
-						class="form-checkbox"/>
+						class="form-checkbox"
+						disabled="#{funcionarioBean.efectivoBoolean==true}" />
 
 				</div>
 			</div>
+			<div class="form-group row">
+				<h:outputLabel styleClass="col-sm-2 col-form-label"
+					value="Carga Horária: " />
+				<div class="col-sm-3">
+					<div class="input-group">
+						<h:inputText
+							value="#{funcionarioBean.funcionarioSelecionado.cargaHoraria}"
+							class="form-control"
+							disabled="#{funcionarioBean.efectivoBoolean==true}">
+							<f:convertNumber />
+						</h:inputText>
+						<h:outputLabel value="Horas" styleClass="col-sm col-form-label" />
+					</div>
+				</div>
+			</div>
+
 			<div class="form-group row">
 				<h:outputLabel styleClass="col-sm-2 col-form-label"
 					value="Data de Cadastro: " />
@@ -216,7 +244,8 @@
 						<f:passThroughAttribute name="data-date-orientation"
 							value="bottom" />
 						<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
-						<f:convertDateTime pattern="dd/MM/yyyy" type="time" timeZone="Africa/Harare" />
+						<f:convertDateTime pattern="dd/MM/yyyy" type="time"
+							timeZone="Africa/Harare" />
 
 					</h:inputText>
 

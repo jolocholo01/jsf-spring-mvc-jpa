@@ -70,9 +70,10 @@
 
 
 						<h:dataTable id="tabela-horarios"
-							styleClass="tabelaProfessor table table-bordered tabela-horarios "
 							value="#{horarioBean.horarioAulas}" var="horarioAula"
-							columnClasses="horario" headerClass="cabacalho">
+							columnClasses="horario"
+							styleClass="table table-bordered tabelaProfessor tabela-hover  tabela-funcionario  tabelaHorarioAluno tabela-horarios"
+							rowClasses="linha2, linha1">
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Horários" />
@@ -186,10 +187,9 @@
 
 							</h:column>
 						</h:dataTable>
-					
 
-						<h:commandLink
-							title="Emitir horário da minha turma?"
+
+						<h:commandLink title="Emitir horário da minha turma?"
 							actionListener="#{horarioBean.imprimirHorarioMinhaTurma}"
 							styleClass="tooltip-top">
 							<p:graphicImage url="#{buscarFotoBean.retornarImagesPrint}"></p:graphicImage>

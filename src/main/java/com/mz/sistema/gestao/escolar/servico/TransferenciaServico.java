@@ -11,5 +11,6 @@ public interface TransferenciaServico {
 	public List<Transferencia> obterTransferenciasPorIdEscolaPorAno(String pesquisa, Long idEscola, Integer ano);
 	public List<Transferencia> receberTransferenciasPorIdEscolaPorAnoComEstadoFalse(Long idEscola, Integer ano);
 	public Transferencia obterTransferenciasExistente(Long idEscolaOrigem, Long idEscolaDestino, Integer idMatricula);
-	public Long obterTransferidosPorIdEscolaPorAno(Long idEscolaOrigem, Integer ano, boolean finalizada);
+	public Long obterAlunosdosQueTransferiramNestaEscola(Long idEscolaOrigem, Integer ano, boolean finalizada);
+	public Long obterAlunosdosQueForamTransferidosParaEstaEscola(Long idEscolaDestino, Integer ano, boolean finalizada);
 }

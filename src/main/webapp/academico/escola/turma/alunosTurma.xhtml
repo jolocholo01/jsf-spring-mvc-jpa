@@ -113,12 +113,12 @@
 					value="#{alunoBean.escolherTerceiroCriterioBoolean}"
 					styleClass="col-sm-1 control-checkbox texto-label textfim"
 					style="    margin-top: 2%;" />
-				<h:outputLabel value="Turma : "
+				<h:outputLabel value="Turma destino: "
 					styleClass="col-sm-2 control-label texto-label textfim" />
 				<div class="col-sm-3">
 					<h:panelGroup id="idDisciplina">
 						<h:selectOneMenu value="#{alunoBean.matricula.turma}"
-							disabled="#{empty alunoBean.turmas}" styleClass="form-control"
+							 styleClass="form-control"
 							converter="turmaInscrictoConverter">
 							<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
 							<f:selectItems value="#{alunoBean.turmas}" var="turma"
@@ -144,7 +144,7 @@
 
 			<div class="form-group row">
 
-				<h:outputLabel value="Listar matriculas : "
+				<h:outputLabel value="Listar matrículas : "
 					styleClass="col-sm-3 control-label texto-label textfim" />
 				<div class="col-sm-4">
 					<h:selectOneMenu styleClass="form-control"
