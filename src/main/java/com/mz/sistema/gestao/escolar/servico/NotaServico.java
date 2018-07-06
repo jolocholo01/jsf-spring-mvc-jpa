@@ -20,15 +20,15 @@ public interface NotaServico {
 	public List<Nota> obterNotaPorIdAluno(Long idAluno, long idClasse, Integer ano);
 	public List<Nota> obterNotasPorIdTurmaEDisciplinaDoProfessor(Long idDisciplinaClasse, Integer idTurma);
 	public Nota obterEscolaDoAluno(Long idEscola);
-	public Nota obterAlunoPorMatriculaPorDisciplinaPorTrimestre(Integer idMatricula, Long idDisciplinaClasse,
+	public Nota obterAlunoPorMatriculaPorDisciplinaPorTrimestre(Long idMatricula, Long idDisciplinaClasse,
 			long idTrimestre);
 	public Nota obterMediaAc(Integer idMatricula, Long idDisciplinaClasse, long idTrimestre);
 	public Double obterMediaTrimestralOuAnulDoAluno(Long idAluno,long idClasse, String tipoMediatrimestre );
 	public List<Nota> obterDisciplinaDoAlunoPorAnoAndId(Long idAluno, Integer ano);
 	public List<Nota> obterNotasPorIdTurmaPorDisciplinaDoProfessorPorTrimetres(Long idDisciplinaClasse, Integer idTurma,
 			Long idTrimetre);
-	public List<Nota> obterNotasPorIdMatricula(Integer idMatricula);
-	public Nota obterNotasPorIdMatriculaPorDisciplina(Integer id, Long idDisciplinaClasse);
+	public List<Nota> obterNotasPorIdMatricula(Long idMatricula);
+	public Nota obterNotasPorIdMatriculaPorDisciplina(Long idMatricula, Long idDisciplinaClasse);
 
 	
 

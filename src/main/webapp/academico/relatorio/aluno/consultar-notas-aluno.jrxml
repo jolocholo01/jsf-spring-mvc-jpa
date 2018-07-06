@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-12-21T18:51:08 -->
+<!-- 2018-07-06T13:11:57 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notas_anual" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="838" leftMargin="2" rightMargin="2" topMargin="10" bottomMargin="10" uuid="9a0dfb25-e72b-4f61-b070-8a9e40fbb38b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value="ZGlzdHJpdGFsICwxMjM2LDUxMyw2ZmZhNmVjYS1lMGMwLTQwOTAtOTdjZC1iYzhhZGM2ZjE5YWE7&#xA;bWF0cmljdWxhICwxNzAsNTExLDNhMWM5ZDVmLWQxYjAtNDRhYS05YjkwLTNlODcxMDRmZTgwYTt1&#xA;c3VhcmlvICw1MzgsMjAyLDA5MzEyMDJlLThkNzUtNGM2NS04YmFmLTZjMTA1M2EwMzJlNDt0dXJt&#xA;YSAsNjg5LDMzNyw5NDE1NjMxZC1mMDUxLTQ2MzAtYWRhMy1hNWRkMWEwYjVhNDI7ZXNjb2xhICwx&#xA;MDUzLDE2NixjOTk0YjQ2ZC1mOTRjLTQ1NDUtYjg1OS1kZjNhMDFmZDExMzQ7ZGlzdHJpdG8gLDE0&#xA;MTMsODM0LGRiNWZjOGVkLTNlMDgtNDEzOC04NDk5LTcxZTUzNzA4OTQyZjtjbGFzc2UgLDgyMiwz&#xA;ODMsYzQyYTc3ZmUtOGZhZi00NzZlLWFhMzYtOWM4NTk2NzRiZWE3O2Rpc2NpcGxpbmEgLDE3MCwy&#xA;MTEsZTE0NTFiYjYtOGJmNi00N2NjLTk3N2MtMTU2YmU0OWIyNmExO3R1cm5vICw4MjIsMTYzLGNl&#xA;OGYzZTc1LTFkNjQtNGQwMy1hNTAwLTBiM2ViYWRhYzY1Zjtub3RhICwxNSwxNSw1MTRhZjY5MC03&#xA;MTY1LTQwZGItOWQ3NS1iNGIyZTIxMDk3NjA7YWx1bm8gLDM2NCwxMTAsNDk1ZWQ1MGQtOWQ5Yy00&#xA;MmUxLWE2MzUtOTQ4ZTIyYmRkZGJkOw=="/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="668"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="318"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<parameter name="idMatricula" class="java.lang.Integer"/>
+	<parameter name="idMatricula" class="java.lang.Long"/>
 	<parameter name="situacao" class="java.lang.String"/>
 	<parameter name="mediaAnual" class="java.lang.Integer"/>
 	<parameter name="mediaAnualPorExtenso" class="java.lang.String"/>

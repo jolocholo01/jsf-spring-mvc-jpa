@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-07-05T23:16:27 -->
+<!-- 2018-07-06T13:13:04 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notas_anual" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="838" leftMargin="2" rightMargin="2" topMargin="10" bottomMargin="10" uuid="9a0dfb25-e72b-4f61-b070-8a9e40fbb38b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="668"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="318"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<parameter name="idMatricula" class="java.lang.Integer"/>
+	<parameter name="idMatricula" class="java.lang.Long"/>
 	<parameter name="situacao" class="java.lang.String"/>
 	<parameter name="mediaAnual" class="java.lang.Integer"/>
 	<parameter name="mediaAnualPorExtenso" class="java.lang.String"/>

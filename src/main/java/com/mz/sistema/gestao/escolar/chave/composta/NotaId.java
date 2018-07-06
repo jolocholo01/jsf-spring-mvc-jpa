@@ -21,15 +21,16 @@ public class NotaId implements Serializable {
 	private static final long serialVersionUID = -5574118779024461601L;
 
 	@Column(name = "id_matricula", nullable = false)
-	private Integer id_matricula;
+	private Long id_matricula;
 	@Column(name = "id_disciplina_classe", nullable = false)
 	private Long id_disciplina_classe;
 
-	public Integer getId_matricula() {
+	
+	public Long getId_matricula() {
 		return id_matricula;
 	}
 
-	public void setId_matricula(Integer id_matricula) {
+	public void setId_matricula(Long id_matricula) {
 		this.id_matricula = id_matricula;
 	}
 

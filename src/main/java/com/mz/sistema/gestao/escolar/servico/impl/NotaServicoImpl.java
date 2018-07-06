@@ -132,7 +132,7 @@ public class NotaServicoImpl implements NotaServico {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Nota obterAlunoPorMatriculaPorDisciplinaPorTrimestre(Integer idMatricula, Long idDisciplinaClasse,
+	public Nota obterAlunoPorMatriculaPorDisciplinaPorTrimestre(Long idMatricula, Long idDisciplinaClasse,
 			long idTrimestre) {
 
 		List<Nota> notas = em
@@ -173,7 +173,7 @@ public class NotaServicoImpl implements NotaServico {
 	}
 
 	@Override
-	public List<Nota> obterNotasPorIdMatricula(Integer idMatricula) {
+	public List<Nota> obterNotasPorIdMatricula(Long idMatricula) {
 		@SuppressWarnings("unchecked")
 		List<Nota> notas = em.createQuery("FROM Nota WHERE matricula.id=:idMatricula ")
 				.setParameter("idMatricula", idMatricula).getResultList();
@@ -185,7 +185,7 @@ public class NotaServicoImpl implements NotaServico {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Nota obterNotasPorIdMatriculaPorDisciplina(Integer idMatricula, Long idDisciplinaClasse) {
+	public Nota obterNotasPorIdMatriculaPorDisciplina(Long idMatricula, Long idDisciplinaClasse) {
 
 		List<Nota> notas = em.createQuery("FROM Nota WHERE disciplinaClasse.id=:idDisciplinaClasse AND matricula.id=:idMatricula")
 				.setParameter("idDisciplinaClasse", idDisciplinaClasse).setParameter("idMatricula", idMatricula).getResultList();

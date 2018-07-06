@@ -79,7 +79,7 @@ public class TransferenciaServicoImpl implements TransferenciaServico {
 	}
 
 	@Override
-	public Transferencia obterTransferenciasExistente(Long idEscolaOrigem, Long idEscolaDestino, Integer idMatricula) {
+	public Transferencia obterTransferenciasExistente(Long idEscolaOrigem, Long idEscolaDestino, Long idMatricula) {
 		@SuppressWarnings("unchecked")
 		List<Transferencia> transferencias = em
 				.createQuery(

@@ -166,7 +166,7 @@ public class MatriculaServicoImpl implements MatriculaServico {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Matricula obterMatriculaPorId(Integer idMatricula) {
+	public Matricula obterMatriculaPorId(Long idMatricula) {
 		List<Matricula> matriculas = em.createQuery("FROM Matricula m  WHERE id=:idMatricula")
 				.setParameter("idMatricula", idMatricula).getResultList();
 		if (!matriculas.isEmpty()) {
@@ -178,7 +178,7 @@ public class MatriculaServicoImpl implements MatriculaServico {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Matricula> obterMatriculasPorId(Integer idMatricula) {
+	public List<Matricula> obterMatriculasPorId(Long idMatricula) {
 		List<Matricula> matriculas = em.createQuery("FROM Matricula m  WHERE m.id=:idMatricula")
 				.setParameter("idMatricula", idMatricula).getResultList();
 		if (!matriculas.isEmpty()) {
