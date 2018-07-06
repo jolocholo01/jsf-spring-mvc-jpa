@@ -3,8 +3,17 @@ package com.mz.sistema.gestao.escolar.bean;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.inject.Named;
 
@@ -15,7 +24,6 @@ import org.springframework.web.context.annotation.SessionScope;
 import com.mz.sistema.gestao.escolar.autenticacao.AuthenticationContext;
 import com.mz.sistema.gestao.escolar.enumerado.EstadoCivil;
 import com.mz.sistema.gestao.escolar.enumerado.Provincia;
-import com.mz.sistema.gestao.escolar.modelo.Distrital;
 import com.mz.sistema.gestao.escolar.modelo.Distrito;
 import com.mz.sistema.gestao.escolar.modelo.Endereco;
 import com.mz.sistema.gestao.escolar.modelo.Escola;
@@ -24,9 +32,7 @@ import com.mz.sistema.gestao.escolar.modelo.FuncionarioEscola;
 import com.mz.sistema.gestao.escolar.modelo.Pais;
 import com.mz.sistema.gestao.escolar.modelo.Permissao;
 import com.mz.sistema.gestao.escolar.modelo.Usuario;
-import com.mz.sistema.gestao.escolar.servico.DirecaoDistritalServico;
 import com.mz.sistema.gestao.escolar.servico.DistritoServico;
-import com.mz.sistema.gestao.escolar.servico.EscolaServico;
 import com.mz.sistema.gestao.escolar.servico.FuncionarioEscolaServico;
 import com.mz.sistema.gestao.escolar.servico.FuncionarioServico;
 import com.mz.sistema.gestao.escolar.servico.PaisServico;
@@ -79,15 +85,13 @@ public class FuncionarioEscolaBean {
 	private PaisServico paisServico;
 	@Autowired
 	private DistritoServico distritoServico;
-	@Autowired
-	private DirecaoDistritalServico servicoDistritalServico;
+
 
 	@Autowired
 	private PermissaoServico permissaoServico;
 	@Autowired
 	private UsuarioServico usuarioServico;
-	@Autowired
-	private EscolaServico escolaServico;
+
 	@Autowired
 	private AuthenticationContext authenticationContext;
 	private Integer funcionarioEncontrado;
@@ -143,7 +147,7 @@ public class FuncionarioEscolaBean {
 					funcionario.getMae().toUpperCase());
 
 			if (funcionarioExistente != null && funcionarioExistente.getId() != funcionario.getId()) {
-				Mensagem.mensagemInfo("Aviso: Já existe um Funcionário Cadastrado no sistema!");
+				Mensagem.mensagemInfo("AVISO: Já existe um Funcionário Cadastrado no sistema!");
 				return;
 			}
 			String numeroMatricula = null;
@@ -184,9 +188,9 @@ public class FuncionarioEscolaBean {
 			funcionario.setNumero(numeroMatricula);
 			funcionarioServico.salvar(funcionario);
 			if (funcionario.getId() == null) {
-				Mensagem.mensagemInfo("Aviso: Funcionário salvo com sucesso!");
+				Mensagem.mensagemInfo("AVISO: Funcionário salvo com sucesso!");
 			} else {
-				Mensagem.mensagemInfo("Aviso: Funcionário foi atualizado com sucesso!");
+				Mensagem.mensagemInfo("AVISO: Funcionário foi atualizado com sucesso!");
 			}
 			if (pesquisa == null) {
 				pesquisa = funcionario.getLogin();
@@ -260,7 +264,7 @@ public class FuncionarioEscolaBean {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			Mensagem.mensagemFatal("Aviso: Deu erro inexperado!");
+			Mensagem.mensagemFatal("AVISO: Deu erro inexperado!");
 		}
 
 	}
@@ -442,9 +446,9 @@ public class FuncionarioEscolaBean {
 			adicionarFuncionarioEscolaBoolean = false;
 			funcionarioServico.salvar(funcionarioSelecionado);
 			if (funcionarioEscola2.getId() == null)
-				Mensagem.mensagemInfo("Aviso: a categoria do funcionário foi cadastrada com sucesso!");
+				Mensagem.mensagemInfo("AVISO: a categoria do funcionário foi cadastrada com sucesso!");
 			else
-				Mensagem.mensagemInfo("Aviso: a categoria do funcionário foi atualizada com sucesso!");
+				Mensagem.mensagemInfo("AVISO: a categoria do funcionário foi atualizada com sucesso!");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -482,9 +486,9 @@ public class FuncionarioEscolaBean {
 			funcionarioEscolaServico.excluir(funcionarioEscolaExclusao);
 			funcionarioEscolas = funcionarioEscolaServico
 					.obterFuncionarioEscolaPorIdEscolaPorIdFuncionario(escola.getId(), funcionarioSelecionado.getId());
-			Mensagem.mensagemInfo("Aviso: a categoria do funcionário foi removida com sucesso!");
+			Mensagem.mensagemInfo("AVISO: a categoria do funcionário foi removida com sucesso!");
 		} catch (Exception e) {
-			Mensagem.mensagemErro("Aviso: a categoria do funcionário não foi removida através da dependência!");
+			Mensagem.mensagemErro("ERRO: A categoria do funcionário não foi removida através da dependência!");
 			e.printStackTrace();
 		}
 

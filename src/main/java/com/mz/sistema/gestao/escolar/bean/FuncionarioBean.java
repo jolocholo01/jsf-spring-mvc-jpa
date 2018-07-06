@@ -7,6 +7,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
+
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -213,14 +223,7 @@ public class FuncionarioBean {
 		return "/academico/director-ditrital/escola/funcionario?faces-redirect=true";
 	}
 
-	public String directorDistritalIndex() {
-		funcionarios = new ArrayList<>();
-		funcionarioEncontrado = 0;
-		virificarNomeFuncionarioBoolean = false;
-		virificarUsuarioFuncionarioBoolean = false;
-		funcionarios = new ArrayList<>();
-		return "/academico/director-ditrital/index?faces-redirect=true";
-	}
+
 
 	public void transformar() {
 		if (funcionario.getObservacao() == null) {
@@ -237,7 +240,7 @@ public class FuncionarioBean {
 					funcionario.getMae().toUpperCase());
 
 			if (funcionarioExistente != null && funcionarioExistente.getId() != funcionario.getId()) {
-				Mensagem.mensagemInfo("Aviso: Já existe um Funcionário Cadastrado no sistema!");
+				Mensagem.mensagemInfo("AVISO: Já existe um Funcionário Cadastrado no sistema!");
 				return;
 			}
 			String numeroMatricula = null;
@@ -280,9 +283,9 @@ public class FuncionarioBean {
 			funcionario.setNumero(numeroMatricula);
 			funcionarioServico.salvar(funcionario);
 			if (funcionario.getId() == null) {
-				Mensagem.mensagemInfo("Aviso: Funcionário salvo com sucesso!");
+				Mensagem.mensagemInfo("AVISO: Funcionário salvo com sucesso!");
 			} else {
-				Mensagem.mensagemInfo("Aviso: Funcionário foi atualizado com sucesso!");
+				Mensagem.mensagemInfo("AVISO: Funcionário foi atualizado com sucesso!");
 			}
 		
 				pesquisa = funcionario.getLogin();
@@ -367,24 +370,24 @@ public class FuncionarioBean {
 			Distrital funcionarioDeDirecaoDitritalLogado = authenticationContext.getFuncionarioDirecaoDistritalLogado();
 
 			if (virificarNomeFuncionarioBoolean == false && virificarUsuarioFuncionarioBoolean == false) {
-				Mensagem.mensagemAlerta("Aviso: Informe os critérios de buscas");
+				Mensagem.mensagemAlerta("AVISO: Informe os critérios de buscas");
 				return;
 			} else if (virificarUsuarioFuncionarioBoolean == true) {
 				if (funcionario.getLogin().trim().equals("")) {
-					Mensagem.mensagemAlerta("Aviso: Informe o usuário do funcionário");
+					Mensagem.mensagemAlerta("AVISO: Informe o usuário do funcionário");
 				} else
 					funcionarios = funcionarioServico.obterFuncionariosPorNomeOuUsuaio(funcionario.getLogin(),
 							funcionarioLogado.getId(), funcionarioDeDirecaoDitritalLogado.getId());
 			} else if (virificarNomeFuncionarioBoolean == true) {
 				if (funcionario.getNome().trim().equals("")) {
-					Mensagem.mensagemAlerta("Aviso: Informe o nome do funcionário");
+					Mensagem.mensagemAlerta("AVISO: Informe o nome do funcionário");
 				} else
 					funcionarios = funcionarioServico.obterFuncionariosPorNomeOuUsuaio(funcionario.getNome(),
 							funcionarioLogado.getId(), funcionarioDeDirecaoDitritalLogado.getId());
 			}
 			if (virificarNomeFuncionarioBoolean == true && virificarUsuarioFuncionarioBoolean == true) {
 				if (funcionario.getNome().trim().equals("") && funcionario.getLogin().trim().equals("")) {
-					Mensagem.mensagemAlerta("Aviso: Informe o usuário e nome do funcionário");
+					Mensagem.mensagemAlerta("AVISO: Informe o usuário e nome do funcionário");
 				} else
 					funcionarios = funcionarioServico.obterFuncionariosPorNomePorUsuaio(funcionario.getNome(),
 							funcionario.getLogin(), funcionarioDeDirecaoDitritalLogado.getId());
@@ -474,9 +477,9 @@ public class FuncionarioBean {
 			}
 			funcionarioEscolaServico.excluir(funcionarioEscolaExclusao);
 			buscarFuncionarioSelecionadoComListaEscolaCategoria();
-			Mensagem.mensagemInfo("Aviso: a categoria do funcionário foi removida com sucesso");
+			Mensagem.mensagemInfo("AVISO: a categoria do funcionário foi removida com sucesso");
 		} catch (Exception e) {
-			Mensagem.mensagemErro("Aviso: a categoria do funcionário não foi removida através da dependência!");
+			Mensagem.mensagemErro("AVISO: a categoria do funcionário não foi removida através da dependência!");
 			e.printStackTrace();
 		}
 
@@ -602,7 +605,7 @@ public class FuncionarioBean {
 			funcionarioSelecionado.setCargaHoraria(cargaHoraria);
 			funcionarioServico.salvar(funcionarioSelecionado);
 
-			Mensagem.mensagemInfo("Aviso: funcionário alocado com sucesso!");
+			Mensagem.mensagemInfo("AVISO: funcionário alocado com sucesso!");
 			voltarNaAlocacao();
 			buscarFuncionarioSelecionadoComListaEscolaCategoria();
 
@@ -744,10 +747,10 @@ public class FuncionarioBean {
 				}
 			}
 			funcionarioServico.excluir(this.funcionarioExclusao);
-			Mensagem.mensagemInfo("Aviso: Funcionário excluido com sucesso");
+			Mensagem.mensagemInfo("AVISO: Funcionário excluido com sucesso");
 			buscarFuncionarioPorNomePorUsuarioPorTelefone();
 		} catch (Exception e) {
-			Mensagem.mensagemErro("Aviso: O Funcionário não foi excluido através da dependência");
+			Mensagem.mensagemErro("ERRO: O funcionário não foi excluido através da dependência");
 		}
 
 	}

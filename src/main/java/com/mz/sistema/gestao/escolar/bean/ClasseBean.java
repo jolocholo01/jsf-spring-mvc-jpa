@@ -1,10 +1,19 @@
-// sistema escolar- autor Agostinho jolocholo
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.inject.Named;
 
@@ -50,7 +59,7 @@ public class ClasseBean {
 		Classe classeExistente = classeServico.classeExisente(classe.getDescricao());
 		if (classeExistente == null) {
 		} else if (classeExistente != null && classe.getId() != classeExistente.getId()) {
-			Mensagem.mensagemInfo("Aviso: já existe esta classe cadastrada no sistema.");
+			Mensagem.mensagemInfo("AVISO: já existe esta classe cadastrada no sistema.");
 			return;
 		}
 		Funcionario funcionario = authenticacao.getFuncionarioLogado();
@@ -58,10 +67,10 @@ public class ClasseBean {
 			classe.setFuncCadastro(funcionario);
 
 			classe.setTipoEnsino("ENSINO SECUNDÁRIO");
-			Mensagem.mensagemInfo("Aviso: " + classe.getSigla() + "ª Classe inserida no sistema com sucesso!");
+			Mensagem.mensagemInfo("AVISO: " + classe.getSigla() + "ª Classe inserida no sistema com sucesso!");
 		} else if (classe.getId() != 0) {
 			classe.setFuncAlteraco(funcionario);
-			Mensagem.mensagemInfo("Aviso: " + classe.getSigla() + "ª Classe atualizada com sucesso!");
+			Mensagem.mensagemInfo("AVISO: " + classe.getSigla() + "ª Classe atualizada com sucesso!");
 		}
 		if (classe.isAtiva() == false) {
 			classe.setFuncAtiva(funcionario);
@@ -182,10 +191,10 @@ public class ClasseBean {
 	public void excluir() {
 		try {
 			classeServico.excluir(this.classeSelecionadaExclusao);
-			Mensagem.mensagemInfo("Aviso: classe excluida com sucesso!");
+			Mensagem.mensagemInfo("AVISO: classe excluida com sucesso!");
 			pequisaClasse();
 		} catch (Exception e) {
-			Mensagem.mensagemAlerta("Aviso: a classe não foi excluida através da dependência.");
+			Mensagem.mensagemAlerta("ATENÇÃO: a classe não foi excluida através da dependência.");
 		}
 
 	}

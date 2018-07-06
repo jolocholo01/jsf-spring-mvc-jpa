@@ -1,4 +1,4 @@
-// sistema escolar- autor Agostinho jolocholo
+
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.io.Serializable;
@@ -7,6 +7,16 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
+
 import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +24,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.context.annotation.SessionScope;
 
 import com.mz.sistema.gestao.escolar.enumerado.Dia;
-import com.mz.sistema.gestao.escolar.enumerado.Provincia;
 import com.mz.sistema.gestao.escolar.modelo.DiaSemana;
-import com.mz.sistema.gestao.escolar.modelo.Distrito;
 import com.mz.sistema.gestao.escolar.servico.DiaSemanaServico;
-import com.mz.sistema.gestao.escolar.servico.DistritoServico;
 import com.mz.sistema.gestao.escolar.util.Mensagem;
 
 @Named
@@ -154,7 +161,7 @@ public class DiaSemanaBean implements Serializable {
 		try {
 			diaSemanaServico.excluir(this.diaSemanaSelecionado);
 			buscar();
-			Mensagem.mensagemInfo("Aviso: dia da semana foi excluido com sucesso!");
+			Mensagem.mensagemInfo("AVISO: dia da semana foi excluido com sucesso!");
 			System.out.println("Chamou a funaco!");
 
 		} catch (Exception e) {

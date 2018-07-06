@@ -1,10 +1,19 @@
-// sistema escolar- autor Agostinho jolocholo
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.inject.Named;
 
@@ -66,10 +75,10 @@ public class SalaBean implements Serializable {
 				if (novaSalaBoolean == true) {
 					String codigoSala = GeradorCodigo.gerarCodigoAleatorio(3);
 					sala.setCodigo(codigoSala);
-					Mensagem.mensagemInfo("Aviso: Sala incluida com sucesso!");
+					Mensagem.mensagemInfo("AVISO: Sala incluida com sucesso!");
 				}
 				if (novaSalaBoolean == false) {
-					Mensagem.mensagemInfo("Aviso: a sala foi atualizada com sucesso!");
+					Mensagem.mensagemInfo("AVISO: a sala foi atualizada com sucesso!");
 					cadastroSalaBoolean = false;
 				}
 			}
@@ -83,11 +92,11 @@ public class SalaBean implements Serializable {
 				if (novaSalaBoolean == true) {
 					String codigoSala = GeradorCodigo.gerarCodigoAleatorio(3);
 					sala.setCodigo(codigoSala);
-					Mensagem.mensagemErro("Aviso: hove erro ao incluir sala!");
+					Mensagem.mensagemErro("AVISO: hove erro ao incluir sala!");
 
 				}
 				if (novaSalaBoolean == false) {
-					Mensagem.mensagemInfo("Aviso: hove erro ao atualizar sala!");
+					Mensagem.mensagemInfo("AVISO: hove erro ao atualizar sala!");
 					// cadastroSalaBoolean = false;
 				}
 			}
@@ -139,11 +148,12 @@ public class SalaBean implements Serializable {
 				numeroUltimaSala++;
 			}
 			if (numeroUltimaSala <= 9) {
-				sala.setNumero("0" + numeroUltimaSala.toString());
-			} else
-				sala.setNumero(numeroUltimaSala.toString());
-
-			
+				sala.setOrdem("0" + numeroUltimaSala.toString());
+			} else {
+				sala.setOrdem(numeroUltimaSala.toString());
+			}
+			if (sala.getNumero() == null)
+				sala.setNumero(sala.getOrdem());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -163,10 +173,10 @@ public class SalaBean implements Serializable {
 	public void excluir() {
 		try {
 			salaServico.excluir(salaSelecionadaExclusao);
-			Mensagem.mensagemInfo("Aviso: Sala excluida com sucesso!");
+			Mensagem.mensagemInfo("AVISO: Sala excluida com sucesso!");
 		} catch (Exception e) {
 			e.printStackTrace();
-			Mensagem.mensagemErro("Aviso: não foi excluida a sala pois existe dependência.");
+			Mensagem.mensagemErro("ERRO: não foi excluida a sala pois existe dependência.");
 		}
 	}
 

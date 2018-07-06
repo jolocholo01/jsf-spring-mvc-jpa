@@ -2,7 +2,15 @@ package com.mz.sistema.gestao.escolar.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

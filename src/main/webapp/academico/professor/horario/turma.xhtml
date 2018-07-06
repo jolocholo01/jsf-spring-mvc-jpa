@@ -10,9 +10,8 @@
 
 <ui:composition template="/academico/principal/templete.xhtml">
 	<ui:define name="titulo">
-		<h:outputText 
-			value="Minhas turmas" />
-	
+		<h:outputText value="Minhas turmas" />
+
 	</ui:define>
 	<ui:define name="cabacalho">
 		<link rel="stylesheet"
@@ -34,19 +33,19 @@
 			<!--Panel-->
 			<div class="card">
 				<h3 class="peg-titulo card-header primary-color white-text">
-					<h:outputText value="Disciplinas ministrada por professor"
+					<h:outputText value="Minhas Turmas"
 						style="font-weight: 700;" />
 				</h3>
 				<p:messages closable="true" />
 
 				<div class="card-body">
 
-					<h:panelGrid
-						style=" width:100%;  margin-bottom: 14px; font-size: 30px;color: rgb(142, 147, 233);text-align: center;font-weight: bold;"
-						rendered="#{professorTurmaBean.turmasProfessor ==null}"
-						styleClass="horarioIndispnivel">
-						<h:outputText value="Turmas indisponível no sistema." />
-					</h:panelGrid>
+					<h:panelGroup
+						rendered="#{professorTurmaBean.turmasProfessor ==null}">
+						<div class="horarioIndispnivel texto center">
+							<h:outputText value="Turmas indisponível no sistema!" />
+						</div>
+					</h:panelGroup>
 
 
 					<h:panelGroup styleClass="panel-professor-turma"
@@ -88,7 +87,8 @@
 								<f:facet name="header">
 									<h:outputText value="Disciplina" styleClass="margin-left" />
 								</f:facet>
-								<h:outputText value="#{professor.disciplina.descricao}"
+								<h:outputText
+									value="#{professor.disciplinaClasse.disciplina.descricao}"
 									styleClass="margin-left" />
 							</h:column>
 							<h:column>
@@ -170,11 +170,12 @@
 
 							</div>
 							<div class="col-md-3">
-								<h:commandLink title="Emitir disciplinas lecionadas pelo professor?"
-									styleClass="tooltip-left"  style="float: right;margin-right: 31%;"
+								<h:commandLink
+									title="Emitir disciplinas lecionadas pelo professor?"
+									styleClass="tooltip-left"
+									style="float: right;margin-right: 31%;"
 									actionListener="#{turmaBean.emitirDisciplinasLecionadasPeloProfessor}">
-									<p:graphicImage url="#{buscarFotoBean.retornarImagesPrint}"
-										  />
+									<p:graphicImage url="#{buscarFotoBean.retornarImagesPrint}" />
 								</h:commandLink>
 							</div>
 

@@ -30,8 +30,12 @@
 				<p:messages closable="true" />
 
 				<div class="card-body">
-
-
+					<h:panelGroup
+						rendered="#{horarioBean.horarioMinhaTurmaBoolean ==true}">
+						<div class="horarioIndispnivel texto center">
+							<h:outputText value="Horários indisponível no sistema!" />
+						</div>
+					</h:panelGroup>
 					<h:panelGroup
 						rendered="#{horarioBean.horarioMinhaTurmaBoolean ==false}">
 

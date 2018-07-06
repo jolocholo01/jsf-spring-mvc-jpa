@@ -1,7 +1,16 @@
-// sistema escolar- autor Agostinho jolocholo
 package com.mz.sistema.gestao.escolar.converter;
 
 import java.util.Date;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

@@ -115,7 +115,8 @@
 										<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
 										<f:selectItems value="#{turnoBean.aulas}" var="aula"
 											itemLabel="#{aula.label}" itemValue="#{aula.label}" />
-										<f:convertDateTime pattern="HH:mm" />
+										<f:convertDateTime pattern="HH:mm" locale="pt" 
+												timeZone="Africa/Harare" />
 										<p:ajax event="change" update="idHoraFim1 " />
 									</h:selectOneMenu>
 
@@ -127,7 +128,8 @@
 											styleClass="desabilitado form-control"
 											style="margin-left: 13px; width: 90px;"
 											value="#{horarioAulaBean.horarioAulaSelecionado.aulaFinal}">
-											<f:convertDateTime pattern="HH:mm" />
+											<f:convertDateTime pattern="HH:mm" locale="pt" 
+												timeZone="Africa/Harare" />
 										</h:inputText>
 									</h:panelGroup>
 								</h:panelGrid>
@@ -171,7 +173,7 @@
 
 										<h:column style="text-align: center;">
 											<f:facet name="header">
-												<h:outputText value="Hora de Início" />
+												<h:outputText value="Hora de Inicial" />
 											</f:facet>
 											<h:outputText value="#{horarioAula.aulaInicial}">
 												<f:convertDateTime pattern="HH:mm" locale="pt" 
@@ -180,7 +182,7 @@
 										</h:column>
 										<h:column>
 											<f:facet name="header">
-												<h:outputText value="Hora de Fim" />
+												<h:outputText value="Hora Final" />
 											</f:facet>
 											<h:outputText value="#{horarioAula.aulaFinal}"
 												style="text-align: center;">

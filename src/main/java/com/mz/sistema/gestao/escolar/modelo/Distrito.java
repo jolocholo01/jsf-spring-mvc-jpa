@@ -3,16 +3,22 @@ package com.mz.sistema.gestao.escolar.modelo;
 import java.io.Serializable;
 import java.util.Date;
 
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
+
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.mz.sistema.gestao.escolar.enumerado.Provincia;
 
 @Entity
 public class Distrito implements Serializable {

@@ -1,7 +1,15 @@
 package com.mz.sistema.gestao.escolar.servico.impl;
 
 import java.util.List;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -41,7 +49,7 @@ public class ProfessorTurmaServicoImpl implements ProfessorTurmaServico {
 		}
 		List<ProfessorTurma> professorTurmas = em
 				.createQuery(
-						"FROM ProfessorTurma pt join fetch pt.professor join fetch pt.disciplina join fetch pt.turma join fetch pt.turma.classe join fetch pt.turma.turno WHERE pt.escola.id=:idEscola AND pt.professor.id=:idProfessor AND pt.turma.ano=:ANO ORDER BY pt.turma.descricao")
+						"FROM ProfessorTurma  WHERE turma.escola.id=:idEscola AND professor.id=:idProfessor AND turma.ano=:ANO ORDER BY turma.descricao")
 				.setParameter("idEscola", idEscola).setParameter("idProfessor", professor.getId())
 				.setParameter("ANO", ANO).getResultList();
 		if (!professorTurmas.isEmpty()) {
@@ -55,7 +63,7 @@ public class ProfessorTurmaServicoImpl implements ProfessorTurmaServico {
 	public List<ProfessorTurma> obterProfessorTurmaPorTurma(Integer idTurma) {
 		List<ProfessorTurma> professorTurmas = em
 				.createQuery(
-						"FROM ProfessorTurma pt join fetch pt.professor join fetch pt.disciplina join fetch pt.turma join fetch pt.turma.classe join fetch pt.turma.turno WHERE pt.turma.id=:idTurma ORDER By pt.disciplina.descricao ")
+						"FROM ProfessorTurma  WHERE turma.id=:idTurma ORDER By disciplinaClasse.disciplina.descricao ")
 				.setParameter("idTurma", idTurma).getResultList();
 		if (!professorTurmas.isEmpty()) {
 			return professorTurmas;
@@ -67,7 +75,7 @@ public class ProfessorTurmaServicoImpl implements ProfessorTurmaServico {
 	public List<ProfessorTurma> obterProfessorTurmaPorTurmaOrdernarPorNome(Integer idTurma) {
 		List<ProfessorTurma> professorTurmas = em
 				.createQuery(
-						"FROM ProfessorTurma pt join fetch pt.professor join fetch pt.disciplina join fetch pt.turma join fetch pt.turma.classe join fetch pt.turma.turno WHERE pt.turma.id=:idTurma ORDER By pt.professor.nome ")
+						"FROM ProfessorTurma  WHERE turma.id=:idTurma ORDER By professor.nome ")
 				.setParameter("idTurma", idTurma).getResultList();
 		if (!professorTurmas.isEmpty()) {
 			return professorTurmas;
@@ -80,7 +88,7 @@ public class ProfessorTurmaServicoImpl implements ProfessorTurmaServico {
 	public List<ProfessorTurma> obterProfessorTurmaPorTurmaOrdenarPorIdDisciplina(Integer idTurma) {
 		List<ProfessorTurma> professorTurmas = em
 				.createQuery(
-						"FROM ProfessorTurma pt join fetch pt.professor join fetch pt.disciplina join fetch pt.turma join fetch pt.turma.classe join fetch pt.turma.turno WHERE pt.turma.id=:idTurma ORDER By pt.disciplina.id ")
+						"FROM ProfessorTurma  WHERE turma.id=:idTurma ORDER By disciplinaClasse.disciplina.id ")
 				.setParameter("idTurma", idTurma).getResultList();
 		if (!professorTurmas.isEmpty()) {
 			return professorTurmas;
@@ -93,7 +101,7 @@ public class ProfessorTurmaServicoImpl implements ProfessorTurmaServico {
 		@SuppressWarnings("unchecked")
 		List<ProfessorTurma> professorTurmas = em
 				.createQuery(
-						"FROM ProfessorTurma pt join fetch pt.professor join fetch pt.disciplina join fetch pt.turma join fetch pt.turma.classe  WHERE pt.turma.id=:idTurma and  pt.disciplina.id=:idDisciplina ")
+						"FROM ProfessorTurma   WHERE turma.id=:idTurma and  disciplinaClasse.disciplina.id=:idDisciplina ")
 				.setParameter("idTurma", idTurma).setParameter("idDisciplina", idDisciplina).getResultList();
 		if (!professorTurmas.isEmpty()) {
 			return professorTurmas.get(0);

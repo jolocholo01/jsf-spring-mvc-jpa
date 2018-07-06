@@ -389,7 +389,7 @@
 
 	<url-mapping>
 		<pattern value="/director/enturmado.jsf" />
-		<view-id value="/academico/director/matricula/enturmar.jsf" />
+		<view-id value="/academico/director/turma/enturmar.jsf" />
 		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
 		</action>
 		<action onPostback="false">#{alunoBean.iniciarQuadroMatriculas}
@@ -413,7 +413,7 @@
 	</url-mapping>
 	<url-mapping>
 		<pattern value="/director-adjunto/enturmado.jsf" />
-		<view-id value="/academico/adjunto/matricula/enturmar.jsf" />
+		<view-id value="/academico/adjunto/turma/enturmar.jsf" />
 		<action onPostback="false">#{authenticationContext.buscarEscolaFuncionarioLogado}
 		</action>
 		<action onPostback="false">#{alunoBean.iniciarQuadroMatriculas}

@@ -4,6 +4,16 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,11 +37,13 @@ public class Matricula implements Serializable {
 	private Integer id;
 	private Integer ano;
 	private Integer acompanhamento;
+	private Integer ordem;
 	private String numero;
 	private Double valor = 0D;
 	private Integer numeroAlunoTurma;
 	private String numeroRecibo;
 	private Date dataMatricula;
+	private Date dataEnturmacao;
 	private Date horaMatricula = new Date();
 	private String curso;
 	private Aluno aluno;
@@ -39,10 +51,10 @@ public class Matricula implements Serializable {
 	private Turma turma;
 	private Escola escola;
 	private Escola escolaOrigem;
+	private Funcionario funcionario;
 	private boolean ativo = false;
 	private boolean repetente = false;
 	private boolean matriculaSelacionada = false;
-	private Boolean notalterada = false;
 	private Date dataDesativacao;
 	private Date dataAtualizacao;
 	private String observacao;
@@ -305,14 +317,6 @@ public class Matricula implements Serializable {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
-	public Boolean getNotalterada() {
-		return notalterada;
-	}
-
-	public void setNotalterada(Boolean notalterada) {
-		this.notalterada = notalterada;
-	}
-
 	@ManyToOne
 	@JoinColumn(name = "id_escola_origem")
 	public Escola getEscolaOrigem() {
@@ -321,6 +325,32 @@ public class Matricula implements Serializable {
 
 	public void setEscolaOrigem(Escola escolaOrigem) {
 		this.escolaOrigem = escolaOrigem;
+	}
+
+	@ManyToOne
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
+
+	@Transient
+	public Integer getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(Integer ordem) {
+		this.ordem = ordem;
+	}
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getDataEnturmacao() {
+		return dataEnturmacao;
+	}
+
+	public void setDataEnturmacao(Date dataEnturmacao) {
+		this.dataEnturmacao = dataEnturmacao;
 	}
 
 }

@@ -1,9 +1,19 @@
-// sistema escolar- autor Agostinho jolocholo
+
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.inject.Named;
 

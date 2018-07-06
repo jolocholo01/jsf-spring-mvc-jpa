@@ -1,7 +1,15 @@
 package com.mz.sistema.gestao.escolar.servico.impl;
 
 import java.util.List;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -95,7 +103,7 @@ public class SalaServicoImpl implements SalaServico {
 	@Override
 	public Long obterNumeroUltimaSalaPorEscola(Long idEscola) {
 		
-		return (Long) em.createQuery("select max(cast(numero as long)) from Sala where escola.id= :idEscola"
+		return (Long) em.createQuery("select max(cast(ordem as long)) from Sala where escola.id= :idEscola"
 				).setParameter("idEscola", idEscola).getSingleResult();
 	}
 }

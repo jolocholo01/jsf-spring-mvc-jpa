@@ -1,7 +1,17 @@
-// sistema escolar- autor Agostinho jolocholo
 package com.mz.sistema.gestao.escolar.autenticacao;
 
 import java.io.IOException;
+
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

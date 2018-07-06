@@ -1,4 +1,3 @@
-// sistema escolar- autor Agostinho jolocholo
 package com.mz.sistema.gestao.escolar.converter;
 
 import java.text.DateFormat;
@@ -7,6 +6,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;

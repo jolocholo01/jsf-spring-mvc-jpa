@@ -2,7 +2,15 @@ package com.mz.sistema.gestao.escolar.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +30,7 @@ public class Sala implements Serializable {
 	private Escola escola;
 	private String codigo;
 	private String numero;
+	private String ordem;
 	private String descricao;
 	private String bloco;
 	private String observacao;
@@ -133,6 +142,12 @@ public class Sala implements Serializable {
 	}
 	public void setBloco(String bloco) {
 		this.bloco = bloco;
+	}
+	public String getOrdem() {
+		return ordem;
+	}
+	public void setOrdem(String ordem) {
+		this.ordem = ordem;
 	}
 	
 }

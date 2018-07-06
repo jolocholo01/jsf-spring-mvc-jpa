@@ -1,5 +1,13 @@
 package com.mz.sistema.gestao.escolar.util;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashMap;

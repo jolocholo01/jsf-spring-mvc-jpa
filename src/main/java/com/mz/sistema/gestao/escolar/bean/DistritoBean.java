@@ -1,4 +1,3 @@
-// sistema escolar- autor Agostinho jolocholo
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.io.Serializable;
@@ -7,18 +6,24 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
+
 import javax.inject.Named;
 
-import org.primefaces.component.datatable.DataTable;
-import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.annotation.SessionScope;
 
 import com.mz.sistema.gestao.escolar.enumerado.Provincia;
 import com.mz.sistema.gestao.escolar.modelo.Distrito;
-import com.mz.sistema.gestao.escolar.modelo.Pais;
 import com.mz.sistema.gestao.escolar.servico.DistritoServico;
 import com.mz.sistema.gestao.escolar.util.Mensagem;
 
@@ -156,11 +161,11 @@ public class DistritoBean implements Serializable {
 		try {
 			distritoServico.excluir(this.ditritoselecionado);
 			buscar();
-			Mensagem.mensagemInfo("Aviso: distrito excluido com sucesso!");
+			Mensagem.mensagemInfo("AVISO: distrito excluido com sucesso!");
 			System.out.println("Chamou a funaco!");
 
 		} catch (Exception e) {
-			Mensagem.mensagemAlerta("Aviso: distrito não foi excluido através da dependência.");
+			Mensagem.mensagemAlerta("ATENÇÃO: distrito não foi excluido através da dependência.");
 		}
 
 	}

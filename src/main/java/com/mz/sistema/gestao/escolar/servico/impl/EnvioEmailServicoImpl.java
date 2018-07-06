@@ -6,7 +6,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -19,7 +27,6 @@ import org.springframework.stereotype.Service;
 import com.mz.sistema.gestao.escolar.modelo.RecoperarSenha;
 import com.mz.sistema.gestao.escolar.modelo.Usuario;
 import com.mz.sistema.gestao.escolar.servico.EnvioEmailServico;
-import com.mz.sistema.gestao.escolar.util.Mensagem;
 
 @Service
 public class EnvioEmailServicoImpl implements EnvioEmailServico {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-06-23T04:34:52 -->
+<!-- 2018-07-06T01:20:06 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="horario" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="89846c30-d53e-4750-a07b-0b1e87785643">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
@@ -146,7 +146,7 @@ ORDER BY
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Courier New" size="10" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Ord.]]></text>
+					<text><![CDATA[Horario]]></text>
 				</staticText>
 			</band>
 		</groupHeader>

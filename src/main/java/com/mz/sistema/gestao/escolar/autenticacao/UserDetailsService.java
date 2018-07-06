@@ -1,7 +1,17 @@
-// sistema escolar- autor Agostinho jolocholo
+
 package com.mz.sistema.gestao.escolar.autenticacao;
 
 import org.springframework.security.core.userdetails.UserDetails;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

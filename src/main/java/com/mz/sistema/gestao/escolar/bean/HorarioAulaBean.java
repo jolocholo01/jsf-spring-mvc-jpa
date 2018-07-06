@@ -1,9 +1,19 @@
-// sistema escolar- autor Agostinho jolocholo
+
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.inject.Named;
 
@@ -51,14 +61,14 @@ public class HorarioAulaBean {
 				horarioAula.getTurno().getId(), horarioAulaSelecionado.getAulaInicial(),
 				horarioAulaSelecionado.getOrdem());
 		if (horarioAulaExistente != null && horarioAulaExistente.getId() != horarioAula.getId()) {
-			Mensagem.mensagemInfo("Já existe este Horário de Aula cadastrado no sistema.");
+			Mensagem.mensagemAlerta("ATENÇÃO: Já existe este Horário de Aula cadastrado no sistema.");
 			return;
 		}
 
 		horarioAulaSelecionado.setEscola(authenticationContext.getFuncionarioEscolaLogada().getEscola());
 		horarioAulaSelecionado.setTurno(horarioAula.getTurno());
 		horarioAulaServico.salvar(horarioAulaSelecionado);
-		Mensagem.mensagemInfo("Horário de Aula cadastrado com sucesso!");
+		Mensagem.mensagemInfo("AVISO: Horário de Aula cadastrado com sucesso!");
 
 		// horarioAulas = horarioAulaServico.obterPorEscola();
 

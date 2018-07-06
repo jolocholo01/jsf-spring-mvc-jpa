@@ -1,9 +1,15 @@
 package com.mz.sistema.gestao.escolar.servico.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -12,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mz.sistema.gestao.escolar.autenticacao.AuthenticationContext;
-import com.mz.sistema.gestao.escolar.enumerado.TipoCurso;
 import com.mz.sistema.gestao.escolar.enumerado.TipoTurno;
 import com.mz.sistema.gestao.escolar.modelo.Escola;
 import com.mz.sistema.gestao.escolar.modelo.Turno;

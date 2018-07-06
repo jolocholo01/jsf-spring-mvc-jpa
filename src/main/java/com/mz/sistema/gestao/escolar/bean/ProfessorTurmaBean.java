@@ -1,4 +1,3 @@
-// sistema escolar- autor Agostinho jolocholo
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.sql.SQLException;
@@ -7,6 +6,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -30,7 +39,6 @@ import com.mz.sistema.gestao.escolar.modelo.Matriz;
 import com.mz.sistema.gestao.escolar.modelo.ProfessorTurma;
 import com.mz.sistema.gestao.escolar.modelo.Turma;
 import com.mz.sistema.gestao.escolar.modelo.Turno;
-import com.mz.sistema.gestao.escolar.modelo.Usuario;
 import com.mz.sistema.gestao.escolar.servico.DiaSemanaServico;
 import com.mz.sistema.gestao.escolar.servico.DisciplinaClasseServico;
 import com.mz.sistema.gestao.escolar.servico.FuncionarioEscolaServico;
@@ -352,8 +360,7 @@ public class ProfessorTurmaBean {
 			System.out.println("Horario do professor:" + professorTurma.getHorario());
 
 			ProfessorTurmaId professorTurmaId = new ProfessorTurmaId();
-			professorTurmaId.setId_disciplina(disciplinaClasse.getDisciplina().getId());
-			professorTurmaId.setId_escola(turmaSelecionada.getEscola().getId());
+			professorTurmaId.setId_disciplina_classe(disciplinaClasse.getId());
 			professorTurmaId.setId_turma(turmaSelecionada.getId());
 			professorTurma.setCredito(disciplinaClasse.getCredito());
 			professorTurma.setId(professorTurmaId);
@@ -361,7 +368,8 @@ public class ProfessorTurmaBean {
 			if (funcionario != null)
 				professorTurma.setProfessor(funcionario);
 			if (diasSemana == true) {
-				Mensagem.mensagemAlerta("ATENÇÃO: Impossível alocar professor pois não exite dias da semana caastrados no sistema!");
+				Mensagem.mensagemAlerta(
+						"ATENÇÃO: Impossível alocar professor pois não exite dias da semana caastrados no sistema!");
 				return;
 			}
 			if (professorTurma.getHorario().equals("")) {
@@ -432,7 +440,7 @@ public class ProfessorTurmaBean {
 
 			horariosDisciplina = horarioServico.obterHorarioPorIdTurmaPorIdDiciplina(
 					this.professorTurmaSelecionada.getTurma().getId(),
-					this.professorTurmaSelecionada.getDisciplina().getId());
+					this.professorTurmaSelecionada.getDisciplinaClasse().getDisciplina().getId());
 		} catch (
 
 		Exception e) {
@@ -710,11 +718,11 @@ public class ProfessorTurmaBean {
 	public void gerarRelatorioDeAlunosDaTurma(ProfessorTurma professorTurma) {
 
 		try {
-			String caminho = "/academico/relatorio/aluno/alunos_turma.jasper",
+			String caminho = "/academico/relatorio/aluno/alunos_turma_por_disciplina.jasper",
 					filename = "LISTA_DOS_ALUNOS_DA_TURMA_" + professorTurma.getTurma().getDescricao() + "_CURSO_"
 							+ professorTurma.getTurma().getCurso() + ".pdf";
 			Map<String, Object> parametro = new HashMap<>();
-			String nomeProfessor = null;
+			String nomeProfessor = null, nomeDiciplina = null;
 			Integer idTurma = null;
 			if (professorTurma.getProfessor() != null) {
 				if (professorTurma.getProfessor().getNome() != null)
@@ -722,14 +730,34 @@ public class ProfessorTurmaBean {
 							.replace(" Dos ", " dos ").replace(" Das ", "das").replace(" De ", " de ")
 							.replace(" À ", " à ");
 			}
+			if (professorTurma.getDisciplinaClasse().getDisciplina() != null) {
+				if (professorTurma.getDisciplinaClasse().getDisciplina().getDescricao() != null)
+					nomeDiciplina = TipoLetra
+							.capitalizeString(professorTurma.getDisciplinaClasse().getDisciplina().getDescricao())
+							.replace(" Dos ", " dos ").replace(" Das ", "das").replace(" De ", " de ")
+							.replace(" À ", " à ");
 
+			}
 			if (professorTurma.getTurma() != null)
 				if (professorTurma.getTurma().getId() != null) {
 					idTurma = professorTurma.getTurma().getId();
 				}
+			if (professorTurma.getDisciplinaClasse().getDisciplina().getDescricao().toUpperCase()
+					.equals("REUNIÃO DE TURMA")) {
 
-			parametro.put("idTurma", idTurma);
-			parametro.put("professor", nomeProfessor);
+				caminho = "/academico/relatorio/aluno/alunos_turma.jasper";
+				filename = "LISTA_DOS_ALUNOS_DA_TURMA_" + professorTurma.getTurma().getDescricao() + "_CURSO_"
+						+ professorTurma.getTurma().getCurso() + ".pdf";
+				parametro = new HashMap<>();
+
+				parametro.put("idTurma", idTurma);
+
+			} else {
+				parametro.put("idTurma", idTurma);
+				parametro.put("professor", nomeProfessor);
+				parametro.put("disciplina", nomeDiciplina);
+				parametro.put("id_disciplina_classe", professorTurma.getDisciplinaClasse().getId());
+			}
 
 			geradorDeRelatoriosServico.geraPdf(caminho, parametro, filename);
 		} catch (Exception e) {

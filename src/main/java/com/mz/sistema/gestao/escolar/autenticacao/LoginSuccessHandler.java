@@ -1,9 +1,19 @@
-// sistema escolar- autor Agostinho jolocholo
+
 package com.mz.sistema.gestao.escolar.autenticacao;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +26,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import com.mz.sistema.gestao.escolar.bean.BuscarFotoBean;
-import com.mz.sistema.gestao.escolar.bean.CalendarioBean;
 import com.mz.sistema.gestao.escolar.bean.ProfessorTurmaBean;
 import com.mz.sistema.gestao.escolar.modelo.Usuario;
 @Named
@@ -26,9 +35,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Autowired
 	private ProfessorTurmaBean professorTurmaBean;
-	@Autowired
-	private CalendarioBean calendarioBean;
-
+	
 	@Autowired
 	private BuscarFotoBean buscarFotoBean;
 

@@ -1,10 +1,19 @@
-// sistema escolar- autor Agostinho jolocholo
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.inject.Named;
 
@@ -27,7 +36,7 @@ public class PermissaoBean {
 
 	@Autowired
 	private PermissaoServico permissaoServico;
-	
+
 	private boolean cadastroPermissaoBoolean;
 	private boolean novoPermissaoBoolean;
 	private boolean editarPermissaoBoolean;
@@ -54,22 +63,23 @@ public class PermissaoBean {
 
 	public void salvar() {
 		try {
-			Permissao permissaoExistente=permissaoServico.obterPermissaoExistente(permissao.getDescricao().getLabel());
-			if(permissaoExistente!=null && permissaoExistente.getId() !=permissao.getId()){
-				Mensagem.mensagemErro("ERRO: Já existe uma permissão cadastrada no sistema!");
+			Permissao permissaoExistente = permissaoServico
+					.obterPermissaoExistente(permissao.getDescricao().getLabel());
+			if (permissaoExistente != null && permissaoExistente.getId() != permissao.getId()) {
+				Mensagem.mensagemAlerta("ATENÇÃO: Já existe uma permissão cadastrada no sistema!");
 				return;
 			}
-			
+
 			permissao.setNome(permissao.getDescricao().getLabel());
 			permissaoServico.salvar(permissao);
-			if(permissao.getId() ==null){
+			if (permissao.getId() == null) {
 				Mensagem.mensagemInfo("AVISO: Permissao foi cadastrada com sucesso!");
-			}else if(permissao.getId() ==null){
+			} else if (permissao.getId() == null) {
 				Mensagem.mensagemInfo("AVISO: Permissao foi atualizada com sucesso!");
 			}
-			if(editarPermissaoBoolean == true){
+			if (editarPermissaoBoolean == true) {
 				editarPermissaoBoolean = false;
-				cadastroPermissaoBoolean=false;
+				cadastroPermissaoBoolean = false;
 			}
 			permissao = new Permissao();
 
@@ -79,19 +89,19 @@ public class PermissaoBean {
 
 	}
 
-
 	public void prepararParExcluir(Permissao permissao) {
-		this.permissaoSelecionada= permissao;
+		this.permissaoSelecionada = permissao;
 	}
+
 	public void excluir() {
 		try {
 			permissaoServico.excluir(this.permissaoSelecionada);
 			buscar();
-			Mensagem.mensagemInfo("Aviso: permissão excluida com sucesso!");
+			Mensagem.mensagemInfo("AVISO: permissão excluida com sucesso!");
 			System.out.println("Chamou a funaco!");
 
 		} catch (Exception e) {
-			Mensagem.mensagemAlerta("Aviso: a permissão não foi excluida através da dependência.");
+			Mensagem.mensagemAlerta("ATENÇÃO: a permissão não foi excluida através da dependência.");
 		}
 
 	}
@@ -107,6 +117,7 @@ public class PermissaoBean {
 			e.printStackTrace();
 		}
 	}
+
 	public void contarQuantidadeCarateres() {
 		quantidadeCaracteres = 0;
 		try {
@@ -118,11 +129,12 @@ public class PermissaoBean {
 		}
 
 	}
+
 	public void nova() {
-		cadastroPermissaoBoolean= true;
+		cadastroPermissaoBoolean = true;
 		novoPermissaoBoolean = true;
 		permissao = new Permissao();
-		permissao.setDataCadastro(new Date() );
+		permissao.setDataCadastro(new Date());
 		editarPermissaoBoolean = false;
 	}
 
@@ -130,10 +142,10 @@ public class PermissaoBean {
 		cadastroPermissaoBoolean = true;
 		novoPermissaoBoolean = false;
 		editarPermissaoBoolean = true;
-		//roleName.=permissao.getDescricao().toString();
+		// roleName.=permissao.getDescricao().toString();
 		this.permissao = permissao;
-		if(this.permissao.getDataCadastro()==null){
-			this.permissao.setDataCadastro(new Date() );
+		if (this.permissao.getDataCadastro() == null) {
+			this.permissao.setDataCadastro(new Date());
 		}
 		contarQuantidadeCarateres();
 	}
@@ -226,5 +238,4 @@ public class PermissaoBean {
 		this.permissaoSelecionada = permissaoSelecionada;
 	}
 
-	
 }

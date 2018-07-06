@@ -1,8 +1,18 @@
-// sistema escolar- autor Agostinho jolocholo
+
 package com.mz.sistema.gestao.escolar.autenticacao;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -14,7 +24,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.mz.sistema.gestao.escolar.enumerado.RoleName;
-import com.mz.sistema.gestao.escolar.modelo.Permissao;
 import com.mz.sistema.gestao.escolar.modelo.Usuario;
 import com.mz.sistema.gestao.escolar.servico.UsuarioServico;
 import com.mz.sistema.gestao.escolar.util.DataUtils;

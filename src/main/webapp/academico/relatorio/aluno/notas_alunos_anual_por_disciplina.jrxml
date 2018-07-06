@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-06-29T12:56:43 -->
+<!-- 2018-07-03T22:00:55 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notas_anual" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoPages" columnWidth="838" leftMargin="2" rightMargin="2" topMargin="10" bottomMargin="10" uuid="9a0dfb25-e72b-4f61-b070-8a9e40fbb38b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="668"/>
@@ -18,7 +18,7 @@
 	<parameter name="disciplina" class="java.lang.String"/>
 	<parameter name="professor" class="java.lang.String"/>
 	<parameter name="idTurma" class="java.lang.Integer"/>
-	<parameter name="idDisciplina" class="java.lang.Integer"/>
+	<parameter name="idDisciplina" class="java.lang.Long"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT nota.ac2,
 	usuario.nome AS aluno,
@@ -83,15 +83,16 @@ FROM distrito,
 	 matricula.id_aluno = aluno.id 
 	INNER JOIN usuario ON 
 	 aluno.id = usuario.id 
-	INNER JOIN disciplina ON 
-	 nota.id_disciplina = disciplina.id 
-	 AND nota.id_disciplina = disciplina.id 
+	INNER JOIN disciplina_classe ON 
+	 nota.id_disciplina_classe = disciplina_classe.id 
+	 INNER JOIN disciplina ON 
+	 disciplina_classe.id_disciplina = disciplina.id 
 WHERE 
 	 escola.id_direcao_distrital = distrital.id 
 	 AND distrital.distrito_id = distrito.id 
 	 AND nota.id_matricula = matricula.id 
 	 AND matricula.idturma = $P{idTurma} 
-	 AND nota.id_disciplina = $P{idDisciplina} 
+	 AND nota.id_disciplina_classe = $P{idDisciplina} 
 ORDER BY matricula.numeroalunoturma ASC]]>
 	</queryString>
 	<field name="ac2" class="java.lang.Double"/>

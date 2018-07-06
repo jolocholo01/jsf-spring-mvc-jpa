@@ -5,6 +5,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
+
 import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +57,7 @@ public class DisciplinaBean implements Serializable {
 		try {
 			Disciplina disciplinaExistente = disciplinaServico.disciplinaExisente(disciplina.getDescricao());
 			if (disciplinaExistente != null && disciplina.getId() != disciplinaExistente.getId()) {
-				Mensagem.mensagemInfo("Aviso: já existe esta disciplina cadastrada no sistema.");
+				Mensagem.mensagemInfo("AVISO: já existe esta disciplina cadastrada no sistema.");
 				return;
 			}
 			Funcionario funcionario = authenticacao.getFuncionarioLogado();
@@ -59,7 +69,7 @@ public class DisciplinaBean implements Serializable {
 				setarCodigoDisciplina();
 
 				disciplinaServico.salvar(disciplina);
-				Mensagem.mensagemInfo("Aviso: disciplina cadastrada com sucesso!");
+				Mensagem.mensagemInfo("AVISO: disciplina cadastrada com sucesso!");
 				disciplina.setDataCadastro(new Date());
 				disciplina = new Disciplina();
 				this.quantidadeCaracteres = 0;
@@ -70,7 +80,7 @@ public class DisciplinaBean implements Serializable {
 
 				disciplinaServico.salvar(disciplina);
 				voltarParaPequisa();
-				Mensagem.mensagemInfo("Aviso: disciplina atualizada com sucesso!");
+				Mensagem.mensagemInfo("AVISO: disciplina atualizada com sucesso!");
 
 			}
 
@@ -140,10 +150,10 @@ public class DisciplinaBean implements Serializable {
 		try {
 			this.disciplinaExclusao.setDescricao(this.disciplinaExclusao.getDescricao().toUpperCase());
 			disciplinaServico.excluir(this.disciplinaExclusao);
-			Mensagem.mensagemInfo("Aviso: disciplina excluida com sucesso!");
+			Mensagem.mensagemInfo("AVISO: disciplina excluida com sucesso!");
 			buscarDisciplina();
 		} catch (Exception e) {
-			Mensagem.mensagemInfo("Aviso: a disciplina não foi excluida através da dependência.");
+			Mensagem.mensagemAlerta("ATENÇÃO: a disciplina não foi excluida através da dependência.");
 		}
 	}
 

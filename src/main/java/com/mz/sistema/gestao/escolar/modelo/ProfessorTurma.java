@@ -2,7 +2,15 @@ package com.mz.sistema.gestao.escolar.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -24,21 +32,19 @@ public class ProfessorTurma implements Serializable {
 	private static final long serialVersionUID = 223608832495589283L;
 
 	private ProfessorTurmaId id;
-	private Disciplina disciplina;
+	private DisciplinaClasse disciplinaClasse;
 	private Turma turma;
 	private Funcionario professor;
-	private Escola escola;
 	private Date dataCadastro;
 	private Integer credito;
 	private boolean fechada = false;
 	private String horario;
-	private Sala sala;
 	private String  elecionadaTurnoExtra;
 
 	@EmbeddedId
 	@AttributeOverrides({ @AttributeOverride(name = "id_turma", column = @Column(name = "id_turma", nullable = false)),
-			@AttributeOverride(name = "id_disciplina", column = @Column(name = "id_disciplina", nullable = false)),
-			@AttributeOverride(name = "id_escola", column = @Column(name = "id_escola", nullable = false)), })
+			@AttributeOverride(name = "id_disciplina_classe", column = @Column(name = "id_disciplina_classe", nullable = false))
+			 })
 	public ProfessorTurmaId getId() {
 		return id;
 	}
@@ -47,7 +53,7 @@ public class ProfessorTurma implements Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "id_turma", nullable = false, insertable = false, updatable = false)
 	public Turma getTurma() {
 		return turma;
@@ -57,7 +63,7 @@ public class ProfessorTurma implements Serializable {
 		this.turma = turma;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "id_professor")
 	public Funcionario getProfessor() {
 		return professor;
@@ -93,24 +99,18 @@ public class ProfessorTurma implements Serializable {
 		this.fechada = fechada;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_escola", nullable = false, insertable = false, updatable = false)
-	public Escola getEscola() {
-		return escola;
+	
+
+	@ManyToOne
+	@JoinColumn(name = "id_disciplina_classe", nullable = false, insertable = false, updatable = false)
+	
+
+	public DisciplinaClasse getDisciplinaClasse() {
+		return disciplinaClasse;
 	}
 
-	public void setEscola(Escola escola) {
-		this.escola = escola;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_disciplina", nullable = false, insertable = false, updatable = false)
-	public Disciplina getDisciplina() {
-		return disciplina;
-	}
-
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
+	public void setDisciplinaClasse(DisciplinaClasse disciplinaClasse) {
+		this.disciplinaClasse = disciplinaClasse;
 	}
 
 	public String getHorario() {
@@ -120,15 +120,7 @@ public class ProfessorTurma implements Serializable {
 	public void setHorario(String horario) {
 		this.horario = horario;
 	}
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_sala")
-	public Sala getSala() {
-		return sala;
-	}
-
-	public void setSala(Sala sala) {
-		this.sala = sala;
-	}
+	
 
 	public String getElecionadaTurnoExtra() {
 		return elecionadaTurnoExtra;

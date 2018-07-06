@@ -1,10 +1,19 @@
-// sistema escolar- autor Agostinho jolocholo
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.inject.Named;
 
@@ -152,7 +161,7 @@ public class TurnoBean {
 		try {
 			turnoServico.excluir(this.turnoSelecionado);
 			buscar();
-			Mensagem.mensagemInfo("Aviso: o turno foi excluido com sucesso!");
+			Mensagem.mensagemInfo("AVISO: o turno foi excluido com sucesso!");
 			System.out.println("Chamou a funaco!");
 
 		} catch (Exception e) {

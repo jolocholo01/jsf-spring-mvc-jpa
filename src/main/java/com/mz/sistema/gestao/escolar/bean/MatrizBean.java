@@ -1,4 +1,4 @@
-// sistema escolar- autor Agostinho jolocholo
+
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.util.ArrayList;
@@ -7,6 +7,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.inject.Named;
 
@@ -148,7 +158,7 @@ public class MatrizBean {
 	public void salvar() {
 		if (calendario == null) {
 			Mensagem.mensagemAlerta(
-					"Aviso:Não pode cadastrar matriz curricular pois, não existe Calendário Escolar no sistema");
+					"AVISO:Não pode cadastrar matriz curricular pois, não existe Calendário Escolar no sistema");
 			return;
 		}
 		matriz.setAno(calendario.getAno());
@@ -156,7 +166,7 @@ public class MatrizBean {
 
 			if (classeSelecionada.getCiclo().equals("1º CICLO")) {
 				if (matriz.getDisciplinaClasses().isEmpty()) {
-					Mensagem.mensagemAlerta("Aviso: selecione disciplinas para cadastrar matriz curricular!");
+					Mensagem.mensagemAlerta("AVISO: selecione disciplinas para cadastrar matriz curricular!");
 					return;
 				}
 				Matriz matrizExistente = matrizServico.disciplinaClasseExistente(classeSelecionada.getId(),
@@ -164,7 +174,7 @@ public class MatrizBean {
 				if (matrizExistente == null) {
 
 				} else if (matrizExistente != null && matriz.getId() != matrizExistente.getId()) {
-					Mensagem.mensagemAlerta("Aviso: ja existe disciplinas distribuida nesta classe.");
+					Mensagem.mensagemAlerta("AVISO: ja existe disciplinas distribuida nesta classe.");
 					return;
 				}
 
@@ -175,11 +185,11 @@ public class MatrizBean {
 				if (matrizExistente == null) {
 
 				} else if (matrizExistente != null && matriz.getId() != matrizExistente.getId()) {
-					Mensagem.mensagemAlerta("Aviso: ja existe disciplinas distribuida nesta classe.");
+					Mensagem.mensagemAlerta("AVISO: ja existe disciplinas distribuida nesta classe.");
 					return;
 				}
 				if (disciplinaClassesArea.isEmpty()) {
-					Mensagem.mensagemAlerta("Aviso: selecione disciplinas para cadastrar matriz curricular!");
+					Mensagem.mensagemAlerta("AVISO: selecione disciplinas para cadastrar matriz curricular!");
 					return;
 				}
 
@@ -219,7 +229,7 @@ public class MatrizBean {
 	public void salvarEdicao() {
 		if (matrizSelecionada.getClasse().getCiclo().equals("2º CICLO")) {
 			if (disciplinaClassesArea.isEmpty()) {
-				Mensagem.mensagemAlerta("Aviso: selecione disciplinas para cadastrar matriz curricular!");
+				Mensagem.mensagemAlerta("AVISO: selecione disciplinas para cadastrar matriz curricular!");
 				return;
 			}
 			matrizSelecionada.setTipoArea(getLabelDisciplinas());
@@ -228,14 +238,14 @@ public class MatrizBean {
 		}
 		matrizSelecionada.setAtiva(false);
 		matrizServico.salvar(matrizSelecionada);
-		Mensagem.mensagemInfo("Aviso: Matriz curricular foi atualizada com sucesso");
+		Mensagem.mensagemInfo("AVISO: Matriz curricular foi atualizada com sucesso");
 	}
 
 	public void salvarAfinalizacao() {
 		try {
 			if (matrizSelecionada.getClasse().getCiclo().equals("2º CICLO")) {
 				if (disciplinaClassesArea.isEmpty()) {
-					Mensagem.mensagemAlerta("Aviso: selecione disciplinas para cadastrar matriz curricular!");
+					Mensagem.mensagemAlerta("AVISO: selecione disciplinas para cadastrar matriz curricular!");
 					return;
 				}
 				matrizSelecionada.setTipoArea(getLabelDisciplinas());
@@ -244,10 +254,10 @@ public class MatrizBean {
 			}
 			matrizSelecionada.setAtiva(true);
 			matrizServico.salvar(matrizSelecionada);
-			Mensagem.mensagemInfo("Aviso: A Matriz curricular foi finalizada com sucesso");
+			Mensagem.mensagemInfo("AVISO: A Matriz curricular foi finalizada com sucesso");
 		} catch (Exception e) {
 			e.printStackTrace();
-			Mensagem.mensagemFatal("Aviso: Hove erro ao finalizar a matriz curricular!o");
+			Mensagem.mensagemFatal("AVISO: Hove erro ao finalizar a matriz curricular!o");
 		}
 	}
 
@@ -296,7 +306,7 @@ public class MatrizBean {
 
 		disciplinaClassesArea1 = new ArrayList<>(matriz.getDisciplinaClasses());
 		if (disciplinaClassesArea1.isEmpty()) {
-			Mensagem.mensagemAlerta("Aviso: selecione disciplinas para cadastrar matriz curricular!");
+			Mensagem.mensagemAlerta("AVISO: selecione disciplinas para cadastrar matriz curricular!");
 			return;
 		}
 		selecionarDisciplinaBoolean = true;
@@ -310,7 +320,7 @@ public class MatrizBean {
 		try {
 			disciplinaClassesAreaEdicao = new ArrayList<>(this.matrizSelecionada.getDisciplinaClasses());
 			if (disciplinaClassesAreaEdicao.isEmpty()) {
-				Mensagem.mensagemAlerta("Aviso: selecione disciplinas para cadastrar matriz curricular!");
+				Mensagem.mensagemAlerta("AVISO: selecione disciplinas para cadastrar matriz curricular!");
 				return;
 			}
 			proximoBotaoParaEdicaoBoolean = true;
@@ -339,7 +349,7 @@ public class MatrizBean {
 			Mensagem.mensagemInfo("Matriz curricular removida com sucesso");
 			buscarMatrizesPorCiclo();
 		} catch (Exception e) {
-			Mensagem.mensagemInfo("Aviso: não foi possivel remover a Matriz curricular através da dependência.");
+			Mensagem.mensagemInfo("AVISO: não foi possivel remover a Matriz curricular através da dependência.");
 		}
 	}
 

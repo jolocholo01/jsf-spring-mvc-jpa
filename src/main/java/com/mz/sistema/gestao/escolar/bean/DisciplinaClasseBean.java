@@ -1,9 +1,19 @@
-// sistema escolar- autor Agostinho jolocholo
+
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.inject.Named;
 
@@ -71,7 +81,7 @@ public class DisciplinaClasseBean {
 		if (disciplinaClasse.getId() == null) {
 			disciplinaClasse.setFuncCadastro(funcionario);
 			disciplinaClasseServico.salvar(disciplinaClasse);
-			Mensagem.mensagemInfo("Aviso: Disciplina alocada na classe com sucesso!");
+			Mensagem.mensagemInfo("AVISO: Disciplina alocada na classe com sucesso!");
 			disciplinaClasse = new DisciplinaClasse();
 			disciplinaClasse.setClasse(classeSelecionada.getClasse());
 			disciplinaClasse.setDataCadastro(new Date());
@@ -81,7 +91,7 @@ public class DisciplinaClasseBean {
 			disciplinaClasseServico.salvar(disciplinaClasse);
 			pesquisaDeDisciplinaNaClasse();
 			voltarParaPequisaAlocacao();
-			Mensagem.mensagemInfo("Aviso: Disciplina atulizada na classe com sucesso!");
+			Mensagem.mensagemInfo("AVISO: Disciplina atulizada na classe com sucesso!");
 
 		}
 		
@@ -138,7 +148,7 @@ public class DisciplinaClasseBean {
 	public void excluir() {
 		try {
 			disciplinaClasseServico.excluir(this.disciplinaClasseExclusao);
-			Mensagem.mensagemInfo("Aviso: Disciplna excluida com sucesso!");
+			Mensagem.mensagemInfo("AVISO: Disciplna excluida com sucesso!");
 			System.out.println("Chamou a funaco!");
 			pesquisaDeDisciplinaNaClasse();
 

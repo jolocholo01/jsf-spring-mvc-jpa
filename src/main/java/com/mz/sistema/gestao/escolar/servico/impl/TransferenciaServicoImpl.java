@@ -1,7 +1,15 @@
 package com.mz.sistema.gestao.escolar.servico.impl;
 
 import java.util.List;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -86,25 +94,24 @@ public class TransferenciaServicoImpl implements TransferenciaServico {
 
 	@Override
 	public Long obterAlunosdosQueTransferiramNestaEscola(Long idEscolaOrigem, Integer ano, boolean finalizada) {
-		Long  qtdTransferencias = (Long) em
+		Long qtdTransferencias = (Long) em
 				.createQuery(
 						"SELECT COUNT(t.id) from Transferencia t  where t.escolaOrigem.id=:idEscolaOrigem AND t.matricula.ano=:ano  AND t.finalizada=:finalizada")
-				.setParameter("idEscolaOrigem", idEscolaOrigem)
-				.setParameter("ano", ano)
+				.setParameter("idEscolaOrigem", idEscolaOrigem).setParameter("ano", ano)
 				.setParameter("finalizada", finalizada).getSingleResult();
-		
+
 		return qtdTransferencias;
 	}
 
 	@Override
-	public Long obterAlunosdosQueForamTransferidosParaEstaEscola(Long idEscolaDestino, Integer ano, boolean finalizada) {
-		Long  qtdTransferencias = (Long) em
+	public Long obterAlunosdosQueForamTransferidosParaEstaEscola(Long idEscolaDestino, Integer ano,
+			boolean finalizada) {
+		Long qtdTransferencias = (Long) em
 				.createQuery(
 						"SELECT COUNT(t.id) from Transferencia t  where t.escolaDestino.id=:escolaDestino AND t.matricula.ano=:ano  AND t.finalizada=:finalizada")
-				.setParameter("escolaDestino", idEscolaDestino)
-				.setParameter("ano", ano)
+				.setParameter("escolaDestino", idEscolaDestino).setParameter("ano", ano)
 				.setParameter("finalizada", finalizada).getSingleResult();
-		
+
 		return qtdTransferencias;
 	}
 

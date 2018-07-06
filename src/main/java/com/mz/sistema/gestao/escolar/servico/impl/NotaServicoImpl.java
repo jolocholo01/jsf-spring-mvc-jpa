@@ -1,7 +1,15 @@
 package com.mz.sistema.gestao.escolar.servico.impl;
 
 import java.util.List;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -55,12 +63,12 @@ public class NotaServicoImpl implements NotaServico {
 	}
 
 	@Override
-	public List<Nota> obterNotasPorIdTurmaEDisciplinaDoProfessor(Integer idDisciplina, Integer idTurma) {
+	public List<Nota> obterNotasPorIdTurmaEDisciplinaDoProfessor(Long idDisciplinaClasse, Integer idTurma) {
 		@SuppressWarnings("unchecked")
 		List<Nota> notas = em
 				.createQuery(
-						"FROM Nota WHERE disciplina.id=:idDisciplina AND matricula.turma.id=:idTurma  ORDER BY matricula.numeroAlunoTurma")
-				.setParameter("idDisciplina", idDisciplina).setParameter("idTurma", idTurma).getResultList();
+						"FROM Nota WHERE disciplinaClasse.id=:idDisciplinaClasse AND matricula.turma.id=:idTurma  ORDER BY matricula.numeroAlunoTurma")
+				.setParameter("idDisciplinaClasse", idDisciplinaClasse).setParameter("idTurma", idTurma).getResultList();
 		if (!notas.isEmpty()) {
 			return notas;
 		}
@@ -68,13 +76,13 @@ public class NotaServicoImpl implements NotaServico {
 	}
 
 	@Override
-	public List<Nota> obterNotasPorIdTurmaPorDisciplinaDoProfessorPorTrimetres(Integer idDisciplina, Integer idTurma,
+	public List<Nota> obterNotasPorIdTurmaPorDisciplinaDoProfessorPorTrimetres(Long idDisciplinaClasse, Integer idTurma,
 			Long idTrimetre) {
 		@SuppressWarnings("unchecked")
 		List<Nota> notas = em
 				.createQuery(
-						"FROM Nota WHERE disciplina.id=:idDisciplina AND matricula.turma.id=:idTurma AND trimestre.id=:idTrimetre ORDER BY matricula.aluno.nome")
-				.setParameter("idDisciplina", idDisciplina).setParameter("idTrimetre", idTrimetre)
+						"FROM Nota WHERE disciplinaClasse.id=:idDisciplinaClasse AND matricula.turma.id=:idTurma AND trimestre.id=:idTrimetre ORDER BY matricula.aluno.nome")
+				.setParameter("idDisciplinaClasse", idDisciplinaClasse).setParameter("idTrimetre", idTrimetre)
 				.setParameter("idTurma", idTurma).getResultList();
 		if (!notas.isEmpty()) {
 			return notas;
@@ -89,7 +97,7 @@ public class NotaServicoImpl implements NotaServico {
 		List<Nota> notas = em
 				.createQuery(
 						"FROM Nota WHERE matricula.aluno.id=:idAluno AND matricula.classe.id=:idClasse AND matricula.ano=:ANO"
-								+ " ORDER BY disciplina.descricao")
+								+ " ORDER BY disciplinaClasse.disciplina.descricao")
 				.setParameter("idAluno", idAluno).setParameter("idClasse", idClasse).setParameter("ANO", ano)
 				.getResultList();
 		if (!notas.isEmpty()) {
@@ -124,13 +132,13 @@ public class NotaServicoImpl implements NotaServico {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Nota obterAlunoPorMatriculaPorDisciplinaPorTrimestre(Integer idMatricula, Integer idDisciplina,
+	public Nota obterAlunoPorMatriculaPorDisciplinaPorTrimestre(Integer idMatricula, Long idDisciplinaClasse,
 			long idTrimestre) {
 
 		List<Nota> notas = em
-				.createQuery("FROM Nota WHERE disciplina.id=:idDisciplina AND matricula.id=:idMatricula"
+				.createQuery("FROM Nota WHERE disciplinaClasse.id=:idDisciplinaClasse AND matricula.id=:idMatricula"
 						+ " AND trimestre.id=:idTrimestre ")
-				.setParameter("idDisciplina", idDisciplina).setParameter("idTrimestre", idTrimestre)
+				.setParameter("idDisciplinaClasse", idDisciplinaClasse).setParameter("idTrimestre", idTrimestre)
 				.setParameter("idMatricula", idMatricula).getResultList();
 		if (!notas.isEmpty()) {
 			return notas.get(0);
@@ -140,12 +148,12 @@ public class NotaServicoImpl implements NotaServico {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Nota obterMediaAc(Integer idMatricula, Integer idDisciplina, long idTrimestre) {
+	public Nota obterMediaAc(Integer idMatricula, Long idDisciplinaClasse, long idTrimestre) {
 		List<Nota> notas = em
 				.createQuery(
-						"SELECT (ac1+ac2+ac3+ac4 )/4 AS MEDIATESTE FROM Nota WHERE disciplina.id=:idDisciplina AND matricula.id=:idMatricula"
+						"SELECT (ac1+ac2+ac3+ac4 )/4 AS MEDIATESTE FROM Nota WHERE disciplinaClasse.id=:idDisciplinaClasse AND matricula.id=:idMatricula"
 								+ " AND trimestre.id=:idTrimestre ")
-				.setParameter("idDisciplina", idDisciplina).setParameter("idTrimestre", idTrimestre)
+				.setParameter("idDisciplinaClasse", idDisciplinaClasse).setParameter("idTrimestre", idTrimestre)
 				.setParameter("idMatricula", idMatricula).getResultList();
 		if (!notas.isEmpty()) {
 			return notas.get(0);
@@ -177,10 +185,10 @@ public class NotaServicoImpl implements NotaServico {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Nota obterNotasPorIdMatriculaPorDisciplina(Integer idMatricula, Integer idDisciplina) {
+	public Nota obterNotasPorIdMatriculaPorDisciplina(Integer idMatricula, Long idDisciplinaClasse) {
 
-		List<Nota> notas = em.createQuery("FROM Nota WHERE disciplina.id=:idDisciplina AND matricula.id=:idMatricula")
-				.setParameter("idDisciplina", idDisciplina).setParameter("idMatricula", idMatricula).getResultList();
+		List<Nota> notas = em.createQuery("FROM Nota WHERE disciplinaClasse.id=:idDisciplinaClasse AND matricula.id=:idMatricula")
+				.setParameter("idDisciplinaClasse", idDisciplinaClasse).setParameter("idMatricula", idMatricula).getResultList();
 		if (!notas.isEmpty()) {
 			return notas.get(0);
 		}

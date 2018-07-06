@@ -1,7 +1,15 @@
 package com.mz.sistema.gestao.escolar.servico;
 
 import java.util.List;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import com.mz.sistema.gestao.escolar.modelo.Turma;
 
 public interface TurmaServico {
@@ -26,6 +34,7 @@ public interface TurmaServico {
 			Integer idTurma);
 	
 	public Turma obterTurmaExistentePorDscricao(String descricao, Long idClasse, String CURSO, Integer ANO, Long idEscola);
+	public Long obterNumeroReciboUltimaTurma();
 	
 	
 	

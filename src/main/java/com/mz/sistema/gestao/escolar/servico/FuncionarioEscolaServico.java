@@ -1,7 +1,15 @@
 package com.mz.sistema.gestao.escolar.servico;
 
 import java.util.List;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import com.mz.sistema.gestao.escolar.enumerado.RoleName;
 import com.mz.sistema.gestao.escolar.modelo.Funcionario;
 import com.mz.sistema.gestao.escolar.modelo.FuncionarioEscola;

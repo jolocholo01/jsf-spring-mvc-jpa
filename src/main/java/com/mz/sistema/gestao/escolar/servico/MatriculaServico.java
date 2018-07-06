@@ -1,7 +1,15 @@
 package com.mz.sistema.gestao.escolar.servico;
 
 import java.util.List;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import com.mz.sistema.gestao.escolar.modelo.Matricula;
 
 public interface MatriculaServico {
@@ -41,10 +49,14 @@ public interface MatriculaServico {
 	public Long obterNumeroReciboUltimaMatricula();
 	public Matricula obterMatriculaPorIdAluno(Long idAluno);
 	public List<Matricula> obterMatriculasPorClassePorCursoPorTurma(long idClasse, Long idEscola, String curso, Integer ano,
-			Boolean temTurma);
+			Integer listarTODASMatriculaOUPorTURMAouPORsemTURMA);
 	public List<Matricula> obterMatriculasPorClassePorCursoPorAreaPorTurma(long idClasse, Long idEscola, String curso, Integer ano,
-			String tipoArea, Boolean temTurma);
+			String tipoArea, Integer listarTODASMatriculaOUPorTURMAouPORsemTURMA);
 	public Integer obterNumeroUltimoAlunoNaTurma(Integer idTurma);
 	public List<Matricula> obterMatriculasPorEscolaPorAno(Long idEscola, Integer ano);
 	public Long obterTotalAlunosMatriculasPorEscolaPorAno(Long idEscola, Integer ano);
+	public List<Matricula> obterMatriculasPorClassePorCursoPorTurmaSemArea(Long idEscola, long idClasse, String curso, Integer ano,
+			Integer listarMatricula, Integer idadeInicial, Integer idadeFinal);
+	public List<Matricula> obterMatriculasPorClassePorCursoPorAreaPorTurma(Long idEscola, long idClasse, String curso, Integer ano,
+			String tipoArea, Integer listarTODASMatriculaOUPorTURMAouPORsemTURMA, Integer idadeInicial, Integer idadeFinal);
 	}

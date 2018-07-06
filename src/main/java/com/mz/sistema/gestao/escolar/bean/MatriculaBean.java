@@ -1,4 +1,4 @@
-// sistema escolar- autor Agostinho jolocholo
+
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.math.BigDecimal;
@@ -10,6 +10,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.inject.Named;
 
@@ -160,7 +170,7 @@ public class MatriculaBean {
 	// matricular aluno por turma
 	public void salvarAlunoTurma() {
 		if (matriculaPorAluno.getTurma() != null && matriculaPorAluno.isAtivo() == true) {
-			Mensagem.mensagemInfo("Aviso: não pode matrícular este aluno pois já está matriculado!");
+			Mensagem.mensagemInfo("AVISO: não pode matrícular este aluno pois já está matriculado!");
 			return;
 		}
 		Integer inscritos = turmaSelecionada.getInscrito() + 1;
@@ -169,14 +179,14 @@ public class MatriculaBean {
 		matriculaPorAluno.setAtivo(true);
 		matriculaPorAluno.setTurma(turmaSelecionada);
 		matriculaServico.salvar(matriculaPorAluno);
-		Mensagem.mensagemAlerta("Aluno " + matriculaPorAluno.getAluno().getId() + " – "
+		Mensagem.mensagemInfo("AVISO: Aluno " + matriculaPorAluno.getAluno().getId() + " – "
 				+ matriculaPorAluno.getAluno().getNome() + " foi matriculado com sucesso");
 	}
 
 	// matricula de alunos por turma
 	public void salvarMatriculaDeAlunosPorTurma() {
 		if (this.adicionarMatriculasLista == null) {
-			Mensagem.mensagemInfo("Aviso: selecione um aluno para matricular!");
+			Mensagem.mensagemInfo("AVISO: selecione um aluno para matricular!");
 		} else if (this.adicionarMatriculasLista != null) {
 			this.qtdAlunoMatriculado = 0;
 			for (Matricula matricula : adicionarMatriculasLista) {
@@ -381,7 +391,7 @@ public class MatriculaBean {
 
 		List<Matricula> matriculas = new ArrayList<>();
 		if (this.matricula.getId() == null) {
-			Mensagem.mensagemAlerta("Aviso: selecione um aluno para matricular!");
+			Mensagem.mensagemAlerta("ATENÇÃO: selecione um aluno para matricular!");
 		} else {
 			matriculas = matriculaServico.obterMatriculasPorId(this.matricula.getId());
 			if (this.adicionarMatriculasLista == null) {
@@ -447,7 +457,7 @@ public class MatriculaBean {
 
 		this.procuararEstudantesMatriculadoParaAltearcao = null;
 		if (this.getNomeAluno() != null && this.getNomeAluno().length() < 3) {
-			Mensagem.mensagemAlerta("Aviso: digite pelo meno 3 letras no campo nome");
+			Mensagem.mensagemAlerta("AVISO: digite pelo meno 3 letras no campo nome");
 		} else if (this.getNomeAluno().length() >= 3) {
 			this.procuararEstudantesMatriculadoParaAltearcao = matriculaServico
 					.obterAlunoDaEscolaPorNome(this.getNomeAluno().trim());
@@ -457,7 +467,7 @@ public class MatriculaBean {
 	public void buscarAlunoConsultaParaMatriculaPorTurma() {
 		this.procuararEstudantesMatriculadoParaAltearcao = null;
 		if (this.getNomeAlunoDeMatriculaPorTurma() != null && this.getNomeAlunoDeMatriculaPorTurma().length() < 3) {
-			Mensagem.mensagemAlerta("Aviso: digite pelo meno 3 letras no campo nome");
+			Mensagem.mensagemAlerta("ATENÇÃO: digite pelo meno 3 letras no campo nome");
 		} else if (this.getNomeAlunoDeMatriculaPorTurma().length() >= 3) {
 			this.procuararEstudantesMatriculadoParaAltearcao = matriculaServico.obterMatriculasDaClasseTrurnoAnoNome(
 					turmaSelecionada.getClasse().getId(), turmaSelecionada.getTurno().getCurso(),

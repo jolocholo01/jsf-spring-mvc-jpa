@@ -2,7 +2,15 @@ package com.mz.sistema.gestao.escolar.servico.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

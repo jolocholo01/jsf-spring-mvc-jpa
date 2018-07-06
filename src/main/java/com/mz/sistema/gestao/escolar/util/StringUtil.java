@@ -1,5 +1,13 @@
 package com.mz.sistema.gestao.escolar.util;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 public class StringUtil {
 	public static String preencherZerosAEsquerda(String valor, int quantidade){
 		int zerosNecessarios = quantidade - valor.length();

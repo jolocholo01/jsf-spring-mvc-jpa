@@ -1,5 +1,13 @@
 package com.mz.sistema.gestao.escolar.util;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 public class Replace {
 	public static String rescreverTexto(String texto) {
 		String texto_escrito = TipoLetra.capitalizeString(texto).replace(" Em ", " em ").replace(" De ", " de ").replace(" Do ", " do ")

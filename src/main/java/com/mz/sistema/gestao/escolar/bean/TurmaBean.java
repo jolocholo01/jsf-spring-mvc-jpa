@@ -1,4 +1,3 @@
-// sistema escolar- autor Agostinho jolocholo
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.util.ArrayList;
@@ -7,9 +6,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.context.FacesContext;
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +31,7 @@ import com.mz.sistema.gestao.escolar.modelo.FuncionarioEscola;
 import com.mz.sistema.gestao.escolar.modelo.HorarioAula;
 import com.mz.sistema.gestao.escolar.modelo.Matricula;
 import com.mz.sistema.gestao.escolar.modelo.Matriz;
+import com.mz.sistema.gestao.escolar.modelo.ProfessorTurma;
 import com.mz.sistema.gestao.escolar.modelo.Sala;
 import com.mz.sistema.gestao.escolar.modelo.Turma;
 import com.mz.sistema.gestao.escolar.modelo.Turno;
@@ -39,8 +46,9 @@ import com.mz.sistema.gestao.escolar.servico.MatrizServico;
 import com.mz.sistema.gestao.escolar.servico.SalaServico;
 import com.mz.sistema.gestao.escolar.servico.TurmaServico;
 import com.mz.sistema.gestao.escolar.servico.TurnoServico;
-import com.mz.sistema.gestao.escolar.util.DataUtils;
 import com.mz.sistema.gestao.escolar.util.Mensagem;
+import com.mz.sistema.gestao.escolar.util.StringUtil;
+import com.mz.sistema.gestao.escolar.util.TipoLetra;
 
 @Named
 @SessionScope
@@ -115,7 +123,7 @@ public class TurmaBean {
 	private MatrizServico matrizServico;
 	@Autowired
 	private GeradorDeRelatoriosServico geradorDeRelatoriosServico;
-	
+
 	@Autowired
 	private CalendarioServico calendarioServico;
 
@@ -146,24 +154,6 @@ public class TurmaBean {
 		}
 	}
 
-	public void salvar(Turma turma) {
-		horarioAulas = horarioAulaServico.obterHorarioAulaPorEscolaTurno(turma.getTurno().getId());
-		if (horarioAulas == null) {
-			Mensagem.mensagemInfo("Não pode Cadastar a Turma, pois existe dependencia com horório de Aula!");
-			return;
-		}
-		if (this.getAlunoMatriculadoNaClasse() == 0) {
-			Mensagem.mensagemInfo("Não pode Cadastar a Turma, pois existe alunos matriculado nesta classe!");
-			return;
-		}
-		this.turmaSalva = turmaServico.salvarRetornarTurma(turma);
-		this.turma = null;
-		matriculasBanco = new ArrayList<>();
-		matriculasBanco = matriculaServico.obterMatriculasDaclasse(turmaSalva.getClasse().getId(),
-				turmaSalva.getTurno().getCurso());
-		matriculasTabela = new ArrayList<>();
-
-	}
 
 	public void salvarTurma() {
 
@@ -175,26 +165,41 @@ public class TurmaBean {
 			if (turmaExistente != null && turmaExistente.getId() != turmaSelecionada.getId()) {
 				Mensagem.mensagemErro("ERRO: Não pode cadastrar essa turma nesta sala pois, a turma "
 						+ turmaExistente.getClasse().getSigla() + "ª" + turmaExistente.getDescricao()
-						+ " de período da " + turmaExistente.getTurno().getDescricao().getLabel().toLowerCase() + " de sala nº "
-						+ turmaExistente.getSala().getNumero() + " é que está disponível.");
+						+ " de período da " + turmaExistente.getTurno().getDescricao().getLabel().toLowerCase()
+						+ " de sala nº " + turmaExistente.getSala().getNumero() + " é que está disponível.");
 				return;
 			}
 			Turma turmaExistente2 = turmaServico.obterTurmaExistentePorDscricao(turmaSelecionada.getDescricao(),
 					turmaSelecionada.getClasse().getId(), turmaSelecionada.getTurno().getCurso(),
 					turmaSelecionada.getAno(), turmaSelecionada.getEscola().getId());
 			if (turmaExistente2 != null && turmaExistente2.getId() != turmaSelecionada.getId()) {
-				Mensagem.mensagemErro("ERRO: Já existe uma turma com esses dados cadastrada no sistema!");
+				Mensagem.mensagemErro("ERRO: Já existe uma turma com esses dados cadastrado no sistema!");
 				return;
 			}
 			if (turmaSelecionada.getRestanteVaga() == null) {
 				turmaSelecionada.setRestanteVaga(turmaSelecionada.getCapacidade());
 			}
-			turma=turmaSelecionada;
+			String numeroRecibo = null;
+			if (turmaSelecionada.getId() == null) {
+				Long numeroReciboUltimaTurma = turmaServico.obterNumeroReciboUltimaTurma();
+				if (numeroReciboUltimaTurma == null) {
+					numeroReciboUltimaTurma = 0L;
+				}
+				numeroReciboUltimaTurma++;
+				numeroRecibo = numeroReciboUltimaTurma.toString();
+
+			} else {
+				numeroRecibo = turmaSelecionada.getNumero();
+			}
+
+			numeroRecibo = StringUtil.preencherZerosAEsquerda(numeroRecibo, 20);
+			turmaSelecionada.setNumero(numeroRecibo);
+			turma = turmaSelecionada;
 			turmaServico.salvar(turmaSelecionada);
 
 			Mensagem.mensagemInfo("AVISO: Turma cadastrada com sucesso!");
 			turmaSelecionada = null;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -210,7 +215,7 @@ public class TurmaBean {
 
 			turmaServico.excluir(this.turmaSelecionadaExclusao);
 			listarTurmas();
-			Mensagem.mensagemInfo("Aviso: turma foi excluida com sucesso!");
+			Mensagem.mensagemInfo("AVISO: turma foi excluida com sucesso!");
 
 		} catch (Exception e) {
 			Mensagem.mensagemErro("ERRO: não foi excluida esta turma pois exite uma dependência!");
@@ -408,9 +413,9 @@ public class TurmaBean {
 			FuncionarioEscola funcionarioEscola = authenticationContext.getFuncionarioEscolaLogada();
 			Escola escola = funcionarioEscola.getEscola();
 			Calendario calendario = calendarioServico.obterCalendarioVigente();
-			
+
 			Map<String, Object> parametro = new HashMap<>();
-			
+
 			parametro.put("idProfessor", professor.getId());
 			parametro.put("idEscola", escola.getId());
 			parametro.put("ano", calendario.getAno());
@@ -430,6 +435,24 @@ public class TurmaBean {
 			e.printStackTrace();
 
 		}
+	}
+
+	public void listarAlunosTurma(Turma turma) {
+
+		try {
+			turma = turmaServico.obterTurmaPorId(turma.getId());
+			String caminho = "/academico/relatorio/aluno/alunos_turma.jasper", filename = "LISTA_DOS_ALUNOS_DA_TURMA_"
+					+ turma.getDescricao() + "_CURSO_" + turma.getCurso() + ".pdf";
+			Map<String, Object> parametro = new HashMap<>();
+			
+
+			parametro.put("idTurma", turma.getId());
+			
+			geradorDeRelatoriosServico.geraPdf(caminho, parametro, filename);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void procularaSalaPorCodingo() {

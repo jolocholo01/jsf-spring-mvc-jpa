@@ -1,6 +1,15 @@
 package com.mz.sistema.gestao.escolar.util;
 
 import java.io.Serializable;
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import java.util.Date;
 
 public class Reserva implements Serializable {

@@ -38,25 +38,26 @@
 						<f:facet name="header">
 							<h:outputText value="#" style="margin-left:5px;" />
 						</f:facet>
-						<h:outputText value="#{alunoTurma.disciplina.id}"
+						<h:outputText value="#{alunoTurma.disciplinaClasse.disciplina.id}"
 							style="margin-left:5px;" />
 					</h:column>
 					<h:column id="idDisciplina">
 						<f:facet name="header">
 							<h:outputText value="Disciplina" style="margin-left:5px;" />
 						</f:facet>
-						
-							<h:commandLink value="#{alunoTurma.disciplina.descricao}"
-								style="margin-left:5px;" styleClass="tooltip-top"
-								title="TENHO AULA NA #{alunoTurma.horario}">
-								<p:ajax event="click"
-									listener="#{professorTurmaBean.selecionarDisciplinaParaVerHorario(alunoTurma)}"
-									update="form_ambiente_comum:id-panelGroup-confirma-modal" />
-								<f:passThroughAttribute name="data-toggle" value="modal" />
-								<f:passThroughAttribute name="data-target" value="#myModal" />
 
-							</h:commandLink>
-						
+						<h:commandLink
+							value="#{alunoTurma.disciplinaClasse.disciplina.descricao}"
+							style="margin-left:5px;" styleClass="tooltip-top"
+							title="TENHO AULA NA #{alunoTurma.horario}">
+							<p:ajax event="click"
+								listener="#{professorTurmaBean.selecionarDisciplinaParaVerHorario(alunoTurma)}"
+								update="form_ambiente_comum:id-panelGroup-confirma-modal" />
+							<f:passThroughAttribute name="data-toggle" value="modal" />
+							<f:passThroughAttribute name="data-target" value="#myModal" />
+
+						</h:commandLink>
+
 					</h:column>
 					<h:column>
 						<f:facet name="header">
@@ -99,15 +100,20 @@
 						<h:panelGroup id="id-panelGroup-confirma-modal">
 							<div class="modal-header">
 								<h4 class="modal-title" id="myModalLabel">
-									<h:outputLabel value="Horário de Disciplina de &#160;" style="text-transform: uppercase;"/>
+									<h:outputLabel value="Horário de &#160;"
+										style="text-transform: uppercase;" />
 									<h:outputLabel
-										value="#{professorTurmaBean.professorTurmaSelecionada.disciplina.descricao}" />
-
+										value="#{professorTurmaBean.professorTurmaSelecionada.disciplinaClasse.disciplina.descricao}" />
+									<h:outputLabel
+										value="&#160;da #{professorTurmaBean.professorTurmaSelecionada.turma.classe.sigla}ª #{professorTurmaBean.professorTurmaSelecionada.turma.descricao}"
+										style="text-transform: uppercase;" />
+									
 								</h4>
 								<button type="button" class="close" data-dismiss="modal"
 									aria-label="Close">
 									<h:panelGroup aria-hidden="true">&times;
-									<p:ajax event="click" update="form_ambiente_comum:tabela:idDisciplina" />
+									<p:ajax event="click"
+											update="form_ambiente_comum:tabela:idDisciplina" />
 									</h:panelGroup>
 								</button>
 							</div>
@@ -144,22 +150,15 @@
 											<h:outputText value="Horário" />
 										</f:facet>
 										<h:outputText value="#{horario.horarioAula.aulaInicial}">
-											<f:convertDateTime pattern="HH:mm" />
+											<f:convertDateTime pattern="HH:mm" timeZone="Africa/Harare" />
 										</h:outputText>
 										<h:outputText value="-" style="margin-left:5px;" />
 										<h:outputText value="#{horario.horarioAula.aulaFinal}"
 											style="margin-left:5px;">
-											<f:convertDateTime pattern="HH:mm" />
+											<f:convertDateTime pattern="HH:mm" timeZone="Africa/Harare" />
 										</h:outputText>
 									</h:column>
-									<h:column>
-										<f:facet name="header">
-											<h:outputText value="Turma" />
-										</f:facet>
-										<h:outputText value="#{horario.turma.descricao}">
-										</h:outputText>
 
-									</h:column>
 									<h:column>
 										<f:facet name="header">
 											<h:outputText value="Turno" />
@@ -180,7 +179,7 @@
 								value=" &#x2716; Fechar">
 								<f:passThroughAttribute name="data-dismiss" value="modal" />
 								<p:ajax event="click"
-									update="form_ambiente_comum:tabela:idDisciplina "/>
+									update="form_ambiente_comum:tabela:idDisciplina " />
 							</h:commandButton>
 						</div>
 					</div>

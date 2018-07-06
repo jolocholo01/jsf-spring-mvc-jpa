@@ -1,4 +1,4 @@
-// sistema escolar- autor Agostinho jolocholo
+
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.io.Serializable;
@@ -7,6 +7,16 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
+
 import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.context.annotation.SessionScope;
 
 import com.mz.sistema.gestao.escolar.enumerado.Continente;
-import com.mz.sistema.gestao.escolar.modelo.Distrito;
 import com.mz.sistema.gestao.escolar.modelo.Pais;
 import com.mz.sistema.gestao.escolar.servico.PaisServico;
 import com.mz.sistema.gestao.escolar.util.Mensagem;
@@ -64,7 +73,7 @@ public class PaisBean implements Serializable {
 		try {
 			Pais paisExistente = paisServico.obterPaisExistente(pais.getContinente(), pais.getNome());
 			if (paisExistente != null && paisExistente.getId() != paisExistente.getId()) {
-				Mensagem.mensagemErro("ERRO: Já existe um país cadastrado no sistema!");
+				Mensagem.mensagemAlerta("ATENÇÃO: Já existe um país cadastrado no sistema!");
 				return;
 			}
 			paisServico.salvar(pais);
@@ -123,7 +132,7 @@ public class PaisBean implements Serializable {
 		novoPaisBoolean = false;
 		editarPaisBoolean = true;
 		this.pais = pais;
-		if(this.pais.getDataCadastro()==null){
+		if (this.pais.getDataCadastro() == null) {
 			this.pais.setDataCadastro(new Date());
 		}
 		if (this.pais.getObservacao() != null) {
@@ -147,11 +156,11 @@ public class PaisBean implements Serializable {
 		try {
 			paisServico.excluir(this.paisSelecionado);
 			buscar();
-			Mensagem.mensagemInfo("Aviso: país excluido com sucesso!");
+			Mensagem.mensagemInfo("AVISO: país excluido com sucesso!");
 			System.out.println("Chamou a funaco!");
 
 		} catch (Exception e) {
-			Mensagem.mensagemAlerta("Aviso: País não foi excluido através da dependência.");
+			Mensagem.mensagemAlerta("ATENÇÃO: País não foi excluido através da dependência.");
 		}
 
 	}

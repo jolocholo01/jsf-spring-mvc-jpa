@@ -1,6 +1,15 @@
 package com.mz.sistema.gestao.escolar.util;
 
 import java.util.Date;
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import java.util.Random;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

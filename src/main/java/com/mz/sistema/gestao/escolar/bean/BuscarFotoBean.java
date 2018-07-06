@@ -1,4 +1,4 @@
-// sistema escolar- autor Agostinho jolocholo
+
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.io.IOException;
@@ -6,6 +6,16 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -142,7 +152,7 @@ public class BuscarFotoBean {
 					funcionarioServico.salvar(funcionario);
 			}
 
-			Mensagem.mensagemInfo("O seu perfil foi atualizado com sucesso");
+			Mensagem.mensagemInfo("AVISO: O seu perfil foi atualizado com sucesso");
 
 			verificarFuncaoAtualizarBoolean = true;
 
@@ -208,14 +218,14 @@ public class BuscarFotoBean {
 			usuario.setSenhaAlterada(true);
 			usuarioServico.salvar(usuario);
 			usuario = usuarioServico.obterUsuarioPeloId(autenticacao.getUsuarioLogado().getId());
-			Mensagem.mensagemInfo("Aviso: a sua senha foi alterada com sucesso!");
+			Mensagem.mensagemInfo("AVISO: a sua senha foi alterada com sucesso!");
 		} else {
-			Mensagem.mensagemErro("AVISO Imposivel executar o pedido pois:".toUpperCase());
+			Mensagem.mensagemAlerta("ATENÇÃO: Imposivel executar o pedido pois:".toUpperCase());
 			if (!usuario.getNovaSenha().equals(usuario.getConfirmaSenha())) {
-				Mensagem.mensagemErro("   SENHA deve ser igual a CONFIRMAÇÃO!");
+				Mensagem.mensagemAlerta("   SENHA deve ser igual a CONFIRMAÇÃO!");
 			}
 			if (usuario.getNovaSenha().length() < 4) {
-				Mensagem.mensagemErro("   SENHA tem que possuir no mínimo 4 caracteres!");
+				Mensagem.mensagemAlerta("   SENHA tem que possuir no mínimo 4 caracteres!");
 			}
 		}
 		// }

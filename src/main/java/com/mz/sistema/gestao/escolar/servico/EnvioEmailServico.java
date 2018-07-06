@@ -2,7 +2,15 @@ package com.mz.sistema.gestao.escolar.servico;
 
 import java.io.File;
 import java.util.List;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import com.mz.sistema.gestao.escolar.modelo.RecoperarSenha;
 import com.mz.sistema.gestao.escolar.modelo.Usuario;
 

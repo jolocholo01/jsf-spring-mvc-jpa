@@ -1,11 +1,19 @@
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.io.Serializable;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -59,13 +67,14 @@ public class RecoperarSenhaBean implements Serializable {
 	}
 
 	public void salvar() {
-//		HttpURLConnection httpURLConnection = null;
-//		URL url = new URL("");
-//		httpURLConnection = url.openConnection();
-//		if (httpURLConnection.getResponseCode() == httpURLConnection.HTTP_OK) {
-//			// tem internate
-//		}
-		
+		// HttpURLConnection httpURLConnection = null;
+		// URL url = new URL("");
+		// httpURLConnection = url.openConnection();
+		// if (httpURLConnection.getResponseCode() == httpURLConnection.HTTP_OK)
+		// {
+		// // tem internate
+		// }
+
 		informacaoBoleano = true;
 		try {
 			recoperarSenha.setEmail(recoperarSenha.getEmail().toLowerCase().trim());

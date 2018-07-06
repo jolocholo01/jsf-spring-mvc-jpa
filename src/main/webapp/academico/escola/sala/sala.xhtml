@@ -9,263 +9,259 @@
 
 
 <h:form id="form" styleClass="form-horizontal">
-			<!--Panel-->
-			<div class="card">
-				<h3 class="peg-titulo card-header primary-color white-text">
-					<h:outputText value="Pesquisa de Sala" style="font-weight: 700;"
-						rendered="#{salaBean.cadastroSalaBoolean==false}" />
-					<h:outputText value="Nova Sala" style="font-weight: 700;"
-						rendered="#{salaBean.cadastroSalaBoolean !=false}" />
+	<!--Panel-->
+	<div class="card">
+		<h3 class="peg-titulo card-header primary-color white-text">
+			<h:outputText value="Pesquisa de Sala" style="font-weight: 700;"
+				rendered="#{salaBean.cadastroSalaBoolean==false}" />
+			<h:outputText value="Nova Sala" style="font-weight: 700;"
+				rendered="#{salaBean.cadastroSalaBoolean !=false}" />
 
-					<h:panelGroup styleClass="form-span">
-						<h:commandLink
-							style="color: blue; float: right; font-weight: 500;"
-							value="Nova Sala" actionListener="#{salaBean.novaSala}"
-							immediate="true"
-							rendered="#{salaBean.cadastroSalaBoolean==false}" />
-						<h:commandLink
-							style="color: blue; float: right; font-weight: 500;"
-							value="Voltar para Pesquisa"
-							actionListener="#{salaBean.voltarParaPequisa}" immediate="true"
-							rendered="#{salaBean.cadastroSalaBoolean !=false}" />
-					</h:panelGroup>
-				</h3>
+			<h:panelGroup styleClass="form-span">
+				<h:commandLink style="color: blue; float: right; font-weight: 500;"
+					value="Nova Sala" actionListener="#{salaBean.novaSala}"
+					immediate="true" rendered="#{salaBean.cadastroSalaBoolean==false}" />
+				<h:commandLink style="color: blue; float: right; font-weight: 500;"
+					value="Voltar para Pesquisa"
+					actionListener="#{salaBean.voltarParaPequisa}" immediate="true"
+					rendered="#{salaBean.cadastroSalaBoolean !=false}" />
+			</h:panelGroup>
+		</h3>
 
-				<p:messages closable="true"
-					style=" margin-left: 5px;margin-right:5px;" />
+		<p:messages closable="true" id="mensagem"
+			style=" margin-left: 5px;margin-right:5px;" />
 
-				<div class="card-body">
+		<div class="card-body">
 
-					<h:panelGroup rendered="#{salaBean.cadastroSalaBoolean ==false}">
+			<h:panelGroup rendered="#{salaBean.cadastroSalaBoolean ==false}">
 
 
 
-						<div class="form-group">
-							<div class="col-sm-6" style="padding-left: 0;">
-								<div class="input-group">
-									<h:inputText styleClass="form-control"
-										value="#{salaBean.pesquisa}" >
-										<f:passThroughAttribute name="placeholder"
-											value="Qual sala que você está procurar?" />
-										<f:passThroughAttribute name="autofocus" value="true" />
-									</h:inputText>
-									<span class="input-group-btn"> <h:commandButton
-											styleClass="btn btn-primary"
-											
-											value="Buscar" actionListener="#{salaBean.buscar}" />
-									</span>
-								</div>
+				<div class="form-group">
+					<div class="col-sm-6" style="padding-left: 0;">
+						<div class="input-group">
+							<h:inputText styleClass="form-control"
+								value="#{salaBean.pesquisa}">
+								<f:passThroughAttribute name="placeholder"
+									value="Qual sala que você está procurar?" />
 
-							</div>
-						</div>
-						<h:dataTable value="#{salaBean.salas}" var="sala" id="tabela"
-							styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
-							headerClass="cab-tabela" footerClass="fo-tabela"
-							style="margin-top: 20px;" rowClasses="linha2, linha1">
-
-					
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Sala" />
-								</f:facet>
-								<h:outputText value="#{sala.numero}" style=" margin-left:4px;" />
-							</h:column>
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Código" />
-								</f:facet>
-								<h:outputText value="#{sala.codigo}" style=" margin-left:4px;" />
-							</h:column>
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Descrição" />
-								</f:facet>
-								<h:outputText value="#{sala.descricao}"
-									style=" margin-left:4px;" />
-							</h:column>
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Bloco" />
-								</f:facet>
-								<h:outputText value="#{sala.bloco}" style=" margin-left:4px;" />
-							</h:column>
-
-							<h:column headerClass="center">
-								<f:facet name="header">
-									<h:outputText value="Data de cadastro" />
-								</f:facet>
-								<h:outputText value="#{sala.dataCadastro}"
-									style="float: left;padding-left: 7px;">
-									<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"/>
-								</h:outputText>
-							</h:column>
-							<h:column headerClass="center">
-								<f:facet name="header">
-									<h:outputText value="Situação da Sala " />
-								</f:facet>
-								<h:outputText value="#{sala.activa?'Activa':'Não activa'}"
-									style="float: left;padding-left: 7px;">
-									
-								</h:outputText>
-							</h:column>
-							<h:column>
-								<h:commandLink title="Editar" immediate="true"
-									action="#{salaBean.editar(sala)}">
-									<h:graphicImage url="#{buscarFotoBean.retornarImagesEditar}"
-										style=" width:21px; height: 20px; " />
-								</h:commandLink>
-
-
-
-								<h:commandLink immediate="true" title="Excluir!" id="id-excluir"
-									style="margin-left:10px;">
-									<p:graphicImage url="#{buscarFotoBean.retornarImagesExcluir}"
-										height="16" width="16" />
-									<p:ajax event="click"
-										listener="#{salaBean.prepararParaExcluir(sala)}"
-										update="form:id-panelGroup-confirma-modal" />
-									<f:passThroughAttribute name="data-toggle" value="modal" />
-									<f:passThroughAttribute name="data-target" value="#myModal" />
-								</h:commandLink>
-							</h:column>
-							<f:facet name="footer">
-								<h:outputText
-									value=" #{salaBean.qtdSalasEncontradas} sala(s) encontrada(s)"></h:outputText>
-							</f:facet>
-						</h:dataTable>
-
-					</h:panelGroup>
-
-					<!-- Cadastro e edicao -->
-					<h:panelGroup rendered="#{salaBean.cadastroSalaBoolean==true}">
-						<div class="form-group row">
-							<h:outputLabel value="Nº da sala :"
-								styleClass="col-sm-2 control-label texto-label" />
-							<div class="col-sm-3">
-								<h:inputText value="#{salaBean.sala.numero}"
-									styleClass="form-control" required="true"
-									requiredMessage="O campo nº da sala é obrigatório" />
-
-							</div>
-						</div>
-						<div class="form-group row">
-							<h:outputLabel value="Descrição :"
-								styleClass="col-sm-2 control-label texto-label" />
-							<div class="col-sm-5">
-								<h:inputText value="#{salaBean.sala.descricao}"
-									styleClass="form-control" required="true"
-									requiredMessage="O campo descrição é obrigatório" />
-
-							</div>
+							</h:inputText>
+							<span class="input-group-btn"> <h:commandButton
+									styleClass="btn btn-primary" value="Buscar"
+									actionListener="#{salaBean.buscar}" />
+							</span>
 						</div>
 
-
-						<div class="form-group row">
-							<h:outputLabel value="Bloco :"
-								styleClass="col-sm-2 control-label texto-label" />
-							<div class="col-sm-5">
-								<h:inputText value="#{salaBean.sala.bloco}"
-									styleClass="form-control" required="true"
-									requiredMessage="O campo bloco é obrigatório" />
-
-							</div>
-						</div>
-						
-						<div class="form-group row">
-							<h:outputLabel value="Activa? :"
-								styleClass="col-sm-2 control-label " />
-							<div class="col-sm-5">
-								<h:selectBooleanCheckbox value="#{salaBean.sala.activa}" />
-
-							</div>
-						</div>
-
-						<div class="form-group row">
-
-							<h:outputLabel value="Data de Cadastro :"
-								styleClass="col-sm-2 control-label texto-label" />
-							<div class="col-sm-2">
-								<h:inputText styleClass="form-control"
-									value="#{salaBean.sala.dataCadastro}">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare"/>
-									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
-									<f:passThroughAttribute name="data-provide" value="datepicker" />
-									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
-									<f:passThroughAttribute name="data-date-autoclose" value="true" />
-									<f:passThroughAttribute name="data-date-today-highlight"
-										value="true" />
-									<f:passThroughAttribute name="data-date-orientation"
-										value="bottom" />
-								</h:inputText>
-
-							</div>
-
-						</div>
-						<div class="form-group row">
-							<h:outputLabel value="Observação :"
-								styleClass="col-sm-2 control-label texto-label" />
-							<div class="col-sm-4">
-								<h:inputTextarea value="#{salaBean.sala.observacao}"
-									styleClass="form-control" />
-
-							</div>
-						</div>
-						<div style="padding-left: 12%;">
-
-
-							<h:commandButton value="Confirmar" action="#{salaBean.salvar}"
-								styleClass=" btn btn-primary" />
-
-						</div>
-
-
-					</h:panelGroup>
-				</div>
-			</div>
-			<!-- Modal -->
-
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel" data-backdrop="static"
-				style="padding-top: 210px;">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h4 class="modal-title" id="myModalLabel">
-								<h:outputLabel value="Você Tem certeza?" />
-
-							</h4>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true"><span class="glyphicon
-												glyphicon-remove"></span></span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<h:panelGroup id="id-panelGroup-confirma-modal">
-								<h:outputText value="Tem certeza que deseja excluir a sala nº" />
-								<h:outputLabel
-									value="&#160;#{salaBean.salaSelecionadaExclusao.numero}"
-									style="font-weight: 600;" />
-								<h:outputText value="?" />
-							</h:panelGroup>
-						</div>
-						<div class="modal-footer">
-							<h:commandButton type="button" title="Cancelar"
-								class="btn btn-success" value="Cancelar">
-								<f:passThroughAttribute name="data-dismiss" value="modal" />
-							</h:commandButton>
-							<h:commandButton title="Excluir" type="button"
-								styleClass="btn btn-primary" value="Excluir">
-								<f:passThroughAttribute name="data-dismiss" value="modal" />
-								<p:ajax event="click" update="form:tabela"
-									listener="#{salaBean.excluir}" />
-							</h:commandButton>
-						</div>
 					</div>
 				</div>
+				<h:dataTable value="#{salaBean.salas}" var="sala" id="tabela"
+					styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
+					headerClass="cab-tabela" footerClass="fo-tabela"
+					style="margin-top: 20px;" rowClasses="linha2, linha1">
+
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Sala" />
+						</f:facet>
+						<h:outputText value="#{sala.numero}" style=" margin-left:4px;" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Código" />
+						</f:facet>
+						<h:outputText value="#{sala.codigo}" style=" margin-left:4px;" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Descrição" />
+						</f:facet>
+						<h:outputText value="#{sala.descricao}" style=" margin-left:4px;" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Bloco" />
+						</f:facet>
+						<h:outputText value="#{sala.bloco}" style=" margin-left:4px;" />
+					</h:column>
+
+					<h:column headerClass="center">
+						<f:facet name="header">
+							<h:outputText value="Data de cadastro" />
+						</f:facet>
+						<h:outputText value="#{sala.dataCadastro}"
+							style="float: left;padding-left: 7px;">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" />
+						</h:outputText>
+					</h:column>
+					<h:column headerClass="center">
+						<f:facet name="header">
+							<h:outputText value="Situação da Sala " />
+						</f:facet>
+						<h:outputText value="#{sala.activa?'Activa':'Não activa'}"
+							style="float: left;padding-left: 7px;">
+
+						</h:outputText>
+					</h:column>
+					<h:column>
+						<h:commandLink title="Editar" immediate="true"
+							action="#{salaBean.editar(sala)}">
+							<h:graphicImage url="#{buscarFotoBean.retornarImagesEditar}"
+								style=" width:21px; height: 20px; " />
+						</h:commandLink>
+
+
+
+						<h:commandLink immediate="true" title="Excluir!" id="id-excluir"
+							style="margin-left:10px;">
+							<p:graphicImage url="#{buscarFotoBean.retornarImagesExcluir}"
+								height="16" width="16" />
+							<p:ajax event="click"
+								listener="#{salaBean.prepararParaExcluir(sala)}"
+								update="form:id-panelGroup-confirma-modal" />
+							<f:passThroughAttribute name="data-toggle" value="modal" />
+							<f:passThroughAttribute name="data-target" value="#myModal" />
+						</h:commandLink>
+					</h:column>
+					<f:facet name="footer">
+						<h:outputText
+							value=" #{salaBean.qtdSalasEncontradas} sala(s) encontrada(s)"></h:outputText>
+					</f:facet>
+				</h:dataTable>
+
+			</h:panelGroup>
+
+			<!-- Cadastro e edicao -->
+			<h:panelGroup rendered="#{salaBean.cadastroSalaBoolean==true}">
+				<div class="form-group row">
+					<h:outputLabel value="Nº da sala :"
+						styleClass="col-sm-2 control-label texto-label" />
+					<div class="col-sm-3">
+						<h:inputText value="#{salaBean.sala.numero}"
+							styleClass="form-control" required="true"
+							requiredMessage="O campo nº da sala é obrigatório" />
+
+					</div>
+				</div>
+				<div class="form-group row">
+					<h:outputLabel value="Descrição :"
+						styleClass="col-sm-2 control-label texto-label" />
+					<div class="col-sm-5">
+						<h:inputText value="#{salaBean.sala.descricao}"
+							styleClass="form-control" required="true"
+							requiredMessage="O campo descrição é obrigatório" />
+
+					</div>
+				</div>
+
+
+				<div class="form-group row">
+					<h:outputLabel value="Bloco :"
+						styleClass="col-sm-2 control-label texto-label" />
+					<div class="col-sm-5">
+						<h:inputText value="#{salaBean.sala.bloco}"
+							styleClass="form-control" required="true"
+							requiredMessage="O campo bloco é obrigatório" />
+
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<h:outputLabel value="Activa? :"
+						styleClass="col-sm-2 control-label " />
+					<div class="col-sm-5">
+						<h:selectBooleanCheckbox value="#{salaBean.sala.activa}" />
+
+					</div>
+				</div>
+
+				<div class="form-group row">
+
+					<h:outputLabel value="Data de Cadastro :"
+						styleClass="col-sm-2 control-label texto-label" />
+					<div class="col-sm-2">
+						<h:inputText styleClass="form-control"
+							value="#{salaBean.sala.dataCadastro}">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" />
+							<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
+							<f:passThroughAttribute name="data-provide" value="datepicker" />
+							<f:passThroughAttribute name="data-date-language" value="pt-PT" />
+							<f:passThroughAttribute name="data-date-autoclose" value="true" />
+							<f:passThroughAttribute name="data-date-today-highlight"
+								value="true" />
+							<f:passThroughAttribute name="data-date-orientation"
+								value="bottom" />
+						</h:inputText>
+
+					</div>
+
+				</div>
+				<div class="form-group row">
+					<h:outputLabel value="Observação :"
+						styleClass="col-sm-2 control-label texto-label" />
+					<div class="col-sm-4">
+						<h:inputTextarea value="#{salaBean.sala.observacao}"
+							styleClass="form-control" />
+
+					</div>
+				</div>
+				<div style="padding-left: 12%;">
+
+
+					<h:commandButton value="Confirmar" action="#{salaBean.salvar}"
+						styleClass=" btn btn-primary" />
+
+				</div>
+
+
+			</h:panelGroup>
+		</div>
+	</div>
+	<!-- Modal -->
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" data-backdrop="static"
+		style="padding-top: 210px;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">
+						<h:outputLabel value="Você Tem certeza?" />
+
+					</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true"><span
+							class="glyphicon
+												glyphicon-remove"></span></span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h:panelGroup id="id-panelGroup-confirma-modal">
+						<h:outputText value="Tem certeza que deseja excluir a sala nº" />
+						<h:outputLabel
+							value="&#160;#{salaBean.salaSelecionadaExclusao.numero}"
+							style="font-weight: 600;" />
+						<h:outputText value="?" />
+					</h:panelGroup>
+				</div>
+				<div class="modal-footer">
+					<h:commandButton type="button" title="Cancelar"
+						class="btn btn-success" value="Cancelar">
+						<f:passThroughAttribute name="data-dismiss" value="modal" />
+					</h:commandButton>
+					<h:commandButton title="Excluir" type="button"
+						styleClass="btn btn-primary" value="Excluir">
+						<f:passThroughAttribute name="data-dismiss" value="modal" />
+						<p:ajax event="click" update="form:tabela form:mensagem"
+							listener="#{salaBean.excluir}" />
+					</h:commandButton>
+				</div>
 			</div>
-			<!--/.Panel-->
-		</h:form>
+		</div>
+	</div>
+	<!--/.Panel-->
+</h:form>
 
 </html>
 

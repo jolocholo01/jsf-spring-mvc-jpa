@@ -1,7 +1,16 @@
-// sistema escolar- autor Agostinho jolocholo
 package com.mz.sistema.gestao.escolar.chave.composta;
 
 import java.io.Serializable;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -15,12 +24,9 @@ public class ProfessorTurmaId implements Serializable{
 	@Column(name = "id_turma", nullable = false)
 	private Integer id_turma;
 	
-	
-	@Column(name = "id_escola", nullable = false)
-	private long id_escola;
-	
+
 	@Column(name = "id_disciplina", nullable = false)
-	private Integer id_disciplina;
+	private Long id_disciplina_classe;
 	
 	public Integer getId_turma() {
 		return id_turma;
@@ -30,29 +36,19 @@ public class ProfessorTurmaId implements Serializable{
 		this.id_turma = id_turma;
 	}
 
-	
-	public long getId_escola() {
-		return id_escola;
+	public Long getId_disciplina_classe() {
+		return id_disciplina_classe;
 	}
 
-	public void setId_escola(long id_escola) {
-		this.id_escola = id_escola;
-	}
-
-	public Integer getId_disciplina() {
-		return id_disciplina;
-	}
-
-	public void setId_disciplina(Integer id_disciplina) {
-		this.id_disciplina = id_disciplina;
+	public void setId_disciplina_classe(Long id_disciplina_classe) {
+		this.id_disciplina_classe = id_disciplina_classe;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id_disciplina == null) ? 0 : id_disciplina.hashCode());
-		result = prime * result + (int) (id_escola ^ (id_escola >>> 32));
+		result = prime * result + ((id_disciplina_classe == null) ? 0 : id_disciplina_classe.hashCode());
 		result = prime * result + ((id_turma == null) ? 0 : id_turma.hashCode());
 		return result;
 	}
@@ -66,12 +62,10 @@ public class ProfessorTurmaId implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		ProfessorTurmaId other = (ProfessorTurmaId) obj;
-		if (id_disciplina == null) {
-			if (other.id_disciplina != null)
+		if (id_disciplina_classe == null) {
+			if (other.id_disciplina_classe != null)
 				return false;
-		} else if (!id_disciplina.equals(other.id_disciplina))
-			return false;
-		if (id_escola != other.id_escola)
+		} else if (!id_disciplina_classe.equals(other.id_disciplina_classe))
 			return false;
 		if (id_turma == null) {
 			if (other.id_turma != null)
@@ -81,6 +75,7 @@ public class ProfessorTurmaId implements Serializable{
 		return true;
 	}
 
+	
 	
 
 	

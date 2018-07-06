@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-06-24T23:32:49 -->
+<!-- 2018-07-05T23:43:33 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="aluno" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b87a085-095b-4f9d-a71c-09f2a9e9c1e0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="337"/>
@@ -251,6 +251,76 @@ ORDER BY turma.descricao ASC,
 					</textElement>
 					<text><![CDATA[O director da Escola]]></text>
 				</staticText>
+				<staticText>
+					<reportElement x="0" y="30" width="110" height="20" uuid="0bb2ee7a-9636-49da-a19e-3d750e516942"/>
+					<box>
+						<pen lineWidth="0.3"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Matricula Inicial]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="50" width="30" height="20" uuid="f51e7789-b926-4a5a-8142-0790ead2d114"/>
+					<box>
+						<pen lineWidth="0.3"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[H]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="30" y="50" width="31" height="20" uuid="13ae5d81-d53a-40c8-9a2f-190d6a8b2644"/>
+					<box>
+						<pen lineWidth="0.3"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[M]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="61" y="50" width="49" height="20" uuid="f473b1dc-3cfe-468c-b2a0-d89f701c7e29"/>
+					<box>
+						<pen lineWidth="0.3"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[HM]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="0" y="70" width="30" height="21" uuid="95a2d538-7579-4a3e-a755-14f2fc021ec3"/>
+					<box>
+						<pen lineWidth="0.3"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{sexo}?""+$V{COLUMN_COUNT}:""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="30" y="70" width="31" height="21" uuid="f988e2f1-bb72-4c8e-9a3a-a0b1dd442c81"/>
+					<box>
+						<pen lineWidth="0.3"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{sexo}?"":""+$V{COLUMN_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="61" y="70" width="49" height="21" uuid="45b5cbdf-7e7f-485e-83ad-f04efe211d0a"/>
+					<box>
+						<pen lineWidth="0.3"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>

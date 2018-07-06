@@ -34,7 +34,7 @@
 					<h:outputText value="Pesquisar meus horários"
 						style="font-weight: 700;" />
 				</h3>
-				<p:messages closable="true" />
+				<p:messages closable="true" style="    width: 98%; margin: 2% auto;" />
 
 				<div class="card-body">
 
@@ -43,9 +43,11 @@
 							<div class="input-group">
 
 								<h:selectOneMenu value="#{horarioBean.horarioAula.turno}"
-									styleClass="form-control" converter="turnoConverter">
-									<f:selectItem itemLabel="SELECIONE O TURNO..."
-										itemValue="#{null}" />
+									styleClass="form-control"
+									 required="true" requiredMessage="O campo turno é obrigatório " converter="turnoConverter">
+									<f:selectItem itemLabel="Slecione o turno..."
+										itemValue="#{null}" 
+										/>
 									<f:selectItems value="#{horarioBean.turnos}" var="turno"
 										itemLabel="#{turno.descricao}" itemValue="#{turno}" />
 

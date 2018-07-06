@@ -12,6 +12,16 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
+
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 

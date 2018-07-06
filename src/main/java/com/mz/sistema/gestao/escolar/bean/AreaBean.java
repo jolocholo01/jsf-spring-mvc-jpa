@@ -6,13 +6,22 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
+
 import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.annotation.SessionScope;
 
-import com.mz.sistema.gestao.escolar.autenticacao.AuthenticationContext;
 import com.mz.sistema.gestao.escolar.enumerado.Ciclo;
 import com.mz.sistema.gestao.escolar.modelo.Area;
 import com.mz.sistema.gestao.escolar.servico.AreaServico;
@@ -42,26 +51,25 @@ public class AreaBean implements Serializable {
 	@Autowired
 	private AreaServico areaServico;
 
-	@Autowired
-	private AuthenticationContext authenticacao;
+
 
 	public void salvar() {
 		try {
 			Area areaExistente = areaServico.obterAreaExistente(area.getDescricao(), area.getCiclo());
 			if (areaExistente != null && areaExistente.getId() != areaExistente.getId()) {
-				Mensagem.mensagemInfo("Aviso: já existe esta área cadastrada no sistema!");
+				Mensagem.mensagemInfo("AVISO: já existe esta área cadastrada no sistema!");
 				return;
 			}
 			if (area.getId() == null) {
 				area.setDataCadastro(new Date());
 				areaServico.salvar(area);
-				Mensagem.mensagemInfo("Aviso: área cadastrada com sucesso!");
+				Mensagem.mensagemInfo("AVISO: área cadastrada com sucesso!");
 				area = new Area();				
 				this.quantidadeCaracteres = 0;
 			} else if (area.getId() != null) {				
 				areaServico.salvar(area);
 				voltarParaPequisa();
-				Mensagem.mensagemInfo("Aviso: área atualizada com sucesso!");
+				Mensagem.mensagemInfo("AVISO: área atualizada com sucesso!");
 			}
 			
 
@@ -123,7 +131,7 @@ public class AreaBean implements Serializable {
 		try {
 			this.areaExclusao.setDescricao(this.areaExclusao.getDescricao().toUpperCase());
 			areaServico.excluir(this.areaExclusao);
-			Mensagem.mensagemInfo("Aviso: área excluida com sucesso!");
+			Mensagem.mensagemInfo("AVISO: área excluida com sucesso!");
 			buscarArea();
 		} catch (Exception e) {
 			Mensagem.mensagemErro("ERRO: a área não foi excluida através da dependência.");

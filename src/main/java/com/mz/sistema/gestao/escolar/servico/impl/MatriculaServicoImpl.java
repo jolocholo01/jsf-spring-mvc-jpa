@@ -1,9 +1,18 @@
 package com.mz.sistema.gestao.escolar.servico.impl;
 
 import java.util.List;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -135,6 +144,7 @@ public class MatriculaServicoImpl implements MatriculaServico {
 				.setParameter("idEscolaOrigem", idEscolaOrigem).setParameter("ANO", ano).getResultList();
 
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Matricula> obterMatriculasPorEscolaPorAno(Long idEscola, Integer ano) {
@@ -279,9 +289,10 @@ public class MatriculaServicoImpl implements MatriculaServico {
 
 	@Override
 	public Long obterMatriculadoPorSexo(Long idEscola, Integer ano, boolean sexo) {
-		
+
 		Long count = (Long) em
-				.createQuery("SELECT COUNT(m.aluno.id) FROM Matricula m  WHERE m.escola.id=:IDEscola AND m.ano=:Ano AND m.aluno.sexo=:Sexo")
+				.createQuery(
+						"SELECT COUNT(m.aluno.id) FROM Matricula m  WHERE m.escola.id=:IDEscola AND m.ano=:Ano AND m.aluno.sexo=:Sexo")
 				.setParameter("IDEscola", idEscola).setParameter("Ano", ano).setParameter("Sexo", sexo)
 				.getSingleResult();
 
@@ -362,7 +373,8 @@ public class MatriculaServicoImpl implements MatriculaServico {
 	@Override
 	public List<Matricula> obterMatriculaPorTurma(Integer idTurma) {
 		@SuppressWarnings("unchecked")
-		List<Matricula> matriculas = em.createQuery("FROM Matricula m  WHERE  m.turma.id=:idTurma order by m.numeroAlunoTurma")
+		List<Matricula> matriculas = em
+				.createQuery("FROM Matricula m  WHERE  m.turma.id=:idTurma order by m.numeroAlunoTurma")
 				.setParameter("idTurma", idTurma).getResultList();
 
 		if (!matriculas.isEmpty()) {
@@ -439,33 +451,51 @@ public class MatriculaServicoImpl implements MatriculaServico {
 
 	@Override
 	public List<Matricula> obterMatriculasPorClassePorCursoPorTurma(long idClasse, Long idEscola, String curso,
-			Integer ano, Boolean temTurma) {
-		@SuppressWarnings("unchecked")
-		List<Matricula> alunos = em
-				.createQuery(
-						"from Matricula m  where m.classe.id=:idClasse AND m.escola.id=:idEscola AND m.curso=:CURSO AND m.ano=:ANO AND m.temTurma=:temTurma ")
-				.setParameter("idClasse", idClasse).setParameter("idEscola", idEscola).setParameter("CURSO", curso)
-				.setParameter("ANO", ano).setParameter("temTurma", temTurma).getResultList();
-		if (!alunos.isEmpty()) {
-			return alunos;
+			Integer ANO, Integer listarTODASMatriculaOUPorTURMAouPORsemTURMA) {
+
+		StringBuilder builder = new StringBuilder(
+				"from Matricula  where escola.id=:idEscola AND classe.id=:idClasse AND ano=:ANO AND curso=:CURSO  ");
+		
+		if (listarTODASMatriculaOUPorTURMAouPORsemTURMA == 2) {
+			builder.append(" AND  temTurma=false");
 		}
-		return null;
+		if (listarTODASMatriculaOUPorTURMAouPORsemTURMA == 3) {
+			builder.append(" AND  temTurma=true");
+		}
+
+		Query query = em.createQuery(builder.toString());
+
+		query.setParameter("idEscola", idEscola);
+		query.setParameter("idClasse", idClasse);
+		query.setParameter("CURSO", curso);
+		query.setParameter("ANO", ANO);
+
+		return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Matricula> obterMatriculasPorClassePorCursoPorAreaPorTurma(long idClasse, Long idEscola, String curso,
-			Integer ano, String tipoArea, Boolean temTurma) {
-		@SuppressWarnings("unchecked")
-		List<Matricula> alunos = em
-				.createQuery(
-						"from Matricula m  where m.classe.id=:idClasse AND m.escola.id=:idEscola AND m.curso=:CURSO AND m.ano=:ANO AND m.temTurma=:temTurma AND m.tipoArea like '%"
-								+ tipoArea + "%'")
-				.setParameter("idClasse", idClasse).setParameter("idEscola", idEscola).setParameter("CURSO", curso)
-				.setParameter("ANO", ano).setParameter("temTurma", temTurma).getResultList();
-		if (!alunos.isEmpty()) {
-			return alunos;
+			Integer ano, String tipoArea, Integer listarTODASMatriculaOUPorTURMAouPORsemTURMA) {
+		StringBuilder builder = new StringBuilder(
+				"from Matricula  where escola.id=:idEscola AND classe.id=:idClasse AND ano=:ANO AND curso=:CURSO AND m.tipoArea like '%"
+								+ tipoArea + "%' ");
+		
+		if (listarTODASMatriculaOUPorTURMAouPORsemTURMA == 2) {
+			builder.append(" AND  temTurma=false");
 		}
-		return null;
+		if (listarTODASMatriculaOUPorTURMAouPORsemTURMA == 3) {
+			builder.append(" AND  temTurma=true");
+		}
+
+		Query query = em.createQuery(builder.toString());
+
+		query.setParameter("idEscola", idEscola);
+		query.setParameter("idClasse", idClasse);
+		query.setParameter("CURSO", curso);
+		query.setParameter("ANO", ano);
+
+		return query.getResultList();
 	}
 
 	@Override
@@ -487,10 +517,65 @@ public class MatriculaServicoImpl implements MatriculaServico {
 	public Long obterTotalAlunosMatriculasPorEscolaPorAno(Long idEscola, Integer ano) {
 		Long count = (Long) em
 				.createQuery("SELECT COUNT(m.id) FROM Matricula m  WHERE m.escola.id=:IDEscola AND m.ano=:Ano")
-				.setParameter("IDEscola", idEscola).setParameter("Ano", ano)
-				.getSingleResult();
+				.setParameter("IDEscola", idEscola).setParameter("Ano", ano).getSingleResult();
 
 		return count;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Matricula> obterMatriculasPorClassePorCursoPorTurmaSemArea(Long idEscola, long idClasse, String curso,
+			Integer ANO, Integer listarTODASMatriculaOUPorTURMAouPORsemTURMA, Integer idadeInicial, Integer idadeFinal) {
+
+		StringBuilder builder = new StringBuilder(
+				"from Matricula  where escola.id=:idEscola AND classe.id=:idClasse AND ano=:ANO AND curso=:CURSO  ");
+		if (idadeInicial != null && idadeFinal != null) {
+			builder.append(" AND  year(aluno.dataNascimento) between '" + idadeInicial + "' AND '" + idadeFinal + "' ");
+		}
+		if (listarTODASMatriculaOUPorTURMAouPORsemTURMA == 2) {
+			builder.append(" AND  temTurma=false");
+		}
+		if (listarTODASMatriculaOUPorTURMAouPORsemTURMA == 3) {
+			builder.append(" AND  temTurma=true");
+		}
+
+		Query query = em.createQuery(builder.toString());
+
+		query.setParameter("idEscola", idEscola);
+		query.setParameter("idClasse", idClasse);
+		query.setParameter("CURSO", curso);
+		query.setParameter("ANO", ANO);
+
+		return query.getResultList();
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Matricula> obterMatriculasPorClassePorCursoPorAreaPorTurma(Long idEscola, long idClasse, String curso,
+			Integer ANO, String tipoArea, Integer listarTODASMatriculaOUPorTURMAouPORsemTURMA, Integer idadeInicial, Integer idadeFinal) {
+		StringBuilder builder = new StringBuilder(
+				"from Matricula  where escola.id=:idEscola AND classe.id=:idClasse AND ano=:ANO AND curso=:CURSO AND m.tipoArea like '%"
+								+ tipoArea + "%' ");
+		if (idadeInicial != null && idadeFinal != null) {
+			builder.append(" AND  year(aluno.dataNascimento) between '" + idadeInicial + "' AND '" + idadeFinal + "' ");
+		}
+		if (listarTODASMatriculaOUPorTURMAouPORsemTURMA == 2) {
+			builder.append(" AND  temTurma=false");
+		}
+		if (listarTODASMatriculaOUPorTURMAouPORsemTURMA == 3) {
+			builder.append(" AND  temTurma=true");
+		}
+
+		Query query = em.createQuery(builder.toString());
+
+		query.setParameter("idEscola", idEscola);
+		query.setParameter("idClasse", idClasse);
+		query.setParameter("CURSO", curso);
+		query.setParameter("ANO", ANO);
+
+		return query.getResultList();
+
 	}
 
 }

@@ -1,8 +1,17 @@
-// sistema escolar- autor Agostinho jolocholo
 package com.mz.sistema.gestao.escolar.autenticacao;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;

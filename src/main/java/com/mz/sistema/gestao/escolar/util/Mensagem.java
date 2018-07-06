@@ -1,6 +1,15 @@
 package com.mz.sistema.gestao.escolar.util;
 
 import javax.faces.application.FacesMessage;
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.faces.context.FacesContext;
 
 public class Mensagem {

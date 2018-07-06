@@ -1,10 +1,20 @@
-// sistema escolar- autor Agostinho jolocholo
+
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.inject.Named;
 
@@ -213,17 +223,17 @@ public class EscolaBean {
 			Escola escolaExistente = escolaServico.obterEscolaExistente(direcaoDitrital.getId(),
 					escola.getDescricao().trim(), escola.getLocalidade().trim());
 			if (escolaExistente != null && escola.getId() != escolaExistente.getId()) {
-				Mensagem.mensagemInfo("Aviso:  Já existe a esta escola cadastrada no sistema!");
+				Mensagem.mensagemInfo("AVISO:  Já existe a esta escola cadastrada no sistema!");
 				return;
 			}
 
 			if (novaEscolaBoolean == true) {
-				Mensagem.mensagemInfo("Aviso: Escola cadastrada com sucesso!");
+				Mensagem.mensagemInfo("AVISO: Escola cadastrada com sucesso!");
 				escola.setFuncCadastro(funcionario);
 
 			}
 			if (editarEscolaBoolean == true) {
-				Mensagem.mensagemInfo("Aviso: a escola atualizada com sucesso!");
+				Mensagem.mensagemInfo("AVISO: a escola atualizada com sucesso!");
 				editarEscolaBoolean = false;
 				cadastroEscolaBoolean = false;
 				escola.setFuncAlteracao(funcionario);
@@ -251,7 +261,7 @@ public class EscolaBean {
 	public void salvarEscolaSelecionada() {
 
 		escolaServico.salvar(escolaSelecionada);
-		Mensagem.mensagemInfo("Aviso: informação da escola foi atualizada com sucesso!");
+		Mensagem.mensagemInfo("AVISO: informação da escola foi atualizada com sucesso!");
 
 	}
 
@@ -494,7 +504,7 @@ public class EscolaBean {
 		try {
 			escolaServico.excluir(this.escolaSelecionadaExclusao);
 			buscar();
-			Mensagem.mensagemInfo("Aviso: escola excluida com sucesso!");
+			Mensagem.mensagemInfo("AVISO: escola excluida com sucesso!");
 			System.out.println("Chamou a funaco!");
 
 		} catch (Exception e) {

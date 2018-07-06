@@ -2,6 +2,16 @@ package com.mz.sistema.gestao.escolar.chave.composta;
 
 import java.io.Serializable;
 
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 

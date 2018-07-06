@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-06-23T07:18:15 -->
+<!-- 2018-07-06T01:21:38 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="minhas_turmas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="95879359-b505-44c9-ab23-ef9bdda7c849">
-	<property name="com.jaspersoft.studio.data.sql.tables" value="dXN1YXJpbyAsNjQyLDQ1OSxkNzM2ZmYwZS03MjFhLTRjYTItYWZmMy1kY2UwMmMyZDBiOTA7dHVy&#xA;bWEgLDE0OSwxMDg3LDgxMmZlZDI2LWM3NDAtNDMyMC05MzRjLTY5NDFkZDBjOGUzYTtjbGFzc2Ug&#xA;LDExNjgsODgxLDRhNTVkNDZjLTNlMjQtNGY3ZC04YzdjLWQyYTBlZmIxMzAxYjtwcm9mZXNzb3Jf&#xA;dHVybWEgLDI4Miw5MTMsZTI2YjFiNTEtNzdkMi00YzgwLWFiNWUtZjBjNTA4NWZiMGM3O2Rpc2Np&#xA;cGxpbmEgLDQ1OSw1NDksNjIyNjI3NDQtNTZiOC00YmQ2LWI2ODUtMDM5MjJkN2Q5Nzk5O2Rpc3Ry&#xA;aXRvICwxNSwxMjE5LGRmYTk4OWRmLTM4NWItNDY1YS05MDBlLWUyYzc0YjRhM2MxNjt0dXJubyAs&#xA;MTM5OSwxMjY3LDBlNTg1YTdhLWViOGQtNDdlNy1hMjZmLTA3Mjg4YTg3MmY5OTtmdW5jaW9uYXJp&#xA;byAsNDU5LDE1LGU0Mzk4NDZkLWIxZjItNGNhMi04NGQ5LTU5YmY1ODgxOGM0MztkaXN0cml0YWwg&#xA;LDgyMCw5MjgsNTdhZjdjMjktNjg5Mi00YjczLTkzNTEtMDg0NjlhM2FmOGFkO2VzY29sYSAsNDU5&#xA;LDg3NSwyNWIzNDM3NS1kM2M2LTQ5ZTAtODI2OS1lMTBiYzhjYTVkMTU7c2FsYSAsOTk3LDk0OCw0&#xA;NDBjNjJiZC04MTMxLTQwYzctYThiNy1kNGQ1YzQ3YTZkZWE7"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="342"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="651"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="571"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="415"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="641"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="345"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -43,13 +43,14 @@ FROM distrito,
 	 funcionario.id = usuario.id 
 	INNER JOIN escola ON 
 	 turma.escola_id = escola.id 
-	 AND professor_turma.id_escola = escola.id 
 	INNER JOIN distrital ON 
 	 escola.id_direcao_distrital = distrital.id 
-	INNER JOIN disciplina ON 
-	 professor_turma.id_disciplina = disciplina.id 
+	INNER JOIN disciplina_classe ON 
+	professor_turma.id_disciplina_classe = disciplina_classe.id 	
+	 INNER JOIN disciplina ON 
+	 disciplina_classe.id_disciplina = disciplina.id 
 	INNER JOIN sala ON 
-	 turma.id_sala = sala.id 
+	 turma.id_sala = sala.id   
 	INNER JOIN classe ON 
 	 turma.classe_id = classe.id 
 	INNER JOIN turno ON 
@@ -463,7 +464,7 @@ ORDER BY turma.descricao ASC]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="196" splitType="Stretch">
+		<band height="261" splitType="Stretch">
 			<staticText>
 				<reportElement x="1" y="30" width="229" height="15" uuid="b2474825-36e9-4eb0-849a-c14f3b027a7c">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -628,6 +629,30 @@ ORDER BY turma.descricao ASC]]>
 					<font fontName="Courier New" size="10"/>
 				</textElement>
 				<text><![CDATA[) representam o primeiro e segundo tempo.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="188" width="246" height="20" uuid="0a4e8dbd-80e0-45f7-993b-e3f5bc4fee5a"/>
+				<box topPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Currie new" size="10"/>
+				</textElement>
+				<text><![CDATA[Auto]]></text>
+			</staticText>
+			<line>
+				<reportElement x="160" y="218" width="246" height="1" uuid="67de2995-1450-4bb3-8113-4fe2e771763d"/>
+				<graphicElement>
+					<pen lineWidth="0.2"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="160" y="226" width="251" height="15" uuid="f1494ee8-1e44-4e61-a3b6-d6d0df89e7ff">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Currie new" size="9"/>
+				</textElement>
+				<text><![CDATA[______/_____/________]]></text>
 			</staticText>
 		</band>
 	</summary>

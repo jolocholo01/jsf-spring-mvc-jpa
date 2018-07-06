@@ -145,10 +145,20 @@
 							<h:outputText value="#{turma.inscrito}" />
 						</h:column>
 						<h:column>
+						<f:facet name="header">
+								<h:outputText value="Acções" />
+							</f:facet>
 							<h:commandLink
 								action="#{professorTurmaBean.selecionarTurma(turma)}"
 								title="Alocar professor nesta turma?">
 								<h:graphicImage url="#{buscarFotoBean.retornarImagesCadastro}" />
+								<f:passThroughAttribute name="data-toggle" value="tooltip" />
+								<f:passThroughAttribute name="data-placement" value="left" />
+							</h:commandLink>
+							<h:commandLink  style="margin-left: 10px;"
+								action="#{turmaBean.listarAlunosTurma(turma)}"
+								title="Emitir lista de alunos desta turma?">
+								<h:graphicImage width="25" height="25" url="#{buscarFotoBean.retornarImagesEmitir}" />
 								<f:passThroughAttribute name="data-toggle" value="tooltip" />
 								<f:passThroughAttribute name="data-placement" value="left" />
 							</h:commandLink>

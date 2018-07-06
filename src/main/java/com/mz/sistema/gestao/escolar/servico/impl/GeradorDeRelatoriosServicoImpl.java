@@ -3,7 +3,15 @@ package com.mz.sistema.gestao.escolar.servico.impl;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -90,9 +98,11 @@ public class GeradorDeRelatoriosServicoImpl implements GeradorDeRelatoriosServic
 		}
 
 	}
+
 	@Override
 	// para funcionar este metodo e preciso criar um jar de fonte
-	public void geraPdfComConexaoDataSource(String caminho, Map<String, Object> parametros, String filename, JRBeanCollectionDataSource dataSource) {
+	public void geraPdfComConexaoDataSource(String caminho, Map<String, Object> parametros, String filename,
+			JRBeanCollectionDataSource dataSource) {
 		try {
 			FacesContext context = FacesContext.getCurrentInstance();
 			HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();

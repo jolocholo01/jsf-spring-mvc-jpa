@@ -130,7 +130,7 @@
 										<ui:repeat var="nota" value="#{alunoBean.notas}">
 											<tr>
 												<td class="td nome-aluno"><h:outputText
-														id="idNomeAluno" value="#{nota.disciplina.descricao}"
+														id="idNomeAluno" value="#{nota.disciplinaClasse.disciplina.descricao}"
 														title="#{nota.situacao}"
 														style="text-transform: uppercase; margin-left: 5px;" /></td>
 

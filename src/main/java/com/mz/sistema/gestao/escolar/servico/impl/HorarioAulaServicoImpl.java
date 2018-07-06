@@ -2,7 +2,15 @@ package com.mz.sistema.gestao.escolar.servico.impl;
 
 import java.util.Date;
 import java.util.List;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -20,7 +28,7 @@ import com.mz.sistema.gestao.escolar.servico.HorarioAulaServico;
 public class HorarioAulaServicoImpl implements HorarioAulaServico {
 
 	@PersistenceContext
-	private  EntityManager em;
+	private EntityManager em;
 	@Autowired
 	private AuthenticationContext authenticationContext;
 
@@ -76,7 +84,7 @@ public class HorarioAulaServicoImpl implements HorarioAulaServico {
 
 	@Override
 	public List<HorarioAula> obterHorarioAulaPorIdEscolaPoridTurno(Long idTurno, Long idEscola) {
-		
+
 		@SuppressWarnings("unchecked")
 		List<HorarioAula> horarioAulas = em
 				.createQuery("FROM HorarioAula WHERE escola.id=:idEscola AND turno.id=:IdTurno ORDER BY ordem")
@@ -86,18 +94,17 @@ public class HorarioAulaServicoImpl implements HorarioAulaServico {
 		}
 		return null;
 	}
+
 	@Override
 	public HorarioAula obterHorarioAulaPorId(Long idHorarioAula) {
-		
+
 		@SuppressWarnings("unchecked")
-		List<HorarioAula> horarioAulas = em
-				.createQuery(
-						"FROM HorarioAula WHERE id=:idH ")
+		List<HorarioAula> horarioAulas = em.createQuery("FROM HorarioAula WHERE id=:idH ")
 				.setParameter("idH", idHorarioAula).getResultList();
 		if (!horarioAulas.isEmpty()) {
 			return horarioAulas.get(0);
 		}
 		return null;
 	}
-	
+
 }

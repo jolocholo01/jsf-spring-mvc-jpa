@@ -1,36 +1,80 @@
-.flex-grow0{
+.texto{
+    font-size: 36px;
+    margin-bottom: 20px;	
+}
+.horarioIndispnivel{
+	
+    color: #fdf1cb;
+    font-weight: 900;
+    text-shadow: 0px 3px #b2a98f, 0px 15px 10px rgba(0,0,0,0.4), 0px 15px 2px rgba(0,0,0,0.1), 0px 15px 30px rgba(0,0,0,0.1);
+}
+.peg-titulo {
+	background: #e9e9e9;
+	color: #333333;
+	font-weight: bold;
+}
+
+.inscrito {
+	margin-left: 15px;
+	padding: 2px 12px;
+}
+
+.SemTurma {
+	margin-left: 4px;
+	background: #f1909052;
+	border-radius: 4px;
+	padding: 2px;
+}
+
+.meu-drog {
+	padding-left: 2px;
+	color: #318ce7;
+}
+
+.flex-grow0 {
 	flex-grow: 0 !important;
 }
 
-.asterstico{
+.asterstico {
 	color: #f07a06;
 	font-size: large;
 }
 
-.legenda-texto{
-	    padding-left: 2%;
+.legenda-texto {
+	padding-left: 2%;
 }
 
-td.left{
+td.left {
 	text-align: left !important;
 }
 
-.hover tbody tr:HOVER{ background: #f3fbb1 -webkit-gradient(linear,left top,left bottom,from(rgba(255, 255, 255, 0.25)),to(rgba(253, 255, 253, 0)));
-}.colorir{
-background: #ffffff -webkit-gradient(linear,left top,left bottom,from(rgba(177, 147, 147, 0.25)),to(rgba(197, 186, 186, 0)));
-}
-tr.active {
-      background: #fff1f1 -webkit-gradient(linear,left top,left bottom,from(rgba(177, 147, 147, 0.25)),to(rgba(197, 186, 186, 0)))
-      
-}
-.bolder{
-	font-weight: 600;
-}
-.link{
-text-decoration: none;
+.hover tbody tr:HOVER {
+	background: #f3fbb1
+		-webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255,
+		0.25)), to(rgba(253, 255, 253, 0)));
 }
 
-.border{
+.colorir {
+	background: #ffffff
+		-webkit-gradient(linear, left top, left bottom, from(rgba(177, 147, 147,
+		0.25)), to(rgba(197, 186, 186, 0)));
+}
+
+tr.active {
+	background: #fff1f1
+		-webkit-gradient(linear, left top, left bottom, from(rgba(177, 147, 147,
+		0.25)), to(rgba(197, 186, 186, 0)))
+}
+
+.bolder {
+	font-weight: 600;
+}
+
+.link {
+	text-decoration: none;
+}
+
+.border {
 	border: 1px solid #e9ecef;
 	border-radius: 3px;
 }
@@ -40,7 +84,7 @@ text-decoration: none;
 }
 
 .bottom0 {
-	margin-bottom: 0px!important;
+	margin-bottom: 0px !important;
 }
 
 .td {
@@ -112,7 +156,8 @@ text-decoration: none;
 .left>tbody>tr>td {
 	text-align: left;
 }
-.center{
+
+.center {
 	text-align: center !important;
 }
 
@@ -187,7 +232,9 @@ text-decoration: none;
 .coluna-acompanhamento-matricula {
 	text-align: center;
 }
-
+.perfil{
+	display: none;
+}
 @media ( max-width : 504px) {
 	.icon-emitir, .icon-alocar {
 		height: 13px;
@@ -248,4 +295,14 @@ text-decoration: none;
 	.textfim {
 		text-align: left;
 	}
+}
+
+@media ( max-width : 990px) {
+
+	.dados-pessoais {
+		display: none;
+	}
+	.perfil{
+	display: block;
+}
 }

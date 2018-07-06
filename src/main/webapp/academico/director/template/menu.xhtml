@@ -55,53 +55,7 @@
 							</h:outputLink>
 
 			</div></li>
-		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
-			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
-			aria-expanded="false">Horário</a>
-			<div class="dropdown-menu" aria-labelledby="dropdown01">
-				<h:outputLink
-					value="#{request.contextPath}/director/gerenciar-horario-aula.jsf"
-					styleClass="dropdown-item">
-					Gerenciar Horário de Aula 
-				</h:outputLink>
-				<ui:remove>
-					<h:outputLink styleClass="dropdown-item"
-						value="#{request.contextPath}/director/horario.jsf">
-					Gerir Horários das Turmas
-				</h:outputLink>
-				</ui:remove>
-
-			</div></li>
-
-		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
-			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
-			aria-expanded="false">Turma</a>
-			<div class="dropdown-menu" aria-labelledby="dropdown01">
-
-				<h:outputLink styleClass="dropdown-item"
-					value="#{request.contextPath}/director/turma.jsf">
-								Gerir turma
-						</h:outputLink>
-
-
-				<h:outputLink styleClass="dropdown-item"
-					value="#{request.contextPath}/director/enturmar.jsf"> Alocar alunos na turma
-							</h:outputLink>
-
-				<h:outputLink styleClass="dropdown-item"
-					value="#{request.contextPath}/director/enturmacao.jsf">
-								 Listar alunos da turma
-						</h:outputLink>
-				<h:outputLink styleClass="dropdown-item"
-					value="#{request.contextPath}/director/alocar-professor.jsf">
-						Alocar professor na turma
-							</h:outputLink>
-				<h:outputLink styleClass="dropdown-item" value="#{request.contextPath}/director/lancar-nota.jsf">
-						Lançar notas numa turma
-							</h:outputLink>
-
-			</div></li>
-
+	
 
 		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
 			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
@@ -119,23 +73,64 @@
 
 			</div></li>
 
-		<ui:remove>
-			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" href="" id="dropdown01"
-				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Matrícula</a>
-				<div class="dropdown-menu" aria-labelledby="dropdown01">
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Matrícula</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
 
-					<h:outputLink styleClass="dropdown-item"
-						value="#{request.contextPath}/director/aluno.jsf">
-								Gerir aluno
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/director/matricula.jsf">
+								Gerir Matrícula
 						</h:outputLink>
+			</div></li>
+	<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Horário</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+				<h:outputLink
+					value="#{request.contextPath}/director/gerenciar-horario-aula.jsf"
+					styleClass="dropdown-item">
+					Gerenciar Horário de Aula 
+				</h:outputLink>
+				<ui:remove>
 					<h:outputLink styleClass="dropdown-item"
-						value="#{request.contextPath}/director/imprimir.jsf">
-								Imprimir lista de alunos
+						value="#{request.contextPath}/director/horario.jsf">
+					Gerir Horários das Turmas
+				</h:outputLink>
+				</ui:remove>
+
+			</div></li>
+		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">Turma</a>
+			<div class="dropdown-menu" aria-labelledby="dropdown01">
+
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/director/turma.jsf">
+								Gerir turma
 						</h:outputLink>
 
-				</div></li>
-		</ui:remove>
+
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/director/enturmar.jsf"> Alocar alunos na turma
+							</h:outputLink>
+
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/director/enturmado.jsf">
+								 Listar alunos da turma
+						</h:outputLink>
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/director/alocar-professor.jsf">
+						Alocar professor na turma
+							</h:outputLink>
+				<h:outputLink styleClass="dropdown-item"
+					value="#{request.contextPath}/director/lancar-nota.jsf">
+						Lançar notas numa turma
+							</h:outputLink>
+
+			</div></li>
+
+
 		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
 			href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
 			aria-expanded="false">Funcionário</a>

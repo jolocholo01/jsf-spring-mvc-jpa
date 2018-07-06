@@ -1,4 +1,4 @@
-// sistema escolar- autor Agostinho jolocholo
+
 package com.mz.sistema.gestao.escolar.bean;
 
 import java.io.Serializable;
@@ -6,6 +6,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.inject.Named;
 
@@ -175,11 +185,11 @@ public class DireccaoDistritalBean implements Serializable {
 		try {
 			direcaoDistritalServico.excluir(this.direccaoDistritalSelecionada);
 			buscar();
-			Mensagem.mensagemInfo("Aviso: distrito excluido com sucesso!");
+			Mensagem.mensagemInfo("AVISO: distrito excluido com sucesso!");
 			System.out.println("Chamou a funaco!");
 
 		} catch (Exception e) {
-			Mensagem.mensagemAlerta("Aviso: distrito não foi excluido através da dependência.");
+			Mensagem.mensagemAlerta("ATENÇÃO: distrito não foi excluido através da dependência.");
 		}
 
 	}

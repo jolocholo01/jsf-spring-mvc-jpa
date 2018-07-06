@@ -2,7 +2,15 @@ package com.mz.sistema.gestao.escolar.modelo;
 
 import java.io.Serializable;
 import java.util.List;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,12 +32,12 @@ public class Turma implements Serializable {
 	private String descricao;
 	private String curso;
 	private Turno turno;
+	private String numero;
 	private Escola escola;
 	private Sala sala;
 	private List<ProfessorTurma> professorTurma ;
 	private List<Matricula> alunos;
 	private List<Horario> horarios ;
-
 	private Classe classe = new Classe();
 	private Integer capacidade;
 	private int inscrito;
@@ -161,7 +169,7 @@ public class Turma implements Serializable {
 		this.fechada = fechada;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	public Escola getEscola() {
 		return escola;
 	}
@@ -217,6 +225,14 @@ public class Turma implements Serializable {
 
 	public void setCurso(String curso) {
 		this.curso = curso;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 
 	

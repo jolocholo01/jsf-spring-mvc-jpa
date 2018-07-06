@@ -1,7 +1,15 @@
 package com.mz.sistema.gestao.escolar.servico;
 
 import java.util.Map;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 

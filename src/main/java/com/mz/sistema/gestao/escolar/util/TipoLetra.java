@@ -1,5 +1,13 @@
 package com.mz.sistema.gestao.escolar.util;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 public class TipoLetra {
 	
 	public static void main(String[] args) {

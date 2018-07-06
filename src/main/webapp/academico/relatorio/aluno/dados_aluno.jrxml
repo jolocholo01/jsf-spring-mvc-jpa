@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-06-27T01:00:18 -->
+<!-- 2018-07-05T23:11:37 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="aluno" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b87a085-095b-4f9d-a71c-09f2a9e9c1e0">
-	<property name="com.jaspersoft.studio.data.sql.tables" value="ZXNjb2xhICw5MjMsMzMzLDA0Y2UwODgzLTZkMjQtNGMzYi04ZDYwLTM1ODdlMGUwYzcyMjtkaXN0&#xA;cml0byAsMTI4Myw3NTMsY2NhNzYyZGQtOTFhNC00Y2RlLThlMTAtZTNkNTU0MWRmNWJmO25vdGEg&#xA;LDE1LDEwMCwxOWVlNzMxMy1jNWY5LTRjMWUtOWEyZi1hOWU0MGEwZGVmNTc7ZGlzY2lwbGluYV9j&#xA;bGFzc2UgLDEzOTgsOTEwLGJlMzI3M2IwLWZjOTEtNDhjNi04M2M2LWI4NzlmMGU4MzQ3MDttYXRy&#xA;aWN1bGEgLDE3MCwxNSxmNmM1MzAxYy1iZjAxLTQ3YjgtOTczNS01ZmJmYzM0ODQ4NGM7ZGlzY2lw&#xA;bGluYSAsMTcwLDc2MCxjYmFjNjk2Zi0zZjBiLTRkYWYtOWM1MC0wMzMwYzc3YjVlYWM7YWx1bm8g&#xA;LDM2NCwzOTgsMTk1YmQ4OWQtNmZiNi00NTZiLTkwMjQtNGQwYWZiNzRmZjMyO2NsYXNzZSAsNjky&#xA;LDM3NyxlNWM4Mzc3My04MWY1LTQwM2YtODBkYi1mOTM3MGM0Y2VhNjM7dXN1YXJpbyAsNTQxLDQ0&#xA;OCw2ZDEwOGM2Mi03MmJjLTRjYTQtYTZhOS0wMWFkNjc0OWQzZjA7ZGlzdHJpdGFsICwxMTA2LDcw&#xA;MSw2ZWZmNjU3Ny1iM2YyLTQwZDItYmVhZS1kYzY4ZmJlOGNhNmE7"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="337"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="657"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
@@ -16,7 +16,8 @@
 		<![CDATA[SELECT usuario.datanascimento,
 	usuario.login,
 	usuario.mae,
-	usuario.nome,
+	usuario.nome,  aluno.nome_encarregado,
+	 aluno.profissao ,
 	classe.descricao AS classe,
 	escola.descricao AS escola,
 	distrito.provincia AS provinciaEscola,
@@ -49,25 +50,26 @@ FROM nota
 	 escola.id_direcao_distrital = distrital.id 
 	INNER JOIN distrito ON 
 	 distrital.distrito_id = distrito.id 
-	INNER JOIN disciplina ON 
-	 nota.id_disciplina = disciplina.id ,
-	disciplina_classe
-WHERE 
-	 disciplina_classe.id_classe = classe.id 
-	 AND disciplina_classe.id_disciplina = nota.id_disciplina 
-	 AND matricula.id = $P{idMatricula} 
-ORDER BY disciplina.descricao ASC]]>
+	INNER JOIN disciplina_classe ON 
+	 nota.id_disciplina_classe = disciplina_classe.id 
+	 INNER JOIN disciplina ON 
+	 disciplina_classe.id_disciplina = disciplina.id 
+	
+	 WHERE
+	  matricula.id = $P{idMatricula} ORDER BY disciplina.descricao ASC]]>
 	</queryString>
 	<field name="datanascimento" class="java.sql.Date"/>
 	<field name="login" class="java.lang.String"/>
 	<field name="mae" class="java.lang.String"/>
 	<field name="nome" class="java.lang.String"/>
+	<field name="nome_encarregado" class="java.lang.String"/>
+	<field name="profissao" class="java.lang.String"/>
 	<field name="classe" class="java.lang.String"/>
 	<field name="escola" class="java.lang.String"/>
 	<field name="provinciaescola" class="java.lang.String"/>
 	<field name="distritoescola" class="java.lang.String"/>
 	<field name="horamatricula" class="java.sql.Time"/>
-	<field name="datamatricula" class="java.sql.Timestamp"/>
+	<field name="datamatricula" class="java.sql.Date"/>
 	<field name="ano" class="java.lang.Integer"/>
 	<field name="curso" class="java.lang.String"/>
 	<field name="disciplina" class="java.lang.String"/>
@@ -223,7 +225,7 @@ ORDER BY disciplina.descricao ASC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["PROVÍNCIA DE "+$F{provinciaescola}.replace("MANICA", "Manica" ).replace("TETE", "Tete" ).replace("SOFALA", "Sofala" ).replace("GAZA", "Gaza" ).replace("INHAMBANE", "Inhambane" ).replace("ZAMBEZIA", "Zambezia").replace("NAMPULA", "Nampula").replace("NIASSA", "Niassa").replace("CABO_DELEGADO", "Cabo Delegado").replace( "MAPUTO", "Maputo" ).toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA["PROV�NCIA DE "+$F{provinciaescola}.replace("MANICA", "Manica" ).replace("TETE", "Tete" ).replace("SOFALA", "Sofala" ).replace("GAZA", "Gaza" ).replace("INHAMBANE", "Inhambane" ).replace("ZAMBEZIA", "Zambezia").replace("NAMPULA", "Nampula").replace("NIASSA", "Niassa").replace("CABO_DELEGADO", "Cabo Delegado").replace( "MAPUTO", "Maputo" ).toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="69" width="555" height="12" uuid="4bde3dab-fd3a-4906-a92c-bd4fa588c986">
@@ -344,7 +346,7 @@ ORDER BY disciplina.descricao ASC]]>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="151" splitType="Stretch">
+		<band height="179" splitType="Stretch">
 			<staticText>
 				<reportElement x="274" y="5" width="24" height="15" uuid="e8cb83eb-dcd4-4ccf-a8da-3ce151961bc8">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -390,7 +392,7 @@ ORDER BY disciplina.descricao ASC]]>
 				<textFieldExpression><![CDATA["Morada:"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1" y="66" width="47" height="15" uuid="27aa7a63-2f5d-4adb-a033-9d2cf71d403f">
+				<reportElement x="1" y="88" width="47" height="15" uuid="27aa7a63-2f5d-4adb-a033-9d2cf71d403f">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -401,7 +403,7 @@ ORDER BY disciplina.descricao ASC]]>
 				<textFieldExpression><![CDATA["Classe:"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="53" y="135" width="392" height="16" uuid="71571cda-e066-41c1-8a8c-919674ba7ae5">
+				<reportElement x="53" y="163" width="392" height="16" uuid="71571cda-e066-41c1-8a8c-919674ba7ae5">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box leftPadding="8">
@@ -415,7 +417,7 @@ ORDER BY disciplina.descricao ASC]]>
 				<text><![CDATA[NOME DA DISCIPLINA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="445" y="135" width="110" height="16" uuid="f5141ebc-42ea-4cfe-8a64-0ce622c82cb9">
+				<reportElement x="445" y="163" width="110" height="16" uuid="f5141ebc-42ea-4cfe-8a64-0ce622c82cb9">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
@@ -428,7 +430,7 @@ ORDER BY disciplina.descricao ASC]]>
 				<text><![CDATA[C.H.SEMANAL]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="109" width="555" height="20" uuid="adbc0276-8d64-4eca-9113-2cc7bd63e81e">
+				<reportElement x="0" y="135" width="555" height="20" uuid="adbc0276-8d64-4eca-9113-2cc7bd63e81e">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="6">
@@ -503,7 +505,7 @@ ORDER BY disciplina.descricao ASC]]>
 				<textFieldExpression><![CDATA[$F{bairro}==null?"Não definida".toUpperCase():$F{bairro}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd-MM-yyyy">
-				<reportElement x="46" y="66" width="77" height="15" uuid="f28b1bcf-637d-4e64-9085-e3dd4e63e49b">
+				<reportElement x="46" y="88" width="77" height="15" uuid="f28b1bcf-637d-4e64-9085-e3dd4e63e49b">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -511,10 +513,10 @@ ORDER BY disciplina.descricao ASC]]>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{classe}==null?"Não definida":$F{classe}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{classe}==null?"N�o definida":$F{classe}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="205" y="66" width="260" height="15" uuid="32b0c6c5-f7d1-4c70-ae1c-4be4456f5dba">
+				<reportElement x="205" y="88" width="260" height="15" uuid="32b0c6c5-f7d1-4c70-ae1c-4be4456f5dba">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
@@ -526,14 +528,14 @@ ORDER BY disciplina.descricao ASC]]>
 				<textFieldExpression><![CDATA[$F{tipoarea}==null?"":$F{classe}+$F{tipoarea}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="125" y="66" width="80" height="15" uuid="9e009bce-b3e6-4b12-a4c0-2bcd20e51840"/>
+				<reportElement x="125" y="88" width="80" height="15" uuid="9e009bce-b3e6-4b12-a4c0-2bcd20e51840"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Courier New" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tipoarea}==null?"":"Área que tem:"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="135" width="53" height="16" uuid="2f38d6f8-ee28-4d2b-a2ca-16b8bf6b9124">
+				<reportElement x="0" y="163" width="53" height="16" uuid="2f38d6f8-ee28-4d2b-a2ca-16b8bf6b9124">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box leftPadding="8">
@@ -590,7 +592,7 @@ ORDER BY disciplina.descricao ASC]]>
 				<textFieldExpression><![CDATA[$F{email}.toString().trim().equals("")?"Nenhum e - mail cadastrado":$F{email}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="3" y="88" width="47" height="15" uuid="66187190-0b26-4200-bd0e-889b224cd42a">
+				<reportElement x="3" y="110" width="47" height="15" uuid="66187190-0b26-4200-bd0e-889b224cd42a">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -601,7 +603,7 @@ ORDER BY disciplina.descricao ASC]]>
 				<textFieldExpression><![CDATA["Turma:"]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="45" y="88" width="122" height="15" uuid="d242fbcc-2422-4eb6-91ac-f9576de20fcd">
+				<reportElement x="45" y="110" width="122" height="15" uuid="d242fbcc-2422-4eb6-91ac-f9576de20fcd">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -610,6 +612,48 @@ ORDER BY disciplina.descricao ASC]]>
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{turma}==null?"Sem turma":$P{turma}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="65" width="125" height="15" uuid="99768aeb-8368-48c1-a39b-1ba63c85e0c6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nome do encarregado: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="123" y="65" width="171" height="15" uuid="4824194d-062d-4f9e-adc2-e3e0a9a22a29">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="4">
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome_encarregado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="294" y="65" width="65" height="15" uuid="beb27102-420a-4fc0-9431-f5abcddd806f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<text><![CDATA[Profissão:]]></text>
+			</staticText>
+			<textField pattern="yyyy">
+				<reportElement x="355" y="65" width="170" height="15" uuid="bb635ca3-46a2-4815-9d39-85ff567eefc6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="5">
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Currie new" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{profissao}==null?"Sem profissão":$F{profissao}==""?"Sem profissão":$F{profissao}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
@@ -701,7 +745,7 @@ ORDER BY disciplina.descricao ASC]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{valorMatriculaExtenso}==null?"":"Extenso: São "+$P{valorMatriculaExtenso}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{valorMatriculaExtenso}==""?"":$P{valorMatriculaExtenso}==null?"":"Extenso: São "+$P{valorMatriculaExtenso}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;#,##0.###,00">
 				<reportElement x="380" y="0" width="175" height="15" uuid="8e821356-e998-411c-88a4-1e72427d9c72">

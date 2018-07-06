@@ -5,6 +5,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
+
 import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,7 +180,7 @@ public class TransferenciaBean {
 			transferenciaSelacionada.getMatricula().getAluno().setEscola(transferenciaSelacionada.getEscolaDestino());
 			matriculaServico.salvar(transferenciaSelacionada.getMatricula());
 			transferenciaServico.salvar(transferenciaSelacionada);
-			Mensagem.mensagemInfo("Aviso: Transferência de aluno realizada com sucesso!");
+			Mensagem.mensagemInfo("AVISO: Transferência de aluno realizada com sucesso!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -214,7 +224,7 @@ public class TransferenciaBean {
 			transferenciaSelacionadaExclusao.setFinalizada(true);
 			matriculaServico.salvar(transferenciaSelacionadaExclusao.getMatricula());
 			transferenciaServico.salvar(transferenciaSelacionadaExclusao);
-			Mensagem.mensagemInfo("Aviso: Transferência de aluno foi finalizada com sucesso!");
+			Mensagem.mensagemInfo("AVISO: Transferência de aluno foi finalizada com sucesso!");
 			receberTransferenciasPesquisado();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -229,7 +239,7 @@ public class TransferenciaBean {
 			transferenciaSelacionadaExclusao.setFinalizada(true);
 			matriculaServico.salvar(transferenciaSelacionadaExclusao.getMatricula());
 			transferenciaServico.salvar(transferenciaSelacionadaExclusao);
-			Mensagem.mensagemInfo("Aviso: Transferência de aluno foi cancelada com sucesso!");
+			Mensagem.mensagemInfo("AVISO: Transferência de aluno foi cancelada com sucesso!");
 			receberTransferenciasPesquisado();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -243,7 +253,7 @@ public class TransferenciaBean {
 			transferenciaSelacionadaExclusao.getMatricula().setSituacao(EstadoTransferencia.EXCLUIDO.getLabel());
 			matriculaServico.salvar(transferenciaSelacionadaExclusao.getMatricula());
 			transferenciaServico.excluir(transferenciaSelacionadaExclusao);
-			Mensagem.mensagemInfo("Aviso: Transferência de aluno excluida com sucesso!");
+			Mensagem.mensagemInfo("AVISO: Transferência de aluno excluida com sucesso!");
 			buscarTransferenciasPesquisado();
 		} catch (Exception e) {
 			e.printStackTrace();

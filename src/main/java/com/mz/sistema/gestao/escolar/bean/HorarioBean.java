@@ -3,9 +3,17 @@ package com.mz.sistema.gestao.escolar.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -26,13 +34,10 @@ import com.mz.sistema.gestao.escolar.modelo.HorarioAula;
 import com.mz.sistema.gestao.escolar.modelo.Matricula;
 import com.mz.sistema.gestao.escolar.modelo.Turma;
 import com.mz.sistema.gestao.escolar.modelo.Turno;
-import com.mz.sistema.gestao.escolar.servico.GeradorDeRelatoriosServico;
 import com.mz.sistema.gestao.escolar.servico.HorarioAulaServico;
 import com.mz.sistema.gestao.escolar.servico.HorarioServico;
 import com.mz.sistema.gestao.escolar.servico.RelatorioHorarioServico;
 import com.mz.sistema.gestao.escolar.servico.TurnoServico;
-
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Named
 @SessionScope
@@ -52,9 +57,6 @@ public class HorarioBean implements Serializable {
 	private Turma turma = new Turma();
 	private Long idTurno;
 	private boolean horarioMinhaTurmaBoolean = true;
-	// private Map<Long, Answer[]> answers = new HashMap<Long, Answer[]>();
-	@Autowired
-	private GeradorDeRelatoriosServico geradorDeRelatoriosServico;
 
 	@Autowired
 	private RelatorioHorarioServico relatorioHorarioServico;
@@ -132,7 +134,7 @@ public class HorarioBean implements Serializable {
 		try {
 
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Horário de Aula cadastrado com sucesso!", null));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "AVISO: Horário de Aula cadastrado com sucesso!", null));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

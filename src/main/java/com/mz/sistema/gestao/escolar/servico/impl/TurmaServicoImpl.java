@@ -1,7 +1,15 @@
 package com.mz.sistema.gestao.escolar.servico.impl;
 
 import java.util.List;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -31,29 +39,31 @@ public class TurmaServicoImpl implements TurmaServico {
 
 	@Override
 	public void excluir(Turma turma) {
-		turma= obterTurmaPorIdLiftJoinFetch(turma.getId());
+		turma = obterTurmaPorIdLiftJoinFetch(turma.getId());
 		em.remove(em.merge(turma));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Turma obterTurmaPorId(Integer idTurma) {
-		List<Turma> turmas = em.createQuery("From Turma t join fetch t.classe join fetch t.escola where t.id=:idTurma").setParameter("idTurma", idTurma)
-				.getResultList();
+		List<Turma> turmas = em.createQuery("From Turma t join fetch t.classe join fetch t.escola where t.id=:idTurma")
+				.setParameter("idTurma", idTurma).getResultList();
 		if (!turmas.isEmpty()) {
 			return turmas.get(0);
 		}
 		return null;
 	}
+
 	@SuppressWarnings("unchecked")
 	private Turma obterTurmaPorIdLiftJoinFetch(Integer idTurma) {
-		List<Turma> turmas = em.createQuery("From Turma t left join fetch t.horarios  where t.id=:idTurma").setParameter("idTurma", idTurma)
-				.getResultList();
+		List<Turma> turmas = em.createQuery("From Turma t left join fetch t.horarios  where t.id=:idTurma")
+				.setParameter("idTurma", idTurma).getResultList();
 		if (!turmas.isEmpty()) {
 			return turmas.get(0);
 		}
 		return null;
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Turma> obterTurmaPorIdClasse(Long idClasse, Integer ano) {
@@ -78,7 +88,8 @@ public class TurmaServicoImpl implements TurmaServico {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Turma> obterTurmaPorIdTurno(Long idTurno, Integer ano) {
-		List<Turma> turmas = em.createQuery("From Turma t  where t.turno.id=:idTurno AND t.ano=:ano ORDER BY t.descricao ")
+		List<Turma> turmas = em
+				.createQuery("From Turma t  where t.turno.id=:idTurno AND t.ano=:ano ORDER BY t.descricao ")
 				.setParameter("idTurno", idTurno).setParameter("ano", ano).getResultList();
 		if (!turmas.isEmpty()) {
 			return turmas;
@@ -101,8 +112,9 @@ public class TurmaServicoImpl implements TurmaServico {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Turma> obterTurmaPorDescricaoTurno(String descricao, Long idTurno, Integer ano) {
-		List<Turma> turmas = em.createQuery(
-				"From Turma t  where t.turno.id=:idTurno AND t.ano=:ano AND t.descricao='" + descricao.toUpperCase() + "'")
+		List<Turma> turmas = em
+				.createQuery("From Turma t  where t.turno.id=:idTurno AND t.ano=:ano AND t.descricao='"
+						+ descricao.toUpperCase() + "'")
 				.setParameter("idTurno", idTurno).setParameter("ano", ano).getResultList();
 		if (!turmas.isEmpty()) {
 			return turmas;
@@ -206,7 +218,8 @@ public class TurmaServicoImpl implements TurmaServico {
 				.createQuery("FROM Turma t  WHERE id !=:idTurma AND t.area=:AREA AND t.classe.id=:IdClasse "
 						+ " AND t.ano=:ANO AND t.escola.id=:IdEscola AND t.turno.curso=:CURSO ORDER BY t.descricao")
 				.setParameter("CURSO", curso).setParameter("AREA", tipoArea).setParameter("IdClasse", idClasse)
-				.setParameter("IdEscola", idEscola).setParameter("ANO", ano).setParameter("idTurma", idTurma).getResultList();
+				.setParameter("IdEscola", idEscola).setParameter("ANO", ano).setParameter("idTurma", idTurma)
+				.getResultList();
 		if (!turmas.isEmpty()) {
 			return turmas;
 		}
@@ -221,22 +234,34 @@ public class TurmaServicoImpl implements TurmaServico {
 		turmas = em
 				.createQuery("FROM Turma t  WHERE id !=:idTurma  AND t.classe.id=:IdClasse "
 						+ " AND t.ano=:ANO AND t.escola.id=:IdEscola AND t.turno.curso=:CURSO ORDER BY t.descricao")
-				.setParameter("CURSO", curso).setParameter("IdClasse", idClasse)
-				.setParameter("IdEscola", idEscola).setParameter("ANO", ano).setParameter("idTurma", idTurma).getResultList();
+				.setParameter("CURSO", curso).setParameter("IdClasse", idClasse).setParameter("IdEscola", idEscola)
+				.setParameter("ANO", ano).setParameter("idTurma", idTurma).getResultList();
 		if (!turmas.isEmpty()) {
 			return turmas;
 		}
 		return null;
 	}
+
 	@Override
-	public Turma obterTurmaExistentePorDscricao(String descricao, Long idClasse, String CURSO, Integer ANO, Long idEscola) {
+	public Turma obterTurmaExistentePorDscricao(String descricao, Long idClasse, String CURSO, Integer ANO,
+			Long idEscola) {
 		@SuppressWarnings("unchecked")
-		List<Turma> list = em.createQuery("FROM Turma t WHERE t.descricao like '%"+descricao+"%' AND t.classe.id =:idClasse AND t.curso =:CURSO AND t.ano =:ANO AND t.escola.id =:idEscola")
-				.setParameter("idClasse", idClasse).setParameter("CURSO", CURSO).setParameter("ANO", ANO).setParameter("idEscola", idEscola).getResultList();
-		if(!list.isEmpty()){
+		List<Turma> list = em
+				.createQuery("FROM Turma t WHERE t.descricao like '%" + descricao
+						+ "%' AND t.classe.id =:idClasse AND t.curso =:CURSO AND t.ano =:ANO AND t.escola.id =:idEscola")
+				.setParameter("idClasse", idClasse).setParameter("CURSO", CURSO).setParameter("ANO", ANO)
+				.setParameter("idEscola", idEscola).getResultList();
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public Long obterNumeroReciboUltimaTurma() {
+		Long numeroRecibo = (Long) em.createQuery("select max(cast(numero as long)) from Turma")
+				.getSingleResult();
+		return numeroRecibo;
 	}
 
 }

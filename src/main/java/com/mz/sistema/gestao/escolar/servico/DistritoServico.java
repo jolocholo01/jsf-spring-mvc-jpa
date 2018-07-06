@@ -1,8 +1,15 @@
 package com.mz.sistema.gestao.escolar.servico;
 
 import java.util.List;
-
-import com.mz.sistema.gestao.escolar.enumerado.Provincia;
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 import com.mz.sistema.gestao.escolar.modelo.Distrito;
 
 public interface DistritoServico {

@@ -1,5 +1,13 @@
 package com.mz.sistema.gestao.escolar.enumerado;
-
+/*
+ * 
+ * 
+ * 
+ * Autor do sistema Agostinho Bartolomeu jolocholo
+ * 
+ * 
+ * 
+ * */
 public enum Dia {
 		DOM("Domingo"),
 		SEG("Segunda"),
