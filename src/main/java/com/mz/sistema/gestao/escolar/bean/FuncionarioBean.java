@@ -47,7 +47,7 @@ import com.mz.sistema.gestao.escolar.servico.FuncionarioServico;
 import com.mz.sistema.gestao.escolar.servico.GeradorDeRelatoriosServico;
 import com.mz.sistema.gestao.escolar.servico.PaisServico;
 import com.mz.sistema.gestao.escolar.servico.PermissaoServico;
-import com.mz.sistema.gestao.escolar.servico.RecoperarSenhaServico;
+import com.mz.sistema.gestao.escolar.servico.RecuperarSenhaServico;
 import com.mz.sistema.gestao.escolar.servico.UsuarioServico;
 import com.mz.sistema.gestao.escolar.util.DataUtils;
 import com.mz.sistema.gestao.escolar.util.GeradorCodigo;
@@ -123,7 +123,7 @@ public class FuncionarioBean {
 	@Autowired
 	private GeradorDeRelatoriosServico geradorDeRelatoriosServico;
 	@Autowired
-	private RecoperarSenhaServico recoperarSenhaServico;
+	private RecuperarSenhaServico recoperarSenhaServico;
 
 	// funcao que esta ser chamado no pretty config para director distrital
 	public void iniciarBean() {
@@ -740,10 +740,10 @@ public class FuncionarioBean {
 			if (usuario == null) {
 
 			} else {
-				if (usuario.getRecoperarSenha() == null) {
+				if (usuario.getRecuperarSenha() == null) {
 				} else {
-					if (usuario.getRecoperarSenha().getId() != null)
-						recoperarSenhaServico.excluir(usuario.getRecoperarSenha());
+					if (usuario.getRecuperarSenha().getId() != null)
+						recoperarSenhaServico.excluir(usuario.getRecuperarSenha());
 				}
 			}
 			funcionarioServico.excluir(this.funcionarioExclusao);

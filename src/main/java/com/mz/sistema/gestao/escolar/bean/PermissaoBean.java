@@ -82,7 +82,7 @@ public class PermissaoBean {
 				cadastroPermissaoBoolean = false;
 			}
 			permissao = new Permissao();
-
+			permissao.setDataCadastro(new Date());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

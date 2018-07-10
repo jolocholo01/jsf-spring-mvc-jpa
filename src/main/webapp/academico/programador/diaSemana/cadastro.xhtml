@@ -24,7 +24,7 @@
 		</h:panelGroup>
 	</ui:define>
 
-		<ui:define name="menu">
+	<ui:define name="menu">
 		<ui:include src="/academico/programador/template/menu.xhtml" />
 	</ui:define>
 	<ui:define name="dados_pessoas">
@@ -38,25 +38,25 @@
 
 			<div class="card">
 				<h4 class="card-header primary-color white-text ">
-		
 
-						<h:outputText value="Pesquisa de dia da Semana"
-							style="font-weight: 700;"
-							rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean ==false}" />
-						<h:outputText value="Novo dia da Semana" style="font-weight: 700;"
+
+					<h:outputText value="Pesquisa de dia da Semana"
+						style="font-weight: 700;"
+						rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean ==false}" />
+					<h:outputText value="Novo dia da Semana" style="font-weight: 700;"
+						rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean !=false}" />
+
+					<h:panelGroup styleClass="form-span">
+						<h:commandLink styleClass="link" value="Novo dia da Semana"
+							style="color: blue; float: right; font-weight: 500;"
+							actionListener="#{diaSemanaBean.novo}" immediate="true"
+							rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean==false}" />
+						<h:commandLink styleClass="link" value="Voltar para Pesquisa"
+							style="color: blue; float: right; font-weight: 500;"
+							actionListener="#{diaSemanaBean.voltar}" immediate="true"
 							rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean !=false}" />
+					</h:panelGroup>
 
-						<h:panelGroup styleClass="form-span">
-							<h:commandLink styleClass="link" value="Novo dia da Semana"
-								style="color: blue; float: right; font-weight: 500;"
-								actionListener="#{diaSemanaBean.novo}" immediate="true"
-								rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean==false}" />
-							<h:commandLink styleClass="link" value="Voltar para Pesquisa"
-								style="color: blue; float: right; font-weight: 500;"
-								actionListener="#{diaSemanaBean.voltar}" immediate="true"
-								rendered="#{diaSemanaBean.cadastroDiaSemanaBoolean !=false}" />
-						</h:panelGroup>
-				
 				</h4>
 				<div class="card-body">
 					<p:messages id="mensagem" closable="true" />
@@ -67,7 +67,7 @@
 
 
 						<div class="form-group">
-							<div class="col-sm-6">
+							<div class="col-sm-6" style="padding-left: 0;">
 								<div class="input-group">
 
 
@@ -75,7 +75,7 @@
 										value="#{diaSemanaBean.pesquisa}">
 										<f:passThroughAttribute name="placeholder"
 											value="Qual dia de semana que você está procurar?" />
-										<f:passThroughAttribute name="autofocus" value="true" />
+
 									</h:inputText>
 									<span class="input-group-btn"> <h:commandButton
 											styleClass="btn btn-primary" value="Buscar!"
@@ -96,7 +96,7 @@
 								<f:facet name="header">
 									<h:outputText value="#" />
 								</f:facet>
-								<h:outputText value=" #{diaSemana.id}" />
+								<h:outputText value=" #{diaSemana.ordem}" />
 							</h:column>
 							<h:column>
 								<f:facet name="header">
@@ -113,36 +113,37 @@
 									style=" margin-left:4px;" />
 							</h:column>
 
-							<h:column headerClass="center">
+							<h:column>
 								<f:facet name="header">
-									<h:outputText value="Ordem" />
+									<h:outputText value="Data de cadastro" />
 								</f:facet>
-								<h:outputText value="#{diaSemana.ordem}"
+								<h:outputText value="#{diaSemana.dataCadastro}"
 									style="float: left;padding-left: 7px;">
-									
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" />
 								</h:outputText>
 							</h:column>
 							<h:column>
-								<div class="form-group row" style="margin-bottom: 0;">
-									<h:commandLink title="Editar?" immediate="true"
-										action="#{diaSemanaBean.editar(diaSemana)}"
-										styleClass="tooltip-left"
-										style="margin-left:10px; color: black;">
-										<span class="glyphicon glyphicon-pencil"></span>
-									</h:commandLink>
+
+								<h:commandLink title="Editar?" immediate="true"
+									action="#{diaSemanaBean.editar(diaSemana)}"
+									styleClass="tooltip-left"
+									style="margin-left:10px; color: black;">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</h:commandLink>
 
 
-									<h:commandLink immediate="true" title="Excluir esse distrito?"
-										styleClass="tooltip-left" id="id-excluir"
-										style="color: black; margin-left:10px;">
-										<span class="glyphicon glyphicon-remove"></span>
-										<p:ajax event="click"
-											listener="#{diaSemanaBean.prepararParaExcluir(diaSemana)}"
-											update="form:id-panelGroup-confirma-modal" />
-										<f:passThroughAttribute name="data-toggle" value="modal" />
-										<f:passThroughAttribute name="data-target" value="#myModal" />
-									</h:commandLink>
-								</div>
+								<h:commandLink immediate="true" title="Excluir esse distrito?"
+									styleClass="tooltip-left" id="id-excluir"
+									style="color: black; margin-left:10px;">
+									<span class="glyphicon glyphicon-remove"></span>
+									<p:ajax event="click"
+										listener="#{diaSemanaBean.prepararParaExcluir(diaSemana)}"
+										update="form:id-panelGroup-confirma-modal" />
+									<f:passThroughAttribute name="data-toggle" value="modal" />
+									<f:passThroughAttribute name="data-target" value="#myModal" />
+								</h:commandLink>
+
 							</h:column>
 							<f:facet name="footer">
 								<h:outputText
@@ -163,12 +164,13 @@
 
 								<h:selectOneMenu id="idDiaSemana"
 									requiredMessage="O campo dia da semana é obrigatório"
-									value="#{diaSemanaBean.diaSemana.descricao}" styleClass="form-control">
+									value="#{diaSemanaBean.diaSemana.descricao}"
+									styleClass="form-control">
 
 									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
 
 									<f:selectItems value="#{diaSemanaBean.dias}" var="dia"
-										itemLabel="#{dia.label}" itemValue="#{dia.label}"  />
+										itemLabel="#{dia.label}" itemValue="#{dia.label}" />
 									<p:ajax event="change" update="idDiaSemana idDia idOrdem"></p:ajax>
 								</h:selectOneMenu>
 							</div>
@@ -187,13 +189,14 @@
 
 							</div>
 						</div>
-						
+
 						<div class="form-group row">
 							<h:outputLabel value="Ordem :"
 								styleClass="col-sm-3 control-label texto-label" />
 							<div class="col-sm-1">
 								<h:panelGroup id="idOrdem">
-									<h:inputText readonly="true" value="#{diaSemanaBean.diaSemana.ordem}"
+									<h:inputText readonly="true"
+										value="#{diaSemanaBean.diaSemana.ordem}"
 										styleClass="form-control">
 									</h:inputText>
 								</h:panelGroup>
@@ -242,18 +245,16 @@
 						</div>
 
 
-						<div class="form-inline" style="text-align:center">
+						<div class="form-inline" style="text-align: center">
+							<div class="col-sm-7">
+								<h:commandButton value="Voltar" immediate="true"
+									action="#{diaSemanaBean.voltar}" styleClass="btn btn-success"
+									style="margin-left: 1%;" />
+								<h:commandButton value="Cadastrar"
+									action="#{diaSemanaBean.salvar}" style="margin-left: 1%"
+									styleClass="btn btn-primary" />
 
-							<h:commandButton value="Cadastrar"
-								action="#{diaSemanaBean.salvar}"
-								style="margin-left: 11%;margin-top:2%;"
-								styleClass="btn btn-primary" />
-
-
-							<h:commandButton value="Voltar" immediate="true"
-								action="#{diaSemanaBean.voltar}" styleClass="btn btn-success"
-								style="margin-left: 1%; margin-top:2%;"
-								/>
+							</div>
 						</div>
 
 

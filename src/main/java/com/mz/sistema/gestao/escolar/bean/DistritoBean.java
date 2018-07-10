@@ -24,6 +24,7 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import com.mz.sistema.gestao.escolar.enumerado.Provincia;
 import com.mz.sistema.gestao.escolar.modelo.Distrito;
+import com.mz.sistema.gestao.escolar.modelo.Permissao;
 import com.mz.sistema.gestao.escolar.servico.DistritoServico;
 import com.mz.sistema.gestao.escolar.util.Mensagem;
 
@@ -87,7 +88,7 @@ public class DistritoBean implements Serializable {
 				cadastroDistritoBoolean = false;
 			}
 			distrito = new Distrito();
-
+			distrito.setDataCadastro(new Date());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

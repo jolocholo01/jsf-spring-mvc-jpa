@@ -33,7 +33,7 @@
 
 
 	<ui:define name="ambiente_comum">
-		
+
 		<h:form id="form" styleClass="form-horizontal">
 			<!--Panel-->
 			<div class="card">
@@ -71,7 +71,7 @@
 										requiredMessage="O campo Província é obrigatório"
 										value="#{distritoBean.pesquisa}" styleClass="form-control">
 
-										<f:passThroughAttribute name="autofocus" value="true" />
+									
 										<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
 
 										<f:selectItems value="#{distritoBean.provincias}"
@@ -90,11 +90,12 @@
 
 						<h:dataTable value="#{distritoBean.distritos}" var="distrito"
 							id="tabela-escola"
-							styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
+							styleClass="table table-bordered tabelaProfessor  tabela-funcionario left"
 							headerClass="cab-tabela" footerClass="fo-tabela"
-							style="margin-top: 20px;" rowClasses="linha2, linha1">
+							style="margin-top: 20px;" rowClasses="linha2, linha1"
+							columnClasses="center, , center, center,center">
 
-							<h:column>
+							<h:column headerClass="center">
 								<f:facet name="header">
 									<h:outputText value="#" />
 								</f:facet>
@@ -106,7 +107,7 @@
 								</f:facet>
 								<h:outputText value="#{distrito.nome}" style=" margin-left:4px;" />
 							</h:column>
-							<h:column>
+							<h:column headerClass="center">
 								<f:facet name="header">
 									<h:outputText value="Província" />
 								</f:facet>
@@ -118,17 +119,19 @@
 								<f:facet name="header">
 									<h:outputText value="Data de cadastro" />
 								</f:facet>
-								<h:outputText value="#{distrito.dataCadastro}"
-									style="float: left;padding-left: 7px;">
-									<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"/>
+								<h:outputText value="#{distrito.dataCadastro}">
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" />
 								</h:outputText>
 							</h:column>
-							<h:column>
-								<div class="form-group row" style="margin-bottom: 0;">
+							<h:column headerClass="center">
+							<f:facet name="header">
+									<h:outputText value="Acções" />
+								</f:facet>
+								
 									<h:commandLink title="Editar dados desse distrito?"
 										immediate="true" action="#{distritoBean.editar(distrito)}"
-										styleClass="tooltip-left"
-										style="margin-left:10px; color: black;">
+										styleClass="tooltip-left" style="margin-left: 10px; color: black;">
 										<span class="glyphicon glyphicon-pencil"></span>
 									</h:commandLink>
 
@@ -143,7 +146,7 @@
 										<f:passThroughAttribute name="data-toggle" value="modal" />
 										<f:passThroughAttribute name="data-target" value="#myModal" />
 									</h:commandLink>
-								</div>
+								
 							</h:column>
 							<f:facet name="footer">
 								<h:outputText
@@ -201,7 +204,8 @@
 							<div class="col-sm-3">
 								<h:inputText styleClass="form-control"
 									value="#{distritoBean.distrito.dataCadastro}">
-									<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"/>
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />

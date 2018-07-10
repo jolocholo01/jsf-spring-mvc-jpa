@@ -68,7 +68,7 @@ public class Usuario implements Serializable, UserDetails {
 	private List<Permissao> permissoes;
 	private Endereco enderenco = new Endereco();
 
-	private RecoperarSenha recoperarSenha;
+	private RecuperarSenha recuperarSenha;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -303,12 +303,12 @@ public class Usuario implements Serializable, UserDetails {
 	}
 
 	@OneToOne( mappedBy = "usuario")
-	public RecoperarSenha getRecoperarSenha() {
-		return recoperarSenha;
+	public RecuperarSenha getRecuperarSenha() {
+		return recuperarSenha;
 	}
 
-	public void setRecoperarSenha(RecoperarSenha recoperarSenha) {
-		this.recoperarSenha = recoperarSenha;
+	public void setRecuperarSenha(RecuperarSenha recuperarSenha) {
+		this.recuperarSenha = recuperarSenha;
 	}
 
 	public boolean isSenhaAlterada() {

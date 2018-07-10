@@ -319,7 +319,7 @@ public class CalendarioBean {
 
 		qtdCalendariosEncontrados = 0;
 		try {
-			if (!pesquisa.trim().equals("")) {
+			if (!pesquisa.equals("")) {
 				calendarios = null;
 				calendarios = calendarioServico.obterCalendarioPorPesquisa(pesquisa);
 				if (calendarios != null) {

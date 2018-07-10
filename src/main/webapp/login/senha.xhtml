@@ -61,7 +61,7 @@
 					</span>
 					<div style="margin-bottom: 3px;; color: #FC0606;">
 						<h:panelGroup
-							rendered="#{recoperarSenhaBean.emailEnviadoBoleano==true or recoperarSenhaBean.informacaoBoleano==true}">
+							rendered="#{recuperarSenhaBean.emailEnviadoBoleano==true or recuperarSenhaBean.informacaoBoleano==true}">
 							<h:outputText value="ATENÇÃO:" />
 						</h:panelGroup>
 						<br />
@@ -70,7 +70,7 @@
 
 
 					<h:panelGroup
-						rendered="#{recoperarSenhaBean.emailEnviadoBoleano ==false and recoperarSenhaBean.informacaoBoleano==false}">
+						rendered="#{recuperarSenhaBean.emailEnviadoBoleano ==false and recuperarSenhaBean.informacaoBoleano==false}">
 						<ul class="mensagem-senha">
 							<li style="margin-left: 8%;" errorStyle="color: #F00;">Introduza
 								o seu e-mail!</li>
@@ -87,8 +87,8 @@
 						data-validate="O campo E - mail é obrigatório!">
 
 						<h:inputText class="usuario input100  "
-							rendered="#{recoperarSenhaBean.emailEnviadoBoleano ==false}"
-							value="#{recoperarSenhaBean.recoperarSenha.email}"
+							rendered="#{recuperarSenhaBean.emailEnviadoBoleano ==false}"
+							value="#{recuperarSenhaBean.recuperarSenha.email}"
 							required="true" maxlength="60"
 							requiredMessage="O campo E - mail é obrigatório!"
 							validatorMessage="E-mail inválido. Por favor introduza um E-mail correcto!">
@@ -113,8 +113,8 @@
 					<div class="container-login100-form-btn">
 
 						<h:commandButton value="Enviar Pedido" class="login100-form-btn"
-							action="#{recoperarSenhaBean.salvar}"
-							rendered="#{recoperarSenhaBean.emailEnviadoBoleano == false}">
+							action="#{recuperarSenhaBean.salvar}"
+							rendered="#{recuperarSenhaBean.emailEnviadoBoleano == false}">
 
 						</h:commandButton>
 					</div>

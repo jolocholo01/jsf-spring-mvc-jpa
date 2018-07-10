@@ -14,8 +14,9 @@
 
 
 			<h:outputText value="Gerir Matrícula" style="font-weight: 700;"
-				rendered="#{alunoBean.renovarMatriculaSelecionadaBoolean==false}" />
-			<h:outputText value="Editar matrícula de aluno"
+				rendered="#{alunoBean.renovarMatriculaSelecionadaBoolean==false and 
+				alunoBean.editarMatricula==false}" />
+			<h:outputText value="Atualizar matrícula de aluno"
 				rendered="#{alunoBean.editarMatricula==true}" />
 
 			<h:outputText value="Transferência de aluno para uma Escola"
@@ -257,6 +258,14 @@
 										<span class="caret"></span>
 								</a>
 									<ul class="dropdown-menu " role="menu">
+
+										<h:commandLink actionListener="#{alunoBean.editar(matricula)}"
+											immediate="true" styleClass="dropdown-item meu-drog">
+											<p:graphicImage url="#{buscarFotoBean.retornarImagesEditar}"
+												height="16" width="16" />
+														Atualizar
+												</h:commandLink>
+
 										<ui:remove>
 											<h:commandLink
 												actionListener="#{alunoBean.selecionarMatricula(matricula)}"
@@ -267,11 +276,12 @@
 														Transf.
 												</h:commandLink>
 										</ui:remove>
+
 										<h:commandLink styleClass="dropdown-item meu-drog"
 											immediate="true"
 											actionListener="#{alunoBean.imprimirReciboInscricaoDoAluno(matricula)}">
 											<p:graphicImage url="#{buscarFotoBean.retornarImagesPrint}"
-												height="16" width="16" style="margin-left:0px;" />
+												height="16" width="16" />
 														 Imprimir recibo?												
 														
 										</h:commandLink>
@@ -280,14 +290,13 @@
 												immediate="true"
 												actionListener="#{alunoBean.exportarParaPDF(matricula)}">
 												<p:graphicImage url="#{buscarFotoBean.retornarImagesEmitir}"
-													height="16" width="16" style="margin-left:0px;" />
+													height="16" width="16" />
 														 Imprimir nota?												
 														
 										</h:commandLink>
 										</h:panelGroup>
 										<h:commandLink styleClass="dropdown-item meu-drog">
-											<span class="glyphicon
-												glyphicon-remove "
+											<span class="glyphicon glyphicon-remove "
 												style="color: black;" />
 														Excluir														
 														<p:ajax event="click"
@@ -531,66 +540,50 @@
 
 			<h:panelGroup rendered="#{alunoBean.editarMatricula==true}">
 
-				<div class="form-group">
-					<h:outputLabel value="Período lectivo: "
-						styleClass="col-sm-3 control-label texto-label textfim" />
-					<div class="col-sm-1">
-						<h:inputText value="#{alunoBean.matriculaSelecionada.ano}"
-							styleClass="form-control" required="true"
-							disabled="#{alunoBean.confirmarsalvarMatricula == true}"
-							requiredMessage="O campo período lectivo é obrigatório" />
+				<div class=" row">
 
+					<h:outputLabel value="Matrícula: *"
+						styleClass="col-sm-2 control-label bolder textfim" />
+					<div class="1">
+						<h:outputText value="#{alunoBean.matriculaSelecionada.numero}" />
 					</div>
 
-					<h:outputLabel value="Valor de matrícula: "
-						styleClass="col-sm-2 control-label texto-label textfim" />
-					<div class="col-sm-1">
-						<h:inputText value="#{alunoBean.matriculaSelecionada.valor}"
-							styleClass="form-control"
-							disabled="#{alunoBean.confirmarsalvarMatricula == true}"
-							onkeypress="return aceitarApenaNumeroComVirgula(this , event );">
-							<f:convertNumber />
-						</h:inputText>
+					<h:outputLabel value="Nome do aluno: *"
+						styleClass="col-sm-2 control-label bolder textfim"
+						style="padding-top: 0;" />
+					<div class="col-sm-5">
+						<h:outputText value="#{alunoBean.matriculaSelecionada.aluno.nome}">
 
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<h:outputLabel value="Nome Completo:"
-						styleClass="col-sm-3 control-label texto-label textfim" />
-
-					<div class="col-sm-6 texto-label">
-						<h:outputText value="#{alunoBean.matriculaSelecionada.aluno.nome}"
-							styleClass="form-control-static texto-label textfim" />
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<h:outputLabel value="Data Nasci.:"
-						styleClass="col-sm-3 control-label texto-label textfim" />
-
-					<div class="col-sm-6 texto-label">
-						<h:outputText
-							value="#{alunoBean.matriculaSelecionada.aluno.dataNascimento}"
-							style=" margin-left:4px;">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</div>
+
 				</div>
 
-				<div class="form-group row">
+				<div class=" row">
+					<h:outputLabel value="Data de Nascimento : "
+						styleClass="col-sm-2 control-label texto-label textfim bolder" />
+					<div class="col-sm-1">
+						<h:outputText
+							value="#{alunoBean.matriculaSelecionada.aluno.dataNascimento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Africa/Harare" />
+
+						</h:outputText>
+					</div>
+
 					<h:outputLabel value="Nome encarregado:"
-						styleClass="col-sm-3 control-label texto-label textfim" />
+						styleClass="col-sm-2 control-label texto-label bolder textfim" />
 
 					<div class="col-sm-6 texto-label">
 						<h:outputText
 							value="#{alunoBean.matriculaSelecionada.aluno.nomeEncaregado}"
 							styleClass="form-control-static texto-label textfim" />
 					</div>
+
 				</div>
+
 				<div class="form-group row">
 					<h:outputLabel value="Curso: "
-						styleClass="col-sm-3 control-label texto-label textfim" />
+						styleClass="col-sm-2 control-label texto-label bolder textfim" />
 					<div class="col-sm-2">
 						<h:selectOneMenu value="#{alunoBean.matriculaSelecionada.curso}"
 							styleClass="form-control" required="true"
@@ -601,33 +594,54 @@
 
 						</h:selectOneMenu>
 					</div>
+					<h:outputLabel value="Ano: "
+						styleClass="col-sm-1 control-label bolder texto-label textfim" />
+					<div class="col-sm-1">
+						<h:inputText value="#{alunoBean.matriculaSelecionada.ano}"
+							styleClass="form-control" required="true"
+							requiredMessage="O campo ano é obrigatório" />
 
 
+					</div>
 				</div>
+
+
 				<div class="form-group row">
 					<h:outputLabel value="Classe:"
-						styleClass="col-sm-3 control-label texto-label textfim" />
+						styleClass="col-sm-2 control-label texto-label bolder textfim" />
 
 					<div class="col-sm-3">
 						<h:selectOneMenu value="#{alunoBean.matriculaSelecionada.classe}"
-							styleClass="form-control" converter="classeConverter"
-							required="true"
-							requiredMessage="O campo classe de destino é obrigatório">
+							styleClass="form-control"
+							converter="classeCicloDescricaoConverter" required="true"
+							requiredMessage="O campo classe de obrigatório">
 							<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
 							<f:selectItems value="#{alunoBean.obterTodasClasses}"
 								var="classe" itemLabel=" #{classe.descricao}"
 								itemValue="#{classe}" />
-
+							<p:ajax event="change"
+								listener="#{alunoBean.buscarMatrizesCurriculares}"
+								update="idAreaEdicao" />
 						</h:selectOneMenu>
+
+					</div>
+					<h:outputLabel value="Valor de matrícula: "
+						styleClass="col-sm-2 control-label texto-label bolder textfim" />
+					<div class="col-sm-1">
+						<h:inputText value="#{alunoBean.matriculaSelecionada.valor}"
+							styleClass="form-control"
+							onkeypress="return aceitarApenaNumeroComVirgula(this , event );">
+							<f:convertNumber />
+						</h:inputText>
 
 					</div>
 				</div>
 				<h:panelGroup id="idAreaEdicao">
 					<h:panelGroup
-						rendered="#{alunoBean.matricula.classe.ciclo=='2º CICLO'}">
+						rendered="#{alunoBean.matriculaSelecionada.classe.ciclo=='2º CICLO'}">
 						<div class="form-group row">
 							<h:outputLabel value="Área Curricular: "
-								styleClass="col-sm-2 control-label texto-label textfim" />
+								styleClass="col-sm-2 control-label texto-label bolder textfim" />
 							<div class="col-sm-5">
 								<h:selectOneMenu
 									value="#{alunoBean.matriculaSelecionada.tipoArea}"
@@ -637,44 +651,77 @@
 									<f:selectItems value="#{alunoBean.matrizes}" var="matriz"
 										itemLabel="#{matriz.classe.descricao} #{matriz.tipoArea}"
 										itemValue="#{matriz.tipoArea}" />
-									<p:ajax event="change"
-										listener="#{alunoBean.buscarMatrizesPorAreaCurricular}" />
+
 								</h:selectOneMenu>
 							</div>
 						</div>
 					</h:panelGroup>
 				</h:panelGroup>
+				<div class="form-group row">
+					<h:outputLabel value="Disciplina: "
+						styleClass="col-sm-2 control-label texto-label bolder textfim" />
+					<div class="col-sm-5">
+						<h:selectOneMenu value="#{alunoBean.nota.disciplinaClasse}"
+							styleClass="form-control" required="true"
+							converter="disciplinaClasseConverter"
+							requiredMessage="O campo área curricular é obrigatório">
+							<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
+							<f:selectItems value="#{alunoBean.matriz.disciplinaClasses}"
+								var="disciplinaClassse"
+								itemLabel="#{disciplinaClassse.disciplina.descricao}"
+								itemValue="#{disciplinaClassse}" />
+
+						</h:selectOneMenu>
+					</div>
+				</div>
+
+
+
+
+
 
 
 				<h:panelGroup id="tabela-disciplinas">
-					<p:dataTable value="#{alunoBean.matriz.disciplinaClasses}"
-						var="disciplinaDaClassse"
-						style="margin-left:10%;margin-top: 20px; width: 400px;"
-						styleClass="tabela1" disabledTextSelection="true"
+					<h:dataTable value="#{alunoBean.notas}" var="nota"
+						style="width:80%;"
+						styleClass="table table-bordered tabelaProfessor  tabela-funcionario left tabela1"
+						disabledTextSelection="true" columnClasses="center, ,center,center"
 						rowKey="#{disciplinaDaClassse.disciplina.id}"
 						selection="#{alunoBean.disciplinaSelecionadas}"
 						emptyMessage="Nenhuma disciplina cadastrada">
 
-						<p:column style="width: 100px;">
+						<h:column style="width: 100px;">
 							<f:facet name="header">
 								<h:outputText value="Codigo" />
 							</f:facet>
-							<h:outputText value="#{disciplinaDaClassse.disciplina.id}"
+							<h:outputText value="#{nota.disciplinaClasse.disciplina.id}"
 								style="text-transform: uppercase;" />
-						</p:column>
-						<p:column>
+						</h:column>
+						<h:column>
 							<f:facet name="header">
 								<h:outputText value="Disciplina" />
 							</f:facet>
-							<h:outputText value="#{disciplinaDaClassse.disciplina.descricao}">
+							<h:outputText
+								value="#{nota.disciplinaClasse.disciplina.descricao}">
 							</h:outputText>
-						</p:column>
-						<p:column selectionMode="multiple"
-							rendered="#{alunoBean.matricula.classe.descricao =='10ª CLASSE' or alunoBean.matricula.classe.descricao =='11ª CLASSE' or alunoBean.matricula.classe.descricao =='12ª CLASSE'}"
-							style="text-align:center; width:40px;">
-						</p:column>
-
-					</p:dataTable>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="C.H. Semanal" />
+							</f:facet>
+							<h:outputText value="#{nota.disciplinaClasse.credito}">
+							</h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Acções" />
+							</f:facet>
+							<h:commandLink>
+							<p:graphicImage url="#{buscarFotoBean.retornarImagesExcluir}"
+													height="16" width="16" />
+							</h:commandLink>
+						</h:column>
+					</h:dataTable>
 				</h:panelGroup>
 				<div class="form-group row">
 

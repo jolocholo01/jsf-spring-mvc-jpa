@@ -164,7 +164,7 @@ public class UsuarioServicoImpl implements UsuarioServico {
 	public Usuario verificarUsuarioParaRecoperarSenha(String key, String token) {
 		List<Usuario> usuarios = em
 				.createQuery(
-						" FROM Usuario  WHERE recoperarSenha.codigo=:Codigo AND recoperarSenha.parametro=:Parametro AND recoperarSenha.dataExpiracao > NOW()")
+						" FROM Usuario  WHERE recuperarSenha.codigo=:Codigo AND recuperarSenha.parametro=:Parametro AND recuperarSenha.dataExpiracao > NOW()")
 				.setParameter("Codigo", key).setParameter("Parametro", token).getResultList();
 		if (!usuarios.isEmpty()) {
 			return usuarios.get(0);

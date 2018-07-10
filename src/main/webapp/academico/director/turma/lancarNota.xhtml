@@ -112,7 +112,7 @@
 						<h:panelGroup rendered="#{notaBean.turmas !=null}">
 
 							<h:dataTable value="#{notaBean.turmas}" var="turma"
-								styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
+								styleClass="table table-bordered tabelaProfessor  tabela-funcionario hover"
 								headerClass="theader"
 								columnClasses="texto-center,texto-center,texto-center,texto-center,texto-center,texto-center, opcoes">
 								<h:column width="370">
@@ -156,6 +156,14 @@
 									<h:commandLink action="#{notaBean.selecionarTurma(turma)}"
 										title="Selecionar esta turma?">
 										<h:graphicImage url="#{buscarFotoBean.retornarImagesCadastro}" />
+										<f:passThroughAttribute name="data-toggle" value="tooltip" />
+										<f:passThroughAttribute name="data-placement" value="left" />
+									</h:commandLink>
+									<h:commandLink style="margin-left: 10px;"
+										action="#{turmaBean.listarAlunosTurma(turma)}"
+										title="Emitir lista de alunos desta turma?">
+										<h:graphicImage width="25" height="25"
+											url="#{buscarFotoBean.retornarImagesEmitir}" />
 										<f:passThroughAttribute name="data-toggle" value="tooltip" />
 										<f:passThroughAttribute name="data-placement" value="left" />
 									</h:commandLink>
@@ -206,7 +214,7 @@
 									styleClass="col-sm-8 form-control-static " />
 
 							</div>
-							
+
 							<div class="form-group row">
 								<h:outputLabel value="Trimestre:"
 									styleClass="col-sm-4 control-label texto-label textfim bolder" />
@@ -215,11 +223,8 @@
 										required="true" converter="trimestreConverter"
 										requiredMessage="O campo disciplina é obrigatório"
 										styleClass="form-control" style="text-transform: uppercase;">
-										<f:selectItems
-											value="#{notaBean.trimestres}"
-											var="trimestre"
-											itemLabel="#{trimestre.descricao}"
-											itemValue="#{trimestre}" />
+										<f:selectItems value="#{notaBean.trimestres}" var="trimestre"
+											itemLabel="#{trimestre.descricao}" itemValue="#{trimestre}" />
 
 									</h:selectOneMenu>
 								</div>
@@ -262,7 +267,7 @@
 
 							<div class="form-group row" style="text-align: center">
 								<div class="col-sm-10">
-									
+
 									<h:commandLink value=" &#x2716; Fechar a turma"
 										style="margin-left:2%;"
 										actionListener="#{notaBean.voltarSelecaoTurma}"

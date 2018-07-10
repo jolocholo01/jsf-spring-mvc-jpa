@@ -56,6 +56,7 @@ public class BuscarFotoBean {
 	private boolean verificarLinkAtualizarPerfilBoolean = false;
 	private boolean verificarLinkAtualizarDadosBoolean = false;
 	private boolean programadorBoolean = false;
+	private boolean verificarDadaosPessais = false;
 	@Autowired
 	private PermissaoServico permissaoServico;
 	@Autowired
@@ -566,5 +567,13 @@ public class BuscarFotoBean {
 
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
+	}
+
+	public boolean isVerificarDadaosPessais() {
+		return verificarDadaosPessais;
+	}
+
+	public void setVerificarDadaosPessais(boolean verificarDadaosPessais) {
+		this.verificarDadaosPessais = verificarDadaosPessais;
 	}
 }

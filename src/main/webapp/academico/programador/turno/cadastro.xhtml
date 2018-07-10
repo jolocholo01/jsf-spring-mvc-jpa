@@ -14,8 +14,7 @@
 		<h:outputText value="Pesquisa de Turno"
 			rendered="#{turnoBean.cadastroTurnoBoolean ==false}" />
 
-		<h:panelGroup
-			rendered="#{turnoBean.cadastroTurnoBoolean ==true}">
+		<h:panelGroup rendered="#{turnoBean.cadastroTurnoBoolean ==true}">
 			<h:outputText value="Novo Turno"
 				rendered="#{turnoBean.novoTurnoBoolean ==true}" />
 			<h:outputText value="Atualização de Distrito"
@@ -38,17 +37,16 @@
 			<div class="card">
 				<h4 class="card-header primary-color white-text ">
 
-					<h:outputText value="Pesquisa de Turno"
-						style="font-weight: 700;"
+					<h:outputText value="Pesquisa de turno" style="font-weight: 700;"
 						rendered="#{turnoBean.cadastroTurnoBoolean ==false}" />
-					<h:outputText value="Novo Turno" style="font-weight: 700;"
+					<h:outputText value="Novo turno" style="font-weight: 700;"
 						rendered="#{turnoBean.cadastroTurnoBoolean !=false}" />
 
 					<h:panelGroup styleClass="form-span">
-						<h:commandLink value="Novo Turno"
+						<h:commandLink value="Novo turno"
 							actionListener="#{turnoBean.novo}" immediate="true"
 							rendered="#{turnoBean.cadastroTurnoBoolean==false}" />
-						<h:commandLink value="Voltar para Pesquisa"
+						<h:commandLink value="Voltar para pesquisa"
 							actionListener="#{turnoBean.voltar}" immediate="true"
 							rendered="#{turnoBean.cadastroTurnoBoolean !=false}" />
 					</h:panelGroup>
@@ -56,8 +54,7 @@
 				<div class="card-body">
 					<p:messages id="mensagem" closable="true" />
 					<!-- Pesquisa de funcionario -->
-					<h:panelGroup
-						rendered="#{turnoBean.cadastroTurnoBoolean ==false}">
+					<h:panelGroup rendered="#{turnoBean.cadastroTurnoBoolean ==false}">
 
 
 
@@ -71,7 +68,7 @@
 										requiredMessage="O campo procurar é Obrigatório">
 										<f:passThroughAttribute name="placeholder"
 											value="Qual turno que você está procurar?" />
-										<f:passThroughAttribute name="autofocus" value="true" />
+
 									</h:inputText>
 									<span class="input-group-btn"> <h:commandButton
 											styleClass="btn btn-primary" value="Buscar!"
@@ -84,9 +81,10 @@
 
 						<h:dataTable value="#{turnoBean.turnos}" var="turno"
 							id="tabela-escola"
-							styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
+							styleClass="table table-bordered tabelaProfessor  tabela-funcionario left"
 							headerClass="cab-tabela" footerClass="fo-tabela"
-							style="margin-top: 20px;" rowClasses="linha2, linha1">
+							style="margin-top: 20px;" rowClasses="linha2, linha1"
+							columnClasses=", ,,center, center, center">
 
 							<h:column>
 								<f:facet name="header">
@@ -104,48 +102,48 @@
 								<f:facet name="header">
 									<h:outputText value="Descrição" />
 								</f:facet>
-								<h:outputText value="#{turno.descricao.label}" style=" margin-left:4px;" />
+								<h:outputText value="#{turno.descricao.label}"
+									style=" margin-left:4px;" />
 							</h:column>
-							<h:column>
+							<h:column headerClass="center">
 								<f:facet name="header">
 									<h:outputText value="Hora Inicial" />
 								</f:facet>
-								<h:outputText value="#{turno.horaInicio}"
-									>
-									<f:convertDateTime pattern="HH:mm"/>
-									</h:outputText>
+								<h:outputText value="#{turno.horaInicio}">
+									<f:convertDateTime pattern="HH:mm" timeZone="Africa/Harare" />
+								</h:outputText>
 							</h:column>
 
-							<h:column>
+							<h:column headerClass="center">
 								<f:facet name="header">
 									<h:outputText value="Hora Final" />
 								</f:facet>
-								<h:outputText value="#{turno.horaFim}"
-									>
-									<f:convertDateTime pattern="HH:mm"/>
-									</h:outputText>
+								<h:outputText value="#{turno.horaFim}">
+									<f:convertDateTime pattern="HH:mm" timeZone="Africa/Harare" />
+								</h:outputText>
 							</h:column>
-							<h:column>
-								<div class="form-group row" style="margin-bottom: 0;">
-									<h:commandLink title="Editar este turno?"
-										immediate="true" action="#{turnoBean.editar(turno)}"
-										styleClass="tooltip-left"
-										style="margin-left:10px; color: black;">
-										<span class="glyphicon glyphicon-pencil"></span>
-									</h:commandLink>
+
+							<h:column headerClass="center">
+								<f:facet name="header">
+									<h:outputText value="Acções" />
+								</f:facet>
+								<h:commandLink title="Editar este turno?" immediate="true"
+									action="#{turnoBean.editar(turno)}" styleClass="tooltip-left"
+									style="padding-left:10px; color: black;">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</h:commandLink>
 
 
-									<h:commandLink immediate="true" title="Excluir esse turno?"
-										styleClass="tooltip-left" id="id-excluir"
-										style="color: black; margin-left:10px;">
-										<span class="glyphicon glyphicon-remove"></span>
-										<p:ajax event="click"
-											listener="#{turnoBean.prepararParExcluir(turno)}"
-											update="form:id-panelGroup-confirma-modal" />
-										<f:passThroughAttribute name="data-toggle" value="modal" />
-										<f:passThroughAttribute name="data-target" value="#myModal" />
-									</h:commandLink>
-								</div>
+								<h:commandLink immediate="true" title="Excluir esse turno?"
+									styleClass="tooltip-left" id="id-excluir"
+									style="color: black; padding-left:10px;">
+									<span class="glyphicon glyphicon-remove"></span>
+									<p:ajax event="click"
+										listener="#{turnoBean.prepararParExcluir(turno)}"
+										update="form:id-panelGroup-confirma-modal" />
+									<f:passThroughAttribute name="data-toggle" value="modal" />
+									<f:passThroughAttribute name="data-target" value="#myModal" />
+								</h:commandLink>
 							</h:column>
 							<f:facet name="footer">
 								<h:outputText
@@ -155,8 +153,7 @@
 					</h:panelGroup>
 
 					<!-- Cadastro e edicao -->
-					<h:panelGroup
-						rendered="#{turnoBean.cadastroTurnoBoolean==true}">
+					<h:panelGroup rendered="#{turnoBean.cadastroTurnoBoolean==true}">
 
 
 						<div class="form-group row">
@@ -164,17 +161,14 @@
 								styleClass="col-sm-3 control-label texto-label" />
 							<div class="col-sm-6">
 
-								<h:selectOneMenu
-									requiredMessage="O campo curso é obrigatório"
-									value="#{turnoBean.turno.curso}"
-									styleClass="form-control">
+								<h:selectOneMenu requiredMessage="O campo curso é obrigatório"
+									value="#{turnoBean.turno.curso}" styleClass="form-control">
 
 
 									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
 
-									<f:selectItems value="#{turnoBean.cursos}"
-										var="curso" itemLabel="#{curso}"
-										itemValue="#{curso}" />
+									<f:selectItems value="#{turnoBean.cursos}" var="curso"
+										itemLabel="#{curso}" itemValue="#{curso}" />
 
 								</h:selectOneMenu>
 							</div>
@@ -186,17 +180,14 @@
 								styleClass="col-sm-3 control-label texto-label" />
 							<div class="col-sm-5">
 
-								<h:selectOneMenu
-									requiredMessage="O campo turno é obrigatório"
-									value="#{turnoBean.turno.descricao}"
-									styleClass="form-control">
+								<h:selectOneMenu requiredMessage="O campo turno é obrigatório"
+									value="#{turnoBean.turno.descricao}" styleClass="form-control">
 
 
 									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
 
-									<f:selectItems value="#{turnoBean.tipoTurnos}"
-										var="tipoTurno" itemLabel="#{tipoTurno}"
-										itemValue="#{tipoTurno}" />
+									<f:selectItems value="#{turnoBean.tipoTurnos}" var="tipoTurno"
+										itemLabel="#{tipoTurno}" itemValue="#{tipoTurno}" />
 
 								</h:selectOneMenu>
 							</div>
@@ -207,18 +198,16 @@
 							<h:outputLabel value="Hora inicial :"
 								styleClass="col-sm-3 control-label texto-label" />
 							<div class="col-sm-3">
-									<h:selectOneMenu
+								<h:selectOneMenu
 									requiredMessage="O campo hora inicial é obrigatório"
-									value="#{turnoBean.turno.horaInicio}"
-									styleClass="form-control">
+									value="#{turnoBean.turno.horaInicio}" styleClass="form-control">
 
 
 									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
 
-									<f:selectItems value="#{turnoBean.aulas}"
-										var="aula" itemLabel="#{aula.label}"
-										itemValue="#{aula.label}" />
-<f:convertDateTime pattern="HH:mm"/>
+									<f:selectItems value="#{turnoBean.aulas}" var="aula"
+										itemLabel="#{aula.label}" itemValue="#{aula.label}" />
+									<f:convertDateTime pattern="HH:mm" timeZone="Africa/Harare" />
 								</h:selectOneMenu>
 							</div>
 
@@ -228,18 +217,16 @@
 							<h:outputLabel value="Hora final :"
 								styleClass="col-sm-3 control-label texto-label" />
 							<div class="col-sm-3">
-									<h:selectOneMenu
+								<h:selectOneMenu
 									requiredMessage="O campo hora final é obrigatório"
-									value="#{turnoBean.turno.horaFim}"
-									styleClass="form-control">
+									value="#{turnoBean.turno.horaFim}" styleClass="form-control">
 
 
 									<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
 
-									<f:selectItems value="#{turnoBean.aulas}"
-										var="aula" itemLabel="#{aula.label}"
-										itemValue="#{aula.label}" />
-<f:convertDateTime pattern="HH:mm"/>
+									<f:selectItems value="#{turnoBean.aulas}" var="aula"
+										itemLabel="#{aula.label}" itemValue="#{aula.label}" />
+									<f:convertDateTime pattern="HH:mm" timeZone="Africa/Harare" />
 								</h:selectOneMenu>
 							</div>
 
@@ -249,8 +236,7 @@
 							<h:outputLabel styleClass="col-sm-3 col-form-label"
 								value="Observação : " />
 							<div class="col-sm-8">
-								<h:inputTextarea cols="3"
-									value="#{turnoBean.turno.observacao}"
+								<h:inputTextarea cols="3" value="#{turnoBean.turno.observacao}"
 									styleClass="form-control" rows="4"
 									onkeydown="return quatidadeCarrateres(this, 255, event);">
 									<f:ajax event="keyup" render="contador"
@@ -264,21 +250,19 @@
 						</div>
 
 
-						<div class="form-inline">
-
-							<h:commandButton value="Cadastrar"
-								action="#{turnoBean.salvar}"
-								style="margin-left: 11%;margin-top:2%;"
-								styleClass="btn btn-primary" />
+						<div class="form-inline center">
+							<div class="col-sm-7">
 
 
-							<h:commandButton value="Voltar" immediate="true"
-								action="#{turnoBean.voltar}" styleClass="btn btn-success"
-								style="margin-left: 1%; margin-top:2%;"
-								rendered="#{escolaBean.editarEscolaBoolean ==false and escolaBean.activarEscolaBoolean ==false}" />
+								<h:commandButton value="Voltar" immediate="true"
+									action="#{turnoBean.voltar}" styleClass="btn btn-success" />
+
+								<h:commandButton value="Cadastrar" action="#{turnoBean.salvar}"
+									style="margin-left: 1%;" styleClass="btn btn-primary" />
+
+							</div>
+
 						</div>
-
-
 
 					</h:panelGroup>
 				</div>
@@ -304,11 +288,11 @@
 							<h:panelGroup id="id-panelGroup-confirma-modal">
 								<h:outputText
 									value="Tem certeza que deseja excluir o turno da  " />
-								<h:outputLabel value=" #{turnoBean.turnoSelecionado.descricao.label}"
+								<h:outputLabel
+									value=" #{turnoBean.turnoSelecionado.descricao.label}"
 									style="font-weight: 600;" />
 								<h:outputText value="&nbsp;do curso " />
-								<h:outputLabel
-									value=" #{turnoBean.turnoSelecionado.curso}"
+								<h:outputLabel value=" #{turnoBean.turnoSelecionado.curso}"
 									style="font-weight: 600;" />
 
 								<h:outputText value="?" />

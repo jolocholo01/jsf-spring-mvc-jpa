@@ -41,7 +41,8 @@ public class DiaSemanaServicoImpl implements DiaSemanaServico {
 	public List<DiaSemana> obterDiaSemanaPorPesquisa(String pesquisa) {
 		@SuppressWarnings("unchecked")
 		List<DiaSemana> diaSemanas = em
-				.createQuery("From DiaSemana  where sigla LIKE '%"+pesquisa+"%' OR descricao LIKE '%"+pesquisa+"%'")
+				.createQuery("From DiaSemana  where sigla LIKE '%"+pesquisa+"%' OR descricao LIKE '%"+pesquisa+"%' "
+						+ "order by ordem")
 				.getResultList();
 
 		if (!diaSemanas.isEmpty()) {

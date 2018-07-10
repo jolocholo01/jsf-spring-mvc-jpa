@@ -78,7 +78,7 @@
 					</div>
 
 					<div class="text-right p-t-13 p-b-23">
-						<a href="${path}/senha.jsf" class="txt2"> Esqueci senha </a>
+						<a href="senha.jsf" class="txt2"> Esqueci senha </a>
 					</div>
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />

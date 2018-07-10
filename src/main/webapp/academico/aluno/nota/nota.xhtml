@@ -32,77 +32,60 @@
 
 				<div class="card-body">
 
-					<div class="form-group row">
-						<h:outputLabel value="Ecola: "
-							styleClass="col-sm-2 control-label texto-label  tesx-right  bolder" />
-						<div class="col-sm-3">
-							<h:outputText
-								value="#{authenticationContext.matriculaEscolaLogada.escola.descricao}"
-								style="text-transform: uppercase;" />
-						</div>
-					</div>
-					<div class="form-group row">
-						<h:outputLabel value="Ano lectivo: "
-							styleClass="col-sm-2 control-label texto-label  tesx-right bolder" />
-						<div class="col-sm-2">
-							<h:outputText
-								value="#{authenticationContext.matriculaEscolaLogada.ano}"
-								style="text-transform: uppercase;" />
-						</div>
-					</div>
-					<div class="form-group row">
-						<h:outputLabel value="Classe: "
-							styleClass="col-sm-2 control-label texto-label  tesx-right  bolder" />
-						<div class="col-sm-3">
-							<h:outputText
-								value="#{authenticationContext.matriculaEscolaLogada.classe.descricao}"
-								style="text-transform: uppercase;" />
-						</div>
-					</div>
-					<div class="form-group row">
-						<h:outputLabel value="Turma: "
-							styleClass="col-sm-2 control-label texto-label  tesx-right bolder" />
-						<div class="col-sm-3">
-							<h:outputText
-								value="#{authenticationContext.matriculaEscolaLogada.turma.descricao} / #{authenticationContext.matriculaEscolaLogada.turma.turno.descricao}"
-								style="margin-left:10px;"
-								rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao !=null}" />
-							<h:outputText value="NÃO INFORMADA" style="margin-left: 10px;"
-								rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao ==null}" />
-						</div>
-					</div>
-					<div class="form-group row">
-						<h:outputLabel value="Trimestre: "
-							styleClass="col-sm-2 control-label texto-label  tesx-right bolder" />
-						<div class="col-sm-3">
-							<h:selectOneMenu styleClass="form-control"
-								value="#{alunoBean.trimestreAtivo.descricao}"
-								style="margin-left:10px;text-transform: uppercase;">
 
-								<f:selectItems value="#{alunoBean.tipoTrimestres}"
-									var="tipoTrimestre" itemLabel="#{tipoTrimestre.label}"
-									itemValue="#{tipoTrimestre.label}" />
+					<h:panelGrid columns="2" style="float:left;margin-left:10px;">
+						<h:outputLabel value="Escola:" />
+						<h:outputText
+							value="#{authenticationContext.matriculaEscolaLogada.escola.descricao}"
+							style="text-transform: uppercase; margin-left:10px; " />
 
-							</h:selectOneMenu>
-						</div>
-					</div>
-					<div class="form-group row" style="text-align: center;">
-						<div class="col-sm-4">
-							<h:commandButton value="Buscar" styleClass="btn btn-primary"
-						style="    margin-top: 3%;"
-						actionListener="#{alunoBean.buscarMinhasNotas}" />
 
-						</div>
-					</div>
+						<h:outputLabel value="Ano lectivo: " />
 
-			
+						<h:outputText
+							value="#{authenticationContext.matriculaEscolaLogada.ano}"
+							style="text-transform: uppercase; margin-left:10px; " />
+
+						<h:outputLabel value="Classe: " />
+
+						<h:outputText
+							value="#{authenticationContext.matriculaEscolaLogada.classe.descricao}"
+							style="text-transform: uppercase;margin-left:10px; " />
+
+						<h:outputLabel value="Turma:" />
+
+						<h:outputText
+							value="#{authenticationContext.matriculaEscolaLogada.turma.descricao} / #{authenticationContext.matriculaEscolaLogada.turma.turno.descricao}"
+							style="margin-left:10px; text-transform: uppercase; " />
+
+						<h:outputLabel value="Trimestre: " />
+
+						<h:selectOneMenu styleClass="form-control"
+							value="#{alunoBean.trimestreAtivo.descricao}"
+							style="margin-left:10px;text-transform: uppercase;">
+
+							<f:selectItems value="#{alunoBean.tipoTrimestres}"
+								var="tipoTrimestre" itemLabel="#{tipoTrimestre.label}"
+								itemValue="#{tipoTrimestre.label}" />
+
+						</h:selectOneMenu>
+						<h:inputHidden />
+						<h:commandButton value="Buscar" styleClass="btn btn-primary"
+							style="    margin-top: 3%;"
+							actionListener="#{alunoBean.buscarMinhasNotas}" />
+					</h:panelGrid>
+
+
+
+
+
 
 					<h:panelGrid id="tabela-notas"
 						styleClass="table tabela-lancar-nota-professor ">
 						<!-- Tabela de nota do primeiro ciclo -->
 						<h:panelGroup
 							rendered="#{alunoBean.matricula.classe.ciclo=='1º CICLO' and alunoBean.notas !=null}">
-							<table class="tblEditavel table" id="tblEditavel">
+							<table class="tblEditavel table hover" id="tblEditavel">
 
 								<THEAD>
 									<TR class="centralizar">
@@ -130,7 +113,8 @@
 										<ui:repeat var="nota" value="#{alunoBean.notas}">
 											<tr>
 												<td class="td nome-aluno"><h:outputText
-														id="idNomeAluno" value="#{nota.disciplinaClasse.disciplina.descricao}"
+														id="idNomeAluno"
+														value="#{nota.disciplinaClasse.disciplina.descricao}"
 														title="#{nota.situacao}"
 														style="text-transform: uppercase; margin-left: 5px;" /></td>
 

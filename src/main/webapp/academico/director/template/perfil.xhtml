@@ -14,10 +14,11 @@
 	</ui:define>
 
 	<ui:define name="menu">
-		<ui:include src="/academico/professor/template/menu.xhtml" />
+		<ui:include src="/academico/director/template/menu.xhtml" />
 	</ui:define>
 	<ui:define name="dados_pessoas">
-		<ui:include src="/academico/professor/template/dados_pessoas.xhtml" />
+		<ui:include
+			src="/academico/director/template/dados_pessoas.xhtml" />
 	</ui:define>
 	<ui:define name="ambiente_comum">
 		<div class="fh">
@@ -49,12 +50,14 @@
 
 
 
-								<h:outputLink value="perfil.jsf"
+								<h:outputLink
+									value="perfil.jsf"
 									styleClass="actualizar-dados link-alterar-foto">Alterar Foto e Perfil
 						</h:outputLink>
 
 								<br />
-								<h:outputLink value="dados.jsf" styleClass="actualizar-dados">Actualizar meus dados
+								<h:outputLink value="dados.jsf"
+									styleClass="actualizar-dados">Actualizar meus dados
 					</h:outputLink>
 
 

@@ -64,7 +64,7 @@ import com.mz.sistema.gestao.escolar.servico.MatrizServico;
 import com.mz.sistema.gestao.escolar.servico.NotaServico;
 import com.mz.sistema.gestao.escolar.servico.PaisServico;
 import com.mz.sistema.gestao.escolar.servico.PermissaoServico;
-import com.mz.sistema.gestao.escolar.servico.RecoperarSenhaServico;
+import com.mz.sistema.gestao.escolar.servico.RecuperarSenhaServico;
 import com.mz.sistema.gestao.escolar.servico.TransferenciaServico;
 import com.mz.sistema.gestao.escolar.servico.TrimestreServico;
 import com.mz.sistema.gestao.escolar.servico.TurmaServico;
@@ -83,11 +83,11 @@ public class AlunoBean {
 	private Aluno aluno = new Aluno();
 	private Aluno alunoSelecionado;
 	private Aluno alunoSelecionadoExclusao;
+	private Nota nota;
 
 	private Transferencia transferencia = new Transferencia();
 	private List<Aluno> alunos = new ArrayList<>();
 	private List<Matricula> matriculas = new ArrayList<>();
-
 	private List<Matricula> matriculaSSelecionadas = new ArrayList<>();
 
 	private List<Nota> notas;
@@ -151,7 +151,8 @@ public class AlunoBean {
 	private List<Turma> turmas = new ArrayList<>();
 	private Matriz matriz = new Matriz();
 	private List<DisciplinaClasse> disciplinaSelecionadas = new ArrayList<>();
-
+	//private List<DisciplinaClasse> disciplinasClasse = new ArrayList<>();
+	
 	private static final String FORMATA_SENHA_PADRAO = "ddMMyyyy";
 
 	@Autowired
@@ -184,7 +185,7 @@ public class AlunoBean {
 	private PaisServico paisServico;
 
 	@Autowired
-	private RecoperarSenhaServico recoperarSenhaServico;
+	private RecuperarSenhaServico recoperarSenhaServico;
 	@Autowired
 	private DisciplinaClasseServico disciplinaClasseServico;
 
@@ -605,10 +606,10 @@ public class AlunoBean {
 			if (alunoExclusao == null) {
 
 			} else {
-				if (alunoExclusao.getRecoperarSenha() == null) {
+				if (alunoExclusao.getRecuperarSenha() == null) {
 				} else {
-					if (alunoExclusao.getRecoperarSenha().getId() != null)
-						recoperarSenhaServico.excluir(alunoExclusao.getRecoperarSenha());
+					if (alunoExclusao.getRecuperarSenha().getId() != null)
+						recoperarSenhaServico.excluir(alunoExclusao.getRecuperarSenha());
 				}
 				alunoServico.excluir(alunoExclusao);
 				// usuarioServico.e
@@ -1463,18 +1464,25 @@ public class AlunoBean {
 	}
 
 	public void editar(Matricula matricula) {
+		this.matriculaSelecionada = new Matricula();
+		this.matricula = new Matricula();
 		this.matriculaSelecionada = matricula;
+		this.matricula = matricula;
 		confirmarsalvarMatricula = false;
+		renovarMatriculaSelecionadaBoolean = false;
 		try {
 			if (matricula.getClasse().getCiclo().equals("2º CICLO")) {
 				matriz = matrizServico.obterMatriz2CicloPorIdELeftJoinAtiva(matricula.getClasse().getId(),
 						matricula.getCurso(), matricula.getTipoArea(), matricula.getEscola().getId());
+				
 
 			} else if (matricula.getClasse().getCiclo().equals("1º CICLO")) {
 				matriz = matrizServico.obterMatrizPorIdELeftJoinAtiva(matricula.getClasse().getId(),
 						matricula.getCurso(), matricula.getEscola().getId());
 
 			}
+			notas=new ArrayList<>();
+			notas = notaServico.obterNotasPorIdMatricula(matricula.getId());
 			editarMatricula = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1551,6 +1559,7 @@ public class AlunoBean {
 	}
 
 	public void voltar() {
+		matricula = null;
 		editarMatricula = false;
 
 	}
@@ -2106,6 +2115,14 @@ public class AlunoBean {
 
 	public void setValorMatricula(Double valorMatricula) {
 		this.valorMatricula = valorMatricula;
+	}
+
+	public Nota getNota() {
+		return nota;
+	}
+
+	public void setNota(Nota nota) {
+		this.nota = nota;
 	}
 
 }

@@ -72,7 +72,7 @@
 										requiredMessage="O campo procurar é Obrigatório">
 										<f:passThroughAttribute name="placeholder"
 											value="Qual direcção que você está procurar?" />
-										<f:passThroughAttribute name="autofocus" value="true" />
+
 									</h:inputText>
 									<span class="input-group-btn"> <h:commandButton
 											styleClass="btn btn-primary" value="Buscar!"
@@ -85,7 +85,7 @@
 
 						<h:dataTable value="#{direccaoDistritalBean.direccoesDistritais}"
 							var="distrito" id="tabela-escola"
-							styleClass="table table-bordered tabelaProfessor  tabela-funcionario"
+							styleClass="table table-bordered tabelaProfessor  tabela-funcionario left"
 							headerClass="cab-tabela" footerClass="fo-tabela"
 							style="margin-top: 20px;" rowClasses="linha2, linha1">
 
@@ -116,31 +116,34 @@
 								</f:facet>
 								<h:outputText value="#{distrito.dataCadastro}"
 									style="float: left;padding-left: 7px;">
-									<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"/>
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" />
 								</h:outputText>
 							</h:column>
-							<h:column>
-								<div class="form-group row" style="margin-bottom: 0;">
-									<h:commandLink title="Editar dados desse distrito?"
-										immediate="true"
-										action="#{direccaoDistritalBean.editar(distrito)}"
-										styleClass="tooltip-left"
-										style="margin-left:10px; color: black;">
-										<span class="glyphicon glyphicon-pencil"></span>
-									</h:commandLink>
+							<h:column headerClass="center">
+								<f:facet name="header">
+									<h:outputText value="Acções" />
+								</f:facet>
+								<h:commandLink title="Editar dados desse distrito?"
+									immediate="true"
+									action="#{direccaoDistritalBean.editar(distrito)}"
+									styleClass="tooltip-left"
+									style="margin-left:10px; color: black;">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</h:commandLink>
 
 
-									<h:commandLink immediate="true" title="Excluir esse distrito?"
-										styleClass="tooltip-left" id="id-excluir"
-										style="color: black; margin-left:10px;margin-right: 6px;">
-										<span class="glyphicon glyphicon-remove"></span>
-										<p:ajax event="click"
-											listener="#{direccaoDistritalBean.prepararParExcluir(distrito)}"
-											update="form:id-panelGroup-confirma-modal" />
-										<f:passThroughAttribute name="data-toggle" value="modal" />
-										<f:passThroughAttribute name="data-target" value="#myModal" />
-									</h:commandLink>
-								</div>
+								<h:commandLink immediate="true" title="Excluir esse distrito?"
+									styleClass="tooltip-left" id="id-excluir"
+									style="color: black; margin-left:10px;margin-right: 6px;">
+									<span class="glyphicon glyphicon-remove"></span>
+									<p:ajax event="click"
+										listener="#{direccaoDistritalBean.prepararParExcluir(distrito)}"
+										update="form:id-panelGroup-confirma-modal" />
+									<f:passThroughAttribute name="data-toggle" value="modal" />
+									<f:passThroughAttribute name="data-target" value="#myModal" />
+								</h:commandLink>
+
 							</h:column>
 							<f:facet name="footer">
 								<h:outputText
@@ -221,7 +224,7 @@
 								styleClass="col-sm-2 control-label texto-label" />
 							<div class="col-sm-6">
 
-								<h:inputText									
+								<h:inputText
 									value="#{direccaoDistritalBean.direccaoDistrital.avRua}"
 									styleClass="form-control" />
 							</div>
@@ -235,7 +238,8 @@
 							<div class="col-sm-2">
 								<h:inputText styleClass="form-control"
 									value="#{direccaoDistritalBean.direccaoDistrital.dataCadastro}">
-									<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="Africa/Harare"/>
+									<f:convertDateTime pattern="dd/MM/yyyy"
+										timeZone="Africa/Harare" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />

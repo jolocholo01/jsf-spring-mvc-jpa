@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-07-05T23:11:37 -->
+<!-- 2018-07-07T03:07:01 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="aluno" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b87a085-095b-4f9d-a71c-09f2a9e9c1e0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="337"/>
@@ -8,7 +8,7 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="814"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="186"/>
-	<parameter name="idMatricula" class="java.lang.Integer"/>
+	<parameter name="idMatricula" class="java.lang.Long"/>
 	<parameter name="password" class="java.lang.String"/>
 	<parameter name="turma" class="java.lang.String"/>
 	<parameter name="valorMatriculaExtenso" class="java.lang.String"/>

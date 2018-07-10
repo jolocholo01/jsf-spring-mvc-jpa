@@ -19,7 +19,7 @@ INSERT INTO distrito(id, nome, provincia) VALUES (18, 'Tsangano', 'Tete');
 INSERT INTO distrito(id, nome, provincia) VALUES (19, 'Angonia', 'Tete');
 INSERT INTO distrito(id, nome, provincia) VALUES (20, 'Macanga', 'Tete');
 INSERT INTO distrito(id, nome, provincia) VALUES (21, 'Chinfunde', 'Tete');
-INSERT INTO distrito(id, nome, provincia) VALUES (22, 'MÃ¡goÃ¨', 'Tete');
+INSERT INTO distrito(id, nome, provincia) VALUES (22, 'Mágoè', 'Tete');
 INSERT INTO distrito(id, nome, provincia) VALUES (23, 'Mutarara', 'Tete');
 INSERT INTO distrito(id, nome, provincia) VALUES (24, 'Dondo', 'Sofala');
 INSERT INTO distrito(id, nome, provincia) VALUES (25, 'Machanga', 'Sofala');

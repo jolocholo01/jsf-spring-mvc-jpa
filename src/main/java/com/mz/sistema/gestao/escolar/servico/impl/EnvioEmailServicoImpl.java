@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+
 /*
  * 
  * 
@@ -24,7 +25,7 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.mz.sistema.gestao.escolar.modelo.RecoperarSenha;
+import com.mz.sistema.gestao.escolar.modelo.RecuperarSenha;
 import com.mz.sistema.gestao.escolar.modelo.Usuario;
 import com.mz.sistema.gestao.escolar.servico.EnvioEmailServico;
 
@@ -125,7 +126,7 @@ public class EnvioEmailServicoImpl implements EnvioEmailServico {
 
 	@Override
 	@Async
-	public void enviarEmailUsuario(Usuario usuario, RecoperarSenha recoperarSenha, String url) {
+	public void enviarEmailUsuario(Usuario usuario, RecuperarSenha recoperarSenha, String url) {
 		String assunto = "Recoperação da Senha";
 		String linkEnviado = url.replace("/senha.html", "/nova/senha.html");
 		;

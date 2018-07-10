@@ -39,14 +39,13 @@
 
 				<div class="card-body">
 					<h:panelGroup rendered="#{notaBean.selecionarturma == false}">
-
-						<h:panelGrid
-							style=" width:100%;  margin-bottom: 14px; font-size: 30px;color: rgb(142, 147, 233);text-align: center;margin-top: 52px;"
-							rendered="#{professorTurmaBean.turmasProfessor ==null}"
-							styleClass="horarioIndispnivel">
-							<h:outputText value="Turmas indisponível no sistema." />
-
-						</h:panelGrid>
+						<h:panelGroup
+							rendered="#{professorTurmaBean.turmasProfessor ==null}">
+							<div class="horarioIndispnivel texto center"
+								style="margin-top: 6%;">
+								<h:outputText value="Turmas indisponível no sistema!" />
+							</div>
+						</h:panelGroup>
 
 
 						<h:panelGroup styleClass="panel-professor-turma"
@@ -82,7 +81,8 @@
 									<f:facet name="header">
 										<h:outputText value="Disciplina" styleClass="margin-left" />
 									</f:facet>
-									<h:outputText value="#{professor.disciplinaClasse.disciplina.descricao}"
+									<h:outputText
+										value="#{professor.disciplinaClasse.disciplina.descricao}"
 										styleClass="margin-left" />
 								</h:column>
 								<h:column>

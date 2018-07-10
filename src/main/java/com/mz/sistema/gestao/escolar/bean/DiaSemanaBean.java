@@ -88,7 +88,7 @@ public class DiaSemanaBean implements Serializable {
 				cadastroDiaSemanaBoolean = false;
 			}
 			diaSemana = new DiaSemana();
-
+			diaSemana.setDataCadastro(new Date());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

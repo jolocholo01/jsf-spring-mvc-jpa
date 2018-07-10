@@ -111,7 +111,7 @@ public class NotaServicoImpl implements NotaServico {
 
 		Double media = (Double) em
 				.createQuery("SELECT AVG(" + tipoMediatrimestre
-						+ ") As MediaTrimestral FROM Nota WHERE matricula.aluno.id=:idAluno AND matricula.classe.id=:idClasse AND matricula.ativo=true")
+						+ ") As MediaTrimestral FROM Nota WHERE matricula.aluno.id=:idAluno AND matricula.classe.id=:idClasse")
 				.setParameter("idAluno", idAluno).setParameter("idClasse", idClasse).getSingleResult();
 
 		return media;
