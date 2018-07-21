@@ -478,7 +478,7 @@ public class MatriculaServicoImpl implements MatriculaServico {
 	public List<Matricula> obterMatriculasPorClassePorCursoPorAreaPorTurma(long idClasse, Long idEscola, String curso,
 			Integer ano, String tipoArea, Integer listarTODASMatriculaOUPorTURMAouPORsemTURMA) {
 		StringBuilder builder = new StringBuilder(
-				"from Matricula  where escola.id=:idEscola AND classe.id=:idClasse AND ano=:ANO AND curso=:CURSO AND m.tipoArea like '%"
+				"from Matricula  where escola.id=:idEscola AND classe.id=:idClasse AND ano=:ANO AND curso=:CURSO AND tipoArea like '%"
 								+ tipoArea + "%' ");
 		
 		if (listarTODASMatriculaOUPorTURMAouPORsemTURMA == 2) {

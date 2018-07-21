@@ -3,6 +3,7 @@ package com.mz.sistema.gestao.escolar.bean;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +45,11 @@ import com.mz.sistema.gestao.escolar.util.Mensagem;
 @Named
 @Controller
 @SessionScoped
-public class BuscarFotoBean {
+public class BuscarFotoBean implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 982225235088558333L;
 	public boolean atualizarFotoBoolean = false;
 	private Usuario usuario;
 	private Funcionario funcionario;

@@ -1,6 +1,7 @@
 
 package com.mz.sistema.gestao.escolar.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -77,13 +78,19 @@ import com.mz.sistema.gestao.escolar.util.TipoLetra;
 import com.mz.sistema.gestao.escolar.util.ValorExtenso;
 
 @Named
-@SessionScope
 @Controller
-public class AlunoBean {
+@SessionScope
+public class AlunoBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2003824937712714535L;
 	private Aluno aluno = new Aluno();
 	private Aluno alunoSelecionado;
 	private Aluno alunoSelecionadoExclusao;
 	private Nota nota;
+	private Nota notaSelecionda;
 
 	private Transferencia transferencia = new Transferencia();
 	private List<Aluno> alunos = new ArrayList<>();
@@ -151,8 +158,8 @@ public class AlunoBean {
 	private List<Turma> turmas = new ArrayList<>();
 	private Matriz matriz = new Matriz();
 	private List<DisciplinaClasse> disciplinaSelecionadas = new ArrayList<>();
-	//private List<DisciplinaClasse> disciplinasClasse = new ArrayList<>();
-	
+	// private List<DisciplinaClasse> disciplinasClasse = new ArrayList<>();
+
 	private static final String FORMATA_SENHA_PADRAO = "ddMMyyyy";
 
 	@Autowired
@@ -239,9 +246,10 @@ public class AlunoBean {
 		pesquisa = new String();
 		alunos = new ArrayList<>();
 		proximoAlocarAlunoBoolean = false;
+		matricula = new Matricula();
+		notaSelecionda = new Nota();
 		try {
 
-			matricula = new Matricula();
 			if (valorMatricula != null)
 				matricula.setValor(valorMatricula);
 			System.out.println("Valor da matrcula: " + valorMatricula);
@@ -530,6 +538,105 @@ public class AlunoBean {
 		}
 	}
 
+	public void adicionarDisciplina() {
+		try {
+			if (nota.getDisciplinaClasse() == null) {
+				Mensagem.mensagemErro("O campo disciplina é obrigatório");
+				return;
+			}
+			NotaId notaId = new NotaId();
+
+			notaId.setId_disciplina_classe(nota.getDisciplinaClasse().getId());
+			notaId.setId_matricula(matriculaSelecionada.getId());
+
+			nota = notaServico.obterNotasPorIdMatriculaPorDisciplina(matriculaSelecionada.getId(),
+					nota.getDisciplinaClasse().getId());
+
+			if (nota == null) {
+				nota = new Nota();
+			}
+			nota.setId(notaId);
+			notaServico.salvar(nota);
+			buscarNotas();
+			Mensagem.mensagemInfo("AVISO: A disciplina adicionada om sucesso!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void atualizarMatricula() {
+		try {
+			NotaId notaId = new NotaId();
+			matricula = matriculaServico.salvarRetornarMatricula(matricula);
+			for (Nota nota : notas) {
+				if (notaId == null) {
+					notaId = new NotaId();
+				}
+
+				Nota nota2 = notaServico.obterNotasPorIdMatriculaPorDisciplina(nota.getMatricula().getId(),
+						nota.getDisciplinaClasse().getId());
+				if (nota2 == null) {
+					nota2 = new Nota();
+
+				}
+				notaId.setId_disciplina_classe(nota.getDisciplinaClasse().getId());
+				notaId.setId_matricula(nota.getMatricula().getId());
+				nota2.setId(notaId);
+				notaServico.salvar(nota);
+
+			}
+
+			Mensagem.mensagemInfo("AVISO: A matrícula  de aluno foi atualizado com sucesso!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void eliminarDisiplina(Nota nota) {
+		try {
+			boolean notasCadastrada = false;
+			Nota notaExistente = notaServico.obterNotasPorIdMatriculaPorDisciplina(nota.getMatricula().getId(),
+					nota.getDisciplinaClasse().getId());
+			if (notaExistente == null) {
+				notas.remove(nota);
+			} else {
+				notasCadastrada = verificarNotasDeAluno(notasCadastrada, nota);
+				if (notasCadastrada) {
+					Mensagem.mensagemErro(
+							"ERRO: Não é possível excluir uma disciplina que já tem nota cadastrada no sistema!");
+					return;
+				}
+				notaServico.excluir(nota);
+				Mensagem.mensagemInfo("AVISO: O vínculo entre o aluno e esta disciplina foi excluido com sucesso!");
+				buscarNotas();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void buscarNotas() {
+		notas = new ArrayList<>();
+		List<Nota> notas = notaServico.obterNotasPorIdMatricula(this.matriculaSelecionada.getId());
+		if (notas != null) {
+			int count = 0;
+			for (Nota nota : notas) {
+				count++;
+				nota.setOrdem(count);
+				this.notas.add(nota);
+			}
+		}
+
+	}
+
+	public void perepararParaEliminarDisiplina(Nota nota) {
+		this.notaSelecionda = nota;
+
+	}
+
 	public void salvarAlocacaoTurma() {
 
 		try {
@@ -638,65 +745,7 @@ public class AlunoBean {
 					boolean notasCadastrada = false;
 					for (Nota nota : notas) {
 
-						if (nota.getAc1() != null) {
-							notasCadastrada = true;
-						}
-						if (nota.getAc2() != null) {
-							notasCadastrada = true;
-						}
-						if (nota.getAc3() != null) {
-							notasCadastrada = true;
-						}
-
-						if (nota.getAc12() != null) {
-							notasCadastrada = true;
-						}
-						if (nota.getAc22() != null) {
-							notasCadastrada = true;
-						}
-						if (nota.getAc32() != null) {
-							notasCadastrada = true;
-						}
-
-						if (nota.getAc13() != null) {
-							notasCadastrada = true;
-						}
-						if (nota.getAc23() != null) {
-							notasCadastrada = true;
-						}
-						if (nota.getAc33() != null) {
-							notasCadastrada = true;
-						}
-
-						if (nota.getAs1() != null) {
-							notasCadastrada = true;
-						}
-						if (nota.getAs2() != null) {
-							notasCadastrada = true;
-						}
-
-						if (nota.getAs12() != null) {
-							notasCadastrada = true;
-						}
-						if (nota.getAs22() != null) {
-							notasCadastrada = true;
-						}
-
-						if (nota.getAs13() != null) {
-							notasCadastrada = true;
-						}
-						if (nota.getAs23() != null) {
-							notasCadastrada = true;
-						}
-						if (nota.getAvaliacaoFinal() != null) {
-							notasCadastrada = true;
-						}
-						if (nota.getAvaliacaoFinal2() != null) {
-							notasCadastrada = true;
-						}
-						if (nota.getAvaliacaoFinal3() != null) {
-							notasCadastrada = true;
-						}
+						notasCadastrada = verificarNotasDeAluno(notasCadastrada, nota);
 					}
 					if (notasCadastrada) {
 						Mensagem.mensagemErro(
@@ -705,8 +754,9 @@ public class AlunoBean {
 					}
 
 					matriculaSelecionadaExclusao.setNotas(new ArrayList<>(notas));
-					matriculaSelecionadaExclusao.getAluno()
-							.setNome(matriculaSelecionadaExclusao.getAluno().getNome().toUpperCase());
+					if (matriculaSelecionadaExclusao.getAluno() != null)
+						matriculaSelecionadaExclusao.getAluno()
+								.setNome(matriculaSelecionadaExclusao.getAluno().getNome().toUpperCase());
 					matriculaServico.excluir(matriculaSelecionadaExclusao);
 
 					Mensagem.mensagemInfo("AVISO: matrícula foi excluida com sucesso!");
@@ -718,6 +768,69 @@ public class AlunoBean {
 			Mensagem.mensagemErro(
 					"ERRO: Não foi possível excluir esse registo pois exitem dependência a ele em outras tabelas!");
 		}
+	}
+
+	private boolean verificarNotasDeAluno(boolean notasCadastrada, Nota nota) {
+		if (nota.getAc1() != null) {
+			notasCadastrada = true;
+		}
+		if (nota.getAc2() != null) {
+			notasCadastrada = true;
+		}
+		if (nota.getAc3() != null) {
+			notasCadastrada = true;
+		}
+
+		if (nota.getAc12() != null) {
+			notasCadastrada = true;
+		}
+		if (nota.getAc22() != null) {
+			notasCadastrada = true;
+		}
+		if (nota.getAc32() != null) {
+			notasCadastrada = true;
+		}
+
+		if (nota.getAc13() != null) {
+			notasCadastrada = true;
+		}
+		if (nota.getAc23() != null) {
+			notasCadastrada = true;
+		}
+		if (nota.getAc33() != null) {
+			notasCadastrada = true;
+		}
+
+		if (nota.getAs1() != null) {
+			notasCadastrada = true;
+		}
+		if (nota.getAs2() != null) {
+			notasCadastrada = true;
+		}
+
+		if (nota.getAs12() != null) {
+			notasCadastrada = true;
+		}
+		if (nota.getAs22() != null) {
+			notasCadastrada = true;
+		}
+
+		if (nota.getAs13() != null) {
+			notasCadastrada = true;
+		}
+		if (nota.getAs23() != null) {
+			notasCadastrada = true;
+		}
+		if (nota.getAvaliacaoFinal() != null) {
+			notasCadastrada = true;
+		}
+		if (nota.getAvaliacaoFinal2() != null) {
+			notasCadastrada = true;
+		}
+		if (nota.getAvaliacaoFinal3() != null) {
+			notasCadastrada = true;
+		}
+		return notasCadastrada;
 	}
 
 	public void excluirEnturmacao() {
@@ -1313,6 +1426,10 @@ public class AlunoBean {
 		try {
 			FuncionarioEscola funcionarioEscola = authenticationContext.getFuncionarioEscolaLogada();
 			escola = funcionarioEscola.getEscola();
+			if (matriculaSelecionada != null) {
+				matricula = matriculaSelecionada;
+			}
+
 			if (renovarMatriculaSelecionadaBoolean == false) {
 				if (matricula.getCurso() != null && matricula.getClasse().getId() != 0 && escola.getId() != null) {
 					if (matricula.getClasse().getCiclo().equals("2º CICLO")) {
@@ -1335,6 +1452,27 @@ public class AlunoBean {
 					}
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void buscarMatrizCurricular() {
+		matrizes = new ArrayList<>();
+		try {
+			FuncionarioEscola funcionarioEscola = authenticationContext.getFuncionarioEscolaLogada();
+			escola = funcionarioEscola.getEscola();
+			if (matriculaSelecionada.getClasse().getCiclo().equals("1º CICLO")) {
+				matriz = matrizServico.obterMatrizPorIdELeftJoinAtiva(matriculaSelecionada.getClasse().getId(),
+						matriculaSelecionada.getCurso(), escola.getId());
+
+			} else {
+
+				matriz = matrizServico.obterMatriz2CicloPorIdELeftJoinAtiva(matriculaSelecionada.getClasse().getId(),
+						matriculaSelecionada.getCurso(), matriculaSelecionada.getTipoArea(), escola.getId());
+
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1419,7 +1557,7 @@ public class AlunoBean {
 		try {
 			matricula.setTurma(null);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 
@@ -1464,25 +1602,24 @@ public class AlunoBean {
 	}
 
 	public void editar(Matricula matricula) {
-		this.matriculaSelecionada = new Matricula();
-		this.matricula = new Matricula();
 		this.matriculaSelecionada = matricula;
-		this.matricula = matricula;
 		confirmarsalvarMatricula = false;
 		renovarMatriculaSelecionadaBoolean = false;
 		try {
+			buscarMatrizesCurriculares();
 			if (matricula.getClasse().getCiclo().equals("2º CICLO")) {
 				matriz = matrizServico.obterMatriz2CicloPorIdELeftJoinAtiva(matricula.getClasse().getId(),
 						matricula.getCurso(), matricula.getTipoArea(), matricula.getEscola().getId());
-				
 
 			} else if (matricula.getClasse().getCiclo().equals("1º CICLO")) {
 				matriz = matrizServico.obterMatrizPorIdELeftJoinAtiva(matricula.getClasse().getId(),
 						matricula.getCurso(), matricula.getEscola().getId());
 
 			}
-			notas=new ArrayList<>();
-			notas = notaServico.obterNotasPorIdMatricula(matricula.getId());
+			nota = new Nota();
+			notas = new ArrayList<>();
+			buscarNotas();
+
 			editarMatricula = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1559,9 +1696,11 @@ public class AlunoBean {
 	}
 
 	public void voltar() {
-		matricula = null;
-		editarMatricula = false;
 
+		if (editarMatricula == true)
+			buscarMatriculas();
+
+		editarMatricula = false;
 	}
 
 	public void setAluno(Aluno aluno) {
@@ -2123,6 +2262,14 @@ public class AlunoBean {
 
 	public void setNota(Nota nota) {
 		this.nota = nota;
+	}
+
+	public Nota getNotaSelecionda() {
+		return notaSelecionda;
+	}
+
+	public void setNotaSelecionda(Nota notaSelecionda) {
+		this.notaSelecionda = notaSelecionda;
 	}
 
 }

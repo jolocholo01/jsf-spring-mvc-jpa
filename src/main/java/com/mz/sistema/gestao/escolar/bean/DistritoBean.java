@@ -77,6 +77,7 @@ public class DistritoBean implements Serializable {
 				Mensagem.mensagemErro("ERRO: Já existe um distrito cadastrado no sistema!");
 				return;
 			}
+			String provincia=distrito.getProvincia();
 			distritoServico.salvar(distrito);
 			if (distrito.getId() == null) {
 				Mensagem.mensagemInfo("AVISO: Distrito foi cadastrado com sucesso!");
@@ -88,6 +89,7 @@ public class DistritoBean implements Serializable {
 				cadastroDistritoBoolean = false;
 			}
 			distrito = new Distrito();
+			distrito.setProvincia(provincia);
 			distrito.setDataCadastro(new Date());
 		} catch (Exception e) {
 			e.printStackTrace();

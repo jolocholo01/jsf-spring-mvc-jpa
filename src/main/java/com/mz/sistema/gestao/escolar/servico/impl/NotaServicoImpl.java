@@ -32,6 +32,15 @@ public class NotaServicoImpl implements NotaServico {
 	}
 
 	@Override
+	public void excluir(Nota nota) {
+		
+		em.createNativeQuery("DELETE FROM Nota WHERE id_matricula = ? AND id_disciplina_classe = ? ").setParameter(1, nota.getMatricula().getId())
+		.setParameter(2, nota.getDisciplinaClasse().getId()).executeUpdate();
+	
+
+	}
+
+	@Override
 	public List<Nota> listarNotas() {
 		@SuppressWarnings("unchecked")
 		List<Nota> notas = em.createQuery("FROM Nota").getResultList();
@@ -68,7 +77,8 @@ public class NotaServicoImpl implements NotaServico {
 		List<Nota> notas = em
 				.createQuery(
 						"FROM Nota WHERE disciplinaClasse.id=:idDisciplinaClasse AND matricula.turma.id=:idTurma  ORDER BY matricula.numeroAlunoTurma")
-				.setParameter("idDisciplinaClasse", idDisciplinaClasse).setParameter("idTurma", idTurma).getResultList();
+				.setParameter("idDisciplinaClasse", idDisciplinaClasse).setParameter("idTurma", idTurma)
+				.getResultList();
 		if (!notas.isEmpty()) {
 			return notas;
 		}
@@ -175,7 +185,7 @@ public class NotaServicoImpl implements NotaServico {
 	@Override
 	public List<Nota> obterNotasPorIdMatricula(Long idMatricula) {
 		@SuppressWarnings("unchecked")
-		List<Nota> notas = em.createQuery("FROM Nota WHERE matricula.id=:idMatricula ")
+		List<Nota> notas = em.createQuery("FROM Nota WHERE matricula.id=:idMatricula ORDER BY disciplinaClasse.disciplina.descricao")
 				.setParameter("idMatricula", idMatricula).getResultList();
 		if (!notas.isEmpty()) {
 			return notas;
@@ -187,8 +197,10 @@ public class NotaServicoImpl implements NotaServico {
 	@Override
 	public Nota obterNotasPorIdMatriculaPorDisciplina(Long idMatricula, Long idDisciplinaClasse) {
 
-		List<Nota> notas = em.createQuery("FROM Nota WHERE disciplinaClasse.id=:idDisciplinaClasse AND matricula.id=:idMatricula")
-				.setParameter("idDisciplinaClasse", idDisciplinaClasse).setParameter("idMatricula", idMatricula).getResultList();
+		List<Nota> notas = em
+				.createQuery("FROM Nota WHERE disciplinaClasse.id=:idDisciplinaClasse AND matricula.id=:idMatricula")
+				.setParameter("idDisciplinaClasse", idDisciplinaClasse).setParameter("idMatricula", idMatricula)
+				.getResultList();
 		if (!notas.isEmpty()) {
 			return notas.get(0);
 		}

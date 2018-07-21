@@ -1,6 +1,9 @@
 .danger{
 	background-color: #423637;
 }
+.danger:HOVER{
+	background-color: #423637;
+}
 
 .texto{
     font-size: 36px;

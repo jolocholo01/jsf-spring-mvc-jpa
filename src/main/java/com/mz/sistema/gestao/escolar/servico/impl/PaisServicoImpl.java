@@ -53,10 +53,13 @@ public class PaisServicoImpl implements PaisServico {
 		return em.createQuery("from Pais  order by nome").getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Pais> obterPaisPorPesquisa(String pesquisa) {
-		@SuppressWarnings("unchecked")
-		List<Pais> pais = em.createQuery("FROM Pais WHERE nome LIKE '%" + pesquisa + "%'").getResultList();
+
+		String continente = pesquisa.toUpperCase().replace("IA", "IÁ");
+		List<Pais> pais = em.createQuery("FROM Pais WHERE nome LIKE '%" + pesquisa
+				+ "%' or continente LIKE '%" + continente + "%' order by nome").getResultList();
 		if (!pais.isEmpty()) {
 			return pais;
 		}

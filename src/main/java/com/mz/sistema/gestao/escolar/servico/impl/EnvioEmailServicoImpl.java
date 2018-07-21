@@ -138,7 +138,7 @@ public class EnvioEmailServicoImpl implements EnvioEmailServico {
 		texto = texto.replace("{usuario.nome}", usuario.getNome());
 		texto = texto.replace("{parametro}", recoperarSenha.getParametro());
 		texto = texto.replace("{emailFormatoHash}", emailFormatoHas);
-		texto = texto.replace("{link}", url.replace("http://", "").replace("https://", ""));
+		texto = texto.replace("{link}", url);
 		texto = texto.replace("{linkEnviado}", linkEnviado);
 		texto = texto.replace("{ano}", ano);
 		

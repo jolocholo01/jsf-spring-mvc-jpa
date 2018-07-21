@@ -49,7 +49,7 @@ public class ProfessorTurmaServicoImpl implements ProfessorTurmaServico {
 		}
 		List<ProfessorTurma> professorTurmas = em
 				.createQuery(
-						"FROM ProfessorTurma  WHERE turma.escola.id=:idEscola AND professor.id=:idProfessor AND turma.ano=:ANO ORDER BY turma.descricao")
+						"FROM ProfessorTurma  WHERE turma.escola.id=:idEscola AND professor.id=:idProfessor AND turma.ano=:ANO ORDER BY turma.curso, turma.classe.sigla, turma.descricao")
 				.setParameter("idEscola", idEscola).setParameter("idProfessor", professor.getId())
 				.setParameter("ANO", ANO).getResultList();
 		if (!professorTurmas.isEmpty()) {

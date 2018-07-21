@@ -1,6 +1,7 @@
 
 package com.mz.sistema.gestao.escolar.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,11 @@ import com.mz.sistema.gestao.escolar.util.Mensagem;
 @Named
 @SessionScope
 @Controller
-public class CalendarioBean {
+public class CalendarioBean implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8702469888813582757L;
 	private Calendario calendario = new Calendario();
 	private List<Calendario> calendarios = new ArrayList<>();
 	private List<Calendario> calendariosEscolar = new ArrayList<>();

@@ -14,6 +14,7 @@ import com.mz.sistema.gestao.escolar.modelo.Nota;
 
 public interface NotaServico {
 	public void salvar(Nota nota);
+	public void excluir(Nota nota);
 	public List<Nota> listarNotas();
 	public List<Nota> listarNotasAtivas();
 	public List<Nota> obterNotaPorTurma(Integer idTurma);
@@ -29,6 +30,7 @@ public interface NotaServico {
 			Long idTrimetre);
 	public List<Nota> obterNotasPorIdMatricula(Long idMatricula);
 	public Nota obterNotasPorIdMatriculaPorDisciplina(Long idMatricula, Long idDisciplinaClasse);
+	
 
 	
 

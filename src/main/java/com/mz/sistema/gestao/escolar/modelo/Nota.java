@@ -18,6 +18,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.mz.sistema.gestao.escolar.chave.composta.NotaId;
 
@@ -75,6 +76,7 @@ public class Nota implements Serializable {
 
 	private int mediaAnual;
 	private String situacaoAnual;
+	private Integer ordem;
 
 	@EmbeddedId
 	@AttributeOverrides({
@@ -190,8 +192,6 @@ public class Nota implements Serializable {
 	public void setAvaliacaoFinal(Double avaliacaoFinal) {
 		this.avaliacaoFinal = avaliacaoFinal;
 	}
-
-	
 
 	public int getMediaAnual() {
 		return mediaAnual;
@@ -419,6 +419,15 @@ public class Nota implements Serializable {
 
 	public void setSituacao3(String situacao3) {
 		this.situacao3 = situacao3;
+	}
+
+	@Transient
+	public Integer getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(Integer ordem) {
+		this.ordem = ordem;
 	}
 
 }

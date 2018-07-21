@@ -1,5 +1,6 @@
 package com.mz.sistema.gestao.escolar.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -32,8 +33,12 @@ import com.mz.sistema.gestao.escolar.util.Mensagem;
 @Controller
 @Named
 @SessionScope
-public class ClasseBean {
+public class ClasseBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8584777005392157876L;
 	private Classe classe;
 	private Classe classeSelecionadaExclusao;
 	private String pesquisa;

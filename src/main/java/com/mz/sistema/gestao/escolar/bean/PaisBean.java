@@ -76,6 +76,7 @@ public class PaisBean implements Serializable {
 				Mensagem.mensagemAlerta("ATENÇÃO: Já existe um país cadastrado no sistema!");
 				return;
 			}
+			Continente continente=pais.getContinente();
 			paisServico.salvar(pais);
 			if (pais.getId() == null) {
 				Mensagem.mensagemInfo("AVISO: País foi cadastrado com sucesso!");
@@ -87,6 +88,8 @@ public class PaisBean implements Serializable {
 				cadastroPaisBoolean = false;
 			}
 			pais = new Pais();
+			pais.setContinente(continente);
+			pais.setDataCadastro(new Date());
 
 		} catch (Exception e) {
 			e.printStackTrace();
