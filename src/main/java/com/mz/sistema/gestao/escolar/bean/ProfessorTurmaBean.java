@@ -360,7 +360,7 @@ public class ProfessorTurmaBean {
 			System.out.println("Horario do professor:" + professorTurma.getHorario());
 
 			ProfessorTurmaId professorTurmaId = new ProfessorTurmaId();
-			professorTurmaId.setId_disciplina_classe(disciplinaClasse.getId());
+			professorTurmaId.setId_disciplina(disciplinaClasse.getId());
 			professorTurmaId.setId_turma(turmaSelecionada.getId());
 			professorTurma.setCredito(disciplinaClasse.getCredito());
 			professorTurma.setId(professorTurmaId);
@@ -440,7 +440,7 @@ public class ProfessorTurmaBean {
 
 			horariosDisciplina = horarioServico.obterHorarioPorIdTurmaPorIdDiciplina(
 					this.professorTurmaSelecionada.getTurma().getId(),
-					this.professorTurmaSelecionada.getDisciplinaClasse().getDisciplina().getId());
+					this.professorTurmaSelecionada.getDisciplina().getId());
 		} catch (
 
 		Exception e) {
@@ -723,17 +723,17 @@ public class ProfessorTurmaBean {
 							+ professorTurma.getTurma().getCurso() + ".pdf";
 			Map<String, Object> parametro = new HashMap<>();
 			String nomeProfessor = null, nomeDiciplina = null;
-			Integer idTurma = null;
+			Long idTurma = null;
 			if (professorTurma.getProfessor() != null) {
 				if (professorTurma.getProfessor().getNome() != null)
 					nomeProfessor = TipoLetra.capitalizeString(professorTurma.getProfessor().getNome())
 							.replace(" Dos ", " dos ").replace(" Das ", "das").replace(" De ", " de ")
 							.replace(" À ", " à ");
 			}
-			if (professorTurma.getDisciplinaClasse().getDisciplina() != null) {
-				if (professorTurma.getDisciplinaClasse().getDisciplina().getDescricao() != null)
+			if (professorTurma.getDisciplina() != null) {
+				if (professorTurma.getDisciplina().getDescricao() != null)
 					nomeDiciplina = TipoLetra
-							.capitalizeString(professorTurma.getDisciplinaClasse().getDisciplina().getDescricao())
+							.capitalizeString(professorTurma.getDisciplina().getDescricao())
 							.replace(" Dos ", " dos ").replace(" Das ", "das").replace(" De ", " de ")
 							.replace(" À ", " à ");
 
@@ -742,7 +742,7 @@ public class ProfessorTurmaBean {
 				if (professorTurma.getTurma().getId() != null) {
 					idTurma = professorTurma.getTurma().getId();
 				}
-			if (professorTurma.getDisciplinaClasse().getDisciplina().getDescricao().toUpperCase()
+			if (professorTurma.getDisciplina().getDescricao().toUpperCase()
 					.equals("REUNIÃO DE TURMA")) {
 
 				caminho = "/academico/relatorio/aluno/alunos_turma.jasper";
@@ -756,7 +756,7 @@ public class ProfessorTurmaBean {
 				parametro.put("idTurma", idTurma);
 				parametro.put("professor", nomeProfessor);
 				parametro.put("disciplina", nomeDiciplina);
-				parametro.put("id_disciplina_classe", professorTurma.getDisciplinaClasse().getId());
+				parametro.put("id_disciplina", professorTurma.getDisciplina().getId());
 			}
 
 			geradorDeRelatoriosServico.geraPdf(caminho, parametro, filename);

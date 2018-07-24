@@ -94,7 +94,7 @@ public class Matricula implements Serializable {
 		this.dataMatricula = dataMatricula;
 	}
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne
 	@JoinColumn(name = "id_aluno")
 	public Aluno getAluno() {
 		return aluno;

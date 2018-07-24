@@ -29,7 +29,7 @@ public class DisciplinaConverter implements Converter {
 
 		String[] propriedades = valor.split("#");
 		if (!propriedades[0].isEmpty()) {
-			disciplina.setId(new Integer(propriedades[0]));
+			disciplina.setId(new Long(propriedades[0]));
 		}
 		if (!propriedades[1].isEmpty()) {
 			disciplina.setDescricao(propriedades[1]);

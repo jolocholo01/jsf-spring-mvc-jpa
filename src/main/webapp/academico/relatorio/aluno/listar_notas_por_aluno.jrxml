@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-07-06T13:13:04 -->
+<!-- 2018-07-23T07:45:33 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notas_anual" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="838" leftMargin="2" rightMargin="2" topMargin="10" bottomMargin="10" uuid="9a0dfb25-e72b-4f61-b070-8a9e40fbb38b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
@@ -72,10 +72,8 @@ FROM nota
 	 matricula.escola_id = escola.id 
 	INNER JOIN distrital ON 
 	 escola.id_direcao_distrital = distrital.id 
-	INNER JOIN disciplina_classe ON 
-	 nota.id_disciplina_classe = disciplina_classe.id 
-	 INNER JOIN disciplina ON 
-	 disciplina_classe.id_disciplina = disciplina.id 
+	INNER JOIN disciplina ON 
+	 nota.id_disciplina = disciplina.id 
 	INNER JOIN classe ON 
 	 matricula.idclasse = classe.id 
 	 AND matricula.idclasse = classe.id 

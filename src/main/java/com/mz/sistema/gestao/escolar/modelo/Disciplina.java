@@ -34,7 +34,7 @@ public class Disciplina implements Serializable {
 
 	private static final String FORMATO_DATA_PADRAO = "dd/MM/yyyy";
 
-	private Integer id;
+	private Long id;
 	private String descricao;
 	private String sigla;
 	private String codigo;
@@ -50,12 +50,12 @@ public class Disciplina implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
+	@Column(name = "id")
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

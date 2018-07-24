@@ -36,7 +36,7 @@ public class HorarioServicoImpl implements HorarioServico {
 				.setParameter(1, horario.getDisciplina().getId()).setParameter(2, horario.getTurma().getId())
 				.executeUpdate();
 
-		//em.remove(em.merge(horario));
+		// em.remove(em.merge(horario));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -44,7 +44,7 @@ public class HorarioServicoImpl implements HorarioServico {
 	public List<Horario> obterHorarioPorIdHorarioAulaPoridProfessor(Long idHorarioAula, Long idProfessor, Integer ano) {
 		List<Horario> horarios = em
 				.createQuery(
-						"From Horario h join fetch h.turma.classe where h.horarioAula.id=:idHorarioAula AND h.professor.id=:idProfessor AND h.ano=:ANO ")
+						"From Horario h  where h.horarioAula.id=:idHorarioAula AND h.professor.id=:idProfessor AND h.ano=:ANO ")
 				.setParameter("idHorarioAula", idHorarioAula).setParameter("idProfessor", idProfessor)
 				.setParameter("ANO", ano).getResultList();
 		if (!horarios.isEmpty()) {
@@ -54,7 +54,7 @@ public class HorarioServicoImpl implements HorarioServico {
 	}
 
 	@Override
-	public List<Horario> obterHorarioPorIdHorarioAulaPoridTurma(Long idHorarioAula, Integer idTurma) {
+	public List<Horario> obterHorarioPorIdHorarioAulaPoridTurma(Long idHorarioAula, Long idTurma) {
 		@SuppressWarnings("unchecked")
 		List<Horario> horarios = em
 				.createQuery("From Horario h  where h.horarioAula.id=:idHorarioAula AND h.turma.id=:idTurma ")
@@ -83,7 +83,7 @@ public class HorarioServicoImpl implements HorarioServico {
 
 	@Override
 	public Horario obterHorarioPorIdHorarioAulaIdProfessorIdTurmaIdDiaSemaIdDiciplina(long idHorarioAula,
-			Long idFuncionario, Long idDiaSemana, Integer idTurma, Integer idDisciplina) {
+			Long idFuncionario, Long idDiaSemana, Long idTurma, Long idDisciplina) {
 		@SuppressWarnings("unchecked")
 		List<Horario> horarios = em
 				.createQuery(
@@ -101,7 +101,7 @@ public class HorarioServicoImpl implements HorarioServico {
 
 	@Override
 	public Horario obterHorarioPorIdHorarioAulaIdTurmaIdDiaSemaIdDiciplina(long idHorarioAula, Long idDiaSemana,
-			Integer idTurma, Integer idDisciplina) {
+			Long idTurma, Long idDisciplina) {
 		@SuppressWarnings("unchecked")
 		List<Horario> horarios = em
 				.createQuery("From Horario h  where h.horarioAula.id=:idHorarioAula AND h.diaSemana.id=:idDiaSemana "
@@ -116,10 +116,11 @@ public class HorarioServicoImpl implements HorarioServico {
 	}
 
 	@Override
-	public List<Horario> obterHorarioPorIdTurmaPorIdDiciplina(Integer idTurma, Integer idDisciplina) {
+	public List<Horario> obterHorarioPorIdTurmaPorIdDiciplina(Long idTurma, Long idDisciplina) {
 		@SuppressWarnings("unchecked")
 		List<Horario> horarios = em
-				.createQuery("From Horario h  where h.turma.id=:idTurma AND h.disciplina.id=:idDisciplina ORDER BY h.diaSemana.ordem")
+				.createQuery(
+						"From Horario h  where h.turma.id=:idTurma AND h.disciplina.id=:idDisciplina ORDER BY h.diaSemana.ordem")
 				.setParameter("idTurma", idTurma).setParameter("idDisciplina", idDisciplina).getResultList();
 
 		if (!horarios.isEmpty()) {
@@ -129,7 +130,7 @@ public class HorarioServicoImpl implements HorarioServico {
 	}
 
 	@Override
-	public List<Horario> obterHorarioIdTurma(Integer idTurma) {
+	public List<Horario> obterHorarioIdTurma(Long idTurma) {
 		@SuppressWarnings("unchecked")
 		List<Horario> horarios = em.createQuery("From Horario h  where h.turma.id=:idTurma ")
 				.setParameter("idTurma", idTurma).getResultList();
@@ -141,21 +142,21 @@ public class HorarioServicoImpl implements HorarioServico {
 	}
 
 	@Override
-	public boolean verificarHorarioMinhaTurma(Integer idTurma) {
+	public boolean verificarHorarioMinhaTurma(Long idTurma) {
 		@SuppressWarnings("unchecked")
 		List<Horario> horarios = em.createQuery("From Horario h  where h.turma.id=:idTurma ")
 				.setParameter("idTurma", idTurma).getResultList();
 
-			return horarios.isEmpty();
+		return horarios.isEmpty();
 	}
 
 	@Override
-	public List<Horario> obterHorarioPorIdTurma(Integer idTurma) {
+	public List<Horario> obterHorarioPorIdTurma(Long idTurma) {
 		@SuppressWarnings("unchecked")
 		List<Horario> horarios = em.createQuery("From Horario h  where h.turma.id=:idTurma ")
 				.setParameter("idTurma", idTurma).getResultList();
 
-			return horarios;
+		return horarios;
 	}
 
 }

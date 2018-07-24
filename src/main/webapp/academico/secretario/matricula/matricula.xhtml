@@ -15,36 +15,9 @@
 			href="#{request.contextPath}/resources/css/horario.css" />
 	</ui:define>
 
-	<ui:define name="titulo_do_corpo">
-		<ui:include src="/academico/secretario/template/titulo_do_corpo.xhtml"></ui:include>
-	</ui:define>
-	<ui:define name="nome_usuario">
-		<ui:include src="/academico/secretario/template/nome_usuario.xhtml"></ui:include>
-	</ui:define>
 
 	<ui:define name="ambiente_comum">
 
-		<!-- <h:inputText >
-	<f:passThroughAttribute name="placeholder" value="Texto do placeholder"/>
-	</h:inputText> -->
-		<!-- menus -->
-		<h:form id="form_menu">
-			<div class="menu menubar">
-				<ul>
-					<li style="width: 65px;"><h:outputLink
-							value="#{request.contextPath}/academico/secretario/index.jsf">
-							 Principal
-						</h:outputLink></li>
-					<h:panelGroup>
-						<h:outputText value=" > " style="font-size:21px;" />
-					</h:panelGroup>
-					<li><h:outputLink
-							value="#{request.contextPath}/secretario/matricula.jsf">
-							Quadro de matrícula
-						</h:outputLink></li>
-				</ul>
-			</div>
-		</h:form>
 		<ui:include src="/academico/escola/matricula/matricula.xhtml"></ui:include>
 	</ui:define>
 </ui:composition>

@@ -16,7 +16,7 @@ public interface DisciplinaClasseServico {
 	public void salvar(DisciplinaClasse disciplinaClasse);	
 	public void excluir(DisciplinaClasse disciplinaSelecionada);
 	public List<DisciplinaClasse> obterDisciplinasClassePorArea( Long idArea);
-	public DisciplinaClasse disciplinasClasseExistente(Long idClasse, Integer idDiscipina, Long idArea);
+	public DisciplinaClasse disciplinasClasseExistente(Long idClasse, Long idDiscipina, Long idArea);
 	public DisciplinaClasse obterDisciplinasClassePorId(long id);
 	public List<DisciplinaClasse> obterTodasDisciplinasClasse();
 	public List<DisciplinaClasse> obterDisciplinasPorClasse(long idClasse);

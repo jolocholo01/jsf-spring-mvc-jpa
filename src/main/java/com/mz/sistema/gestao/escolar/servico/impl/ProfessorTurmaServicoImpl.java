@@ -60,10 +60,10 @@ public class ProfessorTurmaServicoImpl implements ProfessorTurmaServico {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProfessorTurma> obterProfessorTurmaPorTurma(Integer idTurma) {
+	public List<ProfessorTurma> obterProfessorTurmaPorTurma(Long idTurma) {
 		List<ProfessorTurma> professorTurmas = em
 				.createQuery(
-						"FROM ProfessorTurma  WHERE turma.id=:idTurma ORDER By disciplinaClasse.disciplina.descricao ")
+						"FROM ProfessorTurma  WHERE turma.id=:idTurma ORDER By disciplina.descricao ")
 				.setParameter("idTurma", idTurma).getResultList();
 		if (!professorTurmas.isEmpty()) {
 			return professorTurmas;
@@ -72,7 +72,7 @@ public class ProfessorTurmaServicoImpl implements ProfessorTurmaServico {
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProfessorTurma> obterProfessorTurmaPorTurmaOrdernarPorNome(Integer idTurma) {
+	public List<ProfessorTurma> obterProfessorTurmaPorTurmaOrdernarPorNome(Long idTurma) {
 		List<ProfessorTurma> professorTurmas = em
 				.createQuery(
 						"FROM ProfessorTurma  WHERE turma.id=:idTurma ORDER By professor.nome ")
@@ -85,10 +85,10 @@ public class ProfessorTurmaServicoImpl implements ProfessorTurmaServico {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProfessorTurma> obterProfessorTurmaPorTurmaOrdenarPorIdDisciplina(Integer idTurma) {
+	public List<ProfessorTurma> obterProfessorTurmaPorTurmaOrdenarPorIdDisciplina(Long idTurma) {
 		List<ProfessorTurma> professorTurmas = em
 				.createQuery(
-						"FROM ProfessorTurma  WHERE turma.id=:idTurma ORDER By disciplinaClasse.disciplina.id ")
+						"FROM ProfessorTurma  WHERE turma.id=:idTurma ORDER By disciplina.id ")
 				.setParameter("idTurma", idTurma).getResultList();
 		if (!professorTurmas.isEmpty()) {
 			return professorTurmas;
@@ -97,11 +97,11 @@ public class ProfessorTurmaServicoImpl implements ProfessorTurmaServico {
 	}
 
 	@Override
-	public ProfessorTurma obterProfessorTurmaPorIdTurmarPorIdDisciplina(Integer idTurma, Integer idDisciplina) {
+	public ProfessorTurma obterProfessorTurmaPorIdTurmarPorIdDisciplina(Long idTurma, Long idDisciplina) {
 		@SuppressWarnings("unchecked")
 		List<ProfessorTurma> professorTurmas = em
 				.createQuery(
-						"FROM ProfessorTurma   WHERE turma.id=:idTurma and  disciplinaClasse.disciplina.id=:idDisciplina ")
+						"FROM ProfessorTurma   WHERE turma.id=:idTurma and  disciplina.id=:idDisciplina ")
 				.setParameter("idTurma", idTurma).setParameter("idDisciplina", idDisciplina).getResultList();
 		if (!professorTurmas.isEmpty()) {
 			return professorTurmas.get(0);

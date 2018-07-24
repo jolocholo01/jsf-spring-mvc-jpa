@@ -29,7 +29,7 @@
 		</h3>
 
 		<p:messages closable="true"
-			style=" margin-left: 5px;margin-right:5px;" id="idMensagem"/>
+			style=" margin-left: 5px;margin-right:5px;" id="idMensagem" />
 
 		<div class="card-body">
 
@@ -167,12 +167,14 @@
 					</h:panelGroup>
 
 					<div style="text-align: center">
-						<h:commandButton value="Listar os alunos"
-							actionListener="#{alunoBean.buscarMatriculas}"
-							styleClass=" btn btn-primary " />
-						<h:commandButton value=" Cancelar" immediate="true"
-							action="#{buscarFotoBean.voltar}" styleClass=" btn btn-success"
-							style="margin-left:10px" />
+						<div class="col-sm-8">
+							<h:commandButton value="Listar os alunos"
+								actionListener="#{alunoBean.buscarMatriculas}"
+								styleClass=" btn btn-primary " />
+							<h:commandButton value=" Cancelar" immediate="true"
+								action="#{buscarFotoBean.voltar}" styleClass=" btn btn-success"
+								style="margin-left:10px" />
+						</div>
 					</div>
 
 					<h:dataTable id="tabela" value="#{alunoBean.matriculas}"
@@ -664,14 +666,14 @@
 						styleClass="col-sm-2 control-label texto-label bolder textfim" />
 					<div class="col-sm-5">
 						<h:selectOneMenu id="idDisciplinaClasse"
-							value="#{alunoBean.nota.disciplinaClasse}"
-							styleClass="form-control" converter="disciplinaClasseConverter">
+							value="#{alunoBean.nota.disciplina}" styleClass="form-control"
+							converter="disciplinaConverter">
 							<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
 							<f:selectItems value="#{alunoBean.matriz.disciplinaClasses}"
 								var="disciplinaClassse"
 								itemLabel="#{disciplinaClassse.disciplina.descricao}"
-								itemValue="#{disciplinaClassse}" />
-							
+								itemValue="#{disciplinaClassse.disciplina}" />
+
 						</h:selectOneMenu>
 					</div>
 				</div>
@@ -683,21 +685,24 @@
 							actionListener="#{alunoBean.voltar}"
 							styleClass=" btn btn-success " />
 
-						<h:commandButton value="adicionar disciplina"
-							actionListener="#{alunoBean.adicionarDisciplina}"
-							styleClass=" btn btn-danger danger"  style=" margin-left: 1%;">
-						</h:commandButton>
-
 						<h:commandButton value="&#x2714; Confirmar"
-							actionListener="#{alunoBean.atualizarMatricula}"
+							actionListener="#{alunoBean.adicionarDisciplina}"
 							styleClass=" btn btn-primary " style=" margin-left: 1%;" />
+
+						<h:commandLink
+							actionListener="#{alunoBean.imprimirReciboInscricaoDoAluno(alunoBean.matriculaSelecionada)}"
+							styleClass="  btn btn-danger danger" style=" margin-left: 1%;"
+							rendered="#{not empty alunoBean.notas}">
+							<span class="glyphicon glyphicon-save"></span>
+						Baixar
+					</h:commandLink>
 					</div>
 				</div>
 
 				<h:panelGroup id="tabela-disciplinas">
 					<h:dataTable value="#{alunoBean.notas}" var="nota"
 						style="width:80%;"
-						styleClass="table table-bordered tabelaProfessor  tabela-funcionario left tabela1"
+						styleClass="table table-bordered tabelaProfessor  tabela-funcionario left tabela1 hover"
 						disabledTextSelection="true"
 						columnClasses="center, ,center,center"
 						rowKey="#{disciplinaDaClassse.disciplina.id}"
@@ -715,26 +720,29 @@
 							<f:facet name="header">
 								<h:outputText value="Disciplina" />
 							</f:facet>
-							<h:outputText
-								value="#{nota.disciplinaClasse.disciplina.descricao}">
+							<h:outputText value="#{nota.disciplina.descricao}">
 							</h:outputText>
 						</h:column>
 						<h:column headerClass="center">
 							<f:facet name="header">
-								<h:outputText value="C.H. Semanal" />
+								<h:outputText value="Ano" />
 							</f:facet>
-							<h:outputText value="#{nota.disciplinaClasse.credito}">
+							<h:outputText value="#{nota.matricula.ano}">
 							</h:outputText>
 						</h:column>
 						<h:column headerClass="center">
 							<f:facet name="header">
 								<h:outputText value="Acções" />
 							</f:facet>
-							<h:commandLink
-								actionListener="#{alunoBean.eliminarDisiplina(nota)}">
+							<h:commandLink>
 								<p:graphicImage url="#{buscarFotoBean.retornarImagesExcluir}"
 									height="16" width="16" />
-
+							
+								<p:ajax event="click"
+									update="form:id-panelGroup-confirma-modal1"
+									listener="#{alunoBean.prepararParaEliminarDisiplina(nota)}" />
+								<f:passThroughAttribute name="data-toggle" value="modal" />
+								<f:passThroughAttribute name="data-target" value="#myModal1" />
 							</h:commandLink>
 						</h:column>
 					</h:dataTable>
@@ -746,7 +754,7 @@
 	</div>
 
 
-	<!-- Modal -->
+	<!-- Modal escluir matricula-->
 
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" data-backdrop="static"
@@ -815,6 +823,79 @@
 					</h:commandButton>
 					<h:commandButton title="Excluir"
 						action="#{alunoBean.excluirMatricula}"
+						styleClass="btn btn-primary" value="Excluir">
+
+					</h:commandButton>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal escluir disciplina-->
+
+
+	<div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" data-backdrop="static"
+		style="padding-top: 210px;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">
+						<h:outputLabel value="Você Tem certeza?" />
+
+					</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<h:panelGroup aria-hidden="true">&times;
+									
+						</h:panelGroup>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h:panelGroup id="id-panelGroup-confirma-modal1">
+						<h:outputText value="Tem certeza que deseja excluir a disciplina de" />
+						<h:outputLabel
+							value="&nbsp;#{alunoBean.notaSeleciondaExclusao.disciplina.descricao}&nbsp;"
+							style="font-weight: 600;" />
+						<h:outputText value="do(a) aluno(a) " />
+						<h:outputLabel
+							value="&nbsp;#{alunoBean.notaSeleciondaExclusao.matricula.aluno.nome} &nbsp;"
+							style="font-weight: 600;" />
+						<h:outputText value="da" />
+						<h:outputLabel
+							value="&nbsp;#{alunoBean.notaSeleciondaExclusao.matricula.classe.descricao} &nbsp;"
+							style="font-weight: 600;" />
+						<h:outputText value="do curso" />
+						<h:outputLabel
+							value="&nbsp;#{alunoBean.notaSeleciondaExclusao.matricula.curso}"
+							style="font-weight: 600;" />
+						<h:outputText value="?" />
+						<br />
+						<hr></hr>
+						<h:outputLabel value="NB:" style="font-weight: 600;" />
+						<h:outputText value="&nbsp; Se clicar em " />
+						<h:outputLabel value="&nbsp;Excluir&nbsp;"
+							style="font-weight: 600;" />
+						<h:outputText value="&nbsp; a disciplina é apagada do(a)  " />
+						<h:outputLabel value="&nbsp;aluno(a)&nbsp;" />
+						<h:outputLabel
+							value="&nbsp;#{alunoBean.notaSeleciondaExclusao.matricula.aluno.nome}"
+							style="font-weight: 600;" />
+
+						<h:outputText value=".&nbsp;" />
+						<h:outputText
+							value="E se esta disciplina já tem nota associada a este aluno deve ser removida antes. Deseja Continuar?" />
+					</h:panelGroup>
+
+				</div>
+				<div class="modal-footer">
+					<h:commandButton type="button" title="Cancelar"
+						class="btn btn-success" value="Cancelar">
+						<f:passThroughAttribute name="data-dismiss" value="modal" />
+
+					</h:commandButton>
+					<h:commandButton title="Excluir"
+						action="#{alunoBean.eliminarDisiplina}"
 						styleClass="btn btn-primary" value="Excluir">
 
 					</h:commandButton>

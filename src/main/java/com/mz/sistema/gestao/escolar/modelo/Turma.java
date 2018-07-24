@@ -27,7 +27,7 @@ public class Turma implements Serializable {
 
 
 	private static final long serialVersionUID = 5027865035062163664L;
-	private Integer id;
+	private Long id;
 	private Integer ano;
 	private String descricao;
 	private String curso;
@@ -50,11 +50,11 @@ public class Turma implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

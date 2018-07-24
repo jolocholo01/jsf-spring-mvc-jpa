@@ -91,6 +91,7 @@ public class AlunoBean implements Serializable {
 	private Aluno alunoSelecionadoExclusao;
 	private Nota nota;
 	private Nota notaSelecionda;
+	private Nota notaSeleciondaExclusao;
 
 	private Transferencia transferencia = new Transferencia();
 	private List<Aluno> alunos = new ArrayList<>();
@@ -329,7 +330,9 @@ public class AlunoBean implements Serializable {
 				Funcionario funcionario = (Funcionario) authenticationContext.getUsuarioLogado();
 				aluno.setFuncionario(funcionario);
 			}
-
+			if (aluno.getProfissao() == null) {
+				aluno.setProfissao(null);
+			}
 			alunoServico.salvar(aluno);
 			if (aluno.getId() == null) {
 				Mensagem.mensagemInfo("AVISO: Aluno cadastrado com sucesso!");
@@ -490,7 +493,7 @@ public class AlunoBean implements Serializable {
 								nota = new Nota();
 
 							}
-							notaId.setId_disciplina_classe(disciplinaClasse.getId());
+							notaId.setId_disciplina(disciplinaClasse.getDisciplina().getId());
 							notaId.setId_matricula(matricula.getId());
 							nota.setId(notaId);
 							notaServico.salvar(nota);
@@ -513,7 +516,7 @@ public class AlunoBean implements Serializable {
 							nota = new Nota();
 
 						}
-						notaId.setId_disciplina_classe(disciplinaClasse.getId());
+						notaId.setId_disciplina(disciplinaClasse.getDisciplina().getId());
 						notaId.setId_matricula(matricula.getId());
 						nota.setId(notaId);
 						notaServico.salvar(nota);
@@ -540,25 +543,33 @@ public class AlunoBean implements Serializable {
 
 	public void adicionarDisciplina() {
 		try {
-			if (nota.getDisciplinaClasse() == null) {
-				Mensagem.mensagemErro("O campo disciplina é obrigatório");
-				return;
+			if (nota.getDisciplina() != null) {
+				if (nota.getDisciplina().getId() != null) {
+					NotaId notaId = new NotaId();
+
+					notaId.setId_disciplina(nota.getDisciplina().getId());
+					notaId.setId_matricula(matriculaSelecionada.getId());
+
+					nota = notaServico.obterNotasPorIdMatriculaPorDisciplina(matriculaSelecionada.getId(),
+							nota.getDisciplina().getId());
+					if (nota != null) {
+						if (nota.getId() != null) {
+							Mensagem.mensagemAlerta("ATENÇÃO: Esta discipina já foi adicionada a este aluno!");
+							return;
+						}
+					}
+
+					if (nota == null) {
+						nota = new Nota();
+					}
+					nota.setId(notaId);
+					notaServico.salvar(nota);
+				}
 			}
-			NotaId notaId = new NotaId();
-
-			notaId.setId_disciplina_classe(nota.getDisciplinaClasse().getId());
-			notaId.setId_matricula(matriculaSelecionada.getId());
-
-			nota = notaServico.obterNotasPorIdMatriculaPorDisciplina(matriculaSelecionada.getId(),
-					nota.getDisciplinaClasse().getId());
-
-			if (nota == null) {
-				nota = new Nota();
-			}
-			nota.setId(notaId);
-			notaServico.salvar(nota);
+			
+			matricula = matriculaServico.salvarRetornarMatricula(matriculaSelecionada);
 			buscarNotas();
-			Mensagem.mensagemInfo("AVISO: A disciplina adicionada om sucesso!");
+			Mensagem.mensagemInfo("AVISO: A matrícula  deste(a) aluno(a) foi atualizada com sucesso!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -575,12 +586,12 @@ public class AlunoBean implements Serializable {
 				}
 
 				Nota nota2 = notaServico.obterNotasPorIdMatriculaPorDisciplina(nota.getMatricula().getId(),
-						nota.getDisciplinaClasse().getId());
+						nota.getDisciplina().getId());
 				if (nota2 == null) {
 					nota2 = new Nota();
 
 				}
-				notaId.setId_disciplina_classe(nota.getDisciplinaClasse().getId());
+				notaId.setId_disciplina(nota.getDisciplina().getId());
 				notaId.setId_matricula(nota.getMatricula().getId());
 				nota2.setId(notaId);
 				notaServico.salvar(nota);
@@ -594,21 +605,21 @@ public class AlunoBean implements Serializable {
 
 	}
 
-	public void eliminarDisiplina(Nota nota) {
+	public void eliminarDisiplina() {
 		try {
 			boolean notasCadastrada = false;
-			Nota notaExistente = notaServico.obterNotasPorIdMatriculaPorDisciplina(nota.getMatricula().getId(),
-					nota.getDisciplinaClasse().getId());
+			Nota notaExistente = notaServico.obterNotasPorIdMatriculaPorDisciplina(this.notaSeleciondaExclusao.getMatricula().getId(),
+					this.notaSeleciondaExclusao.getDisciplina().getId());
 			if (notaExistente == null) {
-				notas.remove(nota);
+				notas.remove(this.notaSeleciondaExclusao);
 			} else {
-				notasCadastrada = verificarNotasDeAluno(notasCadastrada, nota);
+				notasCadastrada = verificarNotasDeAluno(notasCadastrada, this.notaSeleciondaExclusao);
 				if (notasCadastrada) {
 					Mensagem.mensagemErro(
 							"ERRO: Não é possível excluir uma disciplina que já tem nota cadastrada no sistema!");
 					return;
 				}
-				notaServico.excluir(nota);
+				notaServico.excluir(this.notaSeleciondaExclusao);
 				Mensagem.mensagemInfo("AVISO: O vínculo entre o aluno e esta disciplina foi excluido com sucesso!");
 				buscarNotas();
 			}
@@ -616,6 +627,10 @@ public class AlunoBean implements Serializable {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void prepararParaEliminarDisiplina(Nota nota) {
+		this.notaSeleciondaExclusao = nota;
 	}
 
 	private void buscarNotas() {
@@ -2270,6 +2285,14 @@ public class AlunoBean implements Serializable {
 
 	public void setNotaSelecionda(Nota notaSelecionda) {
 		this.notaSelecionda = notaSelecionda;
+	}
+
+	public Nota getNotaSeleciondaExclusao() {
+		return notaSeleciondaExclusao;
+	}
+
+	public void setNotaSeleciondaExclusao(Nota notaSeleciondaExclusao) {
+		this.notaSeleciondaExclusao = notaSeleciondaExclusao;
 	}
 
 }

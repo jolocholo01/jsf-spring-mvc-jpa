@@ -364,7 +364,7 @@ public class RelatorioHorarioServicoImpl implements RelatorioHorarioServico {
 			cell7.setHorizontalAlignment(Element.ALIGN_LEFT);
 			cell7.setPaddingBottom(5);
 
-			cell8 = new PdfPCell(new Paragraph(professorTurma.getDisciplinaClasse().getDisciplina().getDescricao() + "", fontNormal));
+			cell8 = new PdfPCell(new Paragraph(professorTurma.getDisciplina().getDescricao() + "", fontNormal));
 			cell8.setHorizontalAlignment(Element.ALIGN_LEFT);
 			cell8.setPaddingBottom(5);
 

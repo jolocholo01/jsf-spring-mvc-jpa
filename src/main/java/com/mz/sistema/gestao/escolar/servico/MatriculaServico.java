@@ -29,7 +29,7 @@ public interface MatriculaServico {
 	public List<Matricula> obterMatriculasPorId(Long idMatricula);
 	public List<Matricula> obterAlunoDaEscolaPorNome(String nome);
 	public List<Matricula> obterMatriculasDaclasse(long idClasse,  String curso);
-	public List<Matricula> obterMatriculaPorTurmaAtivas(Integer idTurma);
+	public List<Matricula> obterMatriculaPorTurmaAtivas(Long idTurma);
 	public Matricula obterMatriculaPorIdAlunoPorAno(Long idAluno, Integer ano);
 	public List<Matricula> obterMatriculasPorNomeDoAlunoAndPorAno(String consultarNomeAluno, Integer ano);
 	public List<Matricula> obterMATRICULASdeALUNOSporESCOLA(String nomeAlunoOUCodigo);
@@ -41,7 +41,7 @@ public interface MatriculaServico {
 	public List<Matricula> obterMatriculasPorNome(Long idEscola, String nome, Integer ano);
 	public List<Matricula> obterMatriculasPorClassePorAnoPorCurso(long idClasse, Long idEscola,  String curso,
 			Integer ano);
-	public List<Matricula> obterMatriculaPorTurma(Integer idTurma);
+	public List<Matricula> obterMatriculaPorTurma(Long idTurma);
 	public List<Matricula> obterMatriculasPorClassePorCursoPorArea(long idClasse, Long idEscola, String curso, Integer ano,
 			String tipoArea);
 	public List<Matricula> obterMatriculasPorIdAluno(Long idAluno);
@@ -52,7 +52,7 @@ public interface MatriculaServico {
 			Integer listarTODASMatriculaOUPorTURMAouPORsemTURMA);
 	public List<Matricula> obterMatriculasPorClassePorCursoPorAreaPorTurma(long idClasse, Long idEscola, String curso, Integer ano,
 			String tipoArea, Integer listarTODASMatriculaOUPorTURMAouPORsemTURMA);
-	public Integer obterNumeroUltimoAlunoNaTurma(Integer idTurma);
+	public Integer obterNumeroUltimoAlunoNaTurma(Long idTurma);
 	public List<Matricula> obterMatriculasPorEscolaPorAno(Long idEscola, Integer ano);
 	public Long obterTotalAlunosMatriculasPorEscolaPorAno(Long idEscola, Integer ano);
 	public List<Matricula> obterMatriculasPorClassePorCursoPorTurmaSemArea(Long idEscola, long idClasse, String curso, Integer ano,

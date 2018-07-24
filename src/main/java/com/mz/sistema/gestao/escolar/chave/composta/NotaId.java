@@ -22,8 +22,8 @@ public class NotaId implements Serializable {
 
 	@Column(name = "id_matricula", nullable = false)
 	private Long id_matricula;
-	@Column(name = "id_disciplina_classe", nullable = false)
-	private Long id_disciplina_classe;
+	@Column(name = "id_disciplina", nullable = false)
+	private Long id_disciplina;
 
 	
 	public Long getId_matricula() {
@@ -34,19 +34,19 @@ public class NotaId implements Serializable {
 		this.id_matricula = id_matricula;
 	}
 
-	public Long getId_disciplina_classe() {
-		return id_disciplina_classe;
+	public Long getId_disciplina() {
+		return id_disciplina;
 	}
 
-	public void setId_disciplina_classe(Long id_disciplina_classe) {
-		this.id_disciplina_classe = id_disciplina_classe;
+	public void setId_disciplina(Long id_disciplina) {
+		this.id_disciplina = id_disciplina;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id_disciplina_classe == null) ? 0 : id_disciplina_classe.hashCode());
+		result = prime * result + ((id_disciplina == null) ? 0 : id_disciplina.hashCode());
 		result = prime * result + ((id_matricula == null) ? 0 : id_matricula.hashCode());
 		return result;
 	}
@@ -60,10 +60,10 @@ public class NotaId implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		NotaId other = (NotaId) obj;
-		if (id_disciplina_classe == null) {
-			if (other.id_disciplina_classe != null)
+		if (id_disciplina== null) {
+			if (other.id_disciplina != null)
 				return false;
-		} else if (!id_disciplina_classe.equals(other.id_disciplina_classe))
+		} else if (!id_disciplina.equals(other.id_disciplina))
 			return false;
 		if (id_matricula == null) {
 			if (other.id_matricula != null)

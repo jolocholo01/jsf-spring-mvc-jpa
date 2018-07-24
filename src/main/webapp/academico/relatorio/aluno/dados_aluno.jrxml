@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-07-07T03:07:01 -->
+<!-- 2018-07-23T07:23:50 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="aluno" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b87a085-095b-4f9d-a71c-09f2a9e9c1e0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="337"/>
@@ -13,11 +13,13 @@
 	<parameter name="turma" class="java.lang.String"/>
 	<parameter name="valorMatriculaExtenso" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT usuario.datanascimento,
+		<![CDATA[SELECT disciplina.sigla,
+	usuario.datanascimento,
 	usuario.login,
 	usuario.mae,
-	usuario.nome,  aluno.nome_encarregado,
-	 aluno.profissao ,
+	usuario.nome,
+	aluno.nome_encarregado,
+	aluno.profissao,
 	classe.descricao AS classe,
 	escola.descricao AS escola,
 	distrito.provincia AS provinciaEscola,
@@ -29,7 +31,6 @@
 	disciplina.descricao AS disciplina,
 	usuario.pai,
 	aluno.bairro,
-	disciplina_classe.credito,
 	matricula.numerorecibo,
 	matricula.tipoarea,
 	matricula.valor,
@@ -50,14 +51,13 @@ FROM nota
 	 escola.id_direcao_distrital = distrital.id 
 	INNER JOIN distrito ON 
 	 distrital.distrito_id = distrito.id 
-	INNER JOIN disciplina_classe ON 
-	 nota.id_disciplina_classe = disciplina_classe.id 
-	 INNER JOIN disciplina ON 
-	 disciplina_classe.id_disciplina = disciplina.id 
-	
-	 WHERE
-	  matricula.id = $P{idMatricula} ORDER BY disciplina.descricao ASC]]>
+	INNER JOIN disciplina ON 
+	 nota.id_disciplina = disciplina.id 
+WHERE 
+	 matricula.id = $P{idMatricula} 
+ORDER BY disciplina.descricao ASC]]>
 	</queryString>
+	<field name="sigla" class="java.lang.String"/>
 	<field name="datanascimento" class="java.sql.Date"/>
 	<field name="login" class="java.lang.String"/>
 	<field name="mae" class="java.lang.String"/>
@@ -75,7 +75,6 @@ FROM nota
 	<field name="disciplina" class="java.lang.String"/>
 	<field name="pai" class="java.lang.String"/>
 	<field name="bairro" class="java.lang.String"/>
-	<field name="credito" class="java.lang.Integer"/>
 	<field name="numerorecibo" class="java.lang.String"/>
 	<field name="tipoarea" class="java.lang.String"/>
 	<field name="valor" class="java.lang.Double"/>
@@ -427,7 +426,7 @@ FROM nota
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[C.H.SEMANAL]]></text>
+				<text><![CDATA[SIGLA]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="135" width="555" height="20" uuid="adbc0276-8d64-4eca-9113-2cc7bd63e81e">
@@ -439,7 +438,7 @@ FROM nota
 				<textElement textAlignment="Center">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["DISCIPLINAS DA CLASSE"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ALUNO INSCRITO NAS SEGUINTES DISCIPLINAS:"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="86" y="5" width="187" height="15" uuid="2f1b6ff5-8db3-4e62-a099-6055a94bfe2c">
@@ -653,7 +652,7 @@ FROM nota
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Currie new" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{profissao}==null?"Sem profissão":$F{profissao}==""?"Sem profissão":$F{profissao}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{profissao}==null?"Sem profissão":$F{profissao}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
@@ -699,7 +698,7 @@ FROM nota
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Courier New" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{credito}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{sigla}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

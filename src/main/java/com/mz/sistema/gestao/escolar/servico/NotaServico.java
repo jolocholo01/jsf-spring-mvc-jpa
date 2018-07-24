@@ -17,19 +17,19 @@ public interface NotaServico {
 	public void excluir(Nota nota);
 	public List<Nota> listarNotas();
 	public List<Nota> listarNotasAtivas();
-	public List<Nota> obterNotaPorTurma(Integer idTurma);
+	public List<Nota> obterNotaPorTurma(Long idTurma);
 	public List<Nota> obterNotaPorIdAluno(Long idAluno, long idClasse, Integer ano);
-	public List<Nota> obterNotasPorIdTurmaEDisciplinaDoProfessor(Long idDisciplinaClasse, Integer idTurma);
+	public List<Nota> obterNotasPorIdTurmaEDisciplinaDoProfessor(Long idDisciplina, Long idTurma);
 	public Nota obterEscolaDoAluno(Long idEscola);
-	public Nota obterAlunoPorMatriculaPorDisciplinaPorTrimestre(Long idMatricula, Long idDisciplinaClasse,
+	public Nota obterAlunoPorMatriculaPorDisciplinaPorTrimestre(Long idMatricula, Long idDisciplina,
 			long idTrimestre);
-	public Nota obterMediaAc(Integer idMatricula, Long idDisciplinaClasse, long idTrimestre);
+	public Nota obterMediaAc(Long idMatricula, Long idDisciplina, long idTrimestre);
 	public Double obterMediaTrimestralOuAnulDoAluno(Long idAluno,long idClasse, String tipoMediatrimestre );
 	public List<Nota> obterDisciplinaDoAlunoPorAnoAndId(Long idAluno, Integer ano);
-	public List<Nota> obterNotasPorIdTurmaPorDisciplinaDoProfessorPorTrimetres(Long idDisciplinaClasse, Integer idTurma,
+	public List<Nota> obterNotasPorIdTurmaPorDisciplinaDoProfessorPorTrimetres(Long idDisciplina, Long idTurma,
 			Long idTrimetre);
 	public List<Nota> obterNotasPorIdMatricula(Long idMatricula);
-	public Nota obterNotasPorIdMatriculaPorDisciplina(Long idMatricula, Long idDisciplinaClasse);
+	public Nota obterNotasPorIdMatriculaPorDisciplina(Long idMatricula, Long idDisciplina);
 	
 
 	

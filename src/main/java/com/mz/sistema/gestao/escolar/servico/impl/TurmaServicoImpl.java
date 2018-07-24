@@ -45,8 +45,8 @@ public class TurmaServicoImpl implements TurmaServico {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Turma obterTurmaPorId(Integer idTurma) {
-		List<Turma> turmas = em.createQuery("From Turma t join fetch t.classe join fetch t.escola where t.id=:idTurma")
+	public Turma obterTurmaPorId(Long idTurma) {
+		List<Turma> turmas = em.createQuery("From Turma t where t.id=:idTurma")
 				.setParameter("idTurma", idTurma).getResultList();
 		if (!turmas.isEmpty()) {
 			return turmas.get(0);
@@ -55,7 +55,7 @@ public class TurmaServicoImpl implements TurmaServico {
 	}
 
 	@SuppressWarnings("unchecked")
-	private Turma obterTurmaPorIdLiftJoinFetch(Integer idTurma) {
+	private Turma obterTurmaPorIdLiftJoinFetch(Long idTurma) {
 		List<Turma> turmas = em.createQuery("From Turma t left join fetch t.horarios  where t.id=:idTurma")
 				.setParameter("idTurma", idTurma).getResultList();
 		if (!turmas.isEmpty()) {
@@ -151,7 +151,7 @@ public class TurmaServicoImpl implements TurmaServico {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Turma> obterTurmaPorClassePorEscola(long idClasse, Integer idTurma, Integer ano, Long idEscola) {
+	public List<Turma> obterTurmaPorClassePorEscola(long idClasse, Long idTurma, Integer ano, Long idEscola) {
 		List<Turma> turmas;
 		turmas = em
 				.createQuery("FROM Turma t  WHERE t.id !=:IDTurma AND t.classe.id=:IdClasse "
@@ -212,7 +212,7 @@ public class TurmaServicoImpl implements TurmaServico {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Turma> obterTurmasPorClasseAreaCursoDiferenteIdTurma(long idClasse, String tipoArea, String curso,
-			Integer ano, Long idEscola, Integer idTurma) {
+			Integer ano, Long idEscola, Long idTurma) {
 		List<Turma> turmas;
 		turmas = em
 				.createQuery("FROM Turma t  WHERE id !=:idTurma AND t.area=:AREA AND t.classe.id=:IdClasse "
@@ -229,7 +229,7 @@ public class TurmaServicoImpl implements TurmaServico {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Turma> obterTurmasPorClasseCursoDiferenteIdTurma(long idClasse, String curso, Integer ano,
-			Long idEscola, Integer idTurma) {
+			Long idEscola, Long idTurma) {
 		List<Turma> turmas;
 		turmas = em
 				.createQuery("FROM Turma t  WHERE id !=:idTurma  AND t.classe.id=:IdClasse "

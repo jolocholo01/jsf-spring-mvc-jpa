@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-07-06T00:29:32 -->
+<!-- 2018-07-23T07:31:27 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e580ad1c-f19a-4ded-8190-5074b08cf536">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
@@ -8,10 +8,10 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="608"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="798"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="188"/>
-	<parameter name="idTurma" class="java.lang.Integer"/>
+	<parameter name="idTurma" class="java.lang.Long"/>
 	<parameter name="professor" class="java.lang.String"/>
 	<parameter name="disciplina" class="java.lang.String"/>
-	<parameter name="id_disciplina_classe" class="java.lang.Long"/>
+	<parameter name="id_disciplina" class="java.lang.Long"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT classe.sigla,
 	matricula.numeroalunoturma,
@@ -38,8 +38,8 @@ FROM turma
 	 turma.id = matricula.idturma 
 	JOIN nota ON 
 	 matricula.id = nota.id_matricula 
-	JOIN disciplina_classe ON 
-	 nota.id_disciplina_classe = disciplina_classe.id 
+	JOIN disciplina ON 
+	 nota.id_disciplina = disciplina.id 
 	INNER JOIN turno ON 
 	 turma.turno_id = turno.id 
 	INNER JOIN classe ON 
@@ -58,7 +58,7 @@ FROM turma
 	 distrital.distrito_id = distrito.id 
 WHERE 
 	 matricula.idturma = $P{idTurma} 
-	 AND nota.id_disciplina_classe = $P{id_disciplina_classe} 
+	 AND nota.id_disciplina = $P{id_disciplina} 
 ORDER BY matricula.numeroalunoturma ASC]]>
 	</queryString>
 	<field name="sigla" class="java.lang.Integer"/>

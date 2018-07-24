@@ -30,7 +30,7 @@ public class Nota implements Serializable {
 	private static final long serialVersionUID = 7759791288880599017L;
 	private NotaId id;
 	private Matricula matricula;
-	private DisciplinaClasse disciplinaClasse;
+	private Disciplina disciplina;
 
 	/* notas do aluno do primeiro trimetre */
 	private Trimestre trimestre;
@@ -81,7 +81,7 @@ public class Nota implements Serializable {
 	@EmbeddedId
 	@AttributeOverrides({
 			@AttributeOverride(name = "id_matricula", column = @Column(name = "id_matricula", nullable = false)),
-			@AttributeOverride(name = "id_disciplina_classe", column = @Column(name = "id_disciplina_classe", nullable = false)) })
+			@AttributeOverride(name = "id_disciplina", column = @Column(name = "id_disciplina", nullable = false)) })
 	public NotaId getId() {
 		return id;
 	}
@@ -101,13 +101,13 @@ public class Nota implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "id_disciplina_classe", nullable = false, insertable = false, updatable = false)
-	public DisciplinaClasse getDisciplinaClasse() {
-		return disciplinaClasse;
+	@JoinColumn(name = "id_disciplina", nullable = false, insertable = false, updatable = false)
+	public Disciplina getDisciplina() {
+		return disciplina;
 	}
 
-	public void setDisciplinaClasse(DisciplinaClasse disciplinaClasse) {
-		this.disciplinaClasse = disciplinaClasse;
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
 	}
 
 	@ManyToOne

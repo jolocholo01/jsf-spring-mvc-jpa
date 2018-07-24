@@ -76,7 +76,7 @@ public class DisciplinaClasseServicoImpl implements DisciplinaClasseServico {
 	}
 
 	@Override
-	public DisciplinaClasse disciplinasClasseExistente(Long idClasse, Integer idDiscipina, Long idArea) {
+	public DisciplinaClasse disciplinasClasseExistente(Long idClasse, Long idDiscipina, Long idArea) {
 
 		@SuppressWarnings("unchecked")
 		List<DisciplinaClasse> disciplinaClasses = em

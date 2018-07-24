@@ -542,13 +542,13 @@ public class NotaBean {
 			disciplinaClasse = disciplinaClasseServico.obterDisciplinasClassePorId(disciplinaClasse.getId());
 
 			this.notas = notaServico.obterNotasPorIdTurmaEDisciplinaDoProfessor(
-					disciplinaClasse.getId(), turmaSelecionada.getId());
+					disciplinaClasse.getDisciplina().getId(), turmaSelecionada.getId());
 			this.professorTurma = professorTurmaServico.obterProfessorTurmaPorIdTurmarPorIdDisciplina(
 					turmaSelecionada.getId(), disciplinaClasse.getDisciplina().getId());
 			if (this.professorTurma == null) {
 				this.professorTurma = new ProfessorTurma();
 				this.professorTurma.setTurma(turmaSelecionada);
-				this.professorTurma.setDisciplinaClasse(disciplinaClasse);
+				this.professorTurma.setDisciplina(disciplinaClasse.getDisciplina());
 			}
 
 			this.mediaAvaliacaoContinua = null;
@@ -606,7 +606,7 @@ public class NotaBean {
 		try {
 
 			this.notas = notaServico.obterNotasPorIdTurmaEDisciplinaDoProfessor(
-					this.professorTurma.getDisciplinaClasse().getId(), this.professorTurma.getTurma().getId());
+					this.professorTurma.getDisciplina().getId(), this.professorTurma.getTurma().getId());
 
 			this.mediaAvaliacaoContinua = null;
 			this.mediaAvaliacaoSomativa = null;
@@ -619,7 +619,7 @@ public class NotaBean {
 	public void buscarCadernetaProfessorPorTrimestre() {
 
 		this.notas = notaServico.obterNotasPorIdTurmaPorDisciplinaDoProfessorPorTrimetres(
-				this.professorTurma.getDisciplinaClasse().getId(), this.professorTurma.getTurma().getId(), trimestre.getId());
+				this.professorTurma.getDisciplina().getId(), this.professorTurma.getTurma().getId(), trimestre.getId());
 
 	}
 
@@ -665,12 +665,12 @@ public class NotaBean {
 							.replace(" Dos ", " dos ").replace(" Das ", "das").replace(" De ", " de ")
 							.replace(" À ", " à ");
 			}
-			if (professorTurma.getDisciplinaClasse().getDisciplina() != null) {
-				if (professorTurma.getDisciplinaClasse().getDisciplina().getDescricao() != null)
-					nomeDiciplina = TipoLetra.capitalizeString(professorTurma.getDisciplinaClasse().getDisciplina().getDescricao())
+			if (professorTurma.getDisciplina() != null) {
+				if (professorTurma.getDisciplina().getDescricao() != null)
+					nomeDiciplina = TipoLetra.capitalizeString(professorTurma.getDisciplina().getDescricao())
 							.replace(" Dos ", " dos ").replace(" Das ", "das").replace(" De ", " de ")
 							.replace(" À ", " à ");
-				parametro.put("idDisciplina", professorTurma.getDisciplinaClasse().getId());
+				parametro.put("idDisciplina", professorTurma.getDisciplina().getId());
 			} else {
 				parametro.put("idDisciplina", null);
 			}

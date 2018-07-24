@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-07-04T16:41:59 -->
+<!-- 2018-07-23T12:04:11 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e580ad1c-f19a-4ded-8190-5074b08cf536">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
@@ -8,7 +8,7 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="608"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="798"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="188"/>
-	<parameter name="idTurma" class="java.lang.Integer"/>
+	<parameter name="idTurma" class="java.lang.Long"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT classe.sigla,
 	matricula.numeroalunoturma,
@@ -345,7 +345,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["LISTA DOS ALUNOS DA TURMA "+$F{sigla}+"ª"+$F{turma}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["LISTA DOS ALUNOS DA TURMA DA "+$F{sigla}+"ª"+$F{turma}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>

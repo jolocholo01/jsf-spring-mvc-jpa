@@ -32,7 +32,7 @@ public class ProfessorTurma implements Serializable {
 	private static final long serialVersionUID = 223608832495589283L;
 
 	private ProfessorTurmaId id;
-	private DisciplinaClasse disciplinaClasse;
+	private Disciplina disciplina;
 	private Turma turma;
 	private Funcionario professor;
 	private Date dataCadastro;
@@ -43,7 +43,7 @@ public class ProfessorTurma implements Serializable {
 
 	@EmbeddedId
 	@AttributeOverrides({ @AttributeOverride(name = "id_turma", column = @Column(name = "id_turma", nullable = false)),
-			@AttributeOverride(name = "id_disciplina_classe", column = @Column(name = "id_disciplina_classe", nullable = false))
+			@AttributeOverride(name = "id_disciplina", column = @Column(name = "id_disciplina", nullable = false))
 			 })
 	public ProfessorTurmaId getId() {
 		return id;
@@ -102,15 +102,15 @@ public class ProfessorTurma implements Serializable {
 	
 
 	@ManyToOne
-	@JoinColumn(name = "id_disciplina_classe", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "id_disciplina", nullable = false, insertable = false, updatable = false)
 	
 
-	public DisciplinaClasse getDisciplinaClasse() {
-		return disciplinaClasse;
+	public Disciplina getDisciplina() {
+		return disciplina;
 	}
 
-	public void setDisciplinaClasse(DisciplinaClasse disciplinaClasse) {
-		this.disciplinaClasse = disciplinaClasse;
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
 	}
 
 	public String getHorario() {

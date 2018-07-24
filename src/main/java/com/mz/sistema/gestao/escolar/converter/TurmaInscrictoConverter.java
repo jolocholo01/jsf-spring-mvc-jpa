@@ -29,7 +29,7 @@ public class TurmaInscrictoConverter implements Converter {
 
 		String[] propriedades = valor.split("#");
 		if (!propriedades[0].isEmpty()) {
-			turma.setId(new Integer(propriedades[0]));
+			turma.setId(new Long(propriedades[0]));
 		}
 		if (!propriedades[1].isEmpty()) {
 			turma.setInscrito(new Integer(propriedades[1]));
@@ -45,9 +45,9 @@ public class TurmaInscrictoConverter implements Converter {
 		}
 
 		Turma turma = (Turma) obj;
-		Integer id;
-		if (turma.getId() == 0) {
-			id = 0;
+		Long id;
+		if (turma.getId() == null) {
+			id = 0L;
 		} else {
 			id = turma.getId();
 		}

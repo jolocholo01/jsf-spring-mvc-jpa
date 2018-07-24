@@ -193,7 +193,7 @@ public class FuncionarioBean {
 			if (funcionario.getNascionalidade() != null) {
 				if (funcionario.getNascionalidade().equals("Estrangeira")) {
 					parametro.put("pais", "País: ");
-					parametro.put("paisValue", funcionario.getPais().getNome());
+					parametro.put("paisValue", funcionario.getPais().getNome().toUpperCase());
 					parametro.put("localNasci", null);
 					// funcionario de mocambique
 				} else if (!funcionario.getNascionalidade().equals("Estrangeira")) {
@@ -204,7 +204,7 @@ public class FuncionarioBean {
 
 						parametro.put("provinciaFuncionario", "");
 					} else {
-						parametro.put("provinciaFuncionario", funcionario.getEnderenco().getDistrito().getProvincia());
+						parametro.put("provinciaFuncionario", " - " + funcionario.getEnderenco().getDistrito().getProvincia().toUpperCase());
 					}
 				}
 			}

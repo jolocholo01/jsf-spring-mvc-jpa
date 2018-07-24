@@ -80,7 +80,7 @@
 						</f:facet>
 
 						<h:commandLink
-							value="#{professor.disciplinaClasse.disciplina.descricao}"
+							value="#{professor.disciplina.descricao}"
 							style="margin-left:5px;" styleClass="tooltip-top"
 							title="TENHO AULA NA #{professor.turma.classe.sigla}ª#{professor.turma.descricao} #{professor.horario}">
 							<p:ajax event="click"
@@ -146,7 +146,7 @@
 									<h:outputLabel value="Horário de &#160;"
 										style="text-transform: uppercase;" />
 									<h:outputLabel
-										value="#{professorTurmaBean.professorTurmaSelecionada.disciplinaClasse.disciplina.descricao}" />
+										value="#{professorTurmaBean.professorTurmaSelecionada.disciplina.descricao}" />
 									<h:outputLabel
 										value="&#160;da #{professorTurmaBean.professorTurmaSelecionada.turma.classe.sigla}ª #{professorTurmaBean.professorTurmaSelecionada.turma.descricao}"
 										style="text-transform: uppercase;" />

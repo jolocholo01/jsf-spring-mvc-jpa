@@ -226,7 +226,7 @@ public class MatriculaServicoImpl implements MatriculaServico {
 	}
 
 	@Override
-	public List<Matricula> obterMatriculaPorTurmaAtivas(Integer idTurma) {
+	public List<Matricula> obterMatriculaPorTurmaAtivas(Long idTurma) {
 		@SuppressWarnings("unchecked")
 		List<Matricula> matriculas = em
 				.createQuery("FROM Matricula m WHERE  m.turma.id=:idTurma  AND m.ativo=true order by m.aluno.nome")
@@ -371,7 +371,7 @@ public class MatriculaServicoImpl implements MatriculaServico {
 	}
 
 	@Override
-	public List<Matricula> obterMatriculaPorTurma(Integer idTurma) {
+	public List<Matricula> obterMatriculaPorTurma(Long idTurma) {
 		@SuppressWarnings("unchecked")
 		List<Matricula> matriculas = em
 				.createQuery("FROM Matricula m  WHERE  m.turma.id=:idTurma order by m.numeroAlunoTurma")
@@ -441,7 +441,7 @@ public class MatriculaServicoImpl implements MatriculaServico {
 	}
 
 	@Override
-	public Integer obterNumeroUltimoAlunoNaTurma(Integer idTurma) {
+	public Integer obterNumeroUltimoAlunoNaTurma(Long idTurma) {
 		Integer numeroRecibo = (Integer) em
 				.createQuery("select max(cast(numeroAlunoTurma as integer)) from Matricula WHERE turma.id=:idTurma")
 				.setParameter("idTurma", idTurma).getSingleResult();

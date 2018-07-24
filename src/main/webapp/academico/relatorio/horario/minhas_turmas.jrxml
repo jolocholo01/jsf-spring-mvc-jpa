@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-07-06T01:21:38 -->
+<!-- 2018-07-23T07:42:01 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="minhas_turmas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="95879359-b505-44c9-ab23-ef9bdda7c849">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="342"/>
@@ -45,10 +45,8 @@ FROM distrito,
 	 turma.escola_id = escola.id 
 	INNER JOIN distrital ON 
 	 escola.id_direcao_distrital = distrital.id 
-	INNER JOIN disciplina_classe ON 
-	professor_turma.id_disciplina_classe = disciplina_classe.id 	
-	 INNER JOIN disciplina ON 
-	 disciplina_classe.id_disciplina = disciplina.id 
+	INNER JOIN disciplina ON 
+	professor_turma.id_disciplina = disciplina.id 	
 	INNER JOIN sala ON 
 	 turma.id_sala = sala.id   
 	INNER JOIN classe ON 
