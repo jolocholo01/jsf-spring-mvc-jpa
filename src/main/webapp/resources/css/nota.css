@@ -34,18 +34,22 @@
 .tblEditavel>tbody>tr>td, .tblEditavel>tbody>tr>th, .tblEditavel>tfoot>tr>td,
 	.tblEditavel>tfoot>tr>th, .tblEditavel>thead>tr>td, .tblEditavel>thead>tr>th
 	{
-	padding: 4px;
+	padding: 0px;
 	border-top: 0;
 	vertical-align: inherit;
 }
 .tblEditavel, .tblEditavel tbody .td, .tblEditavel tbody td, .tblEditavel thead tr th {
 	border: 1px solid #ddd;
 	border: 1px solid #BEBEBE;
-	padding: 4px;
 	
 }
 
+.table-nota-aluno >tbody>tr>td, .table-nota-aluno>tbody>tr>th, .table-nota-aluno>tfoot>tr>td,
+	.table-nota-aluno>tfoot>tr>th, .table-nota-aluno>thead>tr>td, .table-nota-aluno>thead>tr>th
+	{
+	padding: 5px;
 
+}
 #form-nota-aluno .tblEditavel>tbody>tr>td {
 	padding: 5px;
 }

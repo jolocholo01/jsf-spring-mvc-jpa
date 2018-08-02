@@ -168,9 +168,9 @@ public class FuncionarioBean {
 
 			String ulrTrocaSenha = request.getRequestURL() + "";
 			String acessoAOSistema = ulrTrocaSenha
-					.replace("academico/director-ditrital/funcionario/cadastro.jsf", "login.jsp")
-					.replace("academico/programador/funcionario/cadastro.jsf", "login.jsp")
-					.replace("academico/director/funcionario/cadastro", "login.jsp");
+					.replace("/academico/director-ditrital/funcionario/cadastro.jsf", "")
+					.replace("/academico/programador/funcionario/cadastro.jsf", "")
+					.replace("/academico/director/funcionario/cadastro", "");
 			System.out.println("Link:" + acessoAOSistema);
 			String caminho;
 
@@ -275,7 +275,7 @@ public class FuncionarioBean {
 				String senha = DataUtils.obterDataFormatoBanco(funcionario.getDataNascimento(), FORMATA_SENHA_PADRAO);
 				String senhaCriptgrafada = usuarioServico.criptografarSenha(senha);
 				funcionario.setSenha(senhaCriptgrafada);
-				System.out.println("Senha de  : " + funcionario.getNome() + " é :" + senha);
+				
 			}
 			if (numeroMatricula != null) {
 				numeroMatricula = StringUtil.preencherZerosAEsquerda(numeroMatricula, 20);
@@ -471,10 +471,12 @@ public class FuncionarioBean {
 	public void excluirCategoria() {
 
 		try {
+			
 			removerUsuarioPermissao(funcionarioEscolaExclusao);
 			if (funcionarioEscolaExclusao.isActivo()) {
 				efectivoBoolean = false;
 			}
+			
 			funcionarioEscolaServico.excluir(funcionarioEscolaExclusao);
 			buscarFuncionarioSelecionadoComListaEscolaCategoria();
 			Mensagem.mensagemInfo("AVISO: a categoria do funcionário foi removida com sucesso");
@@ -535,6 +537,7 @@ public class FuncionarioBean {
 
 	public void alocar() {
 		try {
+			String senaCriptogafada=funcionarioSelecionado.getSenha();
 			FuncionarioEscola funcionarioEscolaExistente = funcionarioEscolaServico.obterFuncionarioEscolaExistente(
 					funcionarioEscola.getEscola().getId(), funcionarioSelecionado.getId(),
 					funcionarioEscola.getPermissao().getId());
@@ -603,6 +606,7 @@ public class FuncionarioBean {
 
 			}
 			funcionarioSelecionado.setCargaHoraria(cargaHoraria);
+			funcionarioSelecionado.setSenha(senaCriptogafada);
 			funcionarioServico.salvar(funcionarioSelecionado);
 
 			Mensagem.mensagemInfo("AVISO: funcionário alocado com sucesso!");
@@ -636,8 +640,9 @@ public class FuncionarioBean {
 		try {
 			List<FuncionarioEscola> funcionarioEscolas = funcionarioEscolaServico
 					.obterFuncionarioEscolaPorIdFuncionario(funcionarioEscola.getFuncionario().getId());
-
+			String senaCriptogafada=funcionarioSelecionado.getSenha();
 			Usuario usuarioSelecionado = usuarioServico.obterUsuarioPeloId(funcionarioSelecionado.getId());
+			usuarioSelecionado.setSenha(senaCriptogafada);
 			if (funcionarioEscolas == null) {
 			} else {
 				if (funcionarioEscolas.size() == 1) {
@@ -645,6 +650,7 @@ public class FuncionarioBean {
 						if (usuarioSelecionado.getPermissoes().contains(funcionarioEscola.getPermissao())) {
 							usuarioSelecionado.getPermissoes().remove(funcionarioEscola.getPermissao());
 							usuarioSelecionado.setAtivo(false);
+							
 							usuarioServico.salvar(usuarioSelecionado);
 						}
 
@@ -736,21 +742,24 @@ public class FuncionarioBean {
 	public void excluir() {
 		try {
 			this.funcionarioExclusao.setNome(this.funcionarioExclusao.getNome().toUpperCase());
-			Usuario usuario = usuarioServico.obterUsuarioPeloId(funcionarioExclusao.getId());
-			if (usuario == null) {
+			Funcionario funcionario = funcionarioServico.obterFuncionarioPorId(funcionarioExclusao.getId());
+			if (funcionario == null) {
 
 			} else {
-				if (usuario.getRecuperarSenha() == null) {
+				if (funcionario.getRecuperarSenha() == null) {
 				} else {
-					if (usuario.getRecuperarSenha().getId() != null)
-						recoperarSenhaServico.excluir(usuario.getRecuperarSenha());
+					if (funcionario.getRecuperarSenha().getId() != null)
+						recoperarSenhaServico.excluir(funcionario.getRecuperarSenha());
 				}
 			}
-			funcionarioServico.excluir(this.funcionarioExclusao);
+			
+			funcionarioServico.excluir(funcionario);
+			System.out.println("Chamou a funcao excluir func");
 			Mensagem.mensagemInfo("AVISO: Funcionário excluido com sucesso");
 			buscarFuncionarioPorNomePorUsuarioPorTelefone();
 		} catch (Exception e) {
 			Mensagem.mensagemErro("ERRO: O funcionário não foi excluido através da dependência");
+			e.printStackTrace();
 		}
 
 	}

@@ -20,7 +20,7 @@ public interface DisciplinaServico {
 	public List<Disciplina> obterTodasDisciplinas();
 	public List<Disciplina> obterDisciplinasAtivas();
 	public List<Disciplina> obterDisciplinaPorCiclo(Ciclo ciclo);
-	public Disciplina obterDisciplinaPorId(Integer idDisciplina);
+	public Disciplina obterDisciplinaPorId(Long idDisciplina);
 	public List<Disciplina> obterDisciplinaPorNome(String descricao);
 	public Disciplina disciplinaExisente(String descricao);
 	public List<Disciplina> obterDisciplinasPorAreas(Long idArea);

@@ -160,12 +160,11 @@ public class MatrizServicoImpl implements MatrizServico {
 	public List<Matriz> obterMatrizPorEscolaPorCiclo(String ciclo, Long idEscola) {
 		@SuppressWarnings("unchecked")
 		List<Matriz> matrizes = em
-				.createQuery("FROM Matriz WHERE  escola.id=:idEscola AND ciclo=:Ciclo ORDER BY classe.ordem")
+				.createQuery("FROM Matriz WHERE  escola.id=:idEscola AND ciclo=:Ciclo ORDER BY classe.ordem, curso")
 				.setParameter("idEscola", idEscola).setParameter("Ciclo", ciclo).getResultList();
-		if (!matrizes.isEmpty()) {
+		
 			return matrizes;
-		}
-		return null;
+		
 	}
 
 	@SuppressWarnings("unchecked")

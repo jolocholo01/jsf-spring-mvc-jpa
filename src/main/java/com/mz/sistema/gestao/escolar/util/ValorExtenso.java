@@ -55,7 +55,7 @@ public class ValorExtenso {
         }
 
         /*
-         * TODO substituir o método setScale, abaixo, pela versão cujo
+         *  substituir o método setScale, abaixo, pela versão cujo
          * parâmetro de arredondamento é um enum
          */
         BigDecimal value = amount.setScale(2, BigDecimal.ROUND_HALF_EVEN);
@@ -75,7 +75,7 @@ public class ValorExtenso {
          * centenas e dos centavos, respectivamente. Assim, o expoente de
          * dez que representa a grandeza no topo da pilha é o número de 
          * (elementos - 2) * 3 */
-        int expoente = 3 * (decomposed.size() - 2); // TODO usar um índice de grupos ao invés do expoente 
+        int expoente = 3 * (decomposed.size() - 2); 
 
         StringBuffer sb = new StringBuffer();
         int lastNonZeroExponent = -1;
@@ -95,7 +95,8 @@ public class ValorExtenso {
                 lastNonZeroExponent = expoente;
             }
 
-            switch (expoente) { // TODO ao invés desses switches e ifs, partir para a idéia das "Pendências"; talvez implementá-las com enum
+            switch (expoente) { 
+            //  Ao invés desses switches e ifs, partir para a idéia das "Pendências"; talvez implementá-las com enum
                 case 0:
                     BigInteger parteInteira = value.toBigInteger();
 
@@ -265,7 +266,7 @@ public class ValorExtenso {
 
     public static void main(String[] args) {
         ValorExtenso e = new ValorExtenso();
-        Double valor = 990000000000000000000000000.0;
+        Double valor = 123126.53;
         String valorExtenso = e.write(BigDecimal.valueOf(valor));
 
         System.out.println("Extenso: " + valorExtenso.toLowerCase().replace("um mil ", "mil "));

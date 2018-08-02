@@ -43,11 +43,9 @@
 
 					<h:panelGroup
 						rendered="#{disciplinaBean.cadastroDisciplinaBoolean ==true}">
-						<h:outputText value="Nova disciplina"
-							style="font-weight: 700;"
+						<h:outputText value="Nova disciplina" style="font-weight: 700;"
 							rendered="#{disciplinaBean.novaDisciplinaBoolean ==true}" />
-						<h:outputText value="Editar disciplina"
-							style="font-weight: 700;"
+						<h:outputText value="Editar disciplina" style="font-weight: 700;"
 							rendered="#{disciplinaBean.editarDisciplinaBoolean == true}" />
 					</h:panelGroup>
 
@@ -76,7 +74,6 @@
 										value="#{disciplinaBean.pesquisa}">
 										<f:passThroughAttribute name="placeholder"
 											value="Qual disciplina que você está procurar?" />
-										<f:passThroughAttribute name="autofocus" value="true" />
 									</h:inputText>
 									<span class="input-group-btn"> <h:commandButton
 											styleClass="btn btn-primary" value="Buscar!"
@@ -122,12 +119,25 @@
 								<h:outputText value="#{disciplina.sigla}"
 									style=" margin-left:4px;" />
 							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Código" />
+								</f:facet>
+								<h:outputText value="#{disciplina.codigo}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Activa?" />
+								</f:facet>
+								<h:outputText value="#{disciplina.ativa?'SIM':'NÃO'}" />
+							</h:column>
 							<h:column headerClass="center">
 								<f:facet name="header">
 									<h:outputText value="Data de Cadastro" />
 								</f:facet>
 								<h:outputText value="#{disciplina.dataCadastro}">
-									<f:convertDateTime pattern="dd/MM/yyyy" type="date" timeZone="Africa/Harare" />
+									<f:convertDateTime pattern="dd/MM/yyyy" type="date"
+										timeZone="Africa/Harare" />
 								</h:outputText>
 							</h:column>
 							<h:column>
@@ -204,7 +214,8 @@
 									value="#{disciplinaBean.disciplina.dataCadastro}"
 									required="true"
 									requiredMessage="O campo Data de Cadastro é obrigatório">
-									<f:convertDateTime pattern="dd/MM/yyyy" type="date"  timeZone="Africa/Harare"/>
+									<f:convertDateTime pattern="dd/MM/yyyy" type="date"
+										timeZone="Africa/Harare" />
 									<f:passThroughAttribute name="placeholder" value="DD/MM/AAAA" />
 									<f:passThroughAttribute name="data-provide" value="datepicker" />
 									<f:passThroughAttribute name="data-date-language" value="pt-PT" />
@@ -283,7 +294,8 @@
 						<div class="modal-body">
 							<h:panelGroup id="id-panelGroup-confirma-modal">
 								<h:outputText value="Tem certeza que deseja excluir a " />
-								<h:outputLabel value="&nbsp;disciplina&nbsp;" style="font-weight: 600;" />
+								<h:outputLabel value="&nbsp;disciplina&nbsp;"
+									style="font-weight: 600;" />
 								<h:outputLabel value="&nbsp;de&nbsp;" />
 								<h:outputLabel
 									value=" #{disciplinaBean.disciplinaExclusao.descricao}"

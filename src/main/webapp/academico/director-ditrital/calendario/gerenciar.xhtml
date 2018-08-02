@@ -74,7 +74,6 @@
 										styleClass="form-control" value="#{calendarioBean.pesquisa}">
 										<f:passThroughAttribute name="placeholder"
 											value="Qual Calendário Escolar que pretende procurar?" />
-										<f:passThroughAttribute name="autofocus" value="true" />
 									</h:inputText>
 									<span class="input-group-btn"> <h:commandButton
 											styleClass="btn btn-primary" value="Buscar!"
@@ -87,8 +86,8 @@
 
 						<h:dataTable value="#{calendarioBean.calendarios}"
 							var="calendario" id="tabela-escola"
-							styleClass="table table-bordered tabelaProfessor tabela-hover  tabela-funcionario"
-							headerClass="cab-tabela" footerClass="fo-tabela"
+							styleClass="table table-bordered tabelaProfessor tabela-hover  tabela-funcionario left"
+							headerClass="cab-tabela" footerClass="fo-tabela" columnClasses=",,,center,center,center"
 							style="margin-top: 20px;" rowClasses="linha2, linha1">
 
 							<h:column>

@@ -360,7 +360,7 @@ public class ProfessorTurmaBean {
 			System.out.println("Horario do professor:" + professorTurma.getHorario());
 
 			ProfessorTurmaId professorTurmaId = new ProfessorTurmaId();
-			professorTurmaId.setId_disciplina(disciplinaClasse.getId());
+			professorTurmaId.setId_disciplina(disciplinaClasse.getDisciplina().getId());
 			professorTurmaId.setId_turma(turmaSelecionada.getId());
 			professorTurma.setCredito(disciplinaClasse.getCredito());
 			professorTurma.setId(professorTurmaId);
@@ -369,15 +369,15 @@ public class ProfessorTurmaBean {
 				professorTurma.setProfessor(funcionario);
 			if (diasSemana == true) {
 				Mensagem.mensagemAlerta(
-						"ATENÇÃO: Impossível alocar professor pois não exite dias da semana caastrados no sistema!");
+						"ATENÇÃO: Impossível alocar professor pois não exite dias da semana castrado no sistema!");
 				return;
 			}
-			if (professorTurma.getHorario().equals("")) {
-				Mensagem.mensagemAlerta("ATENÇÃO: Escolhe o tempo onde o/a professor(a) passa lecionar nesta turma.");
-				Mensagem.mensagemAlerta(
-						"		 A escolha do tempo deve ter em consideração a carga horária da disciplina!");
-				return;
-			}
+//			if (professorTurma.getHorario().equals("")) {
+//				Mensagem.mensagemAlerta("ATENÇÃO: Escolhe o tempo onde o/a professor(a) passa lecionar nesta turma.");
+//				Mensagem.mensagemAlerta(
+//						"		 A escolha do tempo deve ter em consideração a carga horária da disciplina!");
+//				return;
+//			}
 			professorTurmaServico.salvar(professorTurma);
 			Mensagem.mensagemInfo("AVISO: Horário de professor foi cadastrado com sucesso!");
 			cadastrouHorario = true;

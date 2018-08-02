@@ -13,7 +13,7 @@
 	<div class="card">
 		<h3 class="peg-titulo card-header primary-color white-text ">
 
-			Finalizar matriz curricular</h3>
+			Gerir matriz curricular</h3>
 
 		<p:messages closable="true"
 			style=" margin-left: 5px;margin-right:5px;" />
@@ -79,14 +79,13 @@
 							<f:facet name="header">
 								<h:outputText value="#" />
 							</f:facet>
-							<h:outputText value=" #{matriz.id}" style="margin-left:5px;" />
+							<h:outputText value=" #{matriz.ordem}" style="margin-left:5px;" />
 						</h:column>
 						<h:column>
 							<f:facet name="header">
-								<h:outputText value="Estrutura da Matriz" />
+								<h:outputText value="Classe" />
 							</f:facet>
-							<h:outputText
-								value="#{matriz.classe.tipoEnsino} > #{matriz.classe.ciclo} > #{matriz.classe.descricao}"
+							<h:outputText value="#{matriz.classe.descricao}"
 								style="	text-transform: uppercase; margin-left:4px;" />
 						</h:column>
 
@@ -114,24 +113,44 @@
 								style="	text-transform: uppercase; margin-left:4px;" />
 						</h:column>
 
-						<h:column>
+						<h:column headerClass="center">
+							<f:facet name="header">
+								<h:outputText value="Acções" />
+							</f:facet>
+
 							<h:commandLink action="#{matrizBean.selecionarMatriz(matriz)}"
-								title="Atualizar esta matriz?">
+								styleClass="tooltip-left" title="Atualizar esta matriz?">
 								<span class="glyphicon glyphicon-pencil"></span>
 							</h:commandLink>
 
 							<h:panelGroup rendered="#{matriz.ativa ==false}">
-								<span style="margin-left: 10px;"></span>
-								<h:commandLink
-									action="#{matrizBean.selecionarMatrizParaFinalizar(matriz)}"
-									title="Finalizar o Cadastro!">
-									<span class="glyphicon glyphicon-ok"></span>
+								<h:commandLink style="margin-left: 10px;"
+									title="Finalizar o cadastro?" styleClass="click tooltip-left">
+									<span class="glyphicon glyphicon-ok" />
+									<p:ajax event="click"
+										listener="#{matrizBean.selecionarMatrizParaFinalizar(matriz)}"
+										update="form:id-panelGroup-confirma-modal " />
+									<f:passThroughAttribute name="data-toggle" value="modal" />
+									<f:passThroughAttribute name="data-target" value="#myModal" />
 								</h:commandLink>
 
 							</h:panelGroup>
-							<span style="margin-left: 10px;"></span>
+							<h:panelGroup rendered="#{matriz.ativa ==true}">
+								<h:commandLink style="margin-left: 10px;" title="Visualizar?"
+									styleClass="click tooltip-left">
+									<span class="glyphicon glyphicon-search" />
+									<p:ajax event="click"
+										listener="#{matrizBean.selecionarMatrizParaFinalizar(matriz)}"
+										update="form:id-panelGroup-confirma-modal " />
+									<f:passThroughAttribute name="data-toggle" value="modal" />
+									<f:passThroughAttribute name="data-target" value="#myModal" />
+								</h:commandLink>
 
-							<h:commandLink title="Excluir esta matriz?">
+							</h:panelGroup>
+
+
+							<h:commandLink styleClass="tooltip-left"
+								title="Excluir esta matriz?" style="margin-left: 10px;">
 								<span class="glyphicon glyphicon-remove"></span>
 								<p:ajax event="click"
 									listener="#{matrizBean.prepararMatrizParaExcluir(matriz)}"
@@ -147,60 +166,70 @@
 			</h:panelGroup>
 
 			<h:panelGroup rendered="#{matrizBean.matrizSelecionada !=null}">
-				<h:panelGrid columns="2" style="margin: auto;">
 
-					<h:outputLabel value="Ano:" styleClass="text-lebal" />
-					<h:outputText value="#{matrizBean.matrizSelecionada.ano}"
-						style="margin-left: 10px;" />
 
-					<h:outputLabel value="Descrição de Matriz:" styleClass="text-lebal" />
-					<h:outputText
-						value="#{matrizBean.matrizSelecionada.classe.tipoEnsino} >
+				<div class="form-group row">
+					<h:outputLabel value="Ano:"
+						styleClass="col-sm-3 control-label texto-label texto-right" />
+					<div class="col-sm-2">
+						<h:outputText value="#{matrizBean.matrizSelecionada.ano}" />
+
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<h:outputLabel value="Descrição de Matriz:"
+						styleClass="col-sm-3 control-label texto-label texto-right" />
+					<div class="col-sm-7">
+						<h:outputText
+							value="#{matrizBean.matrizSelecionada.classe.tipoEnsino} >
 							 #{matrizBean.matrizSelecionada.classe.ciclo} > 
-							 #{matrizBean.matrizSelecionada.classe.descricao}"
-						style="margin-left: 10px;" />
+							 #{matrizBean.matrizSelecionada.classe.descricao}" />
 
-					<h:outputLabel value="Curso :" styleClass="text-lebal" />
-					<h:panelGroup>
-						<div class="col-sm-6">
-							<h:selectOneMenu
-								disabled="#{matrizBean.finalizarCadastroMatrizBoolean==true or matrizBean.proximoBotaoParaEdicaoBoolean==true}"
-								value="#{matrizBean.matrizSelecionada.curso}"
-								style="margin-left: 10px;" styleClass=" form-control">
-								<f:selectItems value="#{matrizBean.tipoCursos}" var="turno"
-									itemLabel="#{turno}" itemValue="#{turno}" />
-							</h:selectOneMenu>
-						</div>
-					</h:panelGroup>
-					<h:outputLabel value="Área curricular:" styleClass="text-lebal"
-						rendered="#{matrizBean.matrizSelecionada.classe.ciclo == '2º CICLO'}" />
-					<h:panelGroup
-						rendered="#{matrizBean.matrizSelecionada.classe.ciclo == '2º CICLO'}">
-						<div class="col-sm-12">
-							<h:outputText
-								value="#{matrizBean.matrizSelecionada.classe.descricao} #{matrizBean.matrizSelecionada.tipoArea}"
-								rendered="#{matrizBean.proximoBotaoParaEdicaoBoolean == false}"
-								style="margin-left: 10px;" />
-							<h:selectOneMenu value="#{matrizBean.matrizSelecionada.area}"
-								rendered="#{matrizBean.proximoBotaoParaEdicaoBoolean == true}"
-								style="margin-left: 10px;" styleClass=" form-control"
-								converter="areaConverter"
-								disabled="#{matrizBean.finalizarCadastroMatrizBoolean==true}">
-								<f:selectItems value="#{matrizBean.areas}" var="area"
-									itemLabel="#{area.descricao}" itemValue="#{area}" />
-							</h:selectOneMenu>
-						</div>
-					</h:panelGroup>
-					<h:inputHidden
-						rendered="#{matrizBean.matrizSelecionada.classe.ciclo == '2º CICLO' and 
-							matrizBean.proximoBotaoParaEdicaoBoolean == true}" />
-					<h:commandButton value="Buscar"
-						action="#{matrizBean.buscarDisciplinaDaClassePorAreaEdicao}"
-						styleClass="btn btn-primary" style="margin-left: 30px;"
-						rendered="#{matrizBean.matrizSelecionada.classe.ciclo == '2º CICLO' and 
-							matrizBean.proximoBotaoParaEdicaoBoolean == true}" />
-				</h:panelGrid>
+					</div>
+				</div>
+				<div class="form-group row">
+					<h:outputLabel value="Área curricular:"
+						styleClass="col-sm-3 control-label texto-label texto-right" />
+					<div class="col-sm-7">
 
+						<h:outputText
+							value="#{matrizBean.matrizSelecionada.classe.descricao} #{matrizBean.matrizSelecionada.tipoArea}"
+							rendered="#{matrizBean.proximoBotaoParaEdicaoBoolean == false}" />
+						<h:selectOneMenu value="#{matrizBean.matrizSelecionada.area}"
+							rendered="#{matrizBean.proximoBotaoParaEdicaoBoolean == true}"
+							styleClass=" form-control" converter="areaConverter"
+							disabled="#{matrizBean.finalizarCadastroMatrizBoolean==true}">
+							<f:selectItems value="#{matrizBean.areas}" var="area"
+								itemLabel="#{area.descricao}" itemValue="#{area}" />
+						</h:selectOneMenu>
+
+
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<h:outputLabel value="Curso :"
+						styleClass="col-sm-3 control-label texto-label texto-right" />
+					<div class="col-sm-3">
+						<h:selectOneMenu
+							disabled="#{matrizBean.finalizarCadastroMatrizBoolean==true or matrizBean.proximoBotaoParaEdicaoBoolean==true}"
+							value="#{matrizBean.matrizSelecionada.curso}"
+							styleClass=" form-control">
+							<f:selectItems value="#{matrizBean.tipoCursos}" var="turno"
+								itemLabel="#{turno}" itemValue="#{turno}" />
+						</h:selectOneMenu>
+					</div>
+				</div>
+				<div class="form-group row" style="text-align: center;">
+					<div class="col-sm-7">
+						<h:commandButton value="Buscar"
+							action="#{matrizBean.buscarDisciplinaDaClassePorAreaEdicao}"
+							styleClass="btn btn-primary"
+							rendered="#{matrizBean.matrizSelecionada.classe.ciclo == '2º CICLO' and 
+							matrizBean.proximoBotaoParaEdicaoBoolean == true}" />
+					</div>
+				</div>
 
 
 				<p:dataTable styleClass="table tabela_selecao_disciplina"
@@ -220,7 +249,7 @@
 
 					<p:column style="width:40%; text-align:left;">
 						<f:facet name="header">
-							<h:outputText value="Componente Curricular" />
+							<h:outputText value="" />
 						</f:facet>
 						<h:outputText value="#{disciplinaClasse.disciplina.descricao}" />
 					</p:column>
@@ -255,7 +284,7 @@
 
 					<p:column style="width:40%; text-align:left;">
 						<f:facet name="header">
-							<h:outputText value="Componente Curricular" />
+							<h:outputText value="Disciplina" />
 						</f:facet>
 						<h:outputText value="#{disciplinaClasse.disciplina.descricao}" />
 					</p:column>
@@ -282,12 +311,6 @@
 							 matrizBean.proximoBotaoParaEdicaoBoolean == false}"
 						style="margin-left:10%;" />
 
-					<h:commandButton value="Confirmar"
-						action="#{matrizBean.salvarAfinalizacao}"
-						styleClass="btn btn-primary"
-						rendered="#{(matrizBean.matrizSelecionada.classe.ciclo != '2º CICLO' or
-							 matrizBean.proximoBotaoParaEdicaoBoolean == true) and matrizBean.finalizarCadastroMatrizBoolean==true}"
-						style="margin-left:3%;" />
 
 					<h:commandButton value="Confirmar"
 						action="#{matrizBean.salvarEdicao}" styleClass="btn btn-primary"
@@ -304,60 +327,178 @@
 
 
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" data-backdrop="static"
-		style="padding-top: 210px;">
+		aria-labelledby="myModalLabel" data-backdrop="static">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">
-						<h:outputLabel value="Você Tem certeza?" />
-					</h4>
-				</div>
-				<div class="modal-body">
-					<h:panelGroup id="id-panelGroup-confirma-modal">
+				<h:panelGroup id="id-panelGroup-confirma-modal">
+					<div class="modal-header">
+
+						<h4 class="modal-title" id="myModalLabel">
+							<h:outputLabel value="Você Tem certeza?"
+								rendered="#{matrizBean.excluirCadastroMatrizBoolean==true}" />
+
+							<h:outputLabel value="Matriz curricular"
+								rendered="#{matrizBean.excluirCadastroMatrizBoolean==false}" />
+						</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<div class="modal-body">
+
 						<h:panelGroup
-							rendered="#{matrizBean.matrizSelecionadaPraExclusao.classe.ciclo == '1º CICLO'}">
-							<h:outputText
-								value="Tem certeza que deseja excluir  a Matriz curricular da " />
-							<h:outputLabel
-								value=" #{matrizBean.matrizSelecionadaPraExclusao.classe.descricao}"
-								style="text-transform: lowercase;" />
-							<h:outputText value=" do curso " />
-							<h:outputLabel
-								value=" #{matrizBean.matrizSelecionadaPraExclusao.curso}" />
-							<h:outputText value="?" />
+							rendered="#{matrizBean.finalizarCadastroMatrizBoolean==false}">
+							<h:panelGroup
+								rendered="#{matrizBean.matrizSelecionadaPraExclusao.classe.ciclo == '1º CICLO'}">
+								<h:outputText
+									value="Tem certeza que deseja excluir  a Matriz curricular da " />
+								<h:outputLabel
+									value=" #{matrizBean.matrizSelecionadaPraExclusao.classe.descricao}"
+									style="text-transform: lowercase;" />
+								<h:outputText value=" do curso " />
+								<h:outputLabel
+									value=" #{matrizBean.matrizSelecionadaPraExclusao.curso}" />
+								<h:outputText value="?" />
+							</h:panelGroup>
+							<h:panelGroup
+								rendered="#{matrizBean.matrizSelecionadaPraExclusao.classe.ciclo != '1º CICLO'}">
+								<h:outputText
+									value="Tem certeza que deseja excluir  a Matriz curricular da " />
+								<h:outputLabel
+									value=" #{matrizBean.matrizSelecionadaPraExclusao.classe.descricao} " />
+								<h:outputLabel
+									value="	#{matrizBean.matrizSelecionadaPraExclusao.tipoArea}" />
+								<h:outputText value=" do curso " />
+								<h:outputLabel
+									value=" #{matrizBean.matrizSelecionadaPraExclusao.curso}" />
+								<h:outputText value="?" />
+							</h:panelGroup>
 						</h:panelGroup>
+
+
+
 						<h:panelGroup
-							rendered="#{matrizBean.matrizSelecionadaPraExclusao.classe.ciclo != '1º CICLO'}">
+							rendered="#{matrizBean.finalizarCadastroMatrizBoolean==true}">
+
 							<h:outputText
-								value="Tem certeza que deseja excluir  a Matriz curricular da " />
+								value="Tem certeza que deseja finalizar o cadastro da&nbsp;"
+								rendered="#{matrizBean.matrizSelecionadaPraFinalizar.ativa==false}" />
+							<h:outputText value="Matriz curricular" style="font-weight: 600;" />
+							<h:outputText value="&nbsp;da " />
 							<h:outputLabel
-								value=" #{matrizBean.matrizSelecionadaPraExclusao.classe.descricao} " />
+								value=" #{matrizBean.matrizSelecionadaPraFinalizar.classe.descricao}"
+								style=" font-weight: 600;" />
+							<h:panelGroup
+								rendered="#{matrizBean.matrizSelecionadaPraFinalizar.classe.ciclo != '1º CICLO'}">
+								<h:outputText value="&nbsp;da area" />
+								<h:outputLabel
+									value=" &nbsp;#{matrizBean.matrizSelecionadaPraFinalizar.classe.descricao} " />
+								<h:outputLabel
+									value="	#{matrizBean.matrizSelecionadaPraFinalizar.tipoArea}" />
+								<h:outputText value=" curso " />
+							</h:panelGroup>
+
+							<h:outputText value=" do curso "
+								rendered="#{matrizBean.matrizSelecionadaPraFinalizar.classe.ciclo == '1º CICLO'}" />
 							<h:outputLabel
-								value="	#{matrizBean.matrizSelecionadaPraExclusao.tipoArea}" />
-							<h:outputText value=" do curso " />
-							<h:outputLabel
-								value=" #{matrizBean.matrizSelecionadaPraExclusao.curso}" />
-							<h:outputText value="?" />
+								value=" #{matrizBean.matrizSelecionadaPraFinalizar.curso}"
+								style="font-weight: 600;" />
+							<h:outputText value="?"
+								rendered="#{matrizBean.matrizSelecionadaPraFinalizar.ativa==false}" />
+
+
+
+
+							<h:dataTable
+								styleClass="table  table-bordered   tabela-funcionario left tabela-disciplina"
+								value="#{matrizBean.matrizSelecionadaPraFinalizar.disciplinaClasses}"
+								var="disciplinaClasse"
+								columnClasses="coluna4 center, coluna2, coluna3 center, coluna4, coluna5, coluna6, coluna6">
+
+								<h:column headerClass="center">
+									<f:facet name="header">
+										<h:outputText value="#" />
+									</f:facet>
+									<h:outputText value="#{disciplinaClasse.disciplina.id}" />
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Disciplina" />
+									</f:facet>
+									<h:outputText value="#{disciplinaClasse.disciplina.descricao}" />
+								</h:column>
+								<h:column headerClass="center">
+									<f:facet name="header">
+										<h:outputText value="C.H Semanal" />
+									</f:facet>
+									<h:outputText value="#{disciplinaClasse.credito}" />
+								</h:column>
+
+							</h:dataTable>
+
 						</h:panelGroup>
-					</h:panelGroup>
-				</div>
-				<div class="modal-footer">
-					<h:commandButton type="button" title="Cancelar"
-						class="btn btn-success" value="Cancelar">
-						<f:passThroughAttribute name="data-dismiss" value="modal" />
-					</h:commandButton>
-					<h:commandButton title="Excluir" action="#{matrizBean.excluir}"
-						styleClass="btn btn-primary" value="Excluir">
-					</h:commandButton>
-				</div>
+
+					</div>
+					<div class="modal-footer" style="padding: 10px;">
+
+						<h:outputLabel value="Cadastrado por:"
+							rendered="#{matrizBean.matrizSelecionadaPraFinalizar.funcAlteracao.id ==null and matrizBean.matrizSelecionadaPraFinalizar.ativa==false and matrizBean.excluirCadastroMatrizBoolean==false}" />
+						<h:outputLabel styleClass="tooltip-top"
+							value="&nbsp;#{matrizBean.matrizSelecionadaPraFinalizar.funcCadastro.nome}"
+							style="text-transform: uppercase;font-weight: 600;"
+							rendered="#{matrizBean.matrizSelecionadaPraFinalizar.funcAlteracao.id ==null and matrizBean.matrizSelecionadaPraFinalizar.ativa==false and matrizBean.excluirCadastroMatrizBoolean==false}"
+							title="Cadastrado no dia: #{matrizBean.matrizSelecionadaPraFinalizar.dataCadastro}" />
+
+						<h:outputLabel value="Atualizado por:"
+							rendered="#{matrizBean.matrizSelecionadaPraFinalizar.funcAlteracao.id!=null and matrizBean.matrizSelecionadaPraFinalizar.ativa==false and matrizBean.excluirCadastroMatrizBoolean==false}" />
+						<h:outputLabel styleClass="tooltip-top"
+							value="&nbsp;#{matrizBean.matrizSelecionadaPraFinalizar.funcCadastro.nome}"
+							style="text-transform: uppercase;font-weight: 600;"
+							rendered="#{matrizBean.matrizSelecionadaPraFinalizar.funcAlteracao.id !=null and matrizBean.matrizSelecionadaPraFinalizar.ativa==false and matrizBean.excluirCadastroMatrizBoolean==false}"
+							title="Atualizado no dia: #{matrizBean.matrizSelecionadaPraFinalizar.dataAlteracao}" />
+
+						<h:outputLabel value="Finalizado por:"
+							rendered="#{matrizBean.matrizSelecionadaPraFinalizar.ativa==true and matrizBean.excluirCadastroMatrizBoolean==false}" />
+						<h:outputLabel styleClass="tooltip-top"
+							value="&nbsp;#{matrizBean.matrizSelecionadaPraFinalizar.funcFinalizar.nome}"
+							style="text-transform: uppercase;font-weight: 600;"
+							rendered="#{matrizBean.matrizSelecionadaPraFinalizar.ativa==true and matrizBean.excluirCadastroMatrizBoolean==false}"
+							title="Finalizado no dia: #{matrizBean.matrizSelecionadaPraFinalizar.dataFinalizacao}" />
+
+
+						<h:commandButton type="button" title="Cancelar"
+							class="btn btn-success" value="&#x2716; Fechar">
+							<f:passThroughAttribute name="data-dismiss" value="modal" />
+						</h:commandButton>
+
+						<h:panelGroup
+							rendered="#{matrizBean.excluirCadastroMatrizBoolean==true}">
+							<h:commandButton title="Excluir" action="#{matrizBean.excluir}"
+								styleClass="btn btn-primary" value="Excluir">
+							</h:commandButton>
+						</h:panelGroup>
+
+						<h:panelGroup
+							rendered="#{matrizBean.finalizarCadastroMatrizBoolean==true}">
+							<h:commandButton value="&#x2714; Confirmar"
+								disabled="#{matrizBean.matrizSelecionadaPraFinalizar.ativa==true}"
+								action="#{matrizBean.salvarAfinalizacao}"
+								styleClass="btn btn-primary desabilitar" style="margin-left:3%;" />
+						</h:panelGroup>
+
+					</div>
+				</h:panelGroup>
 			</div>
 		</div>
 	</div>
+
+
+
+
+
 </h:form>
 
 </html>

@@ -67,10 +67,10 @@
 				<TBODY>
 					<ui:repeat var="nota" value="#{notaBean.notas}">
 						<tr>
-							<td class="td texto-centro" style="padding-top: 6px;"><h:outputText
+							<td class="td texto-centro" ><h:outputText
 									value="#{nota.matricula.numeroAlunoTurma>=10?'':'0'}#{nota.matricula.numeroAlunoTurma}"></h:outputText>
 							</td>
-							<td class="td nome-aluno" style="padding-top: 6px;"><h:outputText
+							<td class="td nome-aluno" ><h:outputText
 									id="idNomeAluno" value="#{nota.matricula.aluno.nome}"
 									title="#{nota.situacao}"
 									rendered="#{notaBean.trimestreSelecionado.descricao=='1º Trimestre'}"

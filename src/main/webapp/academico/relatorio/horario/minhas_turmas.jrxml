@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-07-23T07:42:01 -->
+<!-- 2018-07-30T15:12:37 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="minhas_turmas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="95879359-b505-44c9-ab23-ef9bdda7c849">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="342"/>
@@ -58,7 +58,7 @@ WHERE
 	 AND funcionario.id = $P{idProfessor} 
 	 AND escola.id = $P{idEscola} 
 	 AND turma.ano = $P{ano} 
-ORDER BY turma.descricao ASC]]>
+ORDER BY turma.curso, classe.sigla, turma.descricao ASC]]>
 	</queryString>
 	<field name="numero" class="java.lang.String"/>
 	<field name="nome" class="java.lang.String"/>

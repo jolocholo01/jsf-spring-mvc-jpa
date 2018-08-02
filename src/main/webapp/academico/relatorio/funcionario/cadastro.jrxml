@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-07-24T04:29:48 -->
+<!-- 2018-08-01T01:37:56 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="funcionario" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b8374351-4b8b-48d2-aa4e-ce1b4a4a2cc1">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
@@ -191,7 +191,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy">
-				<reportElement x="326" y="51" width="74" height="15" uuid="e6272d07-6532-4d4a-be98-0cc49a6976e3">
+				<reportElement x="312" y="51" width="88" height="15" uuid="e6272d07-6532-4d4a-be98-0cc49a6976e3">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="0"/>
@@ -278,13 +278,13 @@ WHERE
 				<reportElement x="400" y="51" width="42" height="15" uuid="7880ed90-7f43-4193-9490-54d5532c90aa">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
-				<textElement textAlignment="Justified" verticalAlignment="Bottom">
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Courier New" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{senha}==null?"":$P{senha}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="306" y="51" width="20" height="15" uuid="fd987285-42f8-41c6-817e-c8a3fe504273">
+				<reportElement x="292" y="51" width="20" height="15" uuid="fd987285-42f8-41c6-817e-c8a3fe504273">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -762,7 +762,7 @@ WHERE
 	<summary>
 		<band height="104" splitType="Stretch">
 			<textField pattern="dd-MM-yyyy">
-				<reportElement x="433" y="30" width="73" height="15" uuid="a0d80349-a6a0-4d53-a53c-429539d7c9f1">
+				<reportElement x="429" y="30" width="73" height="15" uuid="a0d80349-a6a0-4d53-a53c-429539d7c9f1">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box leftPadding="5"/>
@@ -803,13 +803,13 @@ WHERE
 					<bottomPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Top" markup="html">
-					<font fontName="Currie new" size="8" isBold="true" isUnderline="false"/>
+					<font fontName="Currie new" size="10" isBold="true" isUnderline="false"/>
 					<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{link}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="342" y="30" width="102" height="15" uuid="b0e30276-7b4f-41df-bfef-c5feeb699499">
+				<reportElement x="340" y="30" width="102" height="15" uuid="b0e30276-7b4f-41df-bfef-c5feeb699499">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -820,7 +820,7 @@ WHERE
 				<text><![CDATA[Impresso no dia]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="506" y="30" width="14" height="15" uuid="b97a206e-ff5d-48dc-a41e-cfcc386105ec">
+				<reportElement x="497" y="30" width="14" height="15" uuid="b97a206e-ff5d-48dc-a41e-cfcc386105ec">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -830,8 +830,8 @@ WHERE
 				</textElement>
 				<text><![CDATA[as]]></text>
 			</staticText>
-			<textField pattern="H:mm">
-				<reportElement x="520" y="30" width="35" height="15" uuid="0689c47c-dbfb-4ffa-b340-d5b337aa7f60">
+			<textField pattern="HH:mm">
+				<reportElement x="509" y="30" width="46" height="15" uuid="0689c47c-dbfb-4ffa-b340-d5b337aa7f60">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box leftPadding="5"/>

@@ -85,7 +85,7 @@
 						<!-- Tabela de nota do primeiro ciclo -->
 						<h:panelGroup
 							rendered="#{alunoBean.matricula.classe.ciclo=='1º CICLO' and alunoBean.notas !=null}">
-							<table class="tblEditavel table hover" id="tblEditavel">
+							<table class="tblEditavel table hover table-nota-aluno" id="tblEditavel">
 
 								<THEAD class="t">
 									<TR class="centralizar">
@@ -303,7 +303,7 @@
 						<!-- Tabela de nota do Segundo ciclo -->
 						<h:panelGroup
 							rendered="#{authenticationContext.matriculaEscolaLogada.classe.ciclo=='2º CICLO' and alunoBean.notas !=null}">
-							<table class="tblEditavel table " id="tblEditavel">
+							<table class="tblEditavel table table-nota-aluno" id="tblEditavel">
 
 								<THEAD class="t">
 									<TR class="centralizar ">

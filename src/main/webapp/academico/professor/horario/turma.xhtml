@@ -59,7 +59,7 @@
 							value="#{professorTurmaBean.turmasProfessor}" var="professor"
 							style="border: 1px solid #D3CACA; background: #d8e3ef; padding-let:0;"
 							rowClasses="linha1, linha2"
-							columnClasses=",coluna1, coluna2, coluna3, coluna1,,,coluna5, coluna6"
+							columnClasses=",coluna1, coluna2, left, coluna1,,,coluna5, coluna6"
 							headerClass="cabecalhoTabela1">
 
 							<h:column>
@@ -88,7 +88,7 @@
 									<h:outputText value="Disciplina" styleClass="margin-left" />
 								</f:facet>
 								<h:outputText
-									value="#{professor.disciplinaClasse.disciplina.descricao}"
+									value="#{professor.disciplina.descricao}"
 									styleClass="margin-left" />
 							</h:column>
 							<h:column>

@@ -31,9 +31,11 @@
 					styleClass="dropdown-item">Classe</h:commandLink>
 				<h:commandLink action="#{disciplinaBean.cadastroDisciplina}"
 					styleClass="dropdown-item">Disciplina</h:commandLink>
-				<h:commandLink
-					action="#{disciplinaClasseBean.cadastroDisciplinaClasseDirectorDistrital}"
-					styleClass="dropdown-item">Disciplinas da Classe</h:commandLink>
+				<h:outputLink
+					value="#{request.contextPath}/director-ditrital/classe/disciplina.jsf"
+					styleClass="dropdown-item">Disciplinas da Classe</h:outputLink>
+				
+
 
 			</div></li>
 		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"

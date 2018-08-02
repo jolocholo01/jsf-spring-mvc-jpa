@@ -216,8 +216,8 @@
 							styleClass="col-sm-4 control-label texto-label textfim" />
 						<div class="col-sm-6">
 							<h:selectOneMenu
-								value="#{professorTurmaBean.disciplinaClasse.id}"
-								required="true"
+								value="#{professorTurmaBean.disciplinaClasse}"
+								required="true" converter="disciplinaClasseConverter"
 								requiredMessage="O campo disciplina é obrigatório"
 								styleClass="form-control" style="text-transform: uppercase;">
 								<f:selectItem itemLabel="SELECIONE..." itemValue="#{null}" />
@@ -225,7 +225,7 @@
 									value="#{professorTurmaBean.matrizSelecionada.disciplinaClasses}"
 									var="disciplinaClasse"
 									itemLabel="#{disciplinaClasse.disciplina.descricao}"
-									itemValue="#{disciplinaClasse.id}" />
+									itemValue="#{disciplinaClasse}" />
 
 							</h:selectOneMenu>
 						</div>

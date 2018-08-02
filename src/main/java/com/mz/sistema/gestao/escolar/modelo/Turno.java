@@ -31,6 +31,7 @@ public class Turno implements Serializable {
 	 */
 	private static final long serialVersionUID = -5083101781752557820L;
 	private Long id;
+	private Integer ordem;
 	private String curso;
 	private TipoTurno descricao;
 	private String sigla;
@@ -155,6 +156,14 @@ public class Turno implements Serializable {
 
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
+	}
+
+	public Integer getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(Integer ordem) {
+		this.ordem = ordem;
 	}
 
 }

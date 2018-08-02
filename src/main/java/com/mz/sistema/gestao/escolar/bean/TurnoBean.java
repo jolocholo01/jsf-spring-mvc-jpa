@@ -74,12 +74,15 @@ public class TurnoBean {
 			}
 			if(turno.getDescricao().toString().equals(TipoTurno.MANHÃ.toString())){
 				turno.setSigla("M");
+				turno.setOrdem(1);
 			}
 			if(turno.getDescricao().toString().equals(TipoTurno.TARDE.toString())){
 				turno.setSigla("T");
+				turno.setOrdem(2);
 			}
 			if(turno.getDescricao().toString().equals(TipoTurno.NOITE.toString())){
 				turno.setSigla("N");
+				turno.setOrdem(3);
 			}
 
 			turnoServico.salvar(turno);

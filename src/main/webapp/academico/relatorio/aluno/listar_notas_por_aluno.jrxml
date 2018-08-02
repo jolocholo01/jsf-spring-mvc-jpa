@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-07-23T07:45:33 -->
+<!-- 2018-08-01T06:52:03 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notas_anual" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="838" leftMargin="2" rightMargin="2" topMargin="10" bottomMargin="10" uuid="9a0dfb25-e72b-4f61-b070-8a9e40fbb38b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
@@ -282,7 +282,7 @@ ORDER BY disciplina.descricao ASC]]>
 .replace( "TARDE", "Tarde" ).replace( "NOITE", "Noite" )]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="137" y="2" width="88" height="15" uuid="97f52ab0-dbb9-4645-8b6f-4607a5ab5c39"/>
+				<reportElement x="137" y="2" width="114" height="15" uuid="97f52ab0-dbb9-4645-8b6f-4607a5ab5c39"/>
 				<box topPadding="0">
 					<bottomPen lineWidth="0.3"/>
 				</box>
@@ -1445,9 +1445,45 @@ ORDER BY disciplina.descricao ASC]]>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="33" splitType="Stretch">
+		<band height="17" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="200" y="6" width="400" height="21" uuid="bc67567f-7b48-4a3d-9adb-653cdf30ae41">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="6">
+					<topPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="401" y="7" width="100" height="20" uuid="b3753547-065a-42a9-be7e-228044e94095"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="301" y="7" width="100" height="20" uuid="d22d66da-3228-4f37-bb33-b81ee7425fc3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pag. " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="65" splitType="Stretch">
 			<staticText>
-				<reportElement x="557" y="6" width="251" height="25" uuid="15c367c8-db85-41cf-b875-16483bd1b2b3">
+				<reportElement x="552" y="40" width="251" height="25" uuid="15c367c8-db85-41cf-b875-16483bd1b2b3">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="3">
@@ -1460,54 +1496,36 @@ ORDER BY disciplina.descricao ASC]]>
 				<text><![CDATA[______/_____/________]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="321" y="8" width="88" height="16" uuid="f4d9b2bb-5c5f-4e08-9d64-44ba1d95bf6c"/>
+				<reportElement x="395" y="14" width="88" height="16" uuid="f4d9b2bb-5c5f-4e08-9d64-44ba1d95bf6c"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Courier New" size="10" isBold="true"/>
+					<font fontName="Courier New" size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{situacao}==null?"":$P{situacao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="263" y="8" width="69" height="16" uuid="07e6ae63-fa50-410f-b565-a32d039fffee"/>
+				<reportElement x="330" y="14" width="69" height="16" uuid="07e6ae63-fa50-410f-b565-a32d039fffee"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Courier New" size="10" isBold="false"/>
+					<font fontName="Courier New" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{situacao}==null?"":" valores, "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="169" y="8" width="94" height="16" isRemoveLineWhenBlank="true" uuid="60c6d0ed-2609-4cf7-a0f8-8939e17361a9"/>
+				<reportElement x="22" y="14" width="178" height="16" uuid="ca7eaea7-a389-42fa-847d-77907e76083a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{situacao}==null?"":"Classificação Anual (CA): "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="14" width="130" height="16" isRemoveLineWhenBlank="true" uuid="60c6d0ed-2609-4cf7-a0f8-8939e17361a9"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Courier New" size="10" isBold="true"/>
+					<font fontName="Courier New" size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{situacao}==null?"":$P{mediaAnual}+" ( "+$P{mediaAnualPorExtenso}+") "]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="24" y="8" width="148" height="16" uuid="ca7eaea7-a389-42fa-847d-77907e76083a"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Courier New" size="10" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{situacao}==null?"":"Classificação Anual (CA): "]]></textFieldExpression>
-			</textField>
 		</band>
-	</columnFooter>
-	<pageFooter>
-		<band height="32" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="11" width="839" height="21" uuid="48148db2-8e0c-467c-8c32-55c12acf227c"/>
-				<box topPadding="6">
-					<topPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.0"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Courier New"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Pag. " + $V{PAGE_NUMBER}+" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-		</band>
-	</pageFooter>
-	<summary>
-		<band height="72" splitType="Stretch"/>
 	</summary>
 </jasperReport>

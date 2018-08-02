@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.mz.sistema.gestao.escolar.autenticacao.AuthenticationContext;
 import com.mz.sistema.gestao.escolar.modelo.Disciplina;
 import com.mz.sistema.gestao.escolar.modelo.Funcionario;
@@ -64,9 +65,8 @@ public class DisciplinaBean implements Serializable {
 			if (disciplina.getId() == null) {
 				if (funcionario != null)
 					disciplina.setFuncCadastro(funcionario);
-				disciplina.setCodigo(disciplina.getDescricao().substring(0, 3).toUpperCase());
 				disciplina = disciplinaServico.salvarRetornar(disciplina);
-				setarCodigoDisciplina();
+				disciplina.setCodigo(setarCodigoDisciplina(disciplina.getDescricao(), disciplina.getId()));
 
 				disciplinaServico.salvar(disciplina);
 				Mensagem.mensagemInfo("AVISO: disciplina cadastrada com sucesso!");
@@ -76,8 +76,8 @@ public class DisciplinaBean implements Serializable {
 			} else if (disciplina.getId() != null) {
 				if (funcionario != null)
 					disciplina.setFuncAlteracao(funcionario);
-				setarCodigoDisciplina();
-
+				disciplina.setCodigo(setarCodigoDisciplina(disciplina.getDescricao(), disciplina.getId()));
+				disciplina.setDataAlteracao(new Date());
 				disciplinaServico.salvar(disciplina);
 				voltarParaPequisa();
 				Mensagem.mensagemInfo("AVISO: disciplina atualizada com sucesso!");
@@ -89,14 +89,24 @@ public class DisciplinaBean implements Serializable {
 		}
 	}
 
-	private void setarCodigoDisciplina() {
-		if (disciplina.getId() < 100 && disciplina.getId() > 9) {
-			disciplina.setCodigo(disciplina.getDescricao().substring(0, 3).toUpperCase() + "0" + disciplina.getId());
-		} else if (disciplina.getId() < 9) {
-			disciplina.setCodigo(disciplina.getDescricao().substring(0, 3).toUpperCase() + "00" + disciplina.getId());
-		} else {
-			disciplina.setCodigo(disciplina.getDescricao().substring(0, 3).toUpperCase() + "" + disciplina.getId());
+	private String setarCodigoDisciplina(String disciplina1, Long id) {
+		disciplina1 = disciplina1.replace("    ", "").replace("   ", "").replace("  ", "").replace(" ", "");
+		String disciplina = disciplina1.substring(0, 3).toUpperCase();
+
+		if (disciplina.equals("ED.")) {
+			disciplina = disciplina1.substring(0, 4).toUpperCase();
 		}
+		if (disciplina.equals("ED. ")) {
+			disciplina = disciplina1.substring(0, 5).toUpperCase();
+		}
+		if (id < 100 && id > 9) {
+			disciplina = disciplina + "0" + id;
+		} else if (id < 9) {
+			disciplina = disciplina + "00" + id;
+		} else {
+			disciplina = disciplina + "" + id;
+		}
+		return disciplina;
 	}
 
 	public void obterQtdCarateres() {
@@ -119,7 +129,7 @@ public class DisciplinaBean implements Serializable {
 		// pesquisa = null;
 		disciplina = new Disciplina();
 		disciplina.setDataCadastro(new Date());
-		//disciplinas = null;
+		// disciplinas = null;
 
 	}
 
@@ -142,7 +152,6 @@ public class DisciplinaBean implements Serializable {
 
 	public void prepararParExcluir(Disciplina disciplina) {
 		this.disciplinaExclusao = disciplina;
-		this.disciplinaExclusao.setDescricao(Replace.rescreverTexto(disciplina.getDescricao()));
 
 	}
 

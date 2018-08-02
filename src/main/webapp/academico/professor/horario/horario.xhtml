@@ -34,7 +34,7 @@
 					<h:outputText value="Pesquisar meus horários"
 						style="font-weight: 700;" />
 				</h3>
-				<p:messages closable="true" style="    width: 98%; margin: 2% auto;" />
+				<p:messages closable="true" style="    width: 98%; margin: auto;" />
 
 				<div class="card-body">
 
@@ -86,7 +86,7 @@
 								value="#{horarioBean.getHorariosProfessor(horarioAula)}">
 								<h:panelGroup rendered="#{horario.diaSemana.sigla =='SEG'}">
 									<h:outputText
-										value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.sigla}"
+										value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.codigo}"
 										title="#{horario.turma.classe.descricao} > TURMA ( #{horario.turma.descricao} ) - #{horario.disciplina.descricao}">
 
 										<f:passThroughAttribute name="data-toggle" value="tooltip" />
@@ -102,7 +102,7 @@
 							<ui:repeat var="horario" value="#{horarioBean.horariosProfessor}">
 
 								<h:outputText rendered="#{horario.diaSemana.sigla =='TER'}"
-									value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.sigla}"
+									value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.codigo}"
 									title="#{horario.turma.classe.descricao} > TURMA ( #{horario.turma.descricao} ) - #{horario.disciplina.descricao}">
 
 									<f:passThroughAttribute name="data-toggle" value="tooltip" />
@@ -115,7 +115,7 @@
 							<ui:repeat var="horario" value="#{horarioBean.horariosProfessor}">
 
 								<h:outputText rendered="#{horario.diaSemana.sigla =='QUA'}"
-									value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.sigla}"
+									value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.codigo}"
 									title="#{horario.turma.classe.descricao} > TURMA ( #{horario.turma.descricao} ) - #{horario.disciplina.descricao}">
 
 									<f:passThroughAttribute name="data-toggle" value="tooltip" />
@@ -128,7 +128,7 @@
 							<ui:repeat var="horario" value="#{horarioBean.horariosProfessor}">
 
 								<h:outputText rendered="#{horario.diaSemana.sigla =='QUI'}"
-									value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.sigla}"
+									value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.codigo}"
 									title="#{horario.turma.classe.descricao} > TURMA ( #{horario.turma.descricao} ) - #{horario.disciplina.descricao}">
 
 									<f:passThroughAttribute name="data-toggle" value="tooltip" />
@@ -141,7 +141,7 @@
 							<f:facet name="header">Sexta</f:facet>
 							<ui:repeat var="horario" value="#{horarioBean.horariosProfessor}">
 								<h:outputText rendered="#{horario.diaSemana.sigla =='SEX'}"
-									value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.sigla}"
+									value="#{horario.turma.classe.sigla}ª > #{horario.turma.descricao} - #{horario.disciplina.codigo}"
 									title="#{horario.turma.classe.descricao} > TURMA ( #{horario.turma.descricao} ) - #{horario.disciplina.descricao}">
 
 									<f:passThroughAttribute name="data-toggle" value="tooltip" />

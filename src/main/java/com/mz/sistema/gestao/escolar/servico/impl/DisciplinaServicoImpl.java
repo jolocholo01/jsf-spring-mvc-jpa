@@ -29,7 +29,7 @@ public class DisciplinaServicoImpl implements DisciplinaServico {
 
 	@Override
 	public void salvar(Disciplina disciplina) {
-		disciplina.setDescricao(Replace.letrasMasculas(disciplina.getDescricao().trim()));
+		disciplina.setDescricao(disciplina.getDescricao().toUpperCase());
 		em.merge(disciplina);
 
 	}
@@ -82,7 +82,7 @@ public class DisciplinaServicoImpl implements DisciplinaServico {
 	}
 
 	@Override
-	public Disciplina obterDisciplinaPorId(Integer idDisciplina) {
+	public Disciplina obterDisciplinaPorId(Long idDisciplina) {
 		@SuppressWarnings("unchecked")
 		List<Disciplina> disciplinas = em.createQuery("FROM Disciplina WHERE id=:idDisciplina")
 				.setParameter("idDisciplina", idDisciplina).getResultList();
@@ -121,7 +121,7 @@ public class DisciplinaServicoImpl implements DisciplinaServico {
 		String descricao = Replace.letrasMasculas(pesquisa).trim();
 		@SuppressWarnings("unchecked")
 		List<Disciplina> disciplinas = em.createQuery("FROM Disciplina WHERE  descricao LIKE '%"
-				+ descricao.toUpperCase() + "%' OR sigla LIKE '%" + pesquisa.toUpperCase() + "%' ORDER BY descricao ")
+				+ descricao.toUpperCase() + "%' OR sigla LIKE '%" + pesquisa + "%' OR codigo LIKE '%" + pesquisa.toUpperCase() + "%' ORDER BY descricao ")
 				.getResultList();
 		if (!disciplinas.isEmpty()) {
 			return disciplinas;

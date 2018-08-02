@@ -46,7 +46,7 @@ public class TurnoServicoImpl implements TurnoServico {
 	@SuppressWarnings("unchecked")
 	public List<Turno> listarTodosTurnos() {
 
-		List<Turno> turnos = em.createQuery("FROM Turno ORDER BY id ").getResultList();
+		List<Turno> turnos = em.createQuery("FROM Turno ORDER BY ordem ").getResultList();
 		if (!turnos.isEmpty()) {
 			return turnos;
 		}

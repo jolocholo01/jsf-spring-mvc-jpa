@@ -56,7 +56,7 @@
 					value="#{professorTurmaBean.turmasProfessor}" var="professor"
 					style="border: 3px solid #d8e3ef; background: #d8e3ef; "
 					rowClasses="linha1, linha2"
-					columnClasses="coluna4, coluna2, left, coluna4, coluna5, coluna6, coluna6"
+					columnClasses="coluna4, coluna2, left, coluna4,coluna4, coluna5, coluna6, coluna6"
 					headerClass="cabecalhoTabela center">
 
 					<h:column>
@@ -93,13 +93,23 @@
 					</h:column>
 					<h:column>
 						<f:facet name="header">
-							<h:outputText value="Sala/Turno" />
+							<h:outputText value="Sala" />
 						</f:facet>
-						<h:outputText value="#{professor.turma.sala.numero} /"
+						<h:outputText value="#{professor.turma.sala.numero}"
 							rendered="#{professor.turma.sala.numero !=null}" />
-						<h:outputText value=" #{professor.turma.turno.sigla}"
+						<h:outputText value=" Sem sala"
 							style="	text-transform: uppercase; "
-							rendered="#{professor.turma.turno.sigla !=null}" />
+							rendered="#{professor.turma.sala.numero ==null}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Turno" />
+						</f:facet>
+						<h:outputText value="#{professor.turma.turno.descricao}"
+							rendered="#{professor.turma.turno.descricao !=null}" />
+						<h:outputText value=" Sem turno"
+						
+							rendered="#{professor.turma.turno.descricao ==null}" />
 					</h:column>
 					<h:column headerClass="cabecalhoTabela quantidadeAluno center">
 						<f:facet name="header">

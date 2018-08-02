@@ -4,6 +4,7 @@ package com.mz.sistema.gestao.escolar.bean;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +34,10 @@ import com.mz.sistema.gestao.escolar.modelo.Calendario;
 import com.mz.sistema.gestao.escolar.modelo.Classe;
 import com.mz.sistema.gestao.escolar.modelo.DisciplinaClasse;
 import com.mz.sistema.gestao.escolar.modelo.Escola;
+import com.mz.sistema.gestao.escolar.modelo.Funcionario;
 import com.mz.sistema.gestao.escolar.modelo.FuncionarioEscola;
 import com.mz.sistema.gestao.escolar.modelo.Matriz;
+import com.mz.sistema.gestao.escolar.modelo.Usuario;
 import com.mz.sistema.gestao.escolar.servico.AreaServico;
 import com.mz.sistema.gestao.escolar.servico.CalendarioServico;
 import com.mz.sistema.gestao.escolar.servico.DisciplinaClasseServico;
@@ -51,6 +54,7 @@ public class MatrizBean {
 	private Matriz matriz;
 	private Matriz matrizSelecionada;
 	private Matriz matrizSelecionadaPraExclusao;
+	private Matriz matrizSelecionadaPraFinalizar;
 	private Matriz alterarMatriz = new Matriz();
 	private List<Matriz> matrizes;
 	private List<Matriz> matrizesCurriculares;
@@ -73,6 +77,7 @@ public class MatrizBean {
 	private boolean selecionarDisciplinaBoolean = false;
 	private boolean proximoBotaoParaEdicaoBoolean = false;
 	private boolean finalizarCadastroMatrizBoolean = false;
+	private boolean excluirCadastroMatrizBoolean = false;
 
 	private Integer qtdMatrizesEncontradas;
 
@@ -93,7 +98,6 @@ public class MatrizBean {
 	@Autowired
 	private CalendarioServico calendarioServico;
 
-	
 	public void iniciarClasseBean() {
 		try {
 			this.matrizSelecionada = null;
@@ -102,7 +106,7 @@ public class MatrizBean {
 			FuncionarioEscola funcionarioEscola = authenticationContext.getFuncionarioEscolaLogada();
 			escola = funcionarioEscola.getEscola();
 			classes = escolaServico.obterClassesPorIdEscola(escola.getId());
-			
+
 			classe = new Classe();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -156,57 +160,64 @@ public class MatrizBean {
 	}
 
 	public void salvar() {
-		if (calendario == null) {
-			Mensagem.mensagemAlerta(
-					"AVISO:Não pode cadastrar matriz curricular pois, não existe Calendário Escolar no sistema");
-			return;
-		}
-		matriz.setAno(calendario.getAno());
-		if (this.classeSelecionada.getTipoEnsino().equals("ENSINO SECUNDÁRIO")) {
-
-			if (classeSelecionada.getCiclo().equals("1º CICLO")) {
-				if (matriz.getDisciplinaClasses().isEmpty()) {
-					Mensagem.mensagemAlerta("AVISO: selecione disciplinas para cadastrar matriz curricular!");
-					return;
-				}
-				Matriz matrizExistente = matrizServico.disciplinaClasseExistente(classeSelecionada.getId(),
-						matriz.getCurso(), escola.getId());
-				if (matrizExistente == null) {
-
-				} else if (matrizExistente != null && matriz.getId() != matrizExistente.getId()) {
-					Mensagem.mensagemAlerta("AVISO: ja existe disciplinas distribuida nesta classe.");
-					return;
-				}
-
-			} else if (classeSelecionada.getCiclo().equals("2º CICLO")) {
-				matriz.setTipoArea(getLabelDisciplinas());
-				Matriz matrizExistente = matrizServico.disciplinaClasseExistenteSegundoCiclo(classeSelecionada.getId(),
-						matriz.getCurso(), matriz.getTipoArea(), escola.getId());
-				if (matrizExistente == null) {
-
-				} else if (matrizExistente != null && matriz.getId() != matrizExistente.getId()) {
-					Mensagem.mensagemAlerta("AVISO: ja existe disciplinas distribuida nesta classe.");
-					return;
-				}
-				if (disciplinaClassesArea.isEmpty()) {
-					Mensagem.mensagemAlerta("AVISO: selecione disciplinas para cadastrar matriz curricular!");
-					return;
-				}
-
-				matriz.setDisciplinaClasses(new ArrayList<>(disciplinaClassesArea1));
-				matriz.getDisciplinaClasses().addAll(disciplinaClassesArea);
+		try {
+			if (calendario == null) {
+				Mensagem.mensagemAlerta(
+						"AVISO:Não pode cadastrar matriz curricular pois, não existe Calendário Escolar no sistema");
+				return;
 			}
+			matriz.setAno(calendario.getAno());
+			if (this.classeSelecionada.getTipoEnsino().equals("ENSINO SECUNDÁRIO")) {
+
+				if (classeSelecionada.getCiclo().equals("1º CICLO")) {
+					if (matriz.getDisciplinaClasses().isEmpty()) {
+						Mensagem.mensagemAlerta("AVISO: selecione disciplinas para cadastrar matriz curricular!");
+						return;
+					}
+					Matriz matrizExistente = matrizServico.disciplinaClasseExistente(classeSelecionada.getId(),
+							matriz.getCurso(), escola.getId());
+					if (matrizExistente == null) {
+
+					} else if (matrizExistente != null && matriz.getId() != matrizExistente.getId()) {
+						Mensagem.mensagemAlerta("AVISO: ja existe disciplinas distribuida nesta classe.");
+						return;
+					}
+
+				} else if (classeSelecionada.getCiclo().equals("2º CICLO")) {
+					matriz.setTipoArea(getLabelDisciplinas());
+					Matriz matrizExistente = matrizServico.disciplinaClasseExistenteSegundoCiclo(
+							classeSelecionada.getId(), matriz.getCurso(), matriz.getTipoArea(), escola.getId());
+					if (matrizExistente == null) {
+
+					} else if (matrizExistente != null && matriz.getId() != matrizExistente.getId()) {
+						Mensagem.mensagemAlerta("AVISO: ja existe disciplinas distribuida nesta classe.");
+						return;
+					}
+					if (disciplinaClassesArea.isEmpty()) {
+						Mensagem.mensagemAlerta("AVISO: selecione disciplinas para cadastrar matriz curricular!");
+						return;
+					}
+
+					matriz.setDisciplinaClasses(new ArrayList<>(disciplinaClassesArea1));
+					matriz.getDisciplinaClasses().addAll(disciplinaClassesArea);
+				}
+			}
+			matriz.setDataCadastro(new Date());
+			matriz.setClasse(classeSelecionada);
+			matriz.setEscola(escola);
+			Funcionario funcionario = authenticationContext.getFuncionarioLogado();
+			matriz.setFuncCadastro(funcionario);
+
+			matriz.setCiclo(classeSelecionada.getCiclo());
+			matrizServico.salvar(matriz);
+			matriz = new Matriz();
+
+			selecionarDisciplinaBoolean = false;
+
+			Mensagem.mensagemInfo("Matriz curricular incluida com sucesso");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		matriz.setClasse(classeSelecionada);
-		matriz.setEscola(escola);
-		matriz.setCiclo(classeSelecionada.getCiclo());
-		matrizServico.salvar(matriz);
-		matriz = new Matriz();
-
-		selecionarDisciplinaBoolean = false;
-
-		Mensagem.mensagemInfo("Matriz curricular incluida com sucesso");
 
 	}
 
@@ -227,21 +238,7 @@ public class MatrizBean {
 	}
 
 	public void salvarEdicao() {
-		if (matrizSelecionada.getClasse().getCiclo().equals("2º CICLO")) {
-			if (disciplinaClassesArea.isEmpty()) {
-				Mensagem.mensagemAlerta("AVISO: selecione disciplinas para cadastrar matriz curricular!");
-				return;
-			}
-			matrizSelecionada.setTipoArea(getLabelDisciplinas());
-			matrizSelecionada.setDisciplinaClasses(new ArrayList<>(disciplinaClassesAreaEdicao));
-			matrizSelecionada.getDisciplinaClasses().addAll(disciplinaClassesArea);
-		}
-		matrizSelecionada.setAtiva(false);
-		matrizServico.salvar(matrizSelecionada);
-		Mensagem.mensagemInfo("AVISO: Matriz curricular foi atualizada com sucesso");
-	}
 
-	public void salvarAfinalizacao() {
 		try {
 			if (matrizSelecionada.getClasse().getCiclo().equals("2º CICLO")) {
 				if (disciplinaClassesArea.isEmpty()) {
@@ -249,15 +246,44 @@ public class MatrizBean {
 					return;
 				}
 				matrizSelecionada.setTipoArea(getLabelDisciplinas());
+				disciplinaClassesAreaEdicao.removeAll(disciplinaClassesArea);
+				disciplinaClassesAreaEdicao.addAll(disciplinaClassesArea);
+				matrizSelecionada.setDisciplinaClasses(new ArrayList<>());
+				matrizServico.salvar(matrizSelecionada);
 				matrizSelecionada.setDisciplinaClasses(new ArrayList<>(disciplinaClassesAreaEdicao));
-				matrizSelecionada.getDisciplinaClasses().addAll(disciplinaClassesArea);
 			}
-			matrizSelecionada.setAtiva(true);
+			matrizSelecionada.setAtiva(false);
+			Funcionario funcionario = authenticationContext.getFuncionarioLogado();
+			matrizSelecionada.setFuncAlteracao(funcionario);
+			matrizSelecionada.setDataAlteracao(new Date());
+
 			matrizServico.salvar(matrizSelecionada);
-			Mensagem.mensagemInfo("AVISO: A Matriz curricular foi finalizada com sucesso");
+			if (matrizSelecionada.getClasse().getCiclo().equals("1º CICLO"))
+				Mensagem.mensagemInfo("AVISO: Matriz curricular da " + matrizSelecionada.getClasse().getDescricao()
+						+ " do curso " + matrizSelecionada.getCurso() + " foi atualizada com sucesso!");
+			else
+				Mensagem.mensagemInfo("AVISO: Matriz curricular da " + matrizSelecionada.getClasse().getDescricao()
+						+ " " + matrizSelecionada.getTipoArea() + " do curso " + matrizSelecionada.getCurso()
+						+ " foi atualizada com sucesso!");
+
+			voltarEdicao();
 		} catch (Exception e) {
 			e.printStackTrace();
-			Mensagem.mensagemFatal("AVISO: Hove erro ao finalizar a matriz curricular!o");
+		}
+	}
+
+	public void salvarAfinalizacao() {
+		try {
+			matrizSelecionadaPraFinalizar.setAtiva(true);
+			Funcionario funcionario = authenticationContext.getFuncionarioLogado();
+			matrizSelecionadaPraFinalizar.setFuncFinalizar(funcionario);
+			matrizSelecionadaPraFinalizar.setDataFinalizacao(new Date());
+			matrizServico.salvar(matrizSelecionadaPraFinalizar);
+			Mensagem.mensagemInfo("AVISO: A Matriz curricular foi finalizada com sucesso");
+			buscarMatrizesPorCiclo();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Mensagem.mensagemFatal("AVISO: Hove erro ao finalizar a matriz curricular!");
 		}
 	}
 
@@ -268,34 +294,38 @@ public class MatrizBean {
 		disciplinaClasses = null;
 		disciplinaClassesArea = new ArrayList<>();
 		selecionarDisciplinaBoolean = false;
-		if (this.classeSelecionada.getTipoEnsino().equals("ENSINO SECUNDÁRIO")) {
-			if (this.classeSelecionada.getCiclo().equals("1º CICLO")) {
-				disciplinaClasses = disciplinaClasseServico.obterDisciplinasPorClasse(classeSelecionada.getId());
-			} else if (this.classeSelecionada.getCiclo().equals("2º CICLO")) {
-				disciplinaClasses = disciplinaClasseServico.obterDisciplinasPorClassePorArea(classeSelecionada.getId(),
-						tipoArea);
+		try {
+			if (this.classeSelecionada.getTipoEnsino().equals("ENSINO SECUNDÁRIO")) {
+				if (this.classeSelecionada.getCiclo().equals("1º CICLO")) {
+					disciplinaClasses = disciplinaClasseServico.obterDisciplinasPorClasse(classeSelecionada.getId());
+				} else if (this.classeSelecionada.getCiclo().equals("2º CICLO")) {
+					disciplinaClasses = disciplinaClasseServico
+							.obterDisciplinasPorClassePorArea(classeSelecionada.getId(), tipoArea);
+				}
 			}
-		}
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+
 	public void imprimirListaAlunosPorClassePorCurso(Matriz matriz) {
 		try {
 			calendario = calendarioServico.obterCalendarioVigente();
-			if(calendario==null){
+			if (calendario == null) {
 				Mensagem.mensagemErro("ERRO: Não exite calendário escolar em vigor!");
 				return;
 			}
-			String filename =  "ALUNOS DA "+matriz.getClasse().getDescricao()+" DO CURSO "+matriz.getCurso();
+			String filename = "ALUNOS DA " + matriz.getClasse().getDescricao() + " DO CURSO " + matriz.getCurso();
 			String caminho = "/academico/relatorio/aluno/listar_alunos_na_classe.jasper";
 			Map<String, Object> parametro = new HashMap<>();
-			
 
 			parametro.put("idEscola", matriz.getEscola().getId());
 			parametro.put("Ano", calendario.getAno());
 			parametro.put("idClasse", matriz.getClasse().getId());
 			parametro.put("Curso", matriz.getCurso());
 			geradorDeRelatoriosServico.geraPdf(caminho, parametro, filename);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -304,21 +334,25 @@ public class MatrizBean {
 
 	public void seguinte() {
 
-		disciplinaClassesArea1 = new ArrayList<>(matriz.getDisciplinaClasses());
-		if (disciplinaClassesArea1.isEmpty()) {
-			Mensagem.mensagemAlerta("AVISO: selecione disciplinas para cadastrar matriz curricular!");
-			return;
+		try {
+			disciplinaClassesArea1 = new ArrayList<>(matriz.getDisciplinaClasses());
+			if (disciplinaClassesArea1.isEmpty()) {
+				Mensagem.mensagemAlerta("AVISO: selecione disciplinas para cadastrar matriz curricular!");
+				return;
+			}
+			selecionarDisciplinaBoolean = true;
+			areas = areaServico.obterAreasPorCicloOrdenarPorOrdemDecrescenteDiferenteDaArea(
+					this.classeSelecionada.getCiclo(), tipoArea);
+			disciplinaClassesSelecionadaSegundoCiclo = new ArrayList<>();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		selecionarDisciplinaBoolean = true;
-		areas = areaServico.obterAreasPorCicloOrdenarPorOrdemDecrescenteDiferenteDaArea(
-				this.classeSelecionada.getCiclo(), tipoArea);
-		disciplinaClassesSelecionadaSegundoCiclo = new ArrayList<>();
 	}
 
 	public void proximo() {
 
 		try {
-			disciplinaClassesAreaEdicao = new ArrayList<>(this.matrizSelecionada.getDisciplinaClasses());
+			disciplinaClassesAreaEdicao = new ArrayList<>(matrizSelecionada.getDisciplinaClasses());
 			if (disciplinaClassesAreaEdicao.isEmpty()) {
 				Mensagem.mensagemAlerta("AVISO: selecione disciplinas para cadastrar matriz curricular!");
 				return;
@@ -328,8 +362,9 @@ public class MatrizBean {
 					this.matrizSelecionada.getClasse().getCiclo(), tipoArea);
 			disciplinaClassesSelecionadaSegundoCiclo = disciplinaClasseServico.obterDisciplinasPorClasseEArea(
 					this.matrizSelecionada.getClasse().getId(), this.matrizSelecionada.getArea().getId());
-			Matriz matriz = matrizServico.obterMatrizPorIdELeftJoin(this.matrizSelecionada.getId());
-			disciplinaClassesArea = matriz.getDisciplinaClasses();
+			// matrizServico.salvar(this.matrizSelecionada);
+			matrizSelecionada = matrizServico.obterMatrizPorIdELeftJoin(matrizSelecionada.getId());
+			disciplinaClassesArea = new ArrayList<>(matrizSelecionada.getDisciplinaClasses());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -340,6 +375,8 @@ public class MatrizBean {
 		this.matrizSelecionadaPraExclusao = matriz;
 		String curso = TipoLetra.capitalizeString(this.matrizSelecionadaPraExclusao.getCurso());
 		this.matrizSelecionadaPraExclusao.setCurso(curso);
+		finalizarCadastroMatrizBoolean = false;
+		excluirCadastroMatrizBoolean = true;
 
 	}
 
@@ -358,6 +395,7 @@ public class MatrizBean {
 		tipoCursos = Arrays.asList(TipoCurso.values());
 		proximoBotaoParaEdicaoBoolean = false;
 		finalizarCadastroMatrizBoolean = false;
+
 		try {
 			this.matrizSelecionada = matrizServico.obterMatrizPorIdELeftJoin(matriz.getId());
 			if (matriz.getClasse().getTipoEnsino().equals("ENSINO SECUNDÁRIO")) {
@@ -380,9 +418,11 @@ public class MatrizBean {
 		tipoCursos = Arrays.asList(TipoCurso.values());
 		proximoBotaoParaEdicaoBoolean = false;
 		finalizarCadastroMatrizBoolean = true;
+		excluirCadastroMatrizBoolean = false;
+		this.matrizSelecionadaPraFinalizar = new Matriz();
 
 		try {
-			this.matrizSelecionada = matrizServico.obterMatrizPorIdELeftJoin(matriz.getId());
+			this.matrizSelecionadaPraFinalizar = matrizServico.obterMatrizPorIdELeftJoin(matriz.getId());
 			if (matriz.getClasse().getTipoEnsino().equals("ENSINO SECUNDÁRIO")) {
 
 				if (matriz.getClasse().getCiclo().equals("1º CICLO")) {
@@ -476,12 +516,25 @@ public class MatrizBean {
 	}
 
 	public void buscarMatrizesPorCiclo() {
-
+		finalizarCadastroMatrizBoolean = false;
 		try {
+			matrizes = new ArrayList<>();
 			if (calendario == null) {
 			} else if (escola == null) {
-			} else if (calendario != null && escola != null)
-				matrizes = matrizServico.obterMatrizPorEscolaPorCiclo(alterarMatriz.getCiclo(), escola.getId());
+			} else if (calendario != null && escola != null) {
+				List<Matriz> matrizes = matrizServico.obterMatrizPorEscolaPorCiclo(alterarMatriz.getCiclo(),
+						escola.getId());
+				int count = 0;
+				if (!matrizes.isEmpty()) {
+					for (Matriz matriz : matrizes) {
+						count++;
+						matriz.setOrdem(count);
+						this.matrizes.add(matriz);
+
+					}
+				}
+
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -686,6 +739,22 @@ public class MatrizBean {
 
 	public void setQtdMatrizesEncontradas(Integer qtdMatrizesEncontradas) {
 		this.qtdMatrizesEncontradas = qtdMatrizesEncontradas;
+	}
+
+	public Matriz getMatrizSelecionadaPraFinalizar() {
+		return matrizSelecionadaPraFinalizar;
+	}
+
+	public void setMatrizSelecionadaPraFinalizar(Matriz matrizSelecionadaPraFinalizar) {
+		this.matrizSelecionadaPraFinalizar = matrizSelecionadaPraFinalizar;
+	}
+
+	public boolean isExcluirCadastroMatrizBoolean() {
+		return excluirCadastroMatrizBoolean;
+	}
+
+	public void setExcluirCadastroMatrizBoolean(boolean excluirCadastroMatrizBoolean) {
+		this.excluirCadastroMatrizBoolean = excluirCadastroMatrizBoolean;
 	}
 
 }

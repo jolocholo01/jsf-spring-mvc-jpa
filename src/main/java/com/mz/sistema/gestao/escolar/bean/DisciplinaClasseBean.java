@@ -72,7 +72,7 @@ public class DisciplinaClasseBean {
 				disciplinaClasse.getArea().getId());
 
 		if (disciplinaClasseExistente != null && disciplinaClasseExistente.getId() != disciplinaClasse.getId()) {
-			Mensagem.mensagemInfo("Já existe esta disciplina alocado nesta classe!");
+			Mensagem.mensagemAlerta("ATENÇÃO: Já existe esta disciplina alocado nesta classe!");
 			return;
 		}
 		DisciplinaClasse classeSelecionada = new DisciplinaClasse();
@@ -81,7 +81,7 @@ public class DisciplinaClasseBean {
 		if (disciplinaClasse.getId() == null) {
 			disciplinaClasse.setFuncCadastro(funcionario);
 			disciplinaClasseServico.salvar(disciplinaClasse);
-			Mensagem.mensagemInfo("AVISO: Disciplina alocada na classe com sucesso!");
+			Mensagem.mensagemInfo("AVISO: A disciplina foi alocada na classe com sucesso!");
 			disciplinaClasse = new DisciplinaClasse();
 			disciplinaClasse.setClasse(classeSelecionada.getClasse());
 			disciplinaClasse.setDataCadastro(new Date());

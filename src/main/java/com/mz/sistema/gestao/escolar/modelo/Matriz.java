@@ -1,6 +1,8 @@
 package com.mz.sistema.gestao.escolar.modelo;
 
+
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /*
@@ -21,12 +23,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 public class Matriz implements Serializable {
 
 	private static final long serialVersionUID = 71322530428224681L;
 	private long id;
+	private Integer ordem;
 	private Integer ano;
 	private String curso;
 	private List<DisciplinaClasse> disciplinaClasses;
@@ -36,6 +42,12 @@ public class Matriz implements Serializable {
 	private String tipoArea;
 	private String ciclo;
 	private boolean ativa;
+	private Funcionario funcCadastro;
+	private Date dataCadastro;
+	private Funcionario funcFinalizar;
+	private Date dataFinalizacao;
+	private Funcionario funcAlteracao;
+	private Date dataAlteracao;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -147,6 +159,66 @@ public class Matriz implements Serializable {
 
 	public void setTipoArea(String tipoArea) {
 		this.tipoArea = tipoArea;
+	}
+
+	@Transient
+	public Integer getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(Integer ordem) {
+		this.ordem = ordem;
+	}
+
+	@ManyToOne
+	public Funcionario getFuncCadastro() {
+		return funcCadastro;
+	}
+
+	public void setFuncCadastro(Funcionario funcCadastro) {
+		this.funcCadastro = funcCadastro;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	@ManyToOne
+	public Funcionario getFuncFinalizar() {
+		return funcFinalizar;
+	}
+
+	public void setFuncFinalizar(Funcionario funcFinalizar) {
+		this.funcFinalizar = funcFinalizar;
+	}
+	@Temporal(TemporalType.DATE)
+	public Date getDataFinalizacao() {
+		return dataFinalizacao;
+	}
+
+	public void setDataFinalizacao(Date dataFinalizacao) {
+		this.dataFinalizacao = dataFinalizacao;
+	}
+	@ManyToOne
+	public Funcionario getFuncAlteracao() {
+		return funcAlteracao;
+	}
+
+	public void setFuncAlteracao(Funcionario funcAlteracao) {
+		this.funcAlteracao = funcAlteracao;
+	}
+	@Temporal(TemporalType.DATE)
+	public Date getDataAlteracao() {
+		return dataAlteracao;
+	}
+
+	public void setDataAlteracao(Date dataAlteracao) {
+		this.dataAlteracao = dataAlteracao;
 	}
 
 }

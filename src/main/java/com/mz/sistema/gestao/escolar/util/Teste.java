@@ -42,7 +42,7 @@ public class Teste {
 		builder.append(nomes);
 		System.out.println("Nomes: " + builder.toString());
 
-		System.out.println("Senha: " + criptografarSenha("11061990"));
+		System.out.println("Senha: " + criptografarSenha("001.6046.2018"));
 	}
 
 	public static boolean criptografarSenha(String password, String passwordEncode) {

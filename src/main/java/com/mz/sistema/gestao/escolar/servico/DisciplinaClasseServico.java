@@ -1,6 +1,7 @@
 package com.mz.sistema.gestao.escolar.servico;
 
 import java.util.List;
+
 /*
  * 
  * 
@@ -24,7 +25,6 @@ public interface DisciplinaClasseServico {
 	public List<DisciplinaClasse> obterDisciplinasPorClassePorArea(long idClasse, String area);
 	public List<DisciplinaClasse> obterDisciplinasClassePorIdMatriz(long idMatriz);
 	public List<DisciplinaClasse> obterDisciplinasPorClassePorIdMatriz(long idMatriz);
-
-	
+		
 }
 

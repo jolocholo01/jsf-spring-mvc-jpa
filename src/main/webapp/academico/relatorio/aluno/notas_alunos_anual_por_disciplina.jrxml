@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-07-23T07:48:51 -->
+<!-- 2018-08-01T06:52:03 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notas_anual" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoPages" columnWidth="838" leftMargin="2" rightMargin="2" topMargin="10" bottomMargin="10" uuid="9a0dfb25-e72b-4f61-b070-8a9e40fbb38b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="668"/>
@@ -219,7 +219,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Courier New" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{disciplina}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{disciplina}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="109" y="53" width="38" height="15" uuid="61161c8f-f78d-434e-8f7e-113d3de68c5c"/>
@@ -280,7 +280,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Courier New" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{professor}==null?"Sem Professor":$P{professor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{professor}==null?"Sem Professor":$P{professor}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="48" y="76" width="169" height="15" uuid="6c32f99d-5081-412b-8cdd-8ea654621e20">
@@ -1474,9 +1474,9 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="38" splitType="Stretch">
+		<band height="27" splitType="Stretch">
 			<textField>
-				<reportElement x="200" y="13" width="400" height="21" uuid="48148db2-8e0c-467c-8c32-55c12acf227c">
+				<reportElement x="200" y="6" width="400" height="21" uuid="48148db2-8e0c-467c-8c32-55c12acf227c">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box topPadding="6">
@@ -1489,7 +1489,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="301" y="14" width="100" height="20" uuid="748d1d5a-3a55-407f-9209-dfdb7fe9661c">
+				<reportElement x="301" y="7" width="100" height="20" uuid="748d1d5a-3a55-407f-9209-dfdb7fe9661c">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
@@ -1498,7 +1498,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textFieldExpression><![CDATA["Pag. " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="401" y="14" width="100" height="20" uuid="316bca33-e3af-4d32-8b7d-fd61d3333a39"/>
+				<reportElement x="401" y="7" width="100" height="20" uuid="316bca33-e3af-4d32-8b7d-fd61d3333a39"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font fontName="Courier New" size="10"/>
 				</textElement>
@@ -1507,9 +1507,9 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="160" splitType="Stretch">
+		<band height="112" splitType="Stretch">
 			<staticText>
-				<reportElement x="89" y="21" width="42" height="15" uuid="574c89ef-704b-46e1-85ce-34fce13c1b54">
+				<reportElement x="89" y="9" width="42" height="15" uuid="574c89ef-704b-46e1-85ce-34fce13c1b54">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -1519,7 +1519,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[MAC =]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="21" y="21" width="58" height="15" uuid="dcdde638-fd51-4a81-a555-f00f726c5eaa">
+				<reportElement x="21" y="9" width="58" height="15" uuid="dcdde638-fd51-4a81-a555-f00f726c5eaa">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -1529,7 +1529,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[FÓRMULA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="132" y="14" width="124" height="15" uuid="e522b17d-a601-4f51-a31a-54c686fba6f3">
+				<reportElement x="132" y="2" width="124" height="15" uuid="e522b17d-a601-4f51-a31a-54c686fba6f3">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5">
@@ -1541,7 +1541,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[1ªAC + 2ªAC + 3ªAC]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="132" y="30" width="124" height="15" uuid="a6608eeb-37ad-4cb3-a791-68133721863d">
+				<reportElement x="132" y="18" width="124" height="15" uuid="a6608eeb-37ad-4cb3-a791-68133721863d">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5">
@@ -1553,7 +1553,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[3]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="325" y="14" width="124" height="15" uuid="4e756bf2-520d-4060-ac1b-54ae0bb535c7">
+				<reportElement x="325" y="2" width="124" height="15" uuid="4e756bf2-520d-4060-ac1b-54ae0bb535c7">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5">
@@ -1565,7 +1565,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[MAC + 1ªAS + 2ªAS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="325" y="30" width="124" height="15" uuid="3e84cc66-893c-4d6a-afd8-04d262fb0d2f">
+				<reportElement x="325" y="18" width="124" height="15" uuid="3e84cc66-893c-4d6a-afd8-04d262fb0d2f">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5">
@@ -1577,7 +1577,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[3]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="282" y="22" width="42" height="15" uuid="b0271308-0a18-4322-9046-a09acb264696">
+				<reportElement x="282" y="10" width="42" height="15" uuid="b0271308-0a18-4322-9046-a09acb264696">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -1587,7 +1587,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[MAS =]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="525" y="13" width="95" height="15" uuid="3578ba1f-dbde-4ce7-af4b-a77661833275">
+				<reportElement x="525" y="1" width="95" height="15" uuid="3578ba1f-dbde-4ce7-af4b-a77661833275">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5">
@@ -1599,7 +1599,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[2 x MAS + APT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="525" y="27" width="95" height="15" uuid="b043b238-ef99-4248-a669-ccca41512b9e">
+				<reportElement x="525" y="15" width="95" height="15" uuid="b043b238-ef99-4248-a669-ccca41512b9e">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5">
@@ -1611,7 +1611,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[3]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="482" y="18" width="42" height="15" uuid="8105ae16-b702-49fe-b542-9d3597d75f34">
+				<reportElement x="482" y="6" width="42" height="15" uuid="8105ae16-b702-49fe-b542-9d3597d75f34">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -1621,7 +1621,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[MT =]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="637" y="20" width="42" height="15" uuid="fcadae93-c48f-4970-98ac-f8a300bea444">
+				<reportElement x="637" y="8" width="42" height="15" uuid="fcadae93-c48f-4970-98ac-f8a300bea444">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5"/>
@@ -1631,7 +1631,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[MFD =]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="680" y="13" width="109" height="15" uuid="48b972aa-3251-4639-8a10-f0b68a4fec61">
+				<reportElement x="680" y="1" width="109" height="15" uuid="48b972aa-3251-4639-8a10-f0b68a4fec61">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5">
@@ -1643,7 +1643,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[MT1 + MT2+ MT3]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="680" y="29" width="109" height="15" uuid="13e019e2-db29-46b4-8f87-a1f6f92f0839">
+				<reportElement x="680" y="17" width="109" height="15" uuid="13e019e2-db29-46b4-8f87-a1f6f92f0839">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="2" leftPadding="5">
@@ -1655,21 +1655,21 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[3]]></text>
 			</staticText>
 			<line>
-				<reportElement x="20" y="105" width="231" height="1" uuid="b9c6f62a-712c-4990-bcfd-0af32837ad21"/>
+				<reportElement x="20" y="72" width="231" height="1" uuid="b9c6f62a-712c-4990-bcfd-0af32837ad21"/>
 				<graphicElement>
 					<pen lineWidth="0.3"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="580" y="75" width="240" height="20" uuid="0121d221-94bf-4705-8bf9-27002ef203f6"/>
+				<reportElement x="580" y="42" width="240" height="20" uuid="0121d221-94bf-4705-8bf9-27002ef203f6"/>
 				<box topPadding="3"/>
 				<textElement textAlignment="Center">
-					<font fontName="Currie new" size="9"/>
+					<font fontName="Currie new" size="10"/>
 				</textElement>
 				<text><![CDATA[O Director da Escola]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="20" y="113" width="230" height="15" uuid="e4661859-c934-41a3-b2a2-63a1f683fbb5">
+				<reportElement x="20" y="80" width="230" height="15" uuid="e4661859-c934-41a3-b2a2-63a1f683fbb5">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="3"/>
@@ -1679,7 +1679,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[______/_____/________]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="279" y="115" width="260" height="15" uuid="35e309df-5470-4041-a2dc-fbb9f264603d">
+				<reportElement x="279" y="82" width="260" height="15" uuid="35e309df-5470-4041-a2dc-fbb9f264603d">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="3"/>
@@ -1689,7 +1689,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[______/_____/________]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="580" y="113" width="240" height="15" uuid="15c367c8-db85-41cf-b875-16483bd1b2b3"/>
+				<reportElement x="580" y="80" width="240" height="15" uuid="15c367c8-db85-41cf-b875-16483bd1b2b3"/>
 				<box topPadding="3"/>
 				<textElement textAlignment="Center">
 					<font fontName="Currie new" size="9"/>
@@ -1697,30 +1697,30 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<text><![CDATA[______/_____/________]]></text>
 			</staticText>
 			<line>
-				<reportElement x="280" y="105" width="259" height="1" uuid="efc639cd-b801-459b-b225-bfa89163b72c"/>
+				<reportElement x="280" y="72" width="259" height="1" uuid="efc639cd-b801-459b-b225-bfa89163b72c"/>
 				<graphicElement>
 					<pen lineWidth="0.3"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="580" y="105" width="239" height="1" uuid="dbbb2b3a-2fa8-44bc-b933-8ab47de94a2c"/>
+				<reportElement x="580" y="72" width="239" height="1" uuid="dbbb2b3a-2fa8-44bc-b933-8ab47de94a2c"/>
 				<graphicElement>
 					<pen lineWidth="0.3"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="20" y="77" width="231" height="20" uuid="c2b5fb6f-9cd2-4ecf-8b7d-9e2bfef06443"/>
+				<reportElement x="20" y="44" width="231" height="20" uuid="c2b5fb6f-9cd2-4ecf-8b7d-9e2bfef06443"/>
 				<box topPadding="3"/>
 				<textElement textAlignment="Center">
-					<font fontName="Currie new" size="9"/>
+					<font fontName="Currie new" size="10"/>
 				</textElement>
 				<text><![CDATA[O Professor(a)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="279" y="74" width="268" height="20" uuid="c7ac9abb-0e2c-47f1-905f-7bc52b69f3d2"/>
+				<reportElement x="279" y="41" width="268" height="20" uuid="c7ac9abb-0e2c-47f1-905f-7bc52b69f3d2"/>
 				<box topPadding="3"/>
 				<textElement textAlignment="Center">
-					<font fontName="Currie new" size="9"/>
+					<font fontName="Currie new" size="10"/>
 				</textElement>
 				<text><![CDATA[O Director Adjunto da Escola]]></text>
 			</staticText>
