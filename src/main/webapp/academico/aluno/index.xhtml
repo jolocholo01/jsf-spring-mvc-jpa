@@ -93,7 +93,7 @@
 
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" data-backdrop="static"
-				style="padding-top: 210px;">
+				>
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<h:panelGroup id="id-panelGroup-confirma-modal">
@@ -110,21 +110,23 @@
 											style="text-transform: uppercase;" />
 									</h:panelGroup>
 									<h:panelGroup
-										rendered="#{empty professorTurmaBean.horariosDisciplina}" style="    font-size: 14px;">
-										
+										rendered="#{empty professorTurmaBean.horariosDisciplina}"
+										style="    font-size: 14px;">
+
 										<h:outputLabel
-											value="Nenhum Horário de &#160; #{professorTurmaBean.professorTurmaSelecionada.disciplina.descricao}&#160;encontrada!" 
-											style="text-transform: uppercase;"/>
+											value="Nenhum Horário de &#160; #{professorTurmaBean.professorTurmaSelecionada.disciplina.descricao}&#160;encontrada!"
+											style="text-transform: uppercase;" />
 
 									</h:panelGroup>
 								</h3>
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
+								<h:commandLink styleClass="close"
+									actionListener="#{professorTurmaBean.fechar}">
+									<f:passThroughAttribute name="data-dismiss" value="modal" />
+									<f:passThroughAttribute name="aria-label" value="Close" />
 									<h:panelGroup aria-hidden="true">&times;
-									<p:ajax event="click"
-											update="form_ambiente_comum:tabela:idDisciplina" />
+									
 									</h:panelGroup>
-								</button>
+								</h:commandLink>
 							</div>
 							<h:panelGroup
 								rendered="#{not empty professorTurmaBean.horariosDisciplina}">
@@ -188,10 +190,9 @@
 						<div class="modal-footer">
 
 							<h:commandButton styleClass="btn btn-primary"
-								value=" &#x2716; Fechar">
-								<f:passThroughAttribute name="data-dismiss" value="modal" />
-								<p:ajax event="click"
-									update="form_ambiente_comum:tabela:idDisciplina " />
+								value=" &#x2716; Fechar"
+								actionListener="#{professorTurmaBean.fechar}">
+
 							</h:commandButton>
 						</div>
 					</div>

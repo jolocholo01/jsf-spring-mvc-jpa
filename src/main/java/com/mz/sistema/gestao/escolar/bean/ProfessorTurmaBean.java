@@ -435,17 +435,23 @@ public class ProfessorTurmaBean {
 	}
 
 	public void selecionarDisciplinaParaVerHorario(ProfessorTurma professorTurma) {
+		horariosDisciplina=new ArrayList<>();
+		this.professorTurmaSelecionada=new ProfessorTurma();
 		this.professorTurmaSelecionada = professorTurma;
 		try {
 
 			horariosDisciplina = horarioServico.obterHorarioPorIdTurmaPorIdDiciplina(
-					this.professorTurmaSelecionada.getTurma().getId(),
-					this.professorTurmaSelecionada.getDisciplina().getId());
+					professorTurma.getTurma().getId(),
+					professorTurma.getDisciplina().getId());
 		} catch (
 
 		Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public void fechar() {
+		horariosDisciplina=new ArrayList<>();
+		this.professorTurmaSelecionada=new ProfessorTurma();
 	}
 
 	public void selecionarTurma(Turma turma) {

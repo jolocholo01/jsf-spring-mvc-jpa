@@ -227,7 +227,7 @@
 .dados {
 	font-size: 14px;
 	margin-top: 20px;
-	background: url("../../images/fundo_imagem_usuario.PNG");
+	background: #f4f7f5 url(../../images/fundo.PNG) repeat scroll 0% 0%;
 	padding-bottom: 12px;
 }
 
@@ -282,8 +282,9 @@
 .imagem_usuario {
 	border-radius: 2px;
 	height: 140px;
-	background: transparent url("../../images/fundo_imagem_usuario.PNG")
+	background: #f4f7f5 url(../../images/fundo.PNG)
 		repeat scroll 0% 0%;
+		
 }
 
 .usuario, .gestao {
