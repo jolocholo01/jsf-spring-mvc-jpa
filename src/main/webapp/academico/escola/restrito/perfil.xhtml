@@ -36,26 +36,29 @@
 			<h:panelGroup
 				rendered="#{buscarFotoBean.alterarSenhaUsuarioBoolean ==false}">
 
+				<div class="form-group">
+					<div class="col-sm-6" style="padding-left: 0;">
+						<div class="input-group">
+							<h:inputSecret styleClass="form-control font-size16"
+								value="#{buscarFotoBean.autenticarSenha}" required="true"
+								requiredMessage="o campo senha é obrigatório">
+								<f:passThroughAttribute name="placeholder"
+									value="Introduza a sua senha" />
+								
+							</h:inputSecret>
 
-				<div class="form-group row">
-					<h:outputLabel styleClass="tesx-right col-sm-2 col-form-label"
-						value="Senha:*" />
-					<div class="col-sm-6">
-						<h:inputSecret styleClass="form-control font-size16"
-							value="#{buscarFotoBean.autenticarSenha}" required="true"
-							requiredMessage="o campo senha é obrigatório">
-							<f:passThroughAttribute name="placeholder"
-								value="Introduza a sua senha" />
-							<f:passThroughAttribute name="autofocus" value="true" />
-						</h:inputSecret>
+							<span class="input-group-btn"> <h:commandButton
+									value="Autenticar" styleClass="btn btn-primary"
+									actionListener="#{buscarFotoBean.autenticar}" />
+
+							</span>
+						</div>
+
 					</div>
 				</div>
-				<h:commandButton value="Autenticar" style="margin: 2% 0 6% 23%;"
-					styleClass="btn btn-primary"
-					actionListener="#{buscarFotoBean.autenticar}" />
 
 
-
+			
 			</h:panelGroup>
 			<h:panelGroup
 				rendered="#{buscarFotoBean.alterarSenhaUsuarioBoolean !=false}">

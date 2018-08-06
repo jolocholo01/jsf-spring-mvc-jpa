@@ -93,8 +93,7 @@ public class DisciplinaServicoImpl implements DisciplinaServico {
 	}
 
 	@Override
-	public Disciplina disciplinaExisente(String descricao_parametro) {
-		String descricao = Replace.letrasMasculas(descricao_parametro).trim();
+	public Disciplina disciplinaExisente(String descricao) {
 		@SuppressWarnings("unchecked")
 		List<Disciplina> disciplinas = em
 				.createQuery("FROM Disciplina WHERE descricao like '%" + descricao.toUpperCase() + "%'")

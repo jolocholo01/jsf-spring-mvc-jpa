@@ -136,6 +136,7 @@ public class MatrizBean {
 			matrizesCurriculares = new ArrayList<>();
 			List<Matriz> matrizes = matrizServico.obterMatrizesPorIdClasse(escola.getId(), classe.getId());
 			int count = 0, count2 = 0;
+			if(matrizes==null){}else
 			for (Matriz matriz : matrizes) {
 				if (matriz.getCurso().equals("DIURNO")) {
 					count++;
@@ -316,8 +317,8 @@ public class MatrizBean {
 				Mensagem.mensagemErro("ERRO: Não exite calendário escolar em vigor!");
 				return;
 			}
-			String filename = "ALUNOS DA " + matriz.getClasse().getDescricao() + " DO CURSO " + matriz.getCurso();
-			String caminho = "/academico/relatorio/aluno/listar_alunos_na_classe.jasper";
+			String filename = "ALUNOS DA " + matriz.getClasse().getDescricao() + " DO CURSO " + matriz.getCurso()+".pdf";
+			String caminho = "/academico/relatorio/aluno/listar_alunos_na_classe_por_curso.jasper";
 			Map<String, Object> parametro = new HashMap<>();
 
 			parametro.put("idEscola", matriz.getEscola().getId());

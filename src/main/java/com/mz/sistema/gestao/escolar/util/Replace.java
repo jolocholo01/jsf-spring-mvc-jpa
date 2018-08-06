@@ -16,7 +16,7 @@ public class Replace {
 				.replace("MATEMATICA", "MATEMÁTICA").replace("EDUCACAO FISICA", "EDUCAÇÃO FÍSICA")
 				.replace("HISTORIA", "HISTÓRIA").replace("FRANCES", "FRANCÊS").replace("QUIMICA", "QUÍMICA")
 				.replace("EDUCACAO VISUAL", "EDUCAÇÃO VISUAL").replace("ARTES CENICAS", "ARTES CÉNICAS")
-				.replace("AGRO-PECUARIA", "AGRO-PECUÁRIA").replace("CAO", "ÇÃO");
+				.replace("AGRO-PECUARIA", "AGRO-PECUÁRIA");
 		return texto_escrito;
 	}
 	public static String letrasMasculas(String texto) {
@@ -24,9 +24,9 @@ public class Replace {
 				.replace(" Da ", " da ").replace(" E ", " e ").replace(" À ", " à ").replace(" Das ", " das ").replace("FISICA", "FÍSICA").replace("PORTUGUES", "PORTUGUÊS")
 				.replace("INGLES", "INGLÊS").replace("INTRODUCAO A FILOSOFIA", "INTRODUÇÃO À FILOSOFIA")
 				.replace("MATEMATICA", "MATEMÁTICA").replace("EDUCACAO FISICA", "EDUCAÇÃO FÍSICA")
-				.replace("HISTORIA", "HISTÓRIA").replace("FRANCES", "FRANCÊS").replace("QUIMICA", "QUÍMICA").replace("QUI", "QUÍ")
+				.replace("HISTORIA", "HISTÓRIA").replace("FRANCES", "FRANCÊS").replace("QUIMICA", "QUÍMICA")
 				.replace("EDUCACAO VISUAL", "EDUCAÇÃO VISUAL").replace("ARTES CENICAS", "ARTES CÉNICAS")
-				.replace("AGRO-PECUARIA", "AGRO-PECUÁRIA").replace("CAO", "ÇÃO").replace("FI", "FÍ");
+				.replace("AGRO-PECUARIA", "AGRO-PECUÁRIA");
 		return texto_escrito;
 	}
 	public static String escola(String texto) {

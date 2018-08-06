@@ -144,8 +144,7 @@
 			<!-- Modal -->
 
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel" data-backdrop="static"
-				>
+				aria-labelledby="myModalLabel" data-backdrop="static">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<h:panelGroup id="id-panelGroup-confirma-modal">
@@ -172,12 +171,14 @@
 									</h:panelGroup>
 								</h4>
 								<h:commandLink styleClass="close"
-									actionListener="#{professorTurmaBean.fechar}">
+									>
 									<f:passThroughAttribute name="data-dismiss" value="modal" />
 									<f:passThroughAttribute name="aria-label" value="Close" />
 									<h:panelGroup aria-hidden="true">&times;
-									
 									</h:panelGroup>
+									<f:passThroughAttribute name="data-dismiss" value="modal" />
+									<p:ajax event="click" listener="#{professorTurmaBean.fechar}"
+										update="form_ambiente_comum:tabela:idDisciplina" />
 								</h:commandLink>
 							</div>
 							<h:panelGroup
@@ -240,7 +241,11 @@
 						<div class="modal-footer">
 
 							<h:commandButton styleClass="btn btn-primary"
-								value=" &#x2716; Fechar" actionListener="#{professorTurmaBean.fechar}"/>
+								value=" &#x2716; Fechar">
+								<f:passThroughAttribute name="data-dismiss" value="modal" />
+								<p:ajax event="click" listener="#{professorTurmaBean.fechar}"
+									update="form_ambiente_comum:tabela:idDisciplina" />
+							</h:commandButton>
 						</div>
 					</div>
 				</div>

@@ -57,7 +57,7 @@ public class DisciplinaBean implements Serializable {
 	public void salvar() {
 		try {
 			Disciplina disciplinaExistente = disciplinaServico.disciplinaExisente(disciplina.getDescricao());
-			if (disciplinaExistente != null && disciplina.getId() != disciplinaExistente.getId()) {
+			if (disciplinaExistente != null && disciplinaExistente.getId() != disciplina.getId() ) {
 				Mensagem.mensagemInfo("AVISO: já existe esta disciplina cadastrada no sistema.");
 				return;
 			}

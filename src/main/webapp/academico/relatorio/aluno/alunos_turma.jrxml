@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-07-23T12:04:11 -->
+<!-- 2018-08-05T22:16:56 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e580ad1c-f19a-4ded-8190-5074b08cf536">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
@@ -77,9 +77,9 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="146" splitType="Stretch">
+		<band height="149" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="115" width="555" height="15" uuid="8335cd31-d2cf-4c94-93ef-e3aa331e56a8">
+				<reportElement x="0" y="119" width="555" height="15" uuid="8335cd31-d2cf-4c94-93ef-e3aa331e56a8">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
@@ -91,9 +91,12 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textFieldExpression><![CDATA[$F{escola}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="98" width="555" height="15" uuid="13255277-3644-4e28-b997-1a224d05afda">
+				<reportElement x="80" y="98" width="400" height="15" uuid="13255277-3644-4e28-b997-1a224d05afda">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.3"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
@@ -106,7 +109,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textElement textAlignment="Center">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Província de ".toUpperCase()+$F{provincia}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA["PROVÍNICA DE "+$F{provincia}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<image hAlign="Center">
 				<reportElement x="0" y="33" width="555" height="29" uuid="5538a7d0-17eb-49c8-af04-bf26061674cb"/>
@@ -345,7 +348,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["LISTA DOS ALUNOS DA TURMA DA "+$F{sigla}+"ª"+$F{turma}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["LISTA DOS ALUNOS DA TURMA "+$F{sigla}+"ª"+$F{turma}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>

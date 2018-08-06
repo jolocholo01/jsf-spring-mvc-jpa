@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-07-23T07:23:50 -->
+<!-- 2018-08-06T07:28:18 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="aluno" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b87a085-095b-4f9d-a71c-09f2a9e9c1e0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="337"/>
@@ -179,62 +179,62 @@ ORDER BY disciplina.descricao ASC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="101" splitType="Stretch">
+		<band height="139" splitType="Stretch">
 			<image hAlign="Center">
-				<reportElement x="0" y="2" width="555" height="25" uuid="8928c791-766d-4d70-a69f-d8ad18f0536f"/>
+				<reportElement x="0" y="26" width="555" height="25" uuid="8928c791-766d-4d70-a69f-d8ad18f0536f"/>
 				<imageExpression><![CDATA["emblema.png"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="0" y="29" width="555" height="12" uuid="3ee7d9eb-6d51-43f0-b50c-e19ee072fd9b">
+				<reportElement x="0" y="52" width="555" height="16" uuid="3ee7d9eb-6d51-43f0-b50c-e19ee072fd9b">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Courier New" size="10" isBold="true"/>
+					<font fontName="Courier New" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["REPÚBLICA DE MOÇAMBIQUE"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="55" width="555" height="12" uuid="6a0c7943-4c88-484c-86df-680cd0fc4c82">
+				<reportElement x="0" y="81" width="555" height="16" uuid="6a0c7943-4c88-484c-86df-680cd0fc4c82">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
 					<bottomPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Courier New" size="10" isBold="true"/>
+					<font fontName="Courier New" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["GOVERNO DO DISTRITO DE "+$F{distritoescola}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="83" width="555" height="17" uuid="50a4a99e-da4f-4412-aba8-a989a67998e0">
+				<reportElement x="0" y="119" width="555" height="20" uuid="50a4a99e-da4f-4412-aba8-a989a67998e0">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box topPadding="0">
 					<pen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Courier New" size="10" isBold="true"/>
+					<font fontName="Courier New" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["FICHA DE CADASTRO DE ALUNO"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="42" width="555" height="12" uuid="ba06552b-b3cf-4bf8-ad2f-e2e4015bdea6">
+				<reportElement x="0" y="66" width="555" height="16" uuid="ba06552b-b3cf-4bf8-ad2f-e2e4015bdea6">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Courier New" size="10" isBold="true"/>
+					<font fontName="Courier New" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["PROV�NCIA DE "+$F{provinciaescola}.replace("MANICA", "Manica" ).replace("TETE", "Tete" ).replace("SOFALA", "Sofala" ).replace("GAZA", "Gaza" ).replace("INHAMBANE", "Inhambane" ).replace("ZAMBEZIA", "Zambezia").replace("NAMPULA", "Nampula").replace("NIASSA", "Niassa").replace("CABO_DELEGADO", "Cabo Delegado").replace( "MAPUTO", "Maputo" ).toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA["PROV�NCIA DE "+$F{provinciaescola}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="69" width="555" height="12" uuid="4bde3dab-fd3a-4906-a92c-bd4fa588c986">
+				<reportElement x="80" y="96" width="400" height="16" uuid="4bde3dab-fd3a-4906-a92c-bd4fa588c986">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
 					<bottomPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Courier New" size="10" isBold="true"/>
+					<font fontName="Courier New" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{escola}.toUpperCase()]]></textFieldExpression>
 			</textField>

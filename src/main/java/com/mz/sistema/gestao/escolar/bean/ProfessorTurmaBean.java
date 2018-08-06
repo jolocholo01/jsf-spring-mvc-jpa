@@ -232,7 +232,7 @@ public class ProfessorTurmaBean {
 			for (HorarioAula horarioAula : horarioAulas) {
 				Horario horario = new Horario();
 
-				if (horarioAula.isHorarioProfNestaTurmaSeg() == true) {
+				if (horarioAula.isHorarioProfNestaTurmaSeg() == true && horarioAula.isHorarioProfOutraTurmaSeg()==false) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("SEG");
 
 					horario = new Horario();
@@ -250,7 +250,7 @@ public class ProfessorTurmaBean {
 					horariosSeg.add(diaSemana.getSigla() + horarioAula.getOrdem());
 
 				}
-				if (horarioAula.isHorarioProfNestaTurmaTerc() == true) {
+				if (horarioAula.isHorarioProfNestaTurmaTerc() == true && horarioAula.isHorarioProfOutraTurmaTerc()==false) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("TER");
 
 					horario = new Horario();
@@ -269,7 +269,7 @@ public class ProfessorTurmaBean {
 
 					horario = new Horario();
 				}
-				if (horarioAula.isHorarioProfNestaTurmaQua() == true) {
+				if (horarioAula.isHorarioProfNestaTurmaQua() == true && horarioAula.isHorarioProfOutraTurmaQua()==false) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("QUA");
 
 					horario = new Horario();
@@ -286,7 +286,7 @@ public class ProfessorTurmaBean {
 					horarioServico.salvar(horario);
 					horariosQua.add(diaSemana.getSigla() + horarioAula.getOrdem() + "");
 				}
-				if (horarioAula.isHorarioProfNestaTurmaQui() == true) {
+				if (horarioAula.isHorarioProfNestaTurmaQui() == true&& horarioAula.isHorarioProfOutraTurmaQui()==false) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("QUI");
 
 					horario = new Horario();
@@ -304,7 +304,7 @@ public class ProfessorTurmaBean {
 					horariosQui.add(diaSemana.getSigla() + horarioAula.getOrdem() + "");
 
 				}
-				if (horarioAula.isHorarioProfNestaTurmaSex() == true) {
+				if (horarioAula.isHorarioProfNestaTurmaSex() == true && horarioAula.isHorarioProfOutraTurmaSex()==false) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("SEX");
 					horario = new Horario();
 
@@ -728,22 +728,9 @@ public class ProfessorTurmaBean {
 					filename = "LISTA_DOS_ALUNOS_DA_TURMA_" + professorTurma.getTurma().getDescricao() + "_CURSO_"
 							+ professorTurma.getTurma().getCurso() + ".pdf";
 			Map<String, Object> parametro = new HashMap<>();
-			String nomeProfessor = null, nomeDiciplina = null;
+			
 			Long idTurma = null;
-			if (professorTurma.getProfessor() != null) {
-				if (professorTurma.getProfessor().getNome() != null)
-					nomeProfessor = TipoLetra.capitalizeString(professorTurma.getProfessor().getNome())
-							.replace(" Dos ", " dos ").replace(" Das ", "das").replace(" De ", " de ")
-							.replace(" À ", " à ");
-			}
-			if (professorTurma.getDisciplina() != null) {
-				if (professorTurma.getDisciplina().getDescricao() != null)
-					nomeDiciplina = TipoLetra
-							.capitalizeString(professorTurma.getDisciplina().getDescricao())
-							.replace(" Dos ", " dos ").replace(" Das ", "das").replace(" De ", " de ")
-							.replace(" À ", " à ");
-
-			}
+		
 			if (professorTurma.getTurma() != null)
 				if (professorTurma.getTurma().getId() != null) {
 					idTurma = professorTurma.getTurma().getId();
@@ -760,8 +747,8 @@ public class ProfessorTurmaBean {
 
 			} else {
 				parametro.put("idTurma", idTurma);
-				parametro.put("professor", nomeProfessor);
-				parametro.put("disciplina", nomeDiciplina);
+				parametro.put("professor", professorTurma.getProfessor().getNome().toUpperCase());
+				parametro.put("disciplina", professorTurma.getDisciplina().getDescricao().toUpperCase());
 				parametro.put("id_disciplina", professorTurma.getDisciplina().getId());
 			}
 

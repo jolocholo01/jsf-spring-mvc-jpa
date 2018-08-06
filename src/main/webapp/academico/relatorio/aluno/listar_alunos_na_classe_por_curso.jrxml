@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2018-08-06T09:09:46 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="aluno" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b87a085-095b-4f9d-a71c-09f2a9e9c1e0">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="337"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="657"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\main\webapp\academico\relatorio\Conexao.xml"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="598"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="388"/>
+	<parameter name="idClasse" class="java.lang.Long"/>
+	<parameter name="Curso" class="java.lang.String"/>
+	<parameter name="Ano" class="java.lang.Integer"/>
+	<parameter name="idEscola" class="java.lang.Long"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT usuario.datanascimento,
+	usuario.login,
+	usuario.mae,
+	usuario.sexo,
+	usuario.nome,
+	classe.descricao AS classe,
+	classe.sigla,
+	escola.descricao AS escola,
+	distrito.provincia AS provinciaEscola,
+	distrito.nome AS distritoEscola,
+	matricula.horamatricula,
+	matricula.datamatricula,
+	matricula.ano,
+	matricula.curso,
+	usuario.pai,
+	aluno.bairro,
+	matricula.tipoarea,
+	usuario.email,
+	turma.descricao AS turma,
+	turno.descricao AS turno,
+	matricula.numeroalunoturma,
+	sala.numero AS sala,
+	turma.numero as numerorecibo
+FROM matricula
+	INNER JOIN turma ON 
+	 matricula.idturma = turma.id 
+	INNER JOIN aluno ON 
+	 matricula.id_aluno = aluno.id 
+	INNER JOIN usuario ON 
+	 aluno.id = usuario.id 
+	INNER JOIN escola ON 
+	 turma.escola_id = escola.id 
+	INNER JOIN classe ON 
+	 turma.classe_id = classe.id 
+	INNER JOIN turno ON 
+	 turma.turno_id = turno.id 
+	INNER JOIN sala ON 
+	 turma.id_sala = sala.id ,
+	distrital,
+	distrito
+WHERE 
+	 distrital.distrito_id = distrito.id 
+	 AND escola.id_direcao_distrital = distrital.id 
+	 AND escola.id = $P{idEscola} 
+	 AND matricula.ano = $P{Ano} 
+	 AND matricula.idclasse = $P{idClasse} 
+	 AND matricula.curso LIKE $P{Curso} 
+ORDER BY turma.descricao ASC,
+	usuario.nome ASC]]>
+	</queryString>
+	<field name="datanascimento" class="java.sql.Date"/>
+	<field name="login" class="java.lang.String"/>
+	<field name="mae" class="java.lang.String"/>
+	<field name="sexo" class="java.lang.Boolean"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="classe" class="java.lang.String"/>
+	<field name="sigla" class="java.lang.Integer"/>
+	<field name="escola" class="java.lang.String"/>
+	<field name="provinciaescola" class="java.lang.String"/>
+	<field name="distritoescola" class="java.lang.String"/>
+	<field name="horamatricula" class="java.sql.Time"/>
+	<field name="datamatricula" class="java.sql.Date"/>
+	<field name="ano" class="java.lang.Integer"/>
+	<field name="curso" class="java.lang.String"/>
+	<field name="pai" class="java.lang.String"/>
+	<field name="bairro" class="java.lang.String"/>
+	<field name="tipoarea" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="turma" class="java.lang.String"/>
+	<field name="turno" class="java.lang.String"/>
+	<field name="numeroalunoturma" class="java.lang.Integer"/>
+	<field name="sala" class="java.lang.String"/>
+	<field name="numerorecibo" class="java.lang.String"/>
+	<group name="Group1" isStartNewColumn="true">
+		<groupExpression><![CDATA[$F{turma}]]></groupExpression>
+		<groupHeader>
+			<band height="92">
+				<textField pattern="">
+					<reportElement x="160" y="40" width="131" height="15" uuid="be30f680-286c-4290-8a86-fdc627f478ce">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box topPadding="1" leftPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Currie new" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{turno}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="40" width="40" height="15" uuid="de56401b-b214-4ef8-adda-daf14140db95">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<text><![CDATA[Turma:]]></text>
+				</staticText>
+				<textField pattern="">
+					<reportElement x="40" y="40" width="140" height="15" uuid="98be8061-0232-46f5-ac96-4b38f33e4ab9">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box topPadding="1" leftPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Currie new" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{sigla}+"ª"+$F{turma}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="72" width="40" height="20" uuid="1ea064dd-a0d4-409e-b886-7b0c35de2c12">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.3"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ordem]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="120" y="72" width="160" height="20" uuid="904fb81a-2d72-4d62-8f23-492fef375b09">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box leftPadding="5">
+						<pen lineWidth="0.3"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nome Completo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="120" y="40" width="40" height="15" uuid="9cd6d8e0-630d-4e5c-b31f-359bca92f335">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<text><![CDATA[Turno:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="280" y="72" width="49" height="20" uuid="f7328e61-853e-4ccb-b608-3cf4168d3c1a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.3"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sexo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="419" y="72" width="136" height="20" uuid="e487e71e-a970-453b-8a5a-cb1e6d7ae22d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box leftPadding="5">
+						<pen lineWidth="0.3"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Bairo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="249" y="40" width="49" height="15" uuid="e89b4b9a-8d16-4e7d-b1da-f23d25cf5860">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<text><![CDATA[Sala nº:]]></text>
+				</staticText>
+				<textField pattern="">
+					<reportElement x="300" y="40" width="90" height="15" uuid="966e1465-88ae-44a6-a9f0-68f710b46b48">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box topPadding="1" leftPadding="0"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Currie new" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{sala}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="40" y="72" width="80" height="20" uuid="a4fda3e1-3765-433f-a7de-de0474967768">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.3"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Número]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="329" y="72" width="90" height="20" uuid="d79d0d39-4153-4bdd-9f00-1cf41c20881d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.3"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Data de Nasc.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="15" width="67" height="15" uuid="bc2c7ea1-3317-4beb-8dde-5a2fa057193d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<text><![CDATA[Recib. nº:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="68" y="15" width="146" height="15" uuid="1a044084-65d8-4015-abeb-8908d02a618c">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box leftPadding="4">
+						<topPen lineWidth="0.3"/>
+						<leftPen lineWidth="0.3"/>
+						<bottomPen lineWidth="0.3"/>
+						<rightPen lineWidth="0.3"/>
+					</box>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Courier New" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{numerorecibo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="389" y="39" width="90" height="17" uuid="4fb915b9-bfa6-4062-be86-5233c93ffa3d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box topPadding="0">
+						<pen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Ano Lectivo:"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="469" y="39" width="55" height="17" uuid="00bdc111-8cc0-42ab-839e-a18960410f6a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box topPadding="0">
+						<pen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ano}]]></textFieldExpression>
+				</textField>
+				<textField pattern="HH:mm  dd/MM/yyyy">
+					<reportElement x="403" y="8" width="150" height="17" uuid="c0a9fb9e-a0ce-49e7-a7ac-5dc422a2442a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box topPadding="2">
+						<pen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="293" y="8" width="110" height="17" uuid="df82cb19-df1f-4cfb-a0d3-128bf5952492">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box topPadding="0">
+						<pen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Emitido em:"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[$F{turma}]]></groupExpression>
+		<groupFooter>
+			<band height="116">
+				<staticText>
+					<reportElement x="170" y="101" width="251" height="15" uuid="fe217ad3-428e-4154-a22e-065c629d2bba">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box topPadding="3"/>
+					<textElement textAlignment="Center">
+						<font fontName="Currie new" size="9"/>
+					</textElement>
+					<text><![CDATA[______/_____/________]]></text>
+				</staticText>
+				<line>
+					<reportElement x="170" y="93" width="246" height="1" uuid="0c92e75f-6eb5-4858-911a-c5cc94202030"/>
+					<graphicElement>
+						<pen lineWidth="0.3"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="170" y="63" width="246" height="20" uuid="43587673-7e30-4d58-8bfe-b5c2af3c6770"/>
+					<box topPadding="3"/>
+					<textElement textAlignment="Center">
+						<font fontName="Currie new" size="10"/>
+					</textElement>
+					<text><![CDATA[O director da Escola]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="168" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement x="0" y="42" width="555" height="25" uuid="8928c791-766d-4d70-a69f-d8ad18f0536f"/>
+				<imageExpression><![CDATA["emblema.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="70" width="555" height="15" uuid="3ee7d9eb-6d51-43f0-b50c-e19ee072fd9b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["REPÚBLICA DE MOÇAMBIQUE"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="100" width="555" height="15" uuid="6a0c7943-4c88-484c-86df-680cd0fc4c82">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["GOVERNO DO DISTRITO DE "+$F{distritoescola}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="138" width="555" height="20" uuid="50a4a99e-da4f-4412-aba8-a989a67998e0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="0">
+					<pen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["LISTA DOS ALUNOS MATRICULADOS NA "+$F{classe}+" DO CURSO "+$F{curso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="85" width="555" height="15" uuid="ba06552b-b3cf-4bf8-ad2f-e2e4015bdea6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PROVÍNCIA DE "+$F{provinciaescola}.replace("MANICA", "Manica" ).replace("TETE", "Tete" ).replace("SOFALA", "Sofala" ).replace("GAZA", "Gaza" ).replace("INHAMBANE", "Inhambane" ).replace("ZAMBEZIA", "Zambezia").replace("NAMPULA", "Nampula").replace("NIASSA", "Niassa").replace("CABO_DELEGADO", "Cabo Delegado").replace( "MAPUTO", "Maputo" ).toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="115" width="400" height="15" uuid="4bde3dab-fd3a-4906-a92c-bd4fa588c986">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{escola}.toUpperCase()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="7" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="40" height="15" uuid="e97acecf-fc74-4693-ba36-6b2657e8423b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Group1_COUNT} < 10 ?"0"+ $V{Group1_COUNT} :$V{Group1_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="230" height="15" uuid="1054a32a-9d30-42d6-9e46-65179bbca842">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="5">
+					<pen lineWidth="0.3"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Courier New" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="49" height="15" uuid="49c2b50b-87e3-4dfd-9d34-f9da69e7e836">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="5">
+					<pen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sexo}?"M":"F"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="419" y="0" width="136" height="15" uuid="33862297-ff5f-4f63-89a7-1b342f601d9d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="5">
+					<pen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Courier New" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bairro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="0" width="80" height="15" uuid="96f80f18-2aa8-4aab-bb24-dd74e0743ee4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{login}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="329" y="0" width="90" height="15" uuid="2d305236-23ae-465c-8f6e-7462976b322c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="5">
+					<pen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datanascimento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="22" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="43" splitType="Stretch">
+			<textField>
+				<reportElement x="180" y="10" width="100" height="23" uuid="891f55d7-178c-41c6-bacf-3612c8fc3e4a"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pag. "  + $V{PAGE_NUMBER} +" de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="280" y="10" width="275" height="23" uuid="1dfde6e5-d722-4068-bd9b-3a090be63923"/>
+				<box leftPadding="3"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="1" width="200" height="31" uuid="fd29b610-c482-44ca-ae53-bc1d8ddceef9"/>
+				<box topPadding="6">
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="56" splitType="Stretch"/>
+	</summary>
+</jasperReport>
