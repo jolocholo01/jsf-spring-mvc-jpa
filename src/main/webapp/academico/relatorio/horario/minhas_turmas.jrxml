@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-07-30T15:12:37 -->
+<!-- 2018-08-08T18:15:41 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="minhas_turmas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="95879359-b505-44c9-ab23-ef9bdda7c849">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="342"/>
@@ -85,13 +85,13 @@ ORDER BY turma.curso, classe.sigla, turma.descricao ASC]]>
 				<reportElement x="0" y="134" width="555" height="22" uuid="76602324-8fe3-4b31-bf5f-d332ccd846f7">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
-				<box topPadding="6">
+				<box topPadding="0">
 					<pen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Courier New" size="10" isBold="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["RELATÓRIO DE HORÁRIO DAS MINHAS TURMAS"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["RELATÓRIO DE HORÁRIO DO(A) PROFESSOR(A)"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="99" width="555" height="15" uuid="31743546-48dc-4b51-8623-d788f1805399">
@@ -101,7 +101,7 @@ ORDER BY turma.curso, classe.sigla, turma.descricao ASC]]>
 					<bottomPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="Courier New" size="10" isBold="true"/>
+					<font fontName="Courier New" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["GOVERNO DO DISTRITO DE "+$F{distrito}.toUpperCase()]]></textFieldExpression>
 			</textField>
@@ -110,7 +110,7 @@ ORDER BY turma.curso, classe.sigla, turma.descricao ASC]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Courier New" size="10" isBold="true"/>
+					<font fontName="Courier New" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["PROVÍNCIA DE "+$F{provincia}.toUpperCase()]]></textFieldExpression>
 			</textField>
@@ -119,19 +119,19 @@ ORDER BY turma.curso, classe.sigla, turma.descricao ASC]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Courier New" size="10" isBold="true"/>
+					<font fontName="Courier New" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["REPÚBLICA DE MOÇAMBIQUE"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="115" width="556" height="15" uuid="77424d77-822d-456a-9378-cc4197ad82d9">
+				<reportElement x="80" y="115" width="403" height="15" uuid="77424d77-822d-456a-9378-cc4197ad82d9">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
 					<bottomPen lineWidth="0.3"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="Courier New" size="10" isBold="true"/>
+					<font fontName="Courier New" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{escola}.toUpperCase()]]></textFieldExpression>
 			</textField>

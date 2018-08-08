@@ -107,9 +107,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 				buscarFotoBean.setProgramadorBoolean(true);
 				response.sendRedirect(request.getContextPath() + "/programador/index.jsf");
 			}
-			System.out.println("Permissoes: " + permissoes);
-			System.out.println("Nome do Ususario: " + detais.getNome());
-			System.out.println("O contador de Permissao " + contador);
+//			System.out.println("Permissoes: " + permissoes);
+//			System.out.println("Nome do Ususario: " + detais.getNome());
+//			System.out.println("O contador de Permissao " + contador);
 			contador = 0;
 
 		}

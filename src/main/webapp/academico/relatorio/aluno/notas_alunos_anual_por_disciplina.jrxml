@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-08-06T07:33:32 -->
+<!-- 2018-08-08T15:05:56 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notas_anual" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoPages" columnWidth="838" leftMargin="2" rightMargin="2" topMargin="10" bottomMargin="10" uuid="9a0dfb25-e72b-4f61-b070-8a9e40fbb38b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="668"/>
@@ -156,18 +156,18 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 	<title>
 		<band height="139" splitType="Stretch">
 			<image hAlign="Center">
-				<reportElement x="20" y="13" width="801" height="27" uuid="c1b45cfd-64c3-4a08-997f-853deba26e63"/>
+				<reportElement x="100" y="13" width="600" height="27" uuid="c1b45cfd-64c3-4a08-997f-853deba26e63"/>
 				<imageExpression><![CDATA["emblema.png"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="20" y="56" width="798" height="15" uuid="40ab9651-c2be-4046-a20b-29fa1d370d6a"/>
+				<reportElement x="100" y="54" width="600" height="17" uuid="40ab9651-c2be-4046-a20b-29fa1d370d6a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["PROVÍNCIA DE "+$F{provincia}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="200" y="88" width="400" height="15" uuid="0e937600-18bc-4bfa-a91b-376c4357815b">
+				<reportElement x="100" y="88" width="600" height="15" uuid="0e937600-18bc-4bfa-a91b-376c4357815b">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
@@ -176,10 +176,10 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{escola}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{escola}.toUpperCase().trim()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="72" width="801" height="15" uuid="aed0f2cd-9f9d-4dc0-8e62-2dad3bdf0960">
+				<reportElement x="100" y="70" width="600" height="17" uuid="aed0f2cd-9f9d-4dc0-8e62-2dad3bdf0960">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -201,7 +201,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textFieldExpression><![CDATA["CADERNETA DE CONTROLO DE AVALIAÇÕES"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="42" width="800" height="15" uuid="6c1f1ac5-1583-4c66-8f78-2639a84643db"/>
+				<reportElement x="100" y="42" width="600" height="15" uuid="6c1f1ac5-1583-4c66-8f78-2639a84643db"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
@@ -447,38 +447,34 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="513" y="22" width="95" height="12" uuid="e43f1cdd-cbcc-478f-b259-4bc659541d88">
+				<reportElement x="498" y="22" width="95" height="15" uuid="e43f1cdd-cbcc-478f-b259-4bc659541d88">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
-				<textElement>
-					<font fontName="Courier New" size="9" isBold="true"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Emitido no dia]]></text>
 			</staticText>
 			<textField pattern="dd-MM-yyyy">
-				<reportElement x="592" y="22" width="61" height="12" uuid="f4fb35f7-4e00-430d-acf7-7397cad8e7ae">
+				<reportElement x="578" y="22" width="68" height="15" uuid="f4fb35f7-4e00-430d-acf7-7397cad8e7ae">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
-				<textElement textAlignment="Right">
-					<font fontName="Courier New" size="9" isBold="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="653" y="22" width="42" height="12" uuid="c5237737-0773-4dc0-adb9-fed23f44d3e1">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font fontName="Courier New" size="9" isBold="true"/>
+				<reportElement x="645" y="22" width="42" height="15" uuid="c5237737-0773-4dc0-adb9-fed23f44d3e1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[pelas]]></text>
 			</staticText>
 			<textField pattern="HH:mm">
-				<reportElement x="692" y="22" width="100" height="12" uuid="c11c890b-6b01-41af-ac05-119dd6298b2b">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<textElement>
-					<font fontName="Currie new" size="9" isBold="true"/>
+				<reportElement x="687" y="22" width="113" height="15" uuid="c11c890b-6b01-41af-ac05-119dd6298b2b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Currie new" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>

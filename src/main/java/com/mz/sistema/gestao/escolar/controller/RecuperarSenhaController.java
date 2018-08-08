@@ -41,19 +41,22 @@ public class RecuperarSenhaController {
 	private UsuarioServico usuarioServico;
 
 	@RequestMapping(method = RequestMethod.GET)
+	
 	public ModelAndView novaSenha(@RequestParam(value = "key") String key,
 			@RequestParam(value = "token") String token) {
 
-		ModelAndView mv = new ModelAndView(SENHA_VIEW);
-		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName(SENHA_VIEW);
+		//mv.
 		try {
+			
 			Usuario usuario = usuarioServico.verificarUsuarioParaRecoperarSenha(key, token);
 			if (usuario == null) {
 				mv.addObject(new Usuario());
 			} else if (usuario != null) {
-				System.out.println("Nome: " + usuario.getNome());
-				System.out.println("Email: " + usuario.getEmail());
-				System.out.println("Id :" + usuario.getId());
+//				System.out.println("Nome: " + usuario.getNome());
+//				System.out.println("Email: " + usuario.getEmail());
+//				System.out.println("Id :" + usuario.getId());
 				mv.addObject("usuario", usuario);
 
 			}
@@ -67,7 +70,8 @@ public class RecuperarSenhaController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView atualizarSenhaUsuario(@Valid @ModelAttribute Usuario usuario, Errors errors,
 			RedirectAttributes attributes) {
-		ModelAndView mv = new ModelAndView(SENHA_VIEW);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName(SENHA_VIEW);
 		if (errors.hasErrors()) {
 			return mv;
 		}
@@ -78,10 +82,10 @@ public class RecuperarSenhaController {
 						"Aviso: o endereço de recoperação de Senha já expirou. Por favor, Faça um novo pedido.");
 
 			} else {
-				 System.out.println("Nova Senha: " + usuario.getNovaSenha());
-				 System.out.println("Nova Senha Confirmada: " +
-				 usuario.getConfirmaSenha());
-				System.out.println("Id :" + usuario.getId());
+//				 System.out.println("Nova Senha: " + usuario.getNovaSenha());
+//				 System.out.println("Nova Senha Confirmada: " +
+//				 usuario.getConfirmaSenha());
+//				System.out.println("Id :" + usuario.getId());
 
 				Usuario usuarioSelecionado = usuarioRepositorio.findById(usuario.getId()).get();// findOne(usuario.getId());
 
@@ -89,7 +93,7 @@ public class RecuperarSenhaController {
 						&& usuarioSelecionado.getRecuperarSenha().isAtivo()) {
 
 					String novaSenhaCriptografada = usuarioServico.criptografarSenha(usuario.getNovaSenha());
-					System.out.println("Senha Criptgrafada.: '" + novaSenhaCriptografada + "'");
+					//System.out.println("Senha Criptgrafada.: '" + novaSenhaCriptografada + "'");
 					usuarioSelecionado.setSenhaAlterada(true);
 					usuarioSelecionado.setSenha(novaSenhaCriptografada);
 					usuarioRepositorio.save(usuarioSelecionado);
