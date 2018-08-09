@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2018-08-08T15:05:56 -->
+<!-- 2018-08-09T17:44:54 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notas_anual" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoPages" columnWidth="838" leftMargin="2" rightMargin="2" topMargin="10" bottomMargin="10" uuid="9a0dfb25-e72b-4f61-b070-8a9e40fbb38b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="668"/>
@@ -156,18 +156,18 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 	<title>
 		<band height="139" splitType="Stretch">
 			<image hAlign="Center">
-				<reportElement x="100" y="13" width="600" height="27" uuid="c1b45cfd-64c3-4a08-997f-853deba26e63"/>
+				<reportElement x="141" y="13" width="559" height="27" uuid="c1b45cfd-64c3-4a08-997f-853deba26e63"/>
 				<imageExpression><![CDATA["emblema.png"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="100" y="54" width="600" height="17" uuid="40ab9651-c2be-4046-a20b-29fa1d370d6a"/>
+				<reportElement x="141" y="56" width="559" height="17" uuid="40ab9651-c2be-4046-a20b-29fa1d370d6a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["PROVÍNCIA DE "+$F{provincia}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="88" width="600" height="15" uuid="0e937600-18bc-4bfa-a91b-376c4357815b">
+				<reportElement x="141" y="89" width="559" height="15" uuid="0e937600-18bc-4bfa-a91b-376c4357815b">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box>
@@ -179,7 +179,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textFieldExpression><![CDATA[$F{escola}.toUpperCase().trim()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="70" width="600" height="17" uuid="aed0f2cd-9f9d-4dc0-8e62-2dad3bdf0960">
+				<reportElement x="141" y="71" width="559" height="17" uuid="aed0f2cd-9f9d-4dc0-8e62-2dad3bdf0960">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -201,7 +201,7 @@ ORDER BY matricula.numeroalunoturma ASC]]>
 				<textFieldExpression><![CDATA["CADERNETA DE CONTROLO DE AVALIAÇÕES"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="42" width="600" height="15" uuid="6c1f1ac5-1583-4c66-8f78-2639a84643db"/>
+				<reportElement x="141" y="42" width="559" height="15" uuid="6c1f1ac5-1583-4c66-8f78-2639a84643db"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Courier New" size="10" isBold="true"/>
 				</textElement>
