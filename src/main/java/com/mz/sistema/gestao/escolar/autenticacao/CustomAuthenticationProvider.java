@@ -68,7 +68,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		if (!usuarioServico.verificarSenhaDigitada(senhaFornecida, details.getPassword())) {
 			throw new BadCredentialsException("Usuário e/ou senha inválidos.");
 		}
-		DataUtils.compararDatasHojeDataPrevisao();
+	
 
 	}
 
