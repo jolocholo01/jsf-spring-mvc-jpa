@@ -100,7 +100,7 @@
 							<div class="col-sm-5">
 								<h:inputText value="#{buscarFotoBean.usuario.email}"
 									styleClass="form-control"
-									disabled="#{buscarFotoBean.usuario.email !=null or buscarFotoBean.usuario.email !=''}"
+									disabled="#{not empty buscarFotoBean.usuario.email}"
 									validatorMessage="Email inválido. Por favor introduza um Email correcto!">
 									<f:passThroughAttribute name="placeholder"
 										value="exemplo@exemplos.com"></f:passThroughAttribute>

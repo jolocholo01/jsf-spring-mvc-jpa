@@ -661,15 +661,11 @@ public class NotaBean {
 			Map<String, Object> parametro = new HashMap<>();
 			if (professorTurma.getProfessor() != null) {
 				if (professorTurma.getProfessor().getNome() != null)
-					nomeProfessor = TipoLetra.capitalizeString(professorTurma.getProfessor().getNome())
-							.replace(" Dos ", " dos ").replace(" Das ", "das").replace(" De ", " de ")
-							.replace(" À ", " à ");
+					nomeProfessor = professorTurma.getProfessor().getNome();
 			}
 			if (professorTurma.getDisciplina() != null) {
 				if (professorTurma.getDisciplina().getDescricao() != null)
-					nomeDiciplina = TipoLetra.capitalizeString(professorTurma.getDisciplina().getDescricao())
-							.replace(" Dos ", " dos ").replace(" Das ", "das").replace(" De ", " de ")
-							.replace(" À ", " à ");
+					nomeDiciplina = professorTurma.getDisciplina().getDescricao();
 				parametro.put("idDisciplina", professorTurma.getDisciplina().getId());
 			} else {
 				parametro.put("idDisciplina", null);
@@ -685,7 +681,7 @@ public class NotaBean {
 			parametro.put("disciplina", nomeDiciplina);
 			String nomeDoc = "CADERNETA_DE_" + nomeDiciplina.toUpperCase() + "_DA_"
 					+ professorTurma.getTurma().getClasse().getSigla() + "ª"
-					+ professorTurma.getTurma().getDescricao().toUpperCase() + "_DO_CURSO_"
+					+ professorTurma.getTurma().getDescricao().toUpperCase() + "_CURSO_"
 					+ professorTurma.getTurma().getCurso() + ".pdf";
 			geradorDeRelatoriosServico.geraPdf(caminho, parametro, nomeDoc);
 		} catch (Exception e) {

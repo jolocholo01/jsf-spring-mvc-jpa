@@ -82,7 +82,7 @@ public class RecuperarSenhaBean implements Serializable {
 			Usuario usuario = usuarioServico.obterUsuarioPorEmail(recuperarSenha.getEmail());
 			if (usuario == null) {
 				Mensagem.mensagemInfo(
-						"O e - mail introduzido não existe nos nossos registos! Por favor, faça seu registo no menu dados pessoais.");
+						"O e-mail introduzido não existe nos nossos registos! Por favor, faça seu registo no menu dados pessoais.");
 				return;
 			}
 			if (usuario.getEnganoNoEnvioEmail() == null) {
@@ -125,7 +125,7 @@ public class RecuperarSenhaBean implements Serializable {
 			
 			System.out.println("Id usuario:" + usuario.getId());
 			Mensagem.mensagemInfo("Um e-mail foi enviado para " + recuperarSenha.getEmail()
-					+ " com instruções para recoperar sua senha.");
+					+ " com instruções para recuperar sua senha.");
 			Mensagem.mensagemInfo("Se não receber um e-mail em até 10 minuto, verifique a sua caxa de Lixo/Spam.");
 
 			emailEnviadoBoleano = true;

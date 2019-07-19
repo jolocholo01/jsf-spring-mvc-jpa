@@ -232,7 +232,8 @@ public class ProfessorTurmaBean {
 			for (HorarioAula horarioAula : horarioAulas) {
 				Horario horario = new Horario();
 
-				if (horarioAula.isHorarioProfNestaTurmaSeg() == true && horarioAula.isHorarioProfOutraTurmaSeg()==false) {
+				if (horarioAula.isHorarioProfNestaTurmaSeg() == true
+						&& horarioAula.isHorarioProfOutraTurmaSeg() == false) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("SEG");
 
 					horario = new Horario();
@@ -250,7 +251,8 @@ public class ProfessorTurmaBean {
 					horariosSeg.add(diaSemana.getSigla() + horarioAula.getOrdem());
 
 				}
-				if (horarioAula.isHorarioProfNestaTurmaTerc() == true && horarioAula.isHorarioProfOutraTurmaTerc()==false) {
+				if (horarioAula.isHorarioProfNestaTurmaTerc() == true
+						&& horarioAula.isHorarioProfOutraTurmaTerc() == false) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("TER");
 
 					horario = new Horario();
@@ -269,7 +271,8 @@ public class ProfessorTurmaBean {
 
 					horario = new Horario();
 				}
-				if (horarioAula.isHorarioProfNestaTurmaQua() == true && horarioAula.isHorarioProfOutraTurmaQua()==false) {
+				if (horarioAula.isHorarioProfNestaTurmaQua() == true
+						&& horarioAula.isHorarioProfOutraTurmaQua() == false) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("QUA");
 
 					horario = new Horario();
@@ -286,7 +289,8 @@ public class ProfessorTurmaBean {
 					horarioServico.salvar(horario);
 					horariosQua.add(diaSemana.getSigla() + horarioAula.getOrdem() + "");
 				}
-				if (horarioAula.isHorarioProfNestaTurmaQui() == true&& horarioAula.isHorarioProfOutraTurmaQui()==false) {
+				if (horarioAula.isHorarioProfNestaTurmaQui() == true
+						&& horarioAula.isHorarioProfOutraTurmaQui() == false) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("QUI");
 
 					horario = new Horario();
@@ -304,7 +308,8 @@ public class ProfessorTurmaBean {
 					horariosQui.add(diaSemana.getSigla() + horarioAula.getOrdem() + "");
 
 				}
-				if (horarioAula.isHorarioProfNestaTurmaSex() == true && horarioAula.isHorarioProfOutraTurmaSex()==false) {
+				if (horarioAula.isHorarioProfNestaTurmaSex() == true
+						&& horarioAula.isHorarioProfOutraTurmaSex() == false) {
 					DiaSemana diaSemana = diaSemanaServico.obterDiaSemanaPorSigla("SEX");
 					horario = new Horario();
 
@@ -372,14 +377,25 @@ public class ProfessorTurmaBean {
 						"ATENÇÃO: Impossível alocar professor pois não exite dias da semana castrado no sistema!");
 				return;
 			}
-//			if (professorTurma.getHorario().equals("")) {
-//				Mensagem.mensagemAlerta("ATENÇÃO: Escolhe o tempo onde o/a professor(a) passa lecionar nesta turma.");
-//				Mensagem.mensagemAlerta(
-//						"		 A escolha do tempo deve ter em consideração a carga horária da disciplina!");
-//				return;
-//			}
-			professorTurmaServico.salvar(professorTurma);
-			Mensagem.mensagemInfo("AVISO: Horário de professor foi cadastrado com sucesso!");
+			// if (professorTurma.getHorario().equals("")) {
+			// Mensagem.mensagemAlerta("ATENÇÃO: Escolhe o tempo onde o/a
+			// professor(a) passa lecionar nesta turma.");
+			// Mensagem.mensagemAlerta(
+			// " A escolha do tempo deve ter em consideração a carga horária da
+			// disciplina!");
+			// return;
+			// }
+			professorTurma.setHorario(professorTurma.getHorario().trim());
+			System.out.println("Horario do professor:'" + professorTurma.getHorario()+"'");
+			if (professorTurma.getHorario().equals("")) {
+				Mensagem.mensagemInfo("AVISO: Horário de professor foi removido com sucesso!");
+				System.out.println("Sem Horario do professor");
+			} else {
+				professorTurmaServico.salvar(professorTurma);
+				System.out.println("Horario do professor");
+				Mensagem.mensagemInfo("AVISO: Horário de professor foi cadastrado com sucesso!");
+			}
+			
 			cadastrouHorario = true;
 			alocadoComSucessoBoolean = true;
 		} catch (Exception e) {
@@ -435,13 +451,12 @@ public class ProfessorTurmaBean {
 	}
 
 	public void selecionarDisciplinaParaVerHorario(ProfessorTurma professorTurma) {
-		horariosDisciplina=new ArrayList<>();
-		this.professorTurmaSelecionada=new ProfessorTurma();
+		horariosDisciplina = new ArrayList<>();
+		this.professorTurmaSelecionada = new ProfessorTurma();
 		this.professorTurmaSelecionada = professorTurma;
 		try {
 
-			horariosDisciplina = horarioServico.obterHorarioPorIdTurmaPorIdDiciplina(
-					professorTurma.getTurma().getId(),
+			horariosDisciplina = horarioServico.obterHorarioPorIdTurmaPorIdDiciplina(professorTurma.getTurma().getId(),
 					professorTurma.getDisciplina().getId());
 		} catch (
 
@@ -449,9 +464,10 @@ public class ProfessorTurmaBean {
 			e.printStackTrace();
 		}
 	}
+
 	public void fechar() {
-		horariosDisciplina=new ArrayList<>();
-		this.professorTurmaSelecionada=new ProfessorTurma();
+		horariosDisciplina = new ArrayList<>();
+		this.professorTurmaSelecionada = new ProfessorTurma();
 	}
 
 	public void selecionarTurma(Turma turma) {
@@ -506,6 +522,8 @@ public class ProfessorTurmaBean {
 			if (elecionadaTurnoExtra == false)
 				horarioAulas = horarioAulaServico.obterHorarioAulaPorEscolaTurno(turmaSelecionada.getTurno().getId());
 			else if (elecionadaTurnoExtra == true) {
+				horariosProfessor = horarioServico.obterHorarioPorIdTurno(turnoSelecionado.getId(),
+						this.turmaSelecionada.getEscola().getId(), this.turmaSelecionada.getAno());
 				horarioAulas = horarioAulaServico.obterHorarioAulaPorEscolaTurno(turnoSelecionado.getId());
 
 			}
@@ -711,13 +729,32 @@ public class ProfessorTurmaBean {
 				horarioAulas = horarioAulaServico.obterHorarioAulaPorEscolaTurno(turnoSelecionado.getId());
 
 			}
-
 			disciplinaClasse = disciplinaClasseServico.obterDisciplinasClassePorId(disciplinaClasse.getId());
 
 			verificaProfessor(horarioAulas);
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void verificarDisciplina() {
+		try {
+			disciplinaClasse = disciplinaClasseServico.obterDisciplinasClassePorId(disciplinaClasse.getId());
+			professorTurma = professorTurmaServico.obterProfessorTurmaPorIdTurmarPorIdDisciplina(
+					turmaSelecionada.getId(), disciplinaClasse.getDisciplina().getId());
+			if (professorTurma == null) {
+				professorTurma = new ProfessorTurma();
+				elecionadaTurnoExtra = false;
+			} else {
+				if (professorTurma.getElecionadaTurnoExtra().equals("Sim")) {
+					elecionadaTurnoExtra = true;
+				}
+
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 
@@ -728,15 +765,14 @@ public class ProfessorTurmaBean {
 					filename = "LISTA_DOS_ALUNOS_DA_TURMA_" + professorTurma.getTurma().getDescricao() + "_CURSO_"
 							+ professorTurma.getTurma().getCurso() + ".pdf";
 			Map<String, Object> parametro = new HashMap<>();
-			
+
 			Long idTurma = null;
-		
+
 			if (professorTurma.getTurma() != null)
 				if (professorTurma.getTurma().getId() != null) {
 					idTurma = professorTurma.getTurma().getId();
 				}
-			if (professorTurma.getDisciplina().getDescricao().toUpperCase()
-					.equals("REUNIÃO DE TURMA")) {
+			if (professorTurma.getDisciplina().getDescricao().toUpperCase().equals("REUNIÃO DE TURMA")) {
 
 				caminho = "/academico/relatorio/aluno/alunos_turma.jasper";
 				filename = "LISTA_DOS_ALUNOS_DA_TURMA_" + professorTurma.getTurma().getDescricao() + "_CURSO_"

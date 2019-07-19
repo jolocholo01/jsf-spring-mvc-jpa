@@ -145,7 +145,7 @@
 							<h:outputText value="#{turma.inscrito}" />
 						</h:column>
 						<h:column>
-						<f:facet name="header">
+							<f:facet name="header">
 								<h:outputText value="Acções" />
 							</f:facet>
 							<h:commandLink
@@ -155,10 +155,11 @@
 								<f:passThroughAttribute name="data-toggle" value="tooltip" />
 								<f:passThroughAttribute name="data-placement" value="left" />
 							</h:commandLink>
-							<h:commandLink  style="margin-left: 10px;"
+							<h:commandLink style="margin-left: 10px;"
 								action="#{turmaBean.listarAlunosTurma(turma)}"
 								title="Emitir lista de alunos desta turma?">
-								<h:graphicImage width="25" height="25" url="#{buscarFotoBean.retornarImagesEmitir}" />
+								<h:graphicImage width="25" height="25"
+									url="#{buscarFotoBean.retornarImagesEmitir}" />
 								<f:passThroughAttribute name="data-toggle" value="tooltip" />
 								<f:passThroughAttribute name="data-placement" value="left" />
 							</h:commandLink>
@@ -212,11 +213,10 @@
 
 					</div>
 					<div class="form-group row">
-						<h:outputLabel value="Disciplina:"
+						<h:outputLabel id="iDisciplina" value="Disciplina:"
 							styleClass="col-sm-4 control-label texto-label textfim" />
 						<div class="col-sm-6">
-							<h:selectOneMenu
-								value="#{professorTurmaBean.disciplinaClasse}"
+							<h:selectOneMenu value="#{professorTurmaBean.disciplinaClasse}"
 								required="true" converter="disciplinaClasseConverter"
 								requiredMessage="O campo disciplina é obrigatório"
 								styleClass="form-control" style="text-transform: uppercase;">
@@ -226,12 +226,15 @@
 									var="disciplinaClasse"
 									itemLabel="#{disciplinaClasse.disciplina.descricao}"
 									itemValue="#{disciplinaClasse}" />
-
+								<p:ajax event="change"
+									listener="#{professorTurmaBean.verificarDisciplina}"
+									update="iDisciplina idELecionadaNoTurnoExtra"></p:ajax>
 							</h:selectOneMenu>
 						</div>
 					</div>
 					<h:panelGroup
 						rendered="#{professorTurmaBean.turmaSelecionada.curso=='DIURNO'}">
+						<h:panelGroup id="idELecionadaNoTurnoExtra">
 						<div class="form-group row">
 							<h:outputLabel value="É Lecionada no turno extra?:"
 								styleClass="col-sm-4 control-label textfim bolder" />
@@ -243,7 +246,7 @@
 								</h:selectBooleanCheckbox>
 							</div>
 
-						</div>
+						</div></h:panelGroup>
 					</h:panelGroup>
 
 					<div class="form-group row" style="text-align: center;">
@@ -544,7 +547,7 @@
 									styleClass="form-control" required="true"
 									requiredMessage="O campo professor é obrigatório!">
 									<f:passThroughAttribute name="placeholder"
-												value="Qual professor que você está procurar?" />
+										value="Qual professor que você está procurar?" />
 								</h:inputText>
 
 							</div>

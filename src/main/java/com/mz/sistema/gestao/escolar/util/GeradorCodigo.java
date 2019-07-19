@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 public class GeradorCodigo {
 
 	private static String caracteresSenha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	
 
 	public static void main(String[] args) {
 		System.out.println("Codigo: " + gerarCodigoAleatorioSemRepeticao(100L));

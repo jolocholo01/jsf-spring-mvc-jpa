@@ -236,7 +236,7 @@
 										<h:inputText value="#{funcionarioBean.funcionario.nome}"
 											class="form-control"
 											onblur="this.value = this.value.toUpperCase();"
-											required="true" requiredMessage="O campo Nome é obrigatório" />
+											required="true" onkeypress="return lettersOnly(event);" requiredMessage="O campo Nome é obrigatório" />
 									</div>
 									<h:outputLabel styleClass="col-sm-1 col-form-label"
 										value="Sexo:" />
@@ -256,7 +256,7 @@
 										value="Filiação: " />
 									<div class="col-sm-5">
 										<h:inputText value="#{funcionarioBean.funcionario.pai}"
-											class="form-control"
+											class="form-control" onkeypress="return lettersOnly(event);"
 											onblur="this.value = this.value.toUpperCase();"
 											required="true"
 											requiredMessage="O campo Nome do Pai é obrigatório" />
@@ -265,7 +265,7 @@
 										value="e de : " />
 									<div class="col-sm-4">
 										<h:inputText value="#{funcionarioBean.funcionario.mae}"
-											class="form-control"
+											class="form-control" onkeypress="return lettersOnly(event);"
 											onblur="this.value = this.value.toUpperCase();"
 											required="true"
 											requiredMessage="O campo Nome da Mãe é obrigatório" />

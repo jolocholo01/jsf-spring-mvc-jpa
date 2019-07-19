@@ -38,7 +38,7 @@
 					<h:dataTable id="tabela-horarios"
 						styleClass="tabelaProfessor table table-bordered left "
 						value="#{matriculaBean.matriculas}" var="matricula"						
-						columnClasses="opcoes, , opcoes, opcoes, opcoes, opcoes"
+						columnClasses="opcoes, , opcoes, opcoes, center, center"
 						 headerClass="cabacalho">
 						<h:column>
 							<f:facet name="header">
@@ -65,8 +65,9 @@
 						</h:column>
 						<h:column>
 							<f:facet name="header">Turma</f:facet>
-							<h:outputText value="#{matricula.turma.descricao}">
-							</h:outputText>
+							<h:outputText value="#{matricula.turma.descricao}"
+							 rendered="#{not empty matricula.turma.descricao}"/>
+							<h:outputText value="Sem turma" styleClass="SemTurma" rendered="#{empty matricula.turma.descricao}"/>
 						</h:column>
 						<h:column>
 

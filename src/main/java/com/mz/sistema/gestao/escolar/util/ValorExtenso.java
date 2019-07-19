@@ -266,7 +266,7 @@ public class ValorExtenso {
 
     public static void main(String[] args) {
         ValorExtenso e = new ValorExtenso();
-        Double valor = 123126.53;
+        Double valor = 1292.26;
         String valorExtenso = e.write(BigDecimal.valueOf(valor));
 
         System.out.println("Extenso: " + valorExtenso.toLowerCase().replace("um mil ", "mil "));

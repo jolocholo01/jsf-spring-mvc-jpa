@@ -56,7 +56,11 @@
 
 						<h:outputText
 							value="#{authenticationContext.matriculaEscolaLogada.turma.descricao} / #{authenticationContext.matriculaEscolaLogada.turma.turno.descricao}"
-							style="margin-left:10px; text-transform: uppercase; " />
+							style="margin-left:10px; text-transform: uppercase; "
+							rendered="#{not empty authenticationContext.matriculaEscolaLogada.turma.classe.descricao}" />
+						<h:outputText value="Sem turma" styleClass="SemTurma" style="margin-left:10px;" 
+							rendered="#{empty authenticationContext.matriculaEscolaLogada.turma.classe.descricao}" />
+
 
 						<h:outputLabel value="Trimestre: " />
 
@@ -85,7 +89,8 @@
 						<!-- Tabela de nota do primeiro ciclo -->
 						<h:panelGroup
 							rendered="#{alunoBean.matricula.classe.ciclo=='1º CICLO' and alunoBean.notas !=null}">
-							<table class="tblEditavel table hover table-nota-aluno" id="tblEditavel">
+							<table class="tblEditavel table hover table-nota-aluno"
+								id="tblEditavel">
 
 								<THEAD class="t">
 									<TR class="centralizar">
@@ -111,10 +116,9 @@
 									<h:panelGroup
 										rendered="#{alunoBean.trimestreAtivo.descricao!=null}">
 										<ui:repeat var="nota" value="#{alunoBean.notas}">
-											<tr >
+											<tr>
 												<td class="td nome-aluno"><h:outputText
-														id="idNomeAluno"
-														value="#{nota.disciplina.descricao}"
+														id="idNomeAluno" value="#{nota.disciplina.descricao}"
 														title="#{nota.situacao}"
 														style="text-transform: uppercase; margin-left: 5px;" /></td>
 
@@ -303,7 +307,8 @@
 						<!-- Tabela de nota do Segundo ciclo -->
 						<h:panelGroup
 							rendered="#{authenticationContext.matriculaEscolaLogada.classe.ciclo=='2º CICLO' and alunoBean.notas !=null}">
-							<table class="tblEditavel table table-nota-aluno" id="tblEditavel">
+							<table class="tblEditavel table table-nota-aluno"
+								id="tblEditavel">
 
 								<THEAD class="t">
 									<TR class="centralizar ">
@@ -328,7 +333,7 @@
 									<h:panelGroup
 										rendered="#{alunoBean.trimestreAtivo.descricao!=null}">
 										<ui:repeat var="nota" value="#{alunoBean.notas}">
-											<tr >
+											<tr>
 												<td class="td nome-aluno"><h:outputText
 														id="idNomeAluno" value="#{nota.disciplina.descricao}"
 														title="#{nota.situacao}"

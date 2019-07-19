@@ -293,11 +293,10 @@ public class AuthenticationContext {
 			} else if (this.matriculaEscolaLogada.getTurma() == null) {
 
 			} else if (this.matriculaEscolaLogada.getTurma() != null) {
-				Calendario calendarioEscolar = getCalendarioEscolar();
-				if (calendarioEscolar != null)
+				
 					this.professorTurmas = professorTurmaServico.obterProfessorTurmaPorTurmaOrdenarPorIdDisciplina(
 							this.matriculaEscolaLogada.getTurma().getId());
-				System.out.println("Ano Escolar:" + calendarioEscolar.getAno());
+				//System.out.println("Ano Escolar:" + calendarioEscolar.getAno());
 				if (this.professorTurmas == null) {
 					this.professorTurmas = new ArrayList<>();
 				}

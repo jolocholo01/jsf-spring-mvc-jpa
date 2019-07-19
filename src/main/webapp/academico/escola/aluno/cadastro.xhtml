@@ -181,7 +181,7 @@
 								styleClass="col-sm-2 control-label texto-label texto-right" />
 							<div class="col-sm-8">
 								<h:inputText value="#{alunoBean.aluno.nome}"
-									styleClass="form-control"
+									styleClass="form-control" onkeypress="return lettersOnly(event);"
 									onblur="this.value = this.value.toUpperCase();" />
 
 							</div>
@@ -330,7 +330,7 @@
 								</h:outputLabel>
 								<div class="col-sm-7">
 									<h:inputText value="#{alunoBean.aluno.pai}"
-										class="form-control"
+										class="form-control" onkeypress="return lettersOnly(event);"
 										onblur="this.value = this.value.toUpperCase();"
 										required="true"
 										requiredMessage="O campo Nome do Pai é obrigatório" />
@@ -345,7 +345,7 @@
 								</h:outputLabel>
 								<div class="col-sm-7">
 									<h:inputText value="#{alunoBean.aluno.mae}"
-										class="form-control"
+										class="form-control" onkeypress="return lettersOnly(event);"
 										onblur="this.value = this.value.toUpperCase();"
 										required="true"
 										requiredMessage="O campo Nome da mãe é obrigatório" />

@@ -21,7 +21,7 @@ public class UserDetailsService implements org.springframework.security.core.use
 
 	@Transactional
 	// metodo chamado pela autenticação 'remember me' para pegar os dados do
-	// usuario logado
+	// usuario logadoW
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return null;
 	}

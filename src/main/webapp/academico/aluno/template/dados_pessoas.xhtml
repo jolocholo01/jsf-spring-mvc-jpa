@@ -79,7 +79,7 @@
 											value="#{authenticationContext.matriculaEscolaLogada.classe.descricao}"
 											style="text-transform: uppercase;"
 											rendered="#{authenticationContext.matriculaEscolaLogada.classe.descricao !=null}" />
-										<h:outputText value="NÃO INFORMADA."
+										<h:outputText value="NÃO INFORMADA"
 											rendered="#{authenticationContext.matriculaEscolaLogada.classe.descricao ==null}" />
 									</div>
 								</div>
@@ -92,7 +92,7 @@
 											<h:outputText
 												value="#{authenticationContext.matriculaEscolaLogada.turma.descricao} / #{authenticationContext.matriculaEscolaLogada.turma.turno.descricao}"
 												rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao !=null}" />
-											<h:outputText value="NÃO DEFINIDA."
+											<h:outputText value="SEM TURMA" style="margin-left: 0; " styleClass="SemTurma" 
 												rendered="#{authenticationContext.matriculaEscolaLogada.turma.descricao ==null}" />
 										</h:panelGroup>
 									</div>

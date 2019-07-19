@@ -693,7 +693,7 @@ public class AlunoBean implements Serializable {
 			this.matricula.setTurma(turmaPk);
 
 			Mensagem.mensagemInfo("AVISO: Fora(m) alocado(s) " + quantidadeMatriculado + " aluno(s) na turma "
-					+ turmaPk.getClasse().getOrdem() + "ª" + turmaPk.getDescricao() + "!");
+					+ turmaPk.getClasse().getSigla() + "ª" + turmaPk.getDescricao() + "!");
 			List<Matricula> matriculas = matriculaServico.obterMatriculaPorTurmaAtivas(turmaPk.getId());
 			if (matriculas != null) {
 				Integer numeroAlunoNaTurma = 0;
