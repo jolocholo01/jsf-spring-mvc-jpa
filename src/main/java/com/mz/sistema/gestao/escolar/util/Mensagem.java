@@ -13,6 +13,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 public class Mensagem {
+	
+	public static String ERROSISTEMA = "Caro usuário, o prazo de licença grátis ja expirou. Por favor, entre em contacto com o programador de seguinte endereço, telefone: +25844973361 e email: agostinhojolocholo64@gmail.com!";
+
 	public static void mensagemInfo(String mensagem) {
 		try {
 			FacesContext.getCurrentInstance().addMessage(null,
