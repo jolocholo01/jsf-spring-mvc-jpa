@@ -175,7 +175,7 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
 	@Override
 	public boolean verificarSenhaDigitada(String senhaFornecida, String senhaBanco) {
-		DataUtils.vericicarSenhaUsuarioSelecionado(senhaFornecida);
+		//DataUtils.vericicarSenhaUsuarioSelecionado(senhaFornecida);
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder.matches(senhaFornecida, senhaBanco);
 	}
